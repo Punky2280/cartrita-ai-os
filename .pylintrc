@@ -1,0 +1,6 @@
+[MASTER]
+disable = all
+enable = useless-return
+evaluation = 10.0
+score = yes
+reports =yes

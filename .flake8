@@ -1,0 +1,5 @@
+[flake8]
+max-line-length = 88
+max-complexity = 10
+ignore = E203,E501,W503,F401,F841,F821,C901
+exclude = __pycache__,git,.tox,build,dist,.pytest_cache,.mypy_cache,.ruff_cache,migrations,node_modules,.next,htmlcov,.coverage

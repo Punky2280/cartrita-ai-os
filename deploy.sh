@@ -10,21 +10,21 @@ if ! docker info > /dev/null 2>&1; then
 fi
 
 # Stop existing containers
-docker-compose down 2>/dev/null || true
+docker compose down 2>/dev/null || true
 
 # Build and start services
-docker-compose up -d --build
+docker compose up -d --build
 
 # Wait for PostgreSQL to be ready
 echo "⏳ Waiting for PostgreSQL..."
-until docker-compose exec -T postgres pg_isready -U robbie -d cartrita_db &>/dev/null; do
+until docker compose exec -T postgres pg_isready -U robbie -d cartrita_db &>/dev/null; do
     sleep 2
 done
 
 echo "✅ PostgreSQL is ready!"
 
 # Run database initialization
-docker-compose exec -T postgres psql -U robbie -d cartrita_db < infrastructure/docker/init-production.sql
+docker compose exec -T postgres psql -U robbie -d cartrita_db < infrastructure/docker/init-production.sql
 
 echo "✅ Database initialized!"
 
@@ -42,5 +42,5 @@ echo "🔑 API Keys:"
 echo "  • Development:  dev-api-key-123"
 echo "  • Production:   prod-api-key-robbie"
 echo ""
-echo "📊 Logs: docker-compose logs -f"
+echo "📊 Logs: docker compose logs -f"
 echo ""
