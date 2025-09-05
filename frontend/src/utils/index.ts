@@ -76,7 +76,9 @@ export function isImageFile(filename: string): boolean {
 export function highlightText(text: string, searchTerm: string): string {
   if (!searchTerm || !text) return text
 
-  const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi')
+  // Escape special regex characters to prevent ReDoS
+  const escapedTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const regex = new RegExp(`(${escapedTerm})`, 'gi')
   return text.replace(regex, '<mark>$1</mark>')
 }
 

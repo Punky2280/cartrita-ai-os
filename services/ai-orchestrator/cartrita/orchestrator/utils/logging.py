@@ -119,7 +119,6 @@ def _configure_third_party_loggers(level: str) -> None:
 
     # AI/ML libraries
     logging.getLogger("openai").setLevel(logging.WARNING)
-    logging.getLogger("anthropic").setLevel(logging.WARNING)
     logging.getLogger("langchain").setLevel(logging.WARNING)
     logging.getLogger("langgraph").setLevel(logging.WARNING)
 

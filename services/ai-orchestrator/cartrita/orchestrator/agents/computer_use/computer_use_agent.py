@@ -29,12 +29,8 @@ logger = structlog.get_logger(__name__)
 class ScreenshotRequest(BaseModel):
     """Screenshot request model."""
 
-    description: str = Field(
-        ..., description="What to capture in the screenshot"
-    )
-    format: str = Field(
-        default="png", description="Image format: 'png', 'jpg', 'webp'"
-    )
+    description: str = Field(..., description="What to capture in the screenshot")
+    format: str = Field(default="png", description="Image format: 'png', 'jpg', 'webp'")
     quality: int = Field(
         default=90,
         ge=1,
@@ -66,9 +62,7 @@ class SystemCommand(BaseModel):
     timeout: int = Field(
         default=30, ge=1, le=300, description="Command timeout in seconds"
     )
-    working_directory: str | None = Field(
-        default=None, description="Working directory"
-    )
+    working_directory: str | None = Field(default=None, description="Working directory")
 
 
 class ComputerUseRequest(BaseModel):
@@ -84,9 +78,7 @@ class ComputerUseRequest(BaseModel):
     system_commands: list[SystemCommand] = Field(
         default_factory=list, description="System commands to execute"
     )
-    safety_mode: bool = Field(
-        default=True, description="Enable safety restrictions"
-    )
+    safety_mode: bool = Field(default=True, description="Enable safety restrictions")
 
 
 class ComputerUseResponse(BaseModel):
@@ -260,8 +252,7 @@ class ComputerUseAgent:
 
             logger.info(
                 "Computer task completed",
-                operations=len(result.file_results)
-                + len(result.command_results),
+                operations=len(result.file_results) + len(result.command_results),
                 safety_warnings=len(result.safety_warnings),
                 execution_time=time.time() - start_time,
             )
@@ -273,9 +264,7 @@ class ComputerUseAgent:
                 "Computer use execution failed",
                 error=str(e),
                 task=(
-                    computer_task[:100]
-                    if "computer_task" in locals()
-                    else "unknown"
+                    computer_task[:100] if "computer_task" in locals() else "unknown"
                 ),
             )
             return {
@@ -307,9 +296,7 @@ class ComputerUseAgent:
         # Execute file operations
         file_results = []
         for operation in request.file_operations:
-            if request.safety_mode and not self._is_safe_file_operation(
-                operation
-            ):
+            if request.safety_mode and not self._is_safe_file_operation(operation):
                 safety_warnings.append(
                     f"Unsafe file operation blocked: {operation.operation} on {operation.path}"
                 )
@@ -322,9 +309,7 @@ class ComputerUseAgent:
         command_results = []
         for command in request.system_commands:
             if request.safety_mode and not self._is_safe_command(command):
-                safety_warnings.append(
-                    f"Unsafe command blocked: {command.command}"
-                )
+                safety_warnings.append(f"Unsafe command blocked: {command.command}")
                 continue
 
             result = await self._execute_system_command(command)
@@ -344,8 +329,7 @@ class ComputerUseAgent:
             metadata={
                 "task": request.task,
                 "safety_mode": request.safety_mode,
-                "operations_completed": len(file_results)
-                + len(command_results),
+                "operations_completed": len(file_results) + len(command_results),
             },
         )
 
@@ -360,9 +344,7 @@ class ComputerUseAgent:
             logger.error("Screenshot failed", error=str(e))
             return None
 
-    async def _execute_file_operation(
-        self, operation: FileOperation
-    ) -> dict[str, Any]:
+    async def _execute_file_operation(self, operation: FileOperation) -> dict[str, Any]:
         """Execute file operation."""
         try:
             # This would integrate with actual file system operations
@@ -393,9 +375,7 @@ class ComputerUseAgent:
                 "error": str(e),
             }
 
-    async def _execute_system_command(
-        self, command: SystemCommand
-    ) -> dict[str, Any]:
+    async def _execute_system_command(self, command: SystemCommand) -> dict[str, Any]:
         """Execute system command."""
         try:
             # This would integrate with actual command execution
@@ -409,9 +389,7 @@ class ComputerUseAgent:
                 "exit_code": 0,
             }
         except Exception as e:
-            logger.error(
-                "System command failed", command=command.command, error=str(e)
-            )
+            logger.error("System command failed", command=command.command, error=str(e))
             return {
                 "command": command.command,
                 "success": False,
@@ -475,9 +453,7 @@ Provide a clear, concise summary of what was accomplished and any important note
         # Check system commands
         for command in request.system_commands:
             if not self._is_safe_command(command):
-                warnings.append(
-                    f"Potentially unsafe command: {command.command}"
-                )
+                warnings.append(f"Potentially unsafe command: {command.command}")
 
         return warnings
 

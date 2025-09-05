@@ -9,7 +9,6 @@ export interface User {
   bio?: string
   apiKeys?: {
     openai?: string
-    anthropic?: string
     google?: string
     huggingface?: string
   }
@@ -74,11 +73,17 @@ export interface ConversationMetadata {
 export interface Message {
   id: string
   conversationId: string
-  role: 'user' | 'assistant' | 'system'
+  role: 'user' | 'assistant' | 'system' | 'tool'
   content: string
-  timestamp: string
-  metadata: MessageMetadata
   attachments?: Attachment[]
+  metadata: Record<string, any>
+  createdAt: string
+  updatedAt: string
+  isEdited: boolean
+  tokens?: number
+  processingTime?: number
+  // Legacy fields for compatibility
+  timestamp?: string
   reactions?: Reaction[]
 }
 
@@ -123,12 +128,21 @@ export interface Agent {
   id: string
   name: string
   type: AgentType
-  description: string
-  capabilities: string[]
-  status: 'active' | 'inactive' | 'error'
+  status: 'idle' | 'busy' | 'offline' | 'error'
   model: string
-  version: string
-  metadata: AgentMetadata
+  description?: string
+  capabilities?: string[]
+  last_used_at?: string
+  usage_count?: number
+  metadata?: {
+    version?: string
+    uptime?: number
+    memory_usage?: number
+    queue_size?: number
+    [key: string]: any
+  }
+  // Legacy fields for compatibility
+  version?: string
 }
 
 export type AgentType =
@@ -138,7 +152,6 @@ export type AgentType =
   | 'computer_use'
   | 'knowledge'
   | 'task'
-  | 'custom'
 
 export interface AgentMetadata {
   lastActive: string
@@ -151,22 +164,38 @@ export interface AgentMetadata {
 
 export interface ChatRequest {
   message: string
+  conversation_id?: string
+  context?: Record<string, any>
+  agent_override?: AgentType
+  stream?: boolean
+  temperature?: number
+  max_tokens?: number
+  tools?: string[]
+  // Legacy fields for compatibility
   conversationId?: string
   userId?: string
   agentOverride?: string
-  context?: Record<string, any>
-  stream?: boolean
   attachments?: Attachment[]
   metadata?: Record<string, any>
 }
 
 export interface ChatResponse {
-  conversationId: string
-  message: Message
-  sources?: Source[]
+  response: string
+  conversation_id: string
+  agent_type: AgentType
+  message?: Message
+  metadata?: Record<string, any>
+  processing_time?: number
+  token_usage?: {
+    prompt_tokens?: number
+    completion_tokens?: number
+    total_tokens?: number
+  }
+  sources?: string[]
+  // Legacy fields for compatibility
+  conversationId?: string
   suggestions?: string[]
   followUpQuestions?: string[]
-  metadata: ChatResponseMetadata
 }
 
 export interface ChatResponseMetadata {
@@ -185,6 +214,7 @@ export interface StreamingChunk {
     tokens?: number
     agent?: string
     confidence?: number
+    streaming?: boolean
   }
 }
 
@@ -666,11 +696,6 @@ export const AGENT_TYPES: Record<AgentType, { name: string; description: string;
     name: 'Task Agent',
     description: 'GPT-5 powered task planning and project management',
     icon: '📋'
-  },
-  custom: {
-    name: 'Custom Agent',
-    description: 'User-defined specialized agent',
-    icon: '⚙️'
   }
 }
 
@@ -682,7 +707,6 @@ export interface UserSettings {
   theme: 'light' | 'dark' | 'system'
   apiKeys?: {
     openai?: string
-    anthropic?: string
     google?: string
     huggingface?: string
   }
@@ -707,3 +731,119 @@ export interface UserSettings {
 }
 
 export type Theme = 'light' | 'dark' | 'system'
+
+// WebSocket Message Types for Deepgram Integration
+export interface WebSocketMessage {
+  type: 'transcript' | 'analytics' | 'error' | 'state' | 'metrics' | 'connection' | 'audio'
+  data: any
+  timestamp: number
+  messageId?: string
+}
+
+export interface TranscriptMessage extends WebSocketMessage {
+  type: 'transcript'
+  data: {
+    text: string
+    confidence: number
+    is_final: boolean
+    speaker?: number
+    words?: Array<{
+      word: string
+      start: number
+      end: number
+      confidence: number
+    }>
+  }
+}
+
+export interface AnalyticsMessage extends WebSocketMessage {
+  type: 'analytics'
+  data: {
+    sentiment: {
+      score: number
+      label: 'positive' | 'negative' | 'neutral'
+      confidence: number
+    }
+    topics: Array<{
+      name: string
+      confidence: number
+      keywords: string[]
+    }>
+    emotions: Array<{
+      emotion: string
+      confidence: number
+    }>
+    speaker_id?: string
+    language_detected?: string
+  }
+}
+
+export interface ErrorMessage extends WebSocketMessage {
+  type: 'error'
+  data: {
+    code: string
+    message: string
+    details?: any
+  }
+}
+
+export interface StateMessage extends WebSocketMessage {
+  type: 'state'
+  data: {
+    state: 'idle' | 'recording' | 'processing' | 'speaking' | 'error'
+    previousState?: string
+  }
+}
+
+export interface ConnectionMessage extends WebSocketMessage {
+  type: 'connection'
+  data: {
+    status: 'connected' | 'disconnected' | 'reconnecting' | 'failed'
+    reason?: string
+  }
+}
+
+export interface AudioMessage extends WebSocketMessage {
+  type: 'audio'
+  data: {
+    format: string
+    sampleRate: number
+    channels: number
+    duration?: number
+  }
+}
+
+// Audio Analytics Types
+export interface AudioAnalytics {
+  id: string
+  timestamp: string
+  duration: number
+  sampleRate: number
+  channels: number
+  format: string
+  quality: number
+  noiseLevel: number
+  clarity: number
+  transcription?: string
+  confidence?: number
+  language?: string
+  speakerCount?: number
+  sentiment?: 'positive' | 'negative' | 'neutral'
+  keywords?: string[]
+  topics?: string[]
+}
+
+export interface VoiceMetrics {
+  signalQuality: number
+  noiseLevel: number
+  clarity: number
+  volume: number
+  pitch: number
+  speakingRate: number
+  pauses: number
+  fillerWords: number
+  confidence: number
+  language: string
+  accent?: string
+  emotion?: string
+}

@@ -32,7 +32,7 @@ WORKDIR /app
 
 # Copy dependency files
 COPY pyproject.toml ./
-COPY services/ai-orchestrator/requirements.txt ./
+COPY services/ai-orchestrator/requirements-core.txt ./requirements.txt
 
 # Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip && \

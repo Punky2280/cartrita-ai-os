@@ -4,10 +4,11 @@ Tests the core functionality without external dependencies.
 """
 
 import sys
-from typing import Any
 from collections.abc import Generator
-import pytest
+from typing import Any
 from unittest.mock import AsyncMock, patch
+
+import pytest
 
 
 # Mock external dependencies for testing
@@ -75,8 +76,9 @@ def mock_dependencies() -> Generator[dict[str, Any]]:
 @pytest.mark.asyncio
 async def test_application_startup(mock_deps) -> None:
     """Test that the application can start up successfully."""
-    from cartrita.orchestrator.main import lifespan
     from fastapi import FastAPI
+
+    from cartrita.orchestrator.main import lifespan
 
     app = FastAPI()
 
@@ -95,8 +97,9 @@ async def test_application_startup(mock_deps) -> None:
 @pytest.mark.asyncio
 async def test_application_shutdown(mock_deps) -> None:
     """Test that the application shuts down gracefully."""
-    from cartrita.orchestrator.main import lifespan
     from fastapi import FastAPI
+
+    from cartrita.orchestrator.main import lifespan
 
     app = FastAPI()
 
@@ -116,50 +119,79 @@ def test_imports() -> None:  # pylint: disable=W0611
     # pylint: disable=C0413,W0611
     try:
         # Test core imports (using _ prefix for intentionally unused imports)
-        from cartrita.orchestrator.main import (
-            app as _app,
+        # Test agent imports
+        from cartrita.orchestrator.agents import CodeAgent as _code_agent
+        from cartrita.orchestrator.agents import ComputerUseAgent as _computer_use_agent
+        from cartrita.orchestrator.agents import KnowledgeAgent as _knowledge_agent
+        from cartrita.orchestrator.agents import ResearchAgent as _research_agent
+        from cartrita.orchestrator.agents import TaskAgent as _task_agent
+        from cartrita.orchestrator.core.cache import CacheManager as _cache_manager
+        from cartrita.orchestrator.core.database import DatabaseManager as _db_manager
+        from cartrita.orchestrator.core.metrics import (
+            MetricsCollector as _metrics_collector,
         )
         from cartrita.orchestrator.core.supervisor import (
             SupervisorOrchestrator as _supervisor,
         )
-        from cartrita.orchestrator.core.database import (
-            DatabaseManager as _db_manager,
-        )
-        from cartrita.orchestrator.core.cache import (
-            CacheManager as _cache_manager,
-        )
-        from cartrita.orchestrator.core.metrics import (
-            MetricsCollector as _metrics_collector,
-        )
-
-        # Test agent imports
-        from cartrita.orchestrator.agents import (
-            ResearchAgent as _research_agent,
-            CodeAgent as _code_agent,
-            ComputerUseAgent as _computer_use_agent,
-            KnowledgeAgent as _knowledge_agent,
-            TaskAgent as _task_agent,
-        )
+        from cartrita.orchestrator.main import app as _app
 
         # Test model imports
-        from cartrita.orchestrator.models.schemas import (
-            ChatRequest as _chat_request,
-            ChatResponse as _chat_response,
-        )
+        from cartrita.orchestrator.models.schemas import ChatRequest as _chat_request
+        from cartrita.orchestrator.models.schemas import ChatResponse as _chat_response
 
         # Test utility imports
-        from cartrita.orchestrator.utils.config import (
-            Settings as _settings,
-        )
-        from cartrita.orchestrator.utils.logger import (
-            setup_logging as _setup_logging,
-        )
+        from cartrita.orchestrator.utils.config import Settings as _settings
+        from cartrita.orchestrator.utils.logger import setup_logging as _setup_logging
 
         # All imports successful
         assert True
 
     except ImportError as e:
         pytest.fail(f"Import failed: {e}")
+
+
+@pytest.mark.asyncio
+async def test_voice_conversation_flow():
+    """Test the voice conversation flow with OpenAI service."""
+    try:
+        from cartrita.orchestrator.services.openai_service import OpenAIService
+
+        # Mock OpenAI client
+        with patch("cartrita.orchestrator.services.openai_service.AsyncOpenAI") as mock_openai:
+            mock_client = AsyncMock()
+            mock_openai.return_value = mock_client
+
+            # Mock streaming response
+            mock_response = AsyncMock()
+            mock_response.choices = [AsyncMock()]
+            mock_response.choices[0].delta = AsyncMock()
+            mock_response.choices[0].delta.content = "Hello! How can I help you?"
+            mock_response.choices[0].finish_reason = "stop"
+
+            mock_client.chat.completions.create = mock_response
+
+            # Create service instance
+            service = OpenAIService()
+
+            # Test voice conversation
+            conversation_id = "test-voice-conversation"
+            transcribed_text = "Hello, can you help me?"
+
+            chunks = []
+            async for chunk in service.process_voice_conversation(
+                conversation_id=conversation_id,
+                transcribed_text=transcribed_text,
+                conversation_history=None
+            ):
+                chunks.append(chunk)
+
+            # Verify response
+            assert len(chunks) > 0
+            assert any(chunk["type"] == "content" for chunk in chunks)
+            print("✅ Voice conversation test passed")
+
+    except Exception as e:
+        pytest.fail(f"Voice conversation test failed: {e}")
 
 
 if __name__ == "__main__":

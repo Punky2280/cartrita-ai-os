@@ -24,10 +24,10 @@ class DatabaseSettings(BaseSettings):
     """Database configuration settings."""
 
     host: str = Field(default="localhost", description="Database host")
-    port: int = Field(default=5432, ge=1, le=65535, description="Database port")
-    user: str = Field(default="cartrita", description="Database user")
+    port: int = Field(default=5433, ge=1, le=65535, description="Database port")
+    user: str = Field(default="robert-non-root", description="Database user")
     password: SecretStr = Field(
-        default="cartrita_password", description="Database password"
+        default="punky1", description="Database password"
     )
     database: str = Field(default="cartrita_db", description="Database name")
     pool_size: int = Field(default=20, ge=1, le=100, description="Connection pool size")
@@ -207,6 +207,8 @@ class MonitoringSettings(BaseSettings):
     jaeger_password: SecretStr | None = Field(
         default=None, description="Jaeger password"
     )
+    jaeger_host: str = Field(default="localhost", description="Jaeger host")
+    jaeger_port: int = Field(default=6831, ge=1, le=65535, description="Jaeger port")
 
     # Prometheus
     prometheus_enabled: bool = Field(
@@ -215,6 +217,8 @@ class MonitoringSettings(BaseSettings):
     prometheus_port: int = Field(
         default=8001, ge=1024, le=65535, description="Prometheus port"
     )
+    enable_metrics: bool = Field(default=True, description="Enable metrics collection")
+    enable_tracing: bool = Field(default=False, description="Enable tracing")
 
     # Logging
     log_level: str = Field(default="INFO", description="Logging level")
@@ -350,9 +354,10 @@ class Settings(BaseSettings):
         return path
 
     class Config:
-        env_file = ".env"
+        env_file = "/home/robbie/cartrita-ai-os/.env"
         env_file_encoding = "utf-8"
         case_sensitive = False
+        extra = "allow"
 
         # Environment variable prefixes
         env_prefix = ""

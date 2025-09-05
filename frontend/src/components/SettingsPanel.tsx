@@ -205,7 +205,6 @@ function ApiKeysSettings({
 }) {
   const [apiKeys, setApiKeys] = useState({
     openai: settings.apiKeys?.openai || '',
-    anthropic: settings.apiKeys?.anthropic || '',
     google: settings.apiKeys?.google || '',
     huggingface: settings.apiKeys?.huggingface || ''
   })
@@ -243,14 +242,6 @@ function ApiKeysSettings({
           onChange={(value) => handleKeyChange('openai', value)}
           placeholder="sk-..."
           description="Required for GPT models and DALL-E image generation"
-        />
-
-        <ApiKeyInput
-          label="Anthropic API Key"
-          value={apiKeys.anthropic}
-          onChange={(value) => handleKeyChange('anthropic', value)}
-          placeholder="sk-ant-..."
-          description="Required for Claude models"
         />
 
         <ApiKeyInput
@@ -544,7 +535,7 @@ function PrivacySettings({
           <div className="space-y-0.5">
             <Label>Activity Status</Label>
             <p className="text-sm text-muted-foreground">
-              Show when you're online and active
+              Show when you&apos;re online and active
             </p>
           </div>
           <Switch
@@ -658,7 +649,7 @@ function DataManagement({
             <Alert className="mb-4">
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>
-                This will permanently delete all your data. Type "DELETE" to confirm.
+                This will permanently delete all your data. Type &quot;DELETE&quot; to confirm.
               </AlertDescription>
             </Alert>
             <div className="space-y-2">

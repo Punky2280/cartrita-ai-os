@@ -7,18 +7,21 @@ Implements GPT-4.1 orchestrator with hierarchical multi-agent architecture.
 """
 
 import asyncio
+import json
 import os
-from collections.abc import AsyncGenerator
-from contextlib import asynccontextmanager
-from typing import Any
-
 import structlog
 import uvicorn
+from collections.abc import AsyncGenerator
+from contextlib import asynccontextmanager
+from typing import Any, Dict, List, Optional, Union
 from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
+# Load environment variables from .env file
+from dotenv import load_dotenv
+load_dotenv("/home/robbie/cartrita-ai-os/.env")
 
 # Import core components with fallbacks
 try:
@@ -91,12 +94,32 @@ try:
         ChatRequest,
         ChatResponse,
         HealthResponse,
+        Message,
+        MessageRole,
     )
 except ImportError:
     ChatRequest = None
     ChatResponse = None
     AgentStatusResponse = None
     HealthResponse = None
+    Message = None
+    MessageRole = None
+
+
+# Voice Chat Request Model
+class VoiceChatRequest(BaseModel):
+    """Request model for voice conversations."""
+    conversationId: str = Field(..., description="Unique conversation identifier")
+    transcribedText: str = Field(..., description="Text transcribed from user's speech")
+    conversationHistory: Optional[List[Dict[str, Any]]] = Field(
+        None, description="Previous conversation messages for context"
+    )
+    voiceMode: bool = Field(True, description="Whether this is a voice conversation")
+
+
+# ============================================
+# Lifespan Management
+# ============================================
 
 # Import services with fallbacks
 try:
@@ -104,7 +127,14 @@ try:
         verify_api_key,
     )
 except ImportError:
-    verify_api_key = None
+    # Fallback auth function
+    async def verify_api_key(api_key: Optional[str] = None) -> str:
+        """Fallback API key verification."""
+        if not api_key:
+            expected_key = os.getenv("CARTRITA_API_KEY", "dev-api-key-2025")
+            if api_key != expected_key:
+                raise HTTPException(status_code=403, detail="Invalid API key")
+        return api_key or "dev-api-key-2025"
 
 try:
     from cartrita.orchestrator.utils.config import Settings  # type: ignore
@@ -123,17 +153,17 @@ setup_logging()
 logger = structlog.get_logger(__name__)
 
 # Global instances
-supervisor: SupervisorOrchestrator | None = None
-db_manager: DatabaseManager | None = None
-cache_manager: CacheManager | None = None
-metrics_collector: MetricsCollector | None = None
+supervisor = None
+db_manager = None
+cache_manager = None
+metrics_collector = None
 
 # Specialized agents
-research_agent: ResearchAgent | None = None
-code_agent: CodeAgent | None = None
-computer_use_agent: ComputerUseAgent | None = None
-knowledge_agent: KnowledgeAgent | None = None
-task_agent: TaskAgent | None = None
+research_agent = None
+code_agent = None
+computer_use_agent = None
+knowledge_agent = None
+task_agent = None
 
 # ============================================
 # Lifespan Management
@@ -154,41 +184,41 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None]:
         settings = Settings()
 
         # Initialize database
-        db_manager = DatabaseManager(settings.database_url)
+        db_manager = DatabaseManager(settings)
         await db_manager.connect()
 
         # Initialize cache
-        cache_manager = CacheManager(settings.redis_url)
+        cache_manager = CacheManager(settings.redis.url)
 
         # Initialize metrics
-        metrics_collector = MetricsCollector()
+        # metrics_collector = MetricsCollector()
 
         # Initialize specialized agents
-        research_agent = ResearchAgent()
-        await research_agent.start()
+        # research_agent = ResearchAgent()
+        # await research_agent.start()
 
-        code_agent = CodeAgent()
-        await code_agent.start()
+        # code_agent = CodeAgent()
+        # await code_agent.start()
 
-        computer_use_agent = ComputerUseAgent()
-        await computer_use_agent.start()
+        # computer_use_agent = ComputerUseAgent()
+        # await computer_use_agent.start()
 
-        knowledge_agent = KnowledgeAgent()
-        await knowledge_agent.start()
+        # knowledge_agent = KnowledgeAgent()
+        # await knowledge_agent.start()
 
-        task_agent = TaskAgent()
-        await task_agent.start()
+        # task_agent = TaskAgent()
+        # await task_agent.start()
 
         # Initialize GPT-4.1 Supervisor Orchestrator
-        supervisor = SupervisorOrchestrator(
-            db_manager=db_manager,
-            cache_manager=cache_manager,
-            metrics_collector=metrics_collector,
-            settings=settings,
-        )
+        supervisor = None  # SupervisorOrchestrator(
+        #     db_manager=db_manager,
+        #     cache_manager=cache_manager,
+        #     metrics_collector=metrics_collector,
+        #     settings=settings,
+        # )
 
         # Start background tasks
-        await supervisor.start()
+        # await supervisor.start()
 
         logger.info("✅ Cartrita AI Orchestrator started successfully")
 
@@ -331,6 +361,50 @@ async def general_exception_handler(request: Request, exc: Exception):
 
 
 # ============================================
+# Root Endpoint
+# ============================================
+
+
+@app.get("/")
+async def root():
+    """Root endpoint providing API information and available endpoints."""
+    return {
+        "message": "Welcome to Cartrita AI OS - Hierarchical Multi-Agent System",
+        "version": "2.0.0",
+        "status": "operational",
+        "streaming": {
+            "primary_transport": "SSE (Server-Sent Events)",
+            "fallback_transport": "WebSocket",
+            "sse_events": [
+                "token", "function_call", "tool_result", "metrics",
+                "done", "agent_task_started", "agent_task_progress",
+                "agent_task_output", "agent_task_complete", "orchestration_decision",
+                "chain_reconfigured", "safety_flag", "evaluation_metric",
+                "audio_interim", "audio_final", "file.attach.progress",
+                "computer_use.execute.progress"
+            ]
+        },
+        "endpoints": {
+            "health": "/health",
+            "metrics": "/metrics",
+            "chat": "/api/chat",
+            "chat_stream": "/api/chat/stream",
+            "voice_chat": "/api/chat/voice",
+            "voice_chat_stream": "/api/chat/voice/stream",
+            "agents": "/api/agents",
+            "websocket": "/ws/chat",
+            "docs": "/docs",
+            "admin": {
+                "reload_agents": "/api/admin/reload-agents",
+                "stats": "/api/admin/stats"
+            }
+        },
+        "frontend": "http://localhost:3001",
+        "documentation": "Available at /docs"
+    }
+
+
+# ============================================
 # Health & Monitoring Endpoints
 # ============================================
 
@@ -380,8 +454,8 @@ async def metrics():
 
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat(
-    request: ChatRequest, api_key: str = Depends(verify_api_key)
-) -> ChatResponse:
+    request, api_key: str = Depends(verify_api_key)
+):
     """Main chat endpoint with GPT-4.1 orchestration."""
     if not supervisor:
         raise HTTPException(status_code=503, detail="Supervisor not available")
@@ -411,10 +485,70 @@ async def chat(
         raise HTTPException(status_code=500, detail="Chat processing failed") from e
 
 
-@app.get("/api/agents", response_model=dict[str, AgentStatusResponse])
+@app.post("/api/chat/voice", response_model=ChatResponse)
+async def voice_chat(
+    request: VoiceChatRequest, api_key: str = Depends(verify_api_key)
+):
+    """Voice conversation endpoint with Deepgram ASR + OpenAI GPT-4.1 + Deepgram TTS."""
+    try:
+        # Get OpenAI service instance
+        from cartrita.orchestrator.services.openai_service import OpenAIService
+        openai_service = OpenAIService()
+
+        logger.info(
+            "Processing voice conversation",
+            conversation_id=request.conversationId,
+            voice_mode=request.voiceMode,
+            api_key=api_key[:8] + "..."
+        )
+
+        # Process voice conversation
+        response_content = ""
+        async for chunk in openai_service.process_voice_conversation(
+            conversation_id=request.conversationId,
+            transcribed_text=request.transcribedText,
+            conversation_history=request.conversationHistory
+        ):
+            if chunk["type"] == "content":
+                response_content += chunk["content"]
+            elif chunk["type"] == "error":
+                raise HTTPException(status_code=500, detail=chunk["error"])
+
+        # Create response
+        return ChatResponse(
+            response=response_content,
+            conversation_id=request.conversationId,
+            agent_type="openai-voice",
+            messages=[
+                Message(
+                    role=MessageRole.ASSISTANT,
+                    content=response_content
+                )
+            ],
+            context=request.conversationHistory,
+            task_result=None,
+            metadata={
+                "voice_mode": request.voiceMode,
+                "transcription_length": len(request.transcribedText)
+            },
+            processing_time=0.0,  # TODO: Track actual processing time
+            token_usage=None
+        )
+
+    except Exception as e:
+        logger.error(
+            "Voice chat request failed",
+            error=str(e),
+            conversation_id=request.conversationId,
+            api_key=api_key[:8] + "..."
+        )
+        raise HTTPException(status_code=500, detail="Voice chat processing failed") from e
+
+
+@app.get("/api/agents", response_model=dict)
 async def list_agents(
     _api_key: str = Depends(verify_api_key),
-) -> dict[str, AgentStatusResponse]:
+):
     """List all available agents and their status."""
     if not supervisor:
         raise HTTPException(status_code=503, detail="Supervisor not available")
@@ -431,7 +565,7 @@ async def list_agents(
 @app.get("/api/agents/{agent_id}", response_model=AgentStatusResponse)
 async def get_agent_status(
     agent_id: str, _api_key: str = Depends(verify_api_key)
-) -> AgentStatusResponse | None:
+):
     """Get detailed status of a specific agent."""
     if not supervisor:
         raise HTTPException(status_code=503, detail="Supervisor not available")
@@ -450,6 +584,119 @@ async def get_agent_status(
         raise HTTPException(
             status_code=500, detail="Failed to retrieve agent status"
         ) from e
+
+
+# ============================================
+# WebSocket Endpoints
+# ============================================
+
+
+@app.get("/api/chat/stream")
+async def chat_stream(
+    message: str,
+    context: Optional[str] = None,
+    agent_override: Optional[str] = None,
+    api_key: str = Depends(verify_api_key)
+):
+    """SSE endpoint for streaming chat responses."""
+    if not supervisor:
+        raise HTTPException(status_code=503, detail="Supervisor not available")
+
+    async def generate():
+        try:
+            # Parse context if provided
+            context_dict = {}
+            if context:
+                try:
+                    context_dict = json.loads(context)
+                except json.JSONDecodeError:
+                    context_dict = {"raw_context": context}
+
+            # Process through supervisor (currently non-streaming)
+            response = await supervisor.process_chat_request(
+                message=message,
+                context=context_dict,
+                agent_override=agent_override,
+                stream=False,  # Supervisor doesn't support streaming yet
+                api_key=api_key,
+            )
+
+            # Send response as SSE event
+            yield f"data: {json.dumps(response)}\n\n"
+            yield "data: [DONE]\n\n"
+
+        except Exception as e:
+            logger.error("Streaming chat failed", error=str(e))
+            yield f"data: {json.dumps({'error': 'Streaming failed', 'details': str(e)})}\n\n"
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "Access-Control-Allow-Origin": "*",
+        }
+    )
+
+
+@app.get("/api/chat/voice/stream")
+async def voice_chat_stream(
+    conversationId: str,
+    transcribedText: str,
+    conversationHistory: Optional[str] = None,
+    api_key: str = Depends(verify_api_key)
+):
+    """SSE endpoint for streaming voice conversations."""
+    if not supervisor:
+        raise HTTPException(status_code=503, detail="Supervisor not available")
+
+    # Parse conversation history if provided
+    history = []
+    if conversationHistory:
+        try:
+            history = json.loads(conversationHistory)
+        except json.JSONDecodeError:
+            history = []
+
+    async def generate():
+        try:
+            # For now, use regular chat processing (voice processing not fully implemented)
+            # TODO: Implement proper voice processing pipeline
+            response = await supervisor.process_chat_request(
+                message=transcribedText,
+                context={
+                    "conversation_id": conversationId,
+                    "conversation_history": history,
+                    "voice_mode": True
+                },
+                stream=False,
+                api_key=api_key,
+            )
+
+            # Send response as SSE event with voice-specific metadata
+            event_data = {
+                **response,
+                "conversationId": conversationId,
+                "timestamp": asyncio.get_event_loop().time(),
+                "voiceMode": True
+            }
+            yield f"data: {json.dumps(event_data)}\n\n"
+            yield "data: [DONE]\n\n"
+
+        except Exception as e:
+            logger.error("Streaming voice chat failed", error=str(e))
+            yield f"data: {json.dumps({'error': 'Voice streaming failed', 'conversationId': conversationId})}\n\n"
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "Access-Control-Allow-Origin": "*",
+        }
+    )
 
 
 # ============================================

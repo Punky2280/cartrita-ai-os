@@ -17,8 +17,8 @@ FROM base AS deps
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies with npm ci for production
-RUN npm ci --only=production --no-audit --no-fund --prefer-offline
+# Install dependencies (generate package-lock.json if missing)
+RUN npm install --only=production --no-audit --no-fund --legacy-peer-deps
 
 # ============================================
 # BUILDER STAGE

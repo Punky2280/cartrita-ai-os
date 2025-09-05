@@ -8,29 +8,28 @@ services:
   # DATABASE SERVICES
   # ============================================
   postgres:
-    image: pgvector/pgvector:pg17
+    image: pgvector/pgvector:pg17-bookworm
     container_name: cartrita-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-cartrita}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cartrita_password}
-      POSTGRES_DB: ${POSTGRES_DB:-cartrita_db}
+      POSTGRES_USER: robert-non-root
+      POSTGRES_PASSWORD: punky1
+      POSTGRES_DB: cartrita_db
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
     ports:
       - "${POSTGRES_PORT:-5433}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./infrastructure/docker/init-production.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./infrastructure/docker/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./infrastructure/docker/init-database.sql:/docker-entrypoint-initdb.d/init-database.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cartrita} -d ${POSTGRES_DB:-cartrita_db}"]
+      test: ["CMD-SHELL", "pg_isready -U robert-non-root -d cartrita_db"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 30s
     networks:
       - cartrita-network
-    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    # command: postgres -c config_file=/etc/postgresql/postgresql.conf
 
   redis:
     image: redis:7.4-alpine

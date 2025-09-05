@@ -41,7 +41,7 @@ alembic>=1.13.0
 # ============================================
 httpx>=0.27.0
 websockets>=12.0
-aiohttp>=3.9.0
+aiohttp>=3.9.2
 
 # ============================================
 # Data Processing & ML
@@ -54,7 +54,7 @@ scikit-learn>=1.5.0
 # Computer Use & Automation
 # ============================================
 pyautogui>=0.9.54
-pillow>=10.0.0
+pillow>=10.2.0
 opencv-python>=4.9.0
 
 # ============================================
@@ -82,9 +82,9 @@ sentry-sdk>=2.10.0
 # ============================================
 # Security & Authentication
 # ============================================
-python-jose[cryptography]>=3.3.0
+python-jose[cryptography]>=3.4.0
 passlib[bcrypt]>=1.7.4
-python-multipart>=0.0.9
+python-multipart>=0.0.18
 
 # ============================================
 # Caching & Performance
@@ -115,18 +115,18 @@ pydantic-extra-types>=2.8.0
 # ============================================
 uvloop>=0.19.0
 httptools>=0.6.0
-gunicorn>=22.0.0
+gunicorn>=23.0.0
 
 # ============================================
 # GPU Support (Optional)
 # ============================================
-torch>=2.3.0
+torch>=2.6.0
 torchvision>=0.18.0
 torchaudio>=2.3.0
-transformers>=4.40.0
+transformers>=4.48.0
 accelerate>=0.30.0
 bitsandbytes>=0.43.0
-deepspeed>=0.14.0
+deepspeed>=0.15.1
 
 # ============================================
 # Additional Monitoring

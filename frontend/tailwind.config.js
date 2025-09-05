@@ -8,13 +8,6 @@ module.exports = {
     './src/**/*.{ts,tsx}',
   ],
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -25,6 +18,7 @@ module.exports = {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          hover: "hsl(var(--primary-hover))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -50,25 +44,38 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        success: "hsl(var(--success))",
+        warning: "hsl(var(--warning))",
+        'cartrita-blue': '#2563EB',
+        'copilot-blue': '#1B2951',
+        'copilot-blue-light': '#2A3F73',
+        'copilot-blue-dark': '#141E3C',
+        'chatgpt-grey': '#202123',
+        'chatgpt-grey-light': '#2D2D2D',
+        'chatgpt-grey-dark': '#1A1A1A',
+        'fuschia-pink': '#E91E63',
+        'fuschia-pink-light': '#F06292',
+        'fuschia-pink-dark': '#AD1457',
+        // Agent color mapping
+        'supervisor': '#2563EB',
+        'knowledge-agent': '#3B82F6',
+        'code-agent': '#1B2951',
+        'research-agent': '#2A3F73',
+        'task-agent': '#141E3C',
+        'computer-use': '#E91E63',
+        'audio': '#F06292',
+        'evaluation': '#10B981',
+        'memory': '#F59E0B',
+        'model-selector': '#EF4444',
+        'safety': '#6B7280',
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      keyframes: {
-        "accordion-down": {
-          from: { height: 0 },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
-        },
+      fontFamily: {
+        'inter': ['Inter', 'sans-serif'],
+        'jetbrains-mono': ['JetBrains Mono', 'monospace'],
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+        'pulse-fuschia': 'pulse 1.5s ease-in-out infinite',
+        'bounce-voice': 'bounce 0.5s ease-in-out',
       },
     },
   },

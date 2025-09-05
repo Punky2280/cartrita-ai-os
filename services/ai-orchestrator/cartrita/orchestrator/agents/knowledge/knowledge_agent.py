@@ -35,12 +35,8 @@ class KnowledgeQuery(BaseModel):
     include_metadata: bool = Field(
         default=True, description="Include document metadata"
     )
-    semantic_search: bool = Field(
-        default=True, description="Use semantic search"
-    )
-    filters: dict[str, Any] = Field(
-        default_factory=dict, description="Search filters"
-    )
+    semantic_search: bool = Field(default=True, description="Use semantic search")
+    filters: dict[str, Any] = Field(default_factory=dict, description="Search filters")
 
 
 class KnowledgeDocument(BaseModel):
@@ -241,16 +237,12 @@ class KnowledgeAgent:
             confidence_score=confidence_score,
             metadata={
                 "query": query.query,
-                "search_method": (
-                    "semantic" if query.semantic_search else "keyword"
-                ),
+                "search_method": ("semantic" if query.semantic_search else "keyword"),
                 "total_sources": len(sources),
             },
         )
 
-    async def _search_documents(
-        self, query: KnowledgeQuery
-    ) -> list[KnowledgeDocument]:
+    async def _search_documents(self, query: KnowledgeQuery) -> list[KnowledgeDocument]:
         """Search for relevant documents."""
         try:
             # This would integrate with vector database search
@@ -274,9 +266,7 @@ class KnowledgeAgent:
             return mock_sources
 
         except Exception as e:
-            logger.error(
-                "Document search failed", error=str(e), query=query.query
-            )
+            logger.error("Document search failed", error=str(e), query=query.query)
             return []
 
     async def _generate_answer_with_rag(
@@ -289,9 +279,7 @@ class KnowledgeAgent:
         # Prepare context from sources
         context_parts = []
         for source in sources:
-            context_parts.append(
-                f"Source: {source.title}\nContent: {source.content}\n"
-            )
+            context_parts.append(f"Source: {source.title}\nContent: {source.content}\n")
 
         context = "\n".join(context_parts)
 
@@ -323,17 +311,13 @@ Answer:"""
             logger.error("RAG answer generation failed", error=str(e))
             return f"Based on available knowledge: {context[:500]}..."
 
-    def _calculate_confidence_score(
-        self, sources: list[KnowledgeDocument]
-    ) -> float:
+    def _calculate_confidence_score(self, sources: list[KnowledgeDocument]) -> float:
         """Calculate confidence score based on sources."""
         if not sources:
             return 0.0
 
         # Simple confidence calculation based on number and relevance of sources
-        avg_relevance = sum(
-            source.relevance_score for source in sources
-        ) / len(sources)
+        avg_relevance = sum(source.relevance_score for source in sources) / len(sources)
         source_count_factor = min(
             len(sources) / 5.0, 1.0
         )  # Max confidence at 5+ sources

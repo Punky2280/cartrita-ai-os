@@ -153,7 +153,8 @@ export function VoiceInput({
   // Initialize audio context and analyser for volume visualization
   const initializeAudioAnalysis = useCallback(async (stream: MediaStream) => {
     try {
-      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)()
+      const AudioContextClass = window.AudioContext || (window as typeof window & { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+      audioContextRef.current = new AudioContextClass()
       analyserRef.current = audioContextRef.current.createAnalyser()
       const source = audioContextRef.current.createMediaStreamSource(stream)
       source.connect(analyserRef.current)
@@ -252,7 +253,11 @@ export function VoiceInput({
     try {
       const file = new File([audioBlob], 'recording.webm', { type: 'audio/webm' })
 
-      const result = await transcribeAudio.mutateAsync(file) as any
+      const result = await transcribeAudio.mutateAsync(file) as {
+        success: boolean
+        data?: { text: string }
+        error?: string
+      }
 
       if (result.success && result.data) {
         const transcribedText = result.data.text

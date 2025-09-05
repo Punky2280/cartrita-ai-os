@@ -38,23 +38,23 @@ import type { Agent } from '@/types'
 
 // Agent type icons
 const getAgentIcon = (type: string) => {
-  const iconMap: Record<string, any> = {
-    'general': Bot,
-    'creative': Sparkles,
-    'coding': Code,
-    'writing': FileText,
-    'research': Search,
-    'analysis': Brain,
-    'communication': MessageSquare,
-    'multimodal': Image,
-    'music': Music,
-    'translation': Globe,
-    'specialist': Star,
-    'supervisor': Users
-  }
+    const iconMap = {
+      'general': Bot,
+      'creative': Sparkles,
+      'coding': Code,
+      'writing': FileText,
+      'research': Search,
+      'analysis': Brain,
+      'communication': MessageSquare,
+      'multimodal': Image,
+      'music': Music,
+      'translation': Globe,
+      'specialist': Star,
+      'supervisor': Users
+    };
 
-  const IconComponent = iconMap[type] || Bot
-  return <IconComponent className="h-4 w-4" />
+    const IconComponent = iconMap[type] || Bot
+    return <IconComponent className="h-4 w-4" />
 }
 
 // Agent type colors
@@ -187,7 +187,7 @@ function AgentCard({
               <Badge
                 className="text-xs"
               >
-                {agent.status === 'active' ? 'Active' : 'Inactive'}
+                {agent.status === 'idle' ? 'Active' : 'Inactive'}
               </Badge>
             </div>
           </div>

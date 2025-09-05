@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  outputFileTracingRoot: require('path').join(__dirname, '../../'),
   images: {
     domains: ['localhost'],
     unoptimized: process.env.NODE_ENV === 'development',

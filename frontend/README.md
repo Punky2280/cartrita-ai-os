@@ -1,6 +1,6 @@
 # Cartrita AI OS - Frontend
 
-A modern, ChatGPT-like frontend for the Cartrita AI Operating System built with React 18, Next.js 14, and TypeScript.
+A modern, ChatGPT-like frontend for the Cartrita AI Operating System built with React 18, Next.js 15, and TypeScript.
 
 ## 🚀 Features
 
@@ -17,7 +17,7 @@ A modern, ChatGPT-like frontend for the Cartrita AI Operating System built with 
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript 5.3
 - **Styling**: Tailwind CSS 3.4
 - **State Management**: Jotai v2

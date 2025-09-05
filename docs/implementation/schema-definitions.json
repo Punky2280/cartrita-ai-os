@@ -1,0 +1,97 @@
+{
+  "chat": {
+    "ChatRequest": {
+      "message": "string",
+      "conversation_id": "string (optional)",
+      "context": "object (optional)",
+      "agent_override": "string (optional)",
+      "stream": "boolean (default: false)",
+      "provider": "string (optional)",
+      "model": "string (optional)"
+    },
+    "ChatResponse": {
+      "response": "string",
+      "conversation_id": "string",
+      "agent_type": "string",
+      "metadata": "object",
+      "provider": "string",
+      "model": "string",
+      "usage": "object (optional)"
+    }
+  },
+  "agent": {
+    "AgentDiscovery": {
+      "agents": "AgentInfo[]",
+      "total": "number"
+    },
+    "AgentInfo": {
+      "id": "string",
+      "name": "string",
+      "description": "string",
+      "capabilities": "string[]",
+      "model": "string",
+      "provider": "string"
+    }
+  },
+  "file": {
+    "FileUploadRequest": {
+      "file": "File",
+      "conversation_id": "string (optional)",
+      "metadata": "object (optional)"
+    },
+    "FileUploadResponse": {
+      "file_id": "string",
+      "filename": "string",
+      "size": "number",
+      "type": "string",
+      "url": "string"
+    }
+  },
+  "search": {
+    "SearchRequest": {
+      "query": "string",
+      "conversation_id": "string (optional)",
+      "provider": "string (default: 'tavily')",
+      "limit": "number (optional)"
+    },
+    "SearchResponse": {
+      "results": "SearchResult[]",
+      "total": "number",
+      "provider": "string"
+    },
+    "SearchResult": {
+      "title": "string",
+      "url": "string",
+      "snippet": "string",
+      "score": "number (optional)"
+    }
+  },
+  "voice": {
+    "VoiceInputRequest": {
+      "audio": "Blob",
+      "conversation_id": "string (optional)",
+      "language": "string (optional)"
+    },
+    "VoiceInputResponse": {
+      "transcript": "string",
+      "confidence": "number",
+      "language": "string"
+    }
+  },
+  "computer_use": {
+    "ComputerUseRequest": {
+      "task": "string",
+      "screenshot_needed": "boolean (default: false)",
+      "file_operations": "FileOperation[] (optional)",
+      "system_commands": "SystemCommand[] (optional)",
+      "safety_mode": "boolean (default: true)"
+    },
+    "ComputerUseResponse": {
+      "result": "string",
+      "screenshot": "string (base64, optional)",
+      "file_results": "object[] (optional)",
+      "command_results": "object[] (optional)",
+      "safety_warnings": "string[] (optional)"
+    }
+  }
+}

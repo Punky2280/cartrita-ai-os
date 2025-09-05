@@ -15,8 +15,7 @@ import type {
   ThemeConfig,
   VoiceSettings,
   SearchFilters,
-  ChatRequest,
-  StreamingChunk
+  ChatRequest
 } from '@/types'
 
 // Core user state
@@ -62,7 +61,7 @@ export const currentMessagesAtom = atom((get) => {
 })
 
 // Streaming state
-export const streamingMessageAtom = atom<StreamingChunk | null>(null)
+export const streamingMessageAtom = atom<Message | null>(null)
 export const isStreamingAtom = atom((get) => get(streamingMessageAtom) !== null)
 export const streamingConversationIdAtom = atom<string | null>(null)
 
@@ -217,7 +216,7 @@ export const agentStatsAtom = atom((get) => {
 
   return {
     totalAgents: agents.length,
-    activeAgents: agents.filter(a => a.status === 'active').length,
+    activeAgents: agents.filter(a => a.status !== 'offline' && a.status !== 'error').length,
     totalRequests: agents.reduce((sum, a) => sum + a.metadata.totalRequests, 0),
     averageSuccessRate: agents.length > 0
       ? agents.reduce((sum, a) => sum + a.metadata.successRate, 0) / agents.length

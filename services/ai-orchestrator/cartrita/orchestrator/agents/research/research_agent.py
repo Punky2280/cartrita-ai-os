@@ -32,9 +32,7 @@ class ResearchRequest(BaseModel):
         description="Research depth: 'quick', 'detailed', 'comprehensive'",
     )
     sources: int = Field(default=5, description="Number of sources to gather")
-    include_citations: bool = Field(
-        default=True, description="Include citations"
-    )
+    include_citations: bool = Field(default=True, description="Include citations")
     focus_areas: list[str] | None = Field(
         default=None, description="Specific areas to focus on"
     )
@@ -44,16 +42,12 @@ class ResearchResult(BaseModel):
     """Research result model."""
 
     summary: str = Field(..., description="Research summary")
-    key_findings: list[str] = Field(
-        default_factory=list, description="Key findings"
-    )
+    key_findings: list[str] = Field(default_factory=list, description="Key findings")
     sources: list[dict[str, Any]] = Field(
         default_factory=list, description="Source information"
     )
     citations: list[str] = Field(default_factory=list, description="Citations")
-    confidence_score: float = Field(
-        default=0.0, description="Confidence in results"
-    )
+    confidence_score: float = Field(default=0.0, description="Confidence in results")
 
 
 # ============================================
@@ -134,9 +128,7 @@ class ResearchAgent:
                 }
 
             # Perform research
-            research_result = await self._perform_research(
-                query, context or {}
-            )
+            research_result = await self._perform_research(query, context or {})
 
             # Format response
             response = self._format_research_response(research_result)
@@ -147,9 +139,7 @@ class ResearchAgent:
                 "metadata": {
                     "query": query,
                     "sources_count": len(research_result.get("sources", [])),
-                    "confidence_score": research_result.get(
-                        "confidence_score", 0.0
-                    ),
+                    "confidence_score": research_result.get("confidence_score", 0.0),
                     "processing_time": time.time(),
                 },
                 "context": {"last_research": research_result, "query": query},
@@ -217,9 +207,7 @@ class ResearchAgent:
         # Parse and structure the research result
         return self._parse_research_response(research_content, query)
 
-    def _parse_research_response(
-        self, content: str, query: str
-    ) -> dict[str, Any]:
+    def _parse_research_response(self, content: str, query: str) -> dict[str, Any]:
         """Parse the research response into structured format."""
         # This is a simplified parser - in production, you'd want more sophisticated parsing
         lines = content.split("\n")
@@ -257,15 +245,12 @@ class ResearchAgent:
         return {
             "summary": summary.strip() or f"Research conducted on: {query}",
             "key_findings": findings or [f"Research findings for: {query}"],
-            "sources": sources
-            or [{"title": f"Research on {query}", "url": ""}],
+            "sources": sources or [{"title": f"Research on {query}", "url": ""}],
             "citations": citations or [f"Research sources for {query}"],
             "confidence_score": 0.8,  # Default confidence
         }
 
-    def _format_research_response(
-        self, research_result: dict[str, Any]
-    ) -> str:
+    def _format_research_response(self, research_result: dict[str, Any]) -> str:
         """Format research results into a readable response."""
         summary = research_result.get("summary", "")
         findings = research_result.get("key_findings", [])

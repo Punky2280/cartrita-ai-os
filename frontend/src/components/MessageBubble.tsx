@@ -1,5 +1,5 @@
 // Cartrita AI OS - Message Bubble Component
-// Enhanced message display with ChatGPT-like styling and features
+// Enhanced message display with ChatGPT-like sty      // Use ReactMarkdown for safe renderings
 
 'use client'
 
@@ -28,6 +28,9 @@ import { cn, formatMessageTime, copyToClipboard } from '@/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui'
 import { Badge } from '@/components/ui'
 import { Textarea } from '@/components/ui'
+import ReactMarkdown from 'react-markdown'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
 import { useUser } from '@/hooks'
@@ -82,9 +85,13 @@ function MessageContent({
       if (part.type === 'code') {
         return (
           <pre key={index} className="bg-muted p-4 rounded-lg overflow-x-auto my-2">
-            <code className={`language-${part.language}`}>
+            <SyntaxHighlighter
+              language={part.language}
+              style={oneDark as any}
+              className="rounded-md"
+            >
               {part.content}
-            </code>
+            </SyntaxHighlighter>
           </pre>
         )
       }
@@ -105,11 +112,32 @@ function MessageContent({
         .join('')
 
       return (
-        <div
-          key={index}
-          className="prose prose-sm dark:prose-invert max-w-none"
-          dangerouslySetInnerHTML={{ __html: formattedText }}
-        />
+        <div key={index} className="prose prose-sm dark:prose-invert max-w-none">
+          <ReactMarkdown
+            components={{
+              code: ({ node, className, children, ...props }: any) => {
+                const match = /language-(\w+)/.exec(className || '')
+                return !props.inline && match ? (
+                  <SyntaxHighlighter
+                    style={oneDark as any}
+                    language={match[1]}
+                    PreTag="div"
+                    className="rounded-md"
+                    {...props}
+                  >
+                    {String(children).replace(/\n$/, '')}
+                  </SyntaxHighlighter>
+                ) : (
+                  <code className="bg-muted px-1 py-0.5 rounded text-sm" {...props}>
+                    {children}
+                  </code>
+                )
+              }
+            }}
+          >
+            {part.content}
+          </ReactMarkdown>
+        </div>
       )
     })
   }
@@ -119,10 +147,9 @@ function MessageContent({
       'prose prose-sm dark:prose-invert max-w-none',
       isUser ? 'text-white' : 'text-foreground'
     )}>
-      {renderContent(content)}
-      {isStreaming && (
-        <span className="animate-pulse ml-1">|</span>
-      )}
+      <div className={isStreaming ? 'streaming-text' : ''}>
+        {renderContent(content)}
+      </div>
     </div>
   )
 }
@@ -242,12 +269,13 @@ export function MessageBubble({
       )}>
         {/* Message Bubble */}
         <div className={cn(
-          'relative px-4 py-3 rounded-2xl max-w-full break-words',
+          'relative px-4 py-3 rounded-2xl max-w-full break-words message-bubble-enter fluid-hover',
           isUser
-            ? 'bg-primary text-primary-foreground rounded-br-md'
-            : 'bg-muted text-foreground rounded-bl-md',
+            ? 'gradient-user-message text-white rounded-br-md'
+            : 'glass-morphism gradient-ai-message text-foreground rounded-bl-md',
           status === 'error' && 'border border-destructive',
-          status === 'processing' && 'animate-pulse'
+          status === 'processing' && 'animate-pulse',
+          isStreaming && 'streaming-text'
         )}>
           {/* Status Indicator */}
           {status === 'error' && (

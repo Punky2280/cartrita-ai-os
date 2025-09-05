@@ -29,6 +29,47 @@ import {
   logError
 } from '@/utils'
 
+// SSE Event Types based on our schema
+export type SSEEventType = 
+  | 'stream_start'
+  | 'token'
+  | 'function_call'
+  | 'tool_result'
+  | 'agent_task_start'
+  | 'agent_task_progress'
+  | 'agent_task_complete'
+  | 'metrics'
+  | 'error'
+  | 'done'
+
+export interface SSEEvent {
+  event: SSEEventType
+  data: any
+  id?: string
+  retry?: number
+}
+
+export interface StreamingCallbacks {
+  onToken?: (content: string, delta?: string) => void
+  onFunctionCall?: (functionName: string, args: any) => void
+  onToolResult?: (toolName: string, result: any) => void
+  onAgentTaskStart?: (taskId: string, agentType: string, description: string) => void
+  onAgentTaskProgress?: (taskId: string, progress: number, status: string) => void
+  onAgentTaskComplete?: (taskId: string, result: any, success: boolean) => void
+  onMetrics?: (metrics: any) => void
+  onError?: (error: string, code: string, recoverable: boolean) => void
+  onDone?: (finalResponse: string, metadata: any) => void
+}
+
+// WebSocket Message Types
+export interface WebSocketMessage {
+  type: 'auth' | 'chat' | 'ping' | 'pong'
+  api_key?: string
+  message?: string
+  context?: Record<string, any>
+  conversation_id?: string
+}
+
 // Extend AxiosRequestConfig to include metadata
 declare module 'axios' {
   interface AxiosRequestConfig {
@@ -165,13 +206,20 @@ export class CartritaApiClient {
     this.timeout = config.timeout || 30000
     this.retryCount = config.retryCount || 3
 
+    // Get API key from multiple sources
+    const apiKey = config.apiKey || 
+                   process.env.NEXT_PUBLIC_CARTRITA_API_KEY || 
+                   'dev-key-cartrita-ai-os'
+
     this.client = axios.create({
       baseURL: this.baseURL,
       timeout: this.timeout,
       headers: {
         'Content-Type': 'application/json',
         'User-Agent': 'Cartrita-Client/2.0.0',
-        ...(config.apiKey && { 'Authorization': `Bearer ${config.apiKey}` })
+        // Support both header formats for compatibility
+        'X-API-Key': apiKey,
+        'Authorization': `Bearer ${apiKey}`
       }
     })
 
@@ -191,11 +239,13 @@ export class CartritaApiClient {
   // Set authentication token
   setAuthToken(token: string): void {
     this.client.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    this.client.defaults.headers.common['X-API-Key'] = token
   }
 
   // Remove authentication token
   removeAuthToken(): void {
     delete this.client.defaults.headers.common['Authorization']
+    delete this.client.defaults.headers.common['X-API-Key']
   }
 
   private setupInterceptors() {
@@ -433,6 +483,33 @@ export class CartritaApiClient {
     return this.request('POST', `/conversations/${conversationId}/messages`, message)
   }
 
+  // New chat method that matches backend
+  async postChat(request: ChatRequest): Promise<ApiResponse<ChatResponse>> {
+    const response = await this.request<ChatResponse>('POST', '/chat', request)
+    
+    // Normalize backend response to frontend Message shape
+    if (response.data) {
+      const normalizedMessage: Message = {
+        id: crypto.randomUUID(),
+        conversationId: response.data.conversation_id as string,
+        role: 'assistant',
+        content: response.data.response,
+        attachments: [],
+        metadata: response.data.metadata || {},
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        isEdited: false,
+        tokens: response.data.token_usage?.total_tokens,
+        processingTime: response.data.processing_time
+      }
+      
+      // Attach normalized message
+      response.data.message = normalizedMessage
+    }
+    
+    return response
+  }
+
   async editMessage(
     conversationId: string,
     messageId: string,
@@ -445,46 +522,227 @@ export class CartritaApiClient {
     return this.request('DELETE', `/conversations/${conversationId}/messages/${messageId}`)
   }
 
-  // Streaming chat method
-  async *streamChat(
+  // SSE Streaming chat method (primary)
+  async streamChatSSE(
+    request: ChatRequest,
+    callbacks: StreamingCallbacks
+  ): Promise<{ eventSource: EventSource; conversationId: string }> {
+    const endpoint = `${this.baseURL.replace('/api', '')}/api/chat/stream`
+    const apiKey = this.client.defaults.headers.common['X-API-Key'] as string
+    
+    // Create EventSource with POST data via URL params (EventSource limitation workaround)
+    const params = new URLSearchParams({
+      message: request.message,
+      ...(request.conversation_id && { conversation_id: request.conversation_id }),
+      ...(request.agent_override && { agent_override: request.agent_override }),
+      ...(request.context && { context: JSON.stringify(request.context) }),
+      api_key: apiKey
+    })
+    
+    const eventSource = new EventSource(`${endpoint}?${params}`)
+    let conversationId = request.conversation_id || ''
+    
+    eventSource.onmessage = (event) => {
+      try {
+        const sseEvent: SSEEvent = JSON.parse(event.data)
+        
+        switch (sseEvent.event) {
+          case 'stream_start':
+            conversationId = sseEvent.data.conversation_id
+            break
+            
+          case 'token':
+            callbacks.onToken?.(sseEvent.data.content, sseEvent.data.delta)
+            break
+            
+          case 'function_call':
+            callbacks.onFunctionCall?.(sseEvent.data.function_name, sseEvent.data.arguments)
+            break
+            
+          case 'tool_result':
+            callbacks.onToolResult?.(sseEvent.data.tool_name, sseEvent.data.result)
+            break
+            
+          case 'agent_task_start':
+            callbacks.onAgentTaskStart?.(sseEvent.data.task_id, sseEvent.data.agent_type, sseEvent.data.description)
+            break
+            
+          case 'agent_task_progress':
+            callbacks.onAgentTaskProgress?.(sseEvent.data.task_id, sseEvent.data.progress, sseEvent.data.status)
+            break
+            
+          case 'agent_task_complete':
+            callbacks.onAgentTaskComplete?.(sseEvent.data.task_id, sseEvent.data.result, sseEvent.data.success)
+            break
+            
+          case 'metrics':
+            callbacks.onMetrics?.(sseEvent.data)
+            break
+            
+          case 'error':
+            callbacks.onError?.(sseEvent.data.error, sseEvent.data.code, sseEvent.data.recoverable)
+            break
+            
+          case 'done':
+            callbacks.onDone?.(sseEvent.data.final_response, sseEvent.data)
+            eventSource.close()
+            break
+        }
+      } catch (error) {
+        logError(error as Error, {
+          context: 'sse_parse_error',
+          rawData: event.data
+        })
+      }
+    }
+    
+    eventSource.onerror = (error) => {
+      logError(new Error('SSE connection error'), {
+        context: 'sse_connection_error',
+        error
+      })
+      callbacks.onError?.('SSE connection failed', 'SSE_ERROR', true)
+    }
+    
+    return { eventSource, conversationId }
+  }
+
+  // WebSocket streaming chat method (fallback)
+  async streamChatWebSocket(
+    request: ChatRequest,
+    callbacks: StreamingCallbacks
+  ): Promise<{ websocket: WebSocket; conversationId: string }> {
+    const wsUrl = this.baseURL.replace('http', 'ws').replace('/api', '') + '/ws/chat'
+    const websocket = new WebSocket(wsUrl)
+    let conversationId = request.conversation_id || ''
+    
+    return new Promise((resolve, reject) => {
+      websocket.onopen = () => {
+        // Authenticate
+        const authMessage: WebSocketMessage = {
+          type: 'auth',
+          api_key: this.client.defaults.headers.common['X-API-Key'] as string
+        }
+        websocket.send(JSON.stringify(authMessage))
+        
+        // Send chat message
+        const chatMessage: WebSocketMessage = {
+          type: 'chat',
+          message: request.message,
+          context: request.context,
+          conversation_id: request.conversation_id
+        }
+        websocket.send(JSON.stringify(chatMessage))
+        
+        resolve({ websocket, conversationId })
+      }
+      
+      websocket.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data)
+          
+          if (data.error) {
+            callbacks.onError?.(data.error, 'WS_ERROR', false)
+            return
+          }
+          
+          // Handle current backend format (single response)
+          if (data.response && data.done) {
+            conversationId = data.conversation_id
+            callbacks.onDone?.(data.response, {
+              conversation_id: data.conversation_id,
+              agent_type: data.agent_type,
+              processing_time: data.processing_time
+            })
+          }
+        } catch (error) {
+          logError(error as Error, {
+            context: 'websocket_parse_error',
+            rawData: event.data
+          })
+        }
+      }
+      
+      websocket.onerror = (error) => {
+        logError(new Error('WebSocket connection error'), {
+          context: 'websocket_connection_error',
+          error
+        })
+        callbacks.onError?.('WebSocket connection failed', 'WS_ERROR', false)
+        reject(error)
+      }
+      
+      websocket.onclose = () => {
+        // Connection closed
+      }
+    })
+  }
+
+  // Unified streaming method with SSE primary, WebSocket fallback
+  async streamChat(
+    request: ChatRequest,
+    callbacks: StreamingCallbacks
+  ): Promise<{ close: () => void; conversationId: string }> {
+    try {
+      // Try SSE first
+      const { eventSource, conversationId } = await this.streamChatSSE(request, callbacks)
+      
+      return {
+        close: () => eventSource.close(),
+        conversationId
+      }
+    } catch (sseError) {
+      logError(sseError as Error, {
+        context: 'sse_fallback_to_websocket'
+      })
+      
+      // Fallback to WebSocket
+      try {
+        const { websocket, conversationId } = await this.streamChatWebSocket(request, callbacks)
+        
+        return {
+          close: () => websocket.close(),
+          conversationId
+        }
+      } catch (wsError) {
+        logError(wsError as Error, {
+          context: 'websocket_fallback_failed'
+        })
+        throw new Error('Both SSE and WebSocket streaming failed')
+      }
+    }
+  }
+
+  // Legacy streaming method for backward compatibility
+  async *streamChatLegacy(
     conversationId: string,
     message: ChatRequest
   ): AsyncGenerator<StreamingChunk, void, unknown> {
-    const response = await this.client.post(
-      `/conversations/${conversationId}/messages/stream`,
-      message,
-      {
-        responseType: 'stream',
-        timeout: 0 // No timeout for streaming
+    let finalContent = ''
+    let isDone = false
+    
+    const { close } = await this.streamChat(message, {
+      onToken: (content, delta) => {
+        finalContent += delta || content
+      },
+      onDone: (finalResponse) => {
+        finalContent = finalResponse
+        isDone = true
+      },
+      onError: () => {
+        isDone = true
       }
-    )
-
-    const stream = response.data
-
-    for await (const chunk of stream) {
-      const lines = chunk.toString().split('\n')
-
-      for (const line of lines) {
-        if (line.startsWith('data: ')) {
-          try {
-            const data = JSON.parse(line.slice(6))
-
-            if (data.done) {
-              yield createStreamingChunk('', true, data.metadata)
-              return
-            }
-
-            yield createStreamingChunk(data.content || '', false, data.metadata)
-          } catch (error) {
-            logError(error as Error, {
-              context: 'streaming_parse_error',
-              conversationId,
-              rawLine: line
-            })
-          }
-        }
+    })
+    
+    // Simulate async generator behavior
+    while (!isDone) {
+      await new Promise(resolve => setTimeout(resolve, 100))
+      if (finalContent) {
+        yield createStreamingChunk(finalContent, isDone)
       }
     }
+    
+    close()
   }
 
   // Agent methods

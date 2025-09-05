@@ -309,10 +309,10 @@ Tasks:"""
 
             # Convert to Task objects
             tasks = []
-            for i, task_data in enumerate(tasks_data):
+            for i, task_data in enumerate(tasks_data, start=1):
                 task = Task(
-                    id=f"task_{i+1}",
-                    title=task_data.get("title", f"Task {i+1}"),
+                    id=f"task_{i}",
+                    title=task_data.get("title", f"Task {i}"),
                     description=task_data.get("description", ""),
                     priority=task_data.get("priority", "medium"),
                     estimated_hours=task_data.get("estimated_hours", 4.0),
@@ -342,7 +342,7 @@ Tasks:"""
         dependency_prompt = f"""Analyze the dependencies between these tasks:
 
 Tasks:
-{chr(10).join(f"{i+1}. {task.title}: {task.description}" for i, task in enumerate(tasks))}
+{chr(10).join(f"{i}. {task.title}: {task.description}" for i, task in enumerate(tasks, start=1))}
 
 Identify which tasks must be completed before others can begin. Format as JSON array:
 [
@@ -503,13 +503,16 @@ The plan includes detailed task breakdowns with priorities, time estimates, and 
         """Identify project milestones."""
         milestones = []
         total_tasks = len(tasks)
+        half_tasks = total_tasks // 2
 
         if total_tasks >= 3:
+            first_title = tasks[0].title
+            last_title = tasks[-1].title
             milestones.extend(
                 [
-                    f"Complete first task: {tasks[0].title}",
-                    f"Complete {total_tasks//2} tasks",
-                    f"Complete final task: {tasks[-1].title}",
+                    f"Complete first task: {first_title}",
+                    f"Complete {half_tasks} tasks",
+                    f"Complete final task: {last_title}",
                 ]
             )
 

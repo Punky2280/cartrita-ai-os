@@ -694,3 +694,7 @@ export const hooks = {
   useSettings,
   useUpdateSettings
 }
+
+// Voice hooks (separate from React Query)
+export { useVoice } from './useVoice'
+export { useVoiceOutput } from './useVoiceOutput'
