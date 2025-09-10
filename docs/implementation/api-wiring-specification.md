@@ -186,7 +186,7 @@ async def chat_endpoint(
 
 ### Streaming Endpoints
 ```python
-@app.post("/api/chat/stream")
+@app.get("/api/chat/stream")
 async def chat_stream_endpoint(
     request: ChatRequest,
     api_key: str = Depends(validate_api_key)

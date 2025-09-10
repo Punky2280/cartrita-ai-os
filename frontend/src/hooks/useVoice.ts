@@ -16,7 +16,7 @@ export interface UseVoiceOptions extends Partial<DeepgramConfig> {
   enableMetrics?: boolean
   onTranscription?: (transcription: VoiceTranscription) => void
   onResponse?: (response: string) => void
-  onError?: (error: any) => void
+  onError?: (error: unknown) => void
 }
 
 export interface VoiceCapabilities {
@@ -125,7 +125,7 @@ export function useVoice(options: UseVoiceOptions = {}): VoiceCapabilities {
       options.onResponse?.(response)
     })
 
-    voiceServiceRef.current.on('error', (error: any) => {
+    voiceServiceRef.current.on('error', (error: unknown) => {
       console.error('Voice service error:', error)
       options.onError?.(error)
     })

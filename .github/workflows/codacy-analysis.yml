@@ -1,0 +1,57 @@
+name: codacy-analysis
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  codacy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install frontend dependencies (optional)
+        working-directory: frontend
+        run: |
+          if [ -f package.json ]; then npm ci --ignore-scripts || true; fi
+
+      # Run Codacy with token when available
+      - name: Codacy Analysis CLI (with token)
+        if: ${{ secrets.EXTERNAL_CODACY_API_TOKEN != '' }}
+        uses: codacy/codacy-analysis-cli-action@v4
+        with:
+          directory: .
+          format: sarif
+          output: results.sarif
+        env:
+          CODACY_API_TOKEN: ${{ secrets.EXTERNAL_CODACY_API_TOKEN }}
+
+      # Fallback for forks/PRs without access to secrets
+      - name: Codacy Analysis CLI (no token)
+        if: ${{ secrets.EXTERNAL_CODACY_API_TOKEN == '' }}
+        uses: codacy/codacy-analysis-cli-action@v4
+        with:
+          directory: .
+          format: sarif
+          output: results.sarif
+
+      - name: Upload SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif

@@ -37,7 +37,7 @@ vi.mock('../useAudioAnalysis', () => ({
 }))
 
 // Mock the WaveformVisualizer component to avoid Canvas issues
-const MockWaveformVisualizer = React.forwardRef(({ data, width, height, className }: any, ref: any) => (
+const MockWaveformVisualizer = React.forwardRef(({ data, width, height, className }: unknown, ref: unknown) => (
   <div
     ref={ref}
     className={`waveform-visualizer ${className || ''}`}

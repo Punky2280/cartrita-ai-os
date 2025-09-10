@@ -12,9 +12,9 @@ services:
     container_name: cartrita-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: robert-non-root
-      POSTGRES_PASSWORD: punky1
-      POSTGRES_DB: cartrita_db
+      POSTGRES_USER: ${POSTGRES_USER:-robbie}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-cartrita_db}
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
     ports:
       - "${POSTGRES_PORT:-5433}:5432"
@@ -22,7 +22,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./infrastructure/docker/init-database.sql:/docker-entrypoint-initdb.d/init-database.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U robert-non-root -d cartrita_db"]
+      test: ["CMD-SHELL", "pg_isready -U robbie -d cartrita_db"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -69,8 +69,9 @@ services:
     environment:
       - PYTHON_ENV=${PYTHON_ENV:-production}
       - PYTHONPATH=/app
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - OPENAI_EMBEDDINGS_API_KEY=${OPENAI_EMBEDDINGS_API_KEY}
+      - EXTERNAL_CODACY_API_TOKEN=${EXTERNAL_CODACY_API_TOKEN}
+      - AI_OPENAI_API_KEY=${OPENAI_API_KEY}
+      - AI_OPENAI_EMBEDDINGS_API_KEY=${OPENAI_EMBEDDINGS_API_KEY}
       - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
       - LANGCHAIN_TRACING_V2=${LANGCHAIN_TRACING_V2}
       - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
@@ -90,15 +91,16 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
       - COMPUTER_USE_ENABLED=${COMPUTER_USE_ENABLED:-true}
       - COMPUTER_USE_SAFETY_MODE=${COMPUTER_USE_SAFETY_MODE:-strict}
-      - SECRET_KEY=${SECRET_KEY}
-      - JWT_SECRET=${JWT_SECRET}
-      - API_KEY_SECRET=${API_KEY_SECRET}
+      - SECURITY_SECRET_KEY=${SECRET_KEY}
+      - SECURITY_JWT_SECRET=${JWT_SECRET}
+      - SECURITY_API_KEY_SECRET=${API_KEY_SECRET}
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - OTEL_SERVICE_NAME=cartrita-ai-orchestrator
       - OTEL_TRACES_EXPORTER=otlp
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:14268/api/traces
     volumes:
       - ./services/ai-orchestrator:/app
+      - ./.env:/app/.env
       - /app/__pycache__
       - /app/.pytest_cache
     depends_on:
@@ -131,7 +133,7 @@ services:
     container_name: cartrita-api-gateway
     restart: unless-stopped
     ports:
-      - "${API_GATEWAY_PORT:-3000}:3000"
+      - "${API_GATEWAY_PORT:-3001}:3000"
     environment:
       - NODE_ENV=${NODE_ENV:-production}
       - API_GATEWAY_PORT=3000
@@ -187,11 +189,11 @@ services:
     container_name: cartrita-frontend
     restart: unless-stopped
     ports:
-      - "${FRONTEND_PORT:-3001}:3000"
+      - "${FRONTEND_PORT:-3003}:3000"
     environment:
       - NODE_ENV=${NODE_ENV:-production}
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:3000}
-      - NEXT_PUBLIC_WS_URL=${NEXT_PUBLIC_WS_URL:-ws://localhost:3000}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:3001}
+      - NEXT_PUBLIC_WS_URL=${NEXT_PUBLIC_WS_URL:-ws://localhost:3001}
       - NEXT_PUBLIC_AI_ORCHESTRATOR_URL=${NEXT_PUBLIC_AI_ORCHESTRATOR_URL:-http://localhost:8000}
       - NEXT_PUBLIC_APP_NAME=${APP_NAME:-Cartrita AI OS}
       - NEXT_PUBLIC_VERSION=${VERSION:-2.0.0}

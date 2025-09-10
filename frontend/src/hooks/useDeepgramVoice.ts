@@ -7,7 +7,7 @@ import { useAudioAnalysis, AudioAnalysisData } from './useAudioAnalysis'
 
 export interface WebSocketMessage {
   type: 'transcript' | 'analytics' | 'error' | 'state' | 'metrics'
-  data: any
+  data: unknown
   timestamp: number
 }
 
@@ -126,7 +126,7 @@ export const useDeepgramVoice = (options: UseDeepgramVoiceOptions = {}): UseDeep
         setLastActivity(Date.now())
       })
 
-      serviceRef.current.on('error', (errorData: any) => {
+      serviceRef.current.on('error', (errorData: unknown) => {
         const errorMessage = errorData?.message || 'Unknown error occurred'
         setError(errorMessage)
         setConnectionState('error')

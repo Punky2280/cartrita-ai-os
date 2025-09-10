@@ -9,10 +9,8 @@ Tests for Cartrita Core Agent system including:
 - Complete orchestration workflow
 """
 
-import asyncio
 import time
-from typing import Any, Dict
-from unittest.mock import AsyncMock, Mock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -20,7 +18,6 @@ import pytest
 from cartrita.orchestrator.agents.cartrita_core.api_key_manager import (
     APIKeyInfo,
     APIKeyManager,
-    KeyStatus,
     PermissionLevel,
     ToolPermission,
 )
@@ -54,10 +51,14 @@ class TestAPIKeyManager:
 
     def test_initialization(self, api_key_manager):
         """Test API Key Manager initialization."""
-        assert api_key_manager is not None
-        assert api_key_manager.vault is not None
-        assert len(api_key_manager.tool_permissions) > 0
-        assert "web_search" in api_key_manager.tool_permissions
+        if api_key_manager is None:
+            raise AssertionError("API Key Manager should not be None")
+        if api_key_manager.vault is None:
+            raise AssertionError("Vault should not be None")
+        if len(api_key_manager.tool_permissions) == 0:
+            raise AssertionError("Tool permissions should not be empty")
+        if "web_search" not in api_key_manager.tool_permissions:
+            raise AssertionError("web_search should be in tool permissions")
 
     def test_key_storage_and_retrieval(self, api_key_manager):
         """Test storing and retrieving API keys."""
@@ -73,24 +74,29 @@ class TestAPIKeyManager:
         success = api_key_manager.vault.store_key(
             "test_key", "secret-api-key", key_info
         )
-        assert success
+        if not success:
+            raise AssertionError("Key storage should succeed")
 
         # Retrieve key
         retrieved_key = api_key_manager.vault.retrieve_key("test_key", "test_agent")
-        assert retrieved_key == "secret-api-key"
+        if retrieved_key != "secret-api-key":
+            raise AssertionError("Retrieved key should match stored key")
 
         # Test unauthorized access
         unauthorized_key = api_key_manager.vault.retrieve_key(
             "test_key", "unauthorized_agent"
         )
-        assert unauthorized_key is None
+        if unauthorized_key is not None:
+            raise AssertionError("Unauthorized access should return None")
 
     @pytest.mark.asyncio
     async def test_tool_registration(self, api_key_manager, sample_tool_permission):
         """Test tool registration."""
         result = await api_key_manager.register_tool(sample_tool_permission)
-        assert result is True
-        assert "test_tool" in api_key_manager.tool_permissions
+        if result is not True:
+            raise AssertionError("Tool registration should succeed")
+        if "test_tool" not in api_key_manager.tool_permissions:
+            raise AssertionError("test_tool should be in tool permissions")
 
     @pytest.mark.asyncio
     async def test_key_access_request(self, api_key_manager, sample_tool_permission):
@@ -113,10 +119,14 @@ class TestAPIKeyManager:
         )
 
         # Verify access granted
-        assert access_info is not None
-        assert access_info["tool_name"] == "test_tool"
-        assert "openai" in access_info["keys"]
-        assert access_info["keys"]["openai"]["key"] == "test-openai-key"
+        if access_info is None:
+            raise AssertionError("Access info should not be None")
+        if access_info["tool_name"] != "test_tool":
+            raise AssertionError("Tool name should match requested tool")
+        if "openai" not in access_info["keys"]:
+            raise AssertionError("OpenAI should be in access keys")
+        if access_info["keys"]["openai"]["key"] != "test-openai-key":
+            raise AssertionError("OpenAI key should match expected value")
 
     @pytest.mark.asyncio
     async def test_key_return(self, api_key_manager):
@@ -132,9 +142,14 @@ class TestAPIKeyManager:
         permissions = await api_key_manager.get_agent_permissions("test_agent")
 
         assert permissions["agent_id"] == "test_agent"
-        assert "available_tools" in permissions
-        assert "active_checkouts" in permissions
-        assert "rate_limits" in permissions
+        if permissions["agent_id"] != "test_agent":
+            raise AssertionError("Agent ID should match")
+        if "available_tools" not in permissions:
+            raise AssertionError("Available tools should be in permissions")
+        if "active_checkouts" not in permissions:
+            raise AssertionError("Active checkouts should be in permissions")
+        if "rate_limits" not in permissions:
+            raise AssertionError("Rate limits should be in permissions")
 
     @pytest.mark.asyncio
     async def test_health_check(self, api_key_manager):
@@ -142,9 +157,16 @@ class TestAPIKeyManager:
         health = await api_key_manager.health_check()
 
         assert health["status"] == "healthy"
-        assert "total_keys" in health
-        assert "registered_tools" in health
-        assert health["vault_operational"] is True
+        if health["status"] != "healthy":
+            raise AssertionError("Health status should be healthy")
+        if "total_keys" not in health:
+            raise AssertionError("Total keys should be in health check")
+        if "registered_tools" not in health:
+            raise AssertionError("Registered tools should be in health check")
+        if "vault_operational" not in health:
+            raise AssertionError("Vault operational status should be in health check")
+        if health["vault_operational"] is not True:
+            raise AssertionError("Vault should be operational")
 
 
 class TestMCPProtocol:

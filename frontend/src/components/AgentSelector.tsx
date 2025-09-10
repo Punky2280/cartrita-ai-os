@@ -1,7 +1,6 @@
 // Cartrita AI OS - Agent Selector Component
 // Enhanced agent selection with ChatGPT-like interface
 
-'use client'
 
 import { useState } from 'react'
 import { useAtom, useAtomValue } from 'jotai'
@@ -11,7 +10,6 @@ import {
   Bot,
   ChevronDown,
   Check,
-  Settings,
   Zap,
   Brain,
   Code,
@@ -26,9 +24,9 @@ import {
   Sparkles
 } from 'lucide-react'
 import { cn } from '@/utils'
-import { selectedAgentIdAtom, agentsAtom, selectedAgentAtom } from '@/stores'
+import { selectedAgentIdAtom, selectedAgentAtom } from '@/stores'
 import { useAgents } from '@/hooks'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui'
+import { Avatar, AvatarFallback } from '@/components/ui'
 import { Badge } from '@/components/ui'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui'
 import { ScrollArea } from '@/components/ui'
@@ -137,7 +135,7 @@ function AgentCard({
             ? 'ring-2 ring-primary bg-primary/5'
             : 'hover:shadow-md hover:bg-muted/50'
         )}
-        onClick={() => onSelect(agent)}
+        onClick={() => { { onSelect(agent);; }}}
       >
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
@@ -264,7 +262,7 @@ export function AgentSelector() {
           'p-3 border rounded-lg cursor-pointer transition-all duration-200',
           isOpen ? 'ring-2 ring-primary' : 'hover:bg-muted/50'
         )}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => { { setIsOpen(!isOpen);; }}}
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.99 }}
       >
@@ -314,7 +312,7 @@ export function AgentSelector() {
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold">Choose Agent</h3>
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => { { setIsOpen(false);; }}}
                   className="h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md"
                 >
                   <ChevronDown className="h-4 w-4 rotate-180" />
@@ -359,7 +357,7 @@ export function AgentSelector() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-40 bg-black/20"
-          onClick={() => setIsOpen(false)}
+          onClick={() => { { setIsOpen(false);; }}}
         />
       )}
     </div>
@@ -369,7 +367,6 @@ export function AgentSelector() {
 // Compact Agent Selector for mobile
 export function CompactAgentSelector() {
   const [selectedAgentId, setSelectedAgentId] = useAtom(selectedAgentIdAtom)
-  const agentsQuery = useAgents()
   const selectedAgent = useAtomValue(selectedAgentAtom)
 
   // Temporary fix for TypeScript issue

@@ -1,10 +1,9 @@
 // Cartrita AI OS - Settings Panel Component
 // Comprehensive user settings with preferences, API keys, and configuration
 
-'use client'
 
 import { useState, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 import {
   Settings,
@@ -20,15 +19,12 @@ import {
   Eye,
   EyeOff,
   Save,
-  RotateCcw,
-  Check,
   AlertTriangle,
   Info,
   X
 } from 'lucide-react'
 import { cn } from '@/utils'
 import {
-  Button,
   Input,
   Label,
   Textarea,
@@ -47,12 +43,10 @@ import {
   CardHeader,
   CardTitle,
   Alert,
-  AlertDescription,
-  Separator,
-  Badge
+  AlertDescription
 } from '@/components/ui'
 import { useSettings, useUpdateSettings } from '@/hooks'
-import type { UserSettings, Theme, NotificationSettings, PrivacySettings } from '@/types'
+import type { User as UserType, UserSettings, Theme, PrivacySettings } from '@/types'
 
 // API Key Input Component
 function ApiKeyInput({
@@ -83,13 +77,13 @@ function ApiKeyInput({
           id={label.toLowerCase().replace(/\s+/g, '-')}
           type={showKey ? 'text' : 'password'}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => { { onChange(e.target.value); ; }}}
           placeholder={placeholder}
           className="pr-10"
         />
         <button
           type="button"
-          onClick={() => setShowKey(!showKey)}
+          onClick={() => { { setShowKey(!showKey);; }}}
           className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-accent hover:text-accent-foreground rounded-md"
         >
           {showKey ? (
@@ -146,7 +140,7 @@ function ProfileSettings({
             <Input
               id="name"
               value={formData.name}
-              onChange={(e) => handleChange('name', e.target.value)}
+              onChange={(e) => { { { handleChange('name', e.target.value); ; ; }}}}
               placeholder="Enter your full name"
             />
           </div>
@@ -157,7 +151,7 @@ function ProfileSettings({
               id="email"
               type="email"
               value={formData.email}
-              onChange={(e) => handleChange('email', e.target.value)}
+              onChange={(e) => { { handleChange('email', e.target.value); ; }}}
               placeholder="Enter your email"
             />
           </div>
@@ -168,7 +162,7 @@ function ProfileSettings({
           <Input
             id="avatar"
             value={formData.avatar}
-            onChange={(e) => handleChange('avatar', e.target.value)}
+            onChange={(e) => { { handleChange('avatar', e.target.value); ; }}}
             placeholder="https://example.com/avatar.jpg"
           />
         </div>
@@ -178,7 +172,7 @@ function ProfileSettings({
           <Textarea
             id="bio"
             value={formData.bio}
-            onChange={(e) => handleChange('bio', e.target.value)}
+            onChange={(e) => { { handleChange('bio', e.target.value); ; }}}
             placeholder="Tell us about yourself..."
             rows={3}
           />
@@ -239,7 +233,7 @@ function ApiKeysSettings({
         <ApiKeyInput
           label="OpenAI API Key"
           value={apiKeys.openai}
-          onChange={(value) => handleKeyChange('openai', value)}
+          onChange={(value) => { { handleKeyChange('openai', value); ; }}}
           placeholder="sk-..."
           description="Required for GPT models and DALL-E image generation"
         />
@@ -247,7 +241,7 @@ function ApiKeysSettings({
         <ApiKeyInput
           label="Google AI API Key"
           value={apiKeys.google}
-          onChange={(value) => handleKeyChange('google', value)}
+          onChange={(value) => { { handleKeyChange('google', value); ; }}}
           placeholder="AIza..."
           description="Required for Gemini models and Google services"
         />
@@ -255,7 +249,7 @@ function ApiKeysSettings({
         <ApiKeyInput
           label="Hugging Face API Key"
           value={apiKeys.huggingface}
-          onChange={(value) => handleKeyChange('huggingface', value)}
+          onChange={(value) => { { handleKeyChange('huggingface', value); ; }}}
           placeholder="hf_..."
           description="Required for Hugging Face models and datasets"
         />
@@ -284,7 +278,7 @@ function AppearanceSettings({
     toast.success('Theme updated successfully')
   }, [onUpdate])
 
-  const handleSettingChange = useCallback((key: string, value: any) => {
+  const handleSettingChange = useCallback((key: string, value: unknown) => {
     onUpdate({
       appearance: {
         ...settings.appearance,
@@ -370,7 +364,7 @@ function NotificationsSettings({
   settings: UserSettings
   onUpdate: (updates: Partial<UserSettings>) => void
 }) {
-  const handleNotificationChange = useCallback((key: string, value: any) => {
+  const handleNotificationChange = useCallback((key: string, value: unknown) => {
     onUpdate({
       notifications: {
         ...settings.notifications,
@@ -466,7 +460,7 @@ function PrivacySettings({
   settings: UserSettings
   onUpdate: (updates: Partial<UserSettings>) => void
 }) {
-  const handlePrivacyChange = useCallback((key: string, value: any) => {
+  const handlePrivacyChange = useCallback((key: string, value: unknown) => {
     onUpdate({
       privacy: {
         ...settings.privacy,
@@ -620,7 +614,7 @@ function DataManagement({
               <Input
                 type="file"
                 accept=".json"
-                onChange={(e) => setImportFile(e.target.files?.[0] || null)}
+                onChange={(e) => { { setImportFile(e.target.files?.[0] || null); ; }}}
               />
               <button
                 onClick={handleImport}
@@ -655,7 +649,7 @@ function DataManagement({
             <div className="space-y-2">
               <Input
                 value={confirmDelete}
-                onChange={(e) => setConfirmDelete(e.target.value)}
+                onChange={(e) => { { setConfirmDelete(e.target.value); ; }}}
                 placeholder="Type DELETE to confirm"
               />
               <button
@@ -689,7 +683,7 @@ export function SettingsPanel({
   const { data: settings, isLoading } = useSettings()
   const updateSettings = useUpdateSettings()
 
-  const handleUpdateSettings = useCallback(async (updates: Partial<UserSettings>) => {
+  const handleUpdateSettings = useCallback(async (updates: Partial<UserType['preferences']>) => {
     try {
       await updateSettings.mutateAsync(updates)
     } catch (error) {
@@ -828,7 +822,7 @@ export function SettingsPanel({
               <div className="text-center">
                 <p className="text-muted-foreground">Failed to load settings</p>
                 <button
-                  onClick={() => window.location.reload()}
+                  onClick={() => { { window.location.reload();; }}}
                   className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 mt-4"
                 >
                   Reload

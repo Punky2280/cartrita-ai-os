@@ -13,9 +13,8 @@ from typing import Any
 import structlog
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
-from cartrita.orchestrator.utils.config import settings
 
 # Configure logger
 logger = structlog.get_logger(__name__)
@@ -80,6 +79,26 @@ class ComputerUseRequest(BaseModel):
     )
     safety_mode: bool = Field(default=True, description="Enable safety restrictions")
 
+    # Accept string aliases like 'strict'/'relaxed' and coerce to boolean
+    @field_validator("safety_mode", mode="before")
+    @classmethod
+    def _coerce_safety_mode(cls, v):
+        if isinstance(v, bool):
+            return v
+        if v is None:
+            return True
+        if isinstance(v, str):
+            s = v.strip().lower()
+            # Treat strict/moderate/on/true/yes/1/enabled as True
+            if s in {"true", "1", "yes", "on", "strict", "moderate", "enabled", "enable"}:
+                return True
+            # Treat relaxed/permissive/off/false/no/0/disabled as False
+            if s in {"false", "0", "no", "off", "relaxed", "permissive", "disabled", "disable"}:
+                return False
+        raise ValueError(
+            "safety_mode must be a boolean or one of: 'strict','relaxed','on','off','true','false'"
+        )
+
 
 class ComputerUseResponse(BaseModel):
     """Computer use response model."""
@@ -121,19 +140,24 @@ class ComputerUseAgent:
 
     def __init__(
         self,
-        model: str = settings.ai.agent_model,
+        model: str | None = None,
         api_key: str | None = None,
-        safety_mode: bool = True,
+        safety_mode: bool | str = True,
     ):
-        self.model = model
-        self.api_key = api_key or settings.ai.openai_api_key.get_secret_value()
-        self.safety_mode = safety_mode
+        # Get settings with proper initialization
+        from cartrita.orchestrator.utils.config import get_settings
+        _settings = get_settings()
+
+        self.model = model or _settings.ai.agent_model
+        self.api_key = api_key or _settings.ai.openai_api_key.get_secret_value()
+        # Normalize safety_mode to a strict boolean
+        self.safety_mode = self._normalize_safety_mode(safety_mode)
 
         # Initialize GPT-5 computer use model
         self.computer_llm = ChatOpenAI(
             model=self.model,
             temperature=0.1,  # Low temperature for precise computer operations
-            max_tokens=4096,
+            max_completion_tokens=4096,
             openai_api_key=self.api_key,
         )
 
@@ -167,7 +191,7 @@ class ComputerUseAgent:
         logger.info(
             "Computer Use Agent initialized with GPT-5",
             model=self.model,
-            safety_mode=safety_mode,
+            safety_mode=self.safety_mode,
         )
 
     async def start(self) -> None:
@@ -502,3 +526,17 @@ Provide a clear, concise summary of what was accomplished and any important note
         """Reload agent configuration."""
         # Reload settings if needed
         logger.info("Computer Use Agent configuration reloaded")
+
+    def _normalize_safety_mode(self, value: bool | str | None) -> bool:
+        """Normalize safety_mode inputs (bool or string aliases) to a bool."""
+        if isinstance(value, bool):
+            return value
+        if value is None:
+            return True
+        s = str(value).strip().lower()
+        if s in {"true", "1", "yes", "on", "strict", "moderate", "enabled", "enable"}:
+            return True
+        if s in {"false", "0", "no", "off", "relaxed", "permissive", "disabled", "disable"}:
+            return False
+        # Default to safest behavior
+        return True

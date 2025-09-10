@@ -99,12 +99,12 @@ export function useSSEChat(options: UseSSEChatOptions = {}): UseSSEChatReturn {
       })
     },
 
-    onFunctionCall: (functionName: string, args: any) => {
+    onFunctionCall: (functionName: string, args: unknown) => {
       console.log('Function call:', functionName, args)
       toast.info(`Calling ${functionName}...`)
     },
 
-    onToolResult: (toolName: string, result: any) => {
+    onToolResult: (toolName: string, result: unknown) => {
       console.log('Tool result:', toolName, result)
       toast.success(`${toolName} completed`)
     },
@@ -124,13 +124,13 @@ export function useSSEChat(options: UseSSEChatOptions = {}): UseSSEChatReturn {
       }
     },
 
-    onAgentTaskComplete: (taskId: string, result: any, success: boolean) => {
+    onAgentTaskComplete: (taskId: string, result: unknown, success: boolean) => {
       agentTasksRef.current.delete(taskId)
       onAgentTask?.(taskId, success ? 'completed' : 'failed', 1)
       toast.success(`Agent task ${success ? 'completed' : 'failed'}`)
     },
 
-    onMetrics: (metrics: any) => {
+    onMetrics: (metrics: unknown) => {
       console.log('Stream metrics:', metrics)
     },
 
@@ -146,7 +146,7 @@ export function useSSEChat(options: UseSSEChatOptions = {}): UseSSEChatReturn {
       toast.error(`Streaming error: ${error}`)
     },
 
-    onDone: (finalResponse: string, metadata: any) => {
+    onDone: (finalResponse: string, metadata: unknown) => {
       // Create final response object
       const response: ChatResponse = {
         response: finalResponse,

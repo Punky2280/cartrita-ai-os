@@ -6,8 +6,7 @@ Service manager for Cartrita AI OS.
 Handles initialization and lifecycle management of all provider services.
 """
 
-import asyncio
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 
 import structlog
 

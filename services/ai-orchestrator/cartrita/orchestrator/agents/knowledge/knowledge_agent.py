@@ -14,7 +14,6 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
-from cartrita.orchestrator.utils.config import settings
 
 # Configure logger
 logger = structlog.get_logger(__name__)
@@ -88,21 +87,38 @@ class KnowledgeAgent:
 
     def __init__(
         self,
-        model: str = settings.ai.agent_model,
+        model: str | None = None,
         api_key: str | None = None,
         db_manager: Any | None = None,
     ):
-        self.model = model
-        self.api_key = api_key or settings.ai.openai_api_key.get_secret_value()
+        # Get settings with proper initialization
+        from cartrita.orchestrator.utils.config import get_settings
+        _settings = get_settings()
+        
+        self.model = model or _settings.ai.agent_model
+        self.api_key = api_key or _settings.ai.openai_api_key.get_secret_value()
         self.db_manager = db_manager
 
-        # Initialize GPT-5 knowledge model
-        self.knowledge_llm = ChatOpenAI(
-            model=self.model,
-            temperature=0.1,  # Low temperature for factual knowledge retrieval
-            max_tokens=4096,
-            openai_api_key=self.api_key,
-        )
+        # Initialize GPT-5 knowledge model with fallback support
+        try:
+            self.knowledge_llm = ChatOpenAI(
+                model=self.model,
+                temperature=1.0,  # Default temperature (some models don't support custom temperature)
+                max_completion_tokens=4096,  # Use correct parameter for newer models
+                openai_api_key=self.api_key,
+            )
+        except Exception as e:
+            logger.warning("Failed to initialize OpenAI client, will use fallback", error=str(e))
+            self.knowledge_llm = None
+            
+        # Import fallback provider
+        try:
+            from cartrita.orchestrator.providers.fallback_provider_v2 import get_fallback_provider
+            self.fallback_provider = get_fallback_provider()
+            logger.info("Fallback provider initialized for knowledge agent")
+        except Exception as e:
+            logger.error("Failed to initialize fallback provider", error=str(e))
+            self.fallback_provider = None
 
         # Runtime state
         self.is_running = False
@@ -297,19 +313,37 @@ Please provide a well-structured answer that:
 Answer:"""
 
         try:
-            messages = [
-                SystemMessage(
-                    content="You are a knowledgeable assistant using GPT-5. Provide accurate, well-sourced answers based on the provided knowledge context."
-                ),
-                HumanMessage(content=rag_prompt),
-            ]
-
-            response = await self.knowledge_llm.ainvoke(messages)
-            return response.content.strip()
+            # First try OpenAI if available
+            if self.knowledge_llm:
+                messages = [
+                    SystemMessage(
+                        content="You are a knowledgeable assistant using GPT-5. Provide accurate, well-sourced answers based on the provided knowledge context."
+                    ),
+                    HumanMessage(content=rag_prompt),
+                ]
+                response = await self.knowledge_llm.ainvoke(messages)
+                return response.content.strip()
+            else:
+                raise Exception("OpenAI client not available")
 
         except Exception as e:
             logger.error("RAG answer generation failed", error=str(e))
-            return f"Based on available knowledge: {context[:500]}..."
+            
+            # Use fallback provider for knowledge generation
+            if self.fallback_provider:
+                try:
+                    fallback_response = await self.fallback_provider.generate_response(
+                        message=rag_prompt,
+                        conversation_id=f"knowledge-{int(time.time())}",
+                        context={"type": "knowledge_rag", "sources_count": len(sources)}
+                    )
+                    logger.info("Used fallback provider for RAG generation")
+                    return fallback_response
+                except Exception as fallback_error:
+                    logger.error("Fallback provider also failed", error=str(fallback_error))
+            
+            # Final fallback - return basic context summary
+            return f"Based on available knowledge sources, here's what I found about '{query.query}':\n\n{context[:800]}..."
 
     def _calculate_confidence_score(self, sources: list[KnowledgeDocument]) -> float:
         """Calculate confidence score based on sources."""

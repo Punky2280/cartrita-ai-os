@@ -1,7 +1,6 @@
 // Cartrita AI OS - Voice Input Component
 // Advanced voice input with real-time transcription and visual feedback
 
-'use client'
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -10,9 +9,6 @@ import {
   Mic,
   MicOff,
   Square,
-  RotateCcw,
-  Volume2,
-  VolumeX,
   Settings,
   CheckCircle,
   AlertCircle,
@@ -20,8 +16,6 @@ import {
 } from 'lucide-react'
 import { cn } from '@/utils'
 import {
-  Button,
-  Badge,
   Slider,
   Card,
   CardContent,
@@ -217,7 +211,7 @@ export function VoiceInput({
           cancelAnimationFrame(animationFrameRef.current)
         }
         if (audioContextRef.current) {
-          audioContextRef.current.close()
+          void void audioContextRef.current.close()
         }
 
         // Process the recording
@@ -292,7 +286,7 @@ export function VoiceInput({
       cancelAnimationFrame(animationFrameRef.current)
     }
     if (audioContextRef.current) {
-      audioContextRef.current.close()
+      void void audioContextRef.current.close()
     }
 
     setIsRecording(false)
@@ -332,7 +326,7 @@ export function VoiceInput({
         cancelAnimationFrame(animationFrameRef.current)
       }
       if (audioContextRef.current) {
-        audioContextRef.current.close()
+        void void audioContextRef.current.close()
       }
     }
   }, [isRecording])
@@ -358,7 +352,7 @@ export function VoiceInput({
               </CardTitle>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setShowSettings(!showSettings)}
+                  onClick={() => { { setShowSettings(!showSettings);; }}}
                   className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
                 >
                   <Settings className="h-4 w-4" />

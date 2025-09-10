@@ -1,7 +1,6 @@
 // Cartrita AI OS - Voice Output Component
 // Advanced TTS with voice selection and playback controls
 
-'use client'
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -100,7 +99,7 @@ export function VoiceOutput({
 
     return () => {
       if (audioContextRef.current && typeof audioContextRef.current.close === 'function') {
-        audioContextRef.current.close()
+        void void audioContextRef.current.close()
       }
       if (playbackTimeoutRef.current) {
         clearTimeout(playbackTimeoutRef.current)
@@ -413,7 +412,7 @@ export function VoiceOutput({
         {/* Control Buttons */}
         <div className="flex items-center gap-2 pt-2">
           <Button
-            onClick={() => handleSpeak('Hello! This is a test of the voice output system.')}
+            onClick={() => { { handleSpeak('Hello! This is a test of the voice output system.');; }}}
             disabled={isPlaying || isSpeaking}
             className="flex-1"
             aria-describedby="test-voice-description"

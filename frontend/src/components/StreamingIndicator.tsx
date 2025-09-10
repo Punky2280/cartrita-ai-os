@@ -1,12 +1,10 @@
 // Cartrita AI OS - Streaming Indicator Component
 // Animated indicator for real-time message streaming
 
-'use client'
 
 import { motion } from 'framer-motion'
 import { Bot, Zap, Loader2 } from 'lucide-react'
 import { cn } from '@/utils'
-import { Badge } from '@/components/ui'
 import { useAtomValue } from 'jotai'
 import { selectedAgentAtom } from '@/stores'
 

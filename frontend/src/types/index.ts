@@ -76,7 +76,7 @@ export interface Message {
   role: 'user' | 'assistant' | 'system' | 'tool'
   content: string
   attachments?: Attachment[]
-  metadata: Record<string, any>
+  metadata: Record<string, unknown>
   createdAt: string
   updatedAt: string
   isEdited: boolean
@@ -106,7 +106,7 @@ export interface Attachment {
   url: string
   size?: number
   mimeType?: string
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 }
 
 export interface Reaction {
@@ -121,7 +121,7 @@ export interface Source {
   url?: string
   content: string
   relevanceScore: number
-  metadata: Record<string, any>
+  metadata: Record<string, unknown>
 }
 
 export interface Agent {
@@ -139,7 +139,7 @@ export interface Agent {
     uptime?: number
     memory_usage?: number
     queue_size?: number
-    [key: string]: any
+    [key: string]: unknown
   }
   // Legacy fields for compatibility
   version?: string
@@ -165,7 +165,7 @@ export interface AgentMetadata {
 export interface ChatRequest {
   message: string
   conversation_id?: string
-  context?: Record<string, any>
+  context?: Record<string, unknown>
   agent_override?: AgentType
   stream?: boolean
   temperature?: number
@@ -176,7 +176,7 @@ export interface ChatRequest {
   userId?: string
   agentOverride?: string
   attachments?: Attachment[]
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 }
 
 export interface ChatResponse {
@@ -184,7 +184,7 @@ export interface ChatResponse {
   conversation_id: string
   agent_type: AgentType
   message?: Message
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
   processing_time?: number
   token_usage?: {
     prompt_tokens?: number
@@ -231,7 +231,7 @@ export interface ServiceStatus {
   status: 'healthy' | 'unhealthy' | 'degraded'
   responseTime?: number
   lastCheck: string
-  details?: Record<string, any>
+  details?: Record<string, unknown>
 }
 
 export interface MetricsData {
@@ -308,7 +308,7 @@ export interface Plugin {
   version: string
   author: string
   enabled: boolean
-  settings: Record<string, any>
+  settings: Record<string, unknown>
   capabilities: string[]
 }
 
@@ -345,7 +345,7 @@ export interface Notification {
   timestamp: string
   read: boolean
   actionUrl?: string
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 }
 
 export interface ThemeConfig {
@@ -424,7 +424,7 @@ export interface ApiResponse<T> {
   data?: T
   error?: string
   message?: string
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 }
 
 export interface PaginatedResponse<T> {
@@ -442,7 +442,7 @@ export interface PaginatedResponse<T> {
 // WebSocket Message Types
 export interface WSMessage {
   type: 'chat' | 'status' | 'notification' | 'error'
-  payload: any
+  payload: unknown
   timestamp: string
   conversationId?: string
 }
@@ -460,7 +460,7 @@ export interface WSStatusMessage extends WSMessage {
   type: 'status'
   payload: {
     status: 'connected' | 'disconnected' | 'reconnecting'
-    details?: any
+    details?: unknown
   }
 }
 
@@ -626,7 +626,7 @@ export class ApiError extends Error {
   constructor(
     public status: number,
     message: string,
-    public response?: any,
+    public response?: unknown,
     public requestId?: string
   ) {
     super(message)
@@ -638,7 +638,7 @@ export class ValidationError extends Error {
   constructor(
     public field: string,
     message: string,
-    public value?: any
+    public value?: unknown
   ) {
     super(message)
     this.name = 'ValidationError'
@@ -735,7 +735,7 @@ export type Theme = 'light' | 'dark' | 'system'
 // WebSocket Message Types for Deepgram Integration
 export interface WebSocketMessage {
   type: 'transcript' | 'analytics' | 'error' | 'state' | 'metrics' | 'connection' | 'audio'
-  data: any
+  data: unknown
   timestamp: number
   messageId?: string
 }
@@ -783,7 +783,7 @@ export interface ErrorMessage extends WebSocketMessage {
   data: {
     code: string
     message: string
-    details?: any
+    details?: unknown
   }
 }
 

@@ -40,12 +40,12 @@ vi.mock('@/stores', () => ({
 }))
 
 vi.mock('jotai', () => ({
-  useSetAtom: (atom: any) => {
+  useSetAtom: (atom: unknown) => {
     if (atom === 'isStreamingAtom') return mockSetIsStreaming
     if (atom === 'streamingMessageAtom') return mockSetStreamingMessage
     return vi.fn()
   },
-  useAtomValue: (atom: any) => {
+  useAtomValue: (atom: unknown) => {
     if (atom === 'currentMessagesAtom') return mockCurrentMessages
     if (atom === 'currentConversationAtom') return mockCurrentConversation
     if (atom === 'isStreamingAtom') return false
@@ -216,7 +216,7 @@ describe('useSSEChat', () => {
     })
 
     it('should handle streaming token events', async () => {
-      let capturedCallbacks: any
+      let capturedCallbacks: unknown
 
       mockStreamChat.mockImplementation((request, callbacks) => {
         capturedCallbacks = callbacks
@@ -259,7 +259,7 @@ describe('useSSEChat', () => {
     })
 
     it('should handle streaming completion', async () => {
-      let capturedCallbacks: any
+      let capturedCallbacks: unknown
 
       mockStreamChat.mockImplementation((request, callbacks) => {
         capturedCallbacks = callbacks
@@ -310,7 +310,7 @@ describe('useSSEChat', () => {
     })
 
     it('should handle agent task events', async () => {
-      let capturedCallbacks: any
+      let capturedCallbacks: unknown
 
       mockStreamChat.mockImplementation((request, callbacks) => {
         capturedCallbacks = callbacks
@@ -510,7 +510,7 @@ describe('useStreamingChat', () => {
   })
 
   it('should track task progress during streaming', async () => {
-    let capturedCallbacks: any
+    let capturedCallbacks: unknown
 
     mockStreamChat.mockImplementation((request, callbacks) => {
       capturedCallbacks = callbacks
@@ -556,7 +556,7 @@ describe('useStreamingChat', () => {
   })
 
   it('should handle multiple concurrent tasks', async () => {
-    let capturedCallbacks: any
+    let capturedCallbacks: unknown
 
     mockStreamChat.mockImplementation((request, callbacks) => {
       capturedCallbacks = callbacks

@@ -6,8 +6,6 @@ GitHub service for Cartrita AI OS.
 Handles repository operations, code search, and GitHub API interactions.
 """
 
-import asyncio
-import json
 from typing import Any, Dict, List, Optional
 
 import httpx

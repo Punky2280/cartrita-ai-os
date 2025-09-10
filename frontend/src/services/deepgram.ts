@@ -61,8 +61,8 @@ export interface ConversationMetrics {
 }
 
 class DeepgramVoiceService {
-  private client: any
-  private connection: any
+  private client: unknown
+  private connection: unknown
   private mediaRecorder: MediaRecorder | null = null
   private audioStream: MediaStream | null = null
   private isRecording = false
@@ -87,7 +87,7 @@ class DeepgramVoiceService {
     this.eventListeners.set(event, listeners)
   }
 
-  private emit(event: string, data?: any) {
+  private emit(event: string, data?: unknown) {
     const listeners = this.eventListeners.get(event) || []
     listeners.forEach(callback => callback(data))
   }
@@ -136,7 +136,7 @@ class DeepgramVoiceService {
       })
 
       // Handle transcription results
-      this.connection.on(LiveTranscriptionEvents.Transcript, (data: any) => {
+      this.connection.on(LiveTranscriptionEvents.Transcript, (data: unknown) => {
         const transcript = data.channel?.alternatives?.[0]
         if (transcript) {
           const transcription: VoiceTranscription = {
@@ -145,7 +145,7 @@ class DeepgramVoiceService {
             is_final: data.is_final,
             speaker: transcript.speaker,
             timestamp: Date.now(),
-            words: transcript.words?.map((word: any) => ({
+            words: transcript.words?.map((word: unknown) => ({
               word: word.word,
               start: word.start,
               end: word.end,
@@ -255,7 +255,7 @@ class DeepgramVoiceService {
   }
 
   // Analyze voice content using Deepgram's intelligence features
-  private async analyzeVoiceContent(text: string, data: any) {
+  private async analyzeVoiceContent(text: string, data: unknown) {
     try {
       // Extract sentiment, topics, and other analytics from Deepgram response
       const analytics: VoiceAnalytics = {
@@ -264,12 +264,12 @@ class DeepgramVoiceService {
           label: data.sentiment?.label || 'neutral',
           confidence: data.sentiment?.confidence || 0
         },
-        topics: data.topics?.map((topic: any) => ({
+        topics: data.topics?.map((topic: unknown) => ({
           name: topic.name,
           confidence: topic.confidence,
           keywords: topic.keywords || []
         })) || [],
-        emotions: data.emotions?.map((emotion: any) => ({
+        emotions: data.emotions?.map((emotion: unknown) => ({
           emotion: emotion.name,
           confidence: emotion.confidence
         })) || [],

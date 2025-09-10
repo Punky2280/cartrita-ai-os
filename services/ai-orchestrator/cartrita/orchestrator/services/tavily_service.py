@@ -6,8 +6,6 @@ Tavily service for Cartrita AI OS.
 Handles web search, content extraction, and research capabilities.
 """
 
-import asyncio
-import json
 from typing import Any, Dict, List, Optional
 
 import structlog

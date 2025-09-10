@@ -6,7 +6,6 @@ API Key Manager for Cartrita AI OS.
 Manages all API keys, permissions, and tool access delegation with secure vault operations.
 """
 
-import asyncio
 import base64
 import hashlib
 import os
@@ -20,9 +19,8 @@ import structlog
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from pydantic import BaseModel, Field, SecretStr
+from pydantic import BaseModel, Field
 
-from cartrita.orchestrator.utils.config import settings
 
 logger = structlog.get_logger(__name__)
 
@@ -255,10 +253,14 @@ class APIKeyManager:
 
     def _load_initial_keys(self):
         """Load API keys from environment variables."""
+        # Get settings with proper initialization
+        from cartrita.orchestrator.utils.config import get_settings
+        _settings = get_settings()
+        
         key_mappings = {
             "openai": (
-                settings.ai.openai_api_key.get_secret_value()
-                if settings.ai.openai_api_key
+                _settings.ai.openai_api_key.get_secret_value()
+                if _settings.ai.openai_api_key
                 else None
             ),
             "google": os.getenv("GOOGLE_API_KEY"),

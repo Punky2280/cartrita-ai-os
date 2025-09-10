@@ -1,9 +1,8 @@
 // Cartrita AI OS - Audio Analytics Sidebar
 // Real-time conversation analytics and voice intelligence dashboard
 
-'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   BarChart3,
@@ -12,27 +11,22 @@ import {
   MicOff,
   Activity,
   Brain,
-  Heart,
   Zap,
-  Clock,
   Volume2,
-  VolumeX,
   Smile,
   Frown,
   Meh,
   ChevronLeft,
   ChevronRight
 } from 'lucide-react'
-import { cn } from '@/utils'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui'
 import { useVoice } from '@/hooks/useVoice'
 import { useAudioAnalysis } from '@/hooks/useAudioAnalysis'
-import type { AudioAnalytics, VoiceMetrics } from '@/types'
 
 interface AudioAnalyticsSidebarProps {
   isOpen: boolean
   onToggle: () => void
-  messages: any[]
+  messages: unknown[]
   isStreaming: boolean
 }
 
@@ -43,7 +37,7 @@ export default function AudioAnalyticsSidebar({
   isStreaming
 }: AudioAnalyticsSidebarProps) {
   const voice = useVoice()
-  const audioAnalysis = useAudioAnalysis()
+  useAudioAnalysis()
 
   // Real-time conversation analytics
   const conversationAnalytics = useMemo(() => {
@@ -120,12 +114,12 @@ export default function AudioAnalyticsSidebar({
           animate={{ width: 320, opacity: 1 }}
           exit={{ width: 0, opacity: 0 }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
-          className="relative h-full bg-chatgpt-grey-dark border-l border-gray-600 overflow-hidden"
+          className="relative h-full bg-chatgpt-grey-dark border-l border-gray-600 overflow-hidden z-40"
         >
           {/* Toggle Button */}
           <button
             onClick={onToggle}
-            className="absolute -left-3 top-1/2 transform -translate-y-1/2 z-10 h-6 w-6 bg-cartrita-blue hover:bg-cartrita-blue-light rounded-full flex items-center justify-center text-white shadow-lg"
+            className="absolute -left-3 top-1/2 transform -translate-y-1/2 z-50 h-6 w-6 bg-cartrita-blue hover:bg-cartrita-blue-light rounded-full flex items-center justify-center text-white shadow-lg"
           >
             {isOpen ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
           </button>

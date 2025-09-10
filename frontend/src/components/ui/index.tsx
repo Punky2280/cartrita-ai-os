@@ -40,6 +40,13 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
+    if (asChild && React.isValidElement(props.children)) {
+      return React.cloneElement(props.children, {
+        ...props,
+        ref,
+        className: cn(buttonVariants({ variant, size, className }), props.children.props.className),
+      } as any)
+    }
     return (
       <button
         className={cn(buttonVariants({ variant, size, className }))}
@@ -230,7 +237,7 @@ const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
           type="checkbox"
           className="sr-only"
           ref={ref}
-          onChange={(e) => onCheckedChange?.(e.target.checked)}
+          onChange={(e) => { { onCheckedChange?.(e.target.checked); ; }}}
           {...props}
         />
         <div
@@ -585,7 +592,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           'h-4 w-4 rounded border border-primary text-primary focus:ring-2 focus:ring-primary focus:ring-offset-2',
           className
         )}
-        onChange={(e) => onCheckedChange?.(e.target.checked)}
+        onChange={(e) => { { onCheckedChange?.(e.target.checked); ; }}}
         {...props}
       />
     )
@@ -684,6 +691,7 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
     <img
       ref={ref}
       className={cn('aspect-square h-full w-full', className)}
+      alt=""
       {...props}
     />
   )
@@ -728,11 +736,20 @@ export interface TooltipTriggerProps extends React.HTMLAttributes<HTMLDivElement
 }
 
 const TooltipTrigger = React.forwardRef<HTMLDivElement, TooltipTriggerProps>(
-  ({ className, asChild, children, ...props }, ref) => (
-    <div ref={ref} className={className} {...props}>
-      {children}
-    </div>
-  )
+  ({ className, asChild, children, ...props }, ref) => {
+    if (asChild && React.isValidElement(children)) {
+      return React.cloneElement(children, {
+        ...props,
+        ref,
+        className: cn(children.props.className, className),
+      } as any)
+    }
+    return (
+      <div ref={ref} className={className} {...props}>
+        {children}
+      </div>
+    )
+  }
 )
 TooltipTrigger.displayName = 'TooltipTrigger'
 
@@ -766,15 +783,24 @@ export interface DropdownMenuTriggerProps extends React.HTMLAttributes<HTMLButto
 }
 
 const DropdownMenuTrigger = React.forwardRef<HTMLButtonElement, DropdownMenuTriggerProps>(
-  ({ className, asChild, children, ...props }, ref) => (
-    <button
-      ref={ref}
-      className={cn('inline-flex items-center justify-center', className)}
-      {...props}
-    >
-      {children}
-    </button>
-  )
+  ({ className, asChild, children, ...props }, ref) => {
+    if (asChild && React.isValidElement(children)) {
+      return React.cloneElement(children, {
+        ...props,
+        ref,
+        className: cn(children.props.className, className),
+      } as any)
+    }
+    return (
+      <button
+        ref={ref}
+        className={cn('inline-flex items-center justify-center', className)}
+        {...props}
+      >
+        {children}
+      </button>
+    )
+  }
 )
 DropdownMenuTrigger.displayName = 'DropdownMenuTrigger'
 

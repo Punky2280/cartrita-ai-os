@@ -77,7 +77,7 @@ export function useVoiceOutput(options: UseVoiceOutputOptions = {}): UseVoiceOut
 
     return () => {
       if (audioContextRef.current) {
-        audioContextRef.current.close()
+        void void audioContextRef.current.close()
       }
       if (playbackTimeoutRef.current) {
         clearTimeout(playbackTimeoutRef.current)

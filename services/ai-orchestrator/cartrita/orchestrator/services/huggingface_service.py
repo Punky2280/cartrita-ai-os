@@ -6,13 +6,10 @@ HuggingFace service for Cartrita AI OS.
 Handles HuggingFace Hub interactions, model management, and documentation search.
 """
 
-import asyncio
-import json
 from typing import Any, Dict, List, Optional
 
 import structlog
 from huggingface_hub import HfApi, HfFolder
-from huggingface_hub.utils import HfHubHTTPError
 
 from cartrita.orchestrator.utils.config import settings
 

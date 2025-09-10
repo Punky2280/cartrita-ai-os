@@ -166,7 +166,7 @@ export const useAudioAnalysis = (options: UseAudioAnalysisOptions = {}): UseAudi
     }
 
     if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
-      audioContextRef.current.close()
+      void void audioContextRef.current.close()
       audioContextRef.current = null
     }
 

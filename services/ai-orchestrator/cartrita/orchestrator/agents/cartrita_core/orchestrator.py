@@ -6,13 +6,11 @@ Cartrita Main Orchestrator.
 Coordinates Cartrita agent, API key management, and MCP protocol for complete system orchestration.
 """
 
-import asyncio
 import time
 from contextlib import asynccontextmanager
 from typing import Any, Dict, List, Optional
 
 import structlog
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 
 from cartrita.orchestrator.agents.cartrita_core.api_key_manager import APIKeyManager
 from cartrita.orchestrator.agents.cartrita_core.cartrita_agent import CartritaCoreAgent
@@ -20,7 +18,6 @@ from cartrita.orchestrator.agents.cartrita_core.mcp_protocol import (
     CartritaMCPProtocol,
     MCPMessage,
 )
-from cartrita.orchestrator.utils.config import settings
 
 logger = structlog.get_logger(__name__)
 

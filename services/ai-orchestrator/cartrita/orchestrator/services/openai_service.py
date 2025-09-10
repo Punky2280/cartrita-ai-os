@@ -7,7 +7,6 @@ Handles OpenAI API interactions with streaming, tool use, and error handling.
 """
 
 import asyncio
-import json
 from typing import Any, AsyncGenerator, Dict, List, Optional
 
 import structlog

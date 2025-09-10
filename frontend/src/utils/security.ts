@@ -160,7 +160,7 @@ export class SecureStorage {
   }
 
   // Store data with checksum
-  async store(key: string, data: any): Promise<void> {
+  async store(key: string, data: unknown): Promise<void> {
     try {
       const serialized = JSON.stringify(data)
       const checksum = await generateChecksum(serialized)
@@ -183,7 +183,7 @@ export class SecureStorage {
   }
 
   // Retrieve and verify data
-  async retrieve(key: string): Promise<any> {
+  async retrieve(key: string): Promise<unknown> {
     try {
       const stored = localStorage.getItem(`${this.prefix}:${key}`)
       if (!stored) {

@@ -76,10 +76,17 @@ export function isImageFile(filename: string): boolean {
 export function highlightText(text: string, searchTerm: string): string {
   if (!searchTerm || !text) return text
 
-  // Escape special regex characters to prevent ReDoS
+  // Use a safer approach to avoid ReDoS - split and join instead of RegExp
   const escapedTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const regex = new RegExp(`(${escapedTerm})`, 'gi')
-  return text.replace(regex, '<mark>$1</mark>')
+  const index = text.toLowerCase().indexOf(escapedTerm.toLowerCase())
+
+  if (index === -1) return text
+
+  const before = text.slice(0, index)
+  const match = text.slice(index, index + searchTerm.length)
+  const after = text.slice(index + searchTerm.length)
+
+  return `${before}<mark>${match}</mark>${after}`
 }
 
 export function truncateText(text: string, maxLength: number): string {
@@ -97,7 +104,7 @@ export function countTokens(text: string): number {
 }
 
 export function extractCodeBlocks(text: string): Array<{ language: string; code: string }> {
-  const codeBlockRegex = /```(\w+)?\n?([\s\S]*?)```/g
+  const codeBlockRegex = /```(\w+)?\n?([\s\S]*?)\n?```/g
   const codeBlocks: Array<{ language: string; code: string }> = []
   let match
 
@@ -129,7 +136,7 @@ export function stripMarkdown(text: string): string {
 // Copy to clipboard utility
 export async function copyToClipboard(text: string): Promise<boolean> {
   try {
-    await navigator.clipboard.writeText(text)
+    await void void navigator.clipboard.writeText(text)
     return true
   } catch (error) {
     // Fallback for older browsers
@@ -154,7 +161,7 @@ export function createApiResponse<T>(
   data?: T,
   error?: string,
   message?: string,
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 ): ApiResponse<T> {
   return {
     success,
@@ -165,20 +172,21 @@ export function createApiResponse<T>(
   }
 }
 
-export function handleApiError(error: any): ApiResponse<null> {
+export function handleApiError(error: unknown): ApiResponse<null> {
   let errorMessage = 'An unexpected error occurred'
   let statusCode = 500
 
-  if (error?.response) {
+  const err = error as any // Type assertion for error handling
+  if (err?.response) {
     // Server responded with error status
-    statusCode = error.response.status
-    errorMessage = error.response.data?.message || error.response.data?.error || errorMessage
-  } else if (error?.request) {
+    statusCode = err.response.status
+    errorMessage = err.response.data?.message || err.response.data?.error || errorMessage
+  } else if (err?.request) {
     // Request was made but no response received
     errorMessage = 'Network error - please check your connection'
-  } else if (error?.message) {
+  } else if (err?.message) {
     // Something else happened
-    errorMessage = error.message
+    errorMessage = err.message
   }
 
   logError(new Error(errorMessage), { statusCode, originalError: error })
@@ -189,7 +197,7 @@ export function handleApiError(error: any): ApiResponse<null> {
 export function createStreamingChunk(
   content: string,
   done: boolean = false,
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 ): StreamingChunk {
   return {
     content,
@@ -204,7 +212,7 @@ export function createStreamingChunk(
 }
 
 // Error boundary utilities
-export function logError(error: Error, context?: Record<string, any>) {
+export function logError(error: Error, context?: Record<string, unknown>) {
   console.error('Error occurred:', {
     message: error.message,
     stack: error.stack,

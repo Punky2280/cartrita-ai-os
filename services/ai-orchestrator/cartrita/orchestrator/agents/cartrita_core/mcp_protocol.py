@@ -7,18 +7,14 @@ Implements LangSmith-inspired tool hierarchy with secure API key management.
 """
 
 import asyncio
-import json
 import os
 import time
 import uuid
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Any, Callable, Dict, List, Optional
 
 import structlog
-from langchain_core.callbacks import BaseCallbackHandler
-from langchain_core.outputs import LLMResult
-from langchain_core.tools import BaseTool, StructuredTool
 from langsmith import Client as LangSmithClient
 from pydantic import BaseModel, Field
 

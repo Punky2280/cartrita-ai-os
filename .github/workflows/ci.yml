@@ -37,7 +37,7 @@ jobs:
     - name: Run tests
       run: pytest --cov=cartrita --cov-report=xml
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c6738
       with:
         file: ./coverage.xml
 

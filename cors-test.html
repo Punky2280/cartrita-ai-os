@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORS Test - Cartrita AI</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        #response { margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Cartrita AI CORS Test</h1>
+    <p>Testing connectivity to backend at <code>http://localhost:8000</code></p>
+    
+    <button onclick="testHealth()">Test Health Endpoint</button>
+    <button onclick="testChat()">Test Chat Endpoint</button>
+    <button onclick="testStream()">Test Stream Endpoint</button>
+    
+    <div id="results"></div>
+    <div id="response"></div>
+
+    <script>
+        const results = document.getElementById('results');
+        const response = document.getElementById('response');
+        
+        function addResult(message, isSuccess) {
+            const div = document.createElement('div');
+            div.className = `test-result ${isSuccess ? 'success' : 'error'}`;
+            div.textContent = message;
+            results.appendChild(div);
+        }
+        
+        async function testHealth() {
+            try {
+                const res = await fetch('http://localhost:8000/health', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                
+                if (res.ok) {
+                    const data = await res.json();
+                    addResult('✅ Health endpoint: SUCCESS', true);
+                    response.innerHTML = `<strong>Health Response:</strong><br><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    addResult(`❌ Health endpoint: HTTP ${res.status}`, false);
+                }
+            } catch (error) {
+                addResult(`❌ Health endpoint: ${error.message}`, false);
+            }
+        }
+        
+        async function testChat() {
+            try {
+                const res = await fetch('http://localhost:8000/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: 'Hello from CORS test!',
+                        conversation_id: 'cors-test-' + Date.now()
+                    })
+                });
+                
+                if (res.ok) {
+                    const data = await res.json();
+                    addResult('✅ Chat endpoint: SUCCESS', true);
+                    response.innerHTML = `<strong>Chat Response:</strong><br><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    addResult(`❌ Chat endpoint: HTTP ${res.status}`, false);
+                }
+            } catch (error) {
+                addResult(`❌ Chat endpoint: ${error.message}`, false);
+            }
+        }
+        
+        async function testStream() {
+            try {
+                const res = await fetch('http://localhost:8000/api/chat/stream?message=Hello%20streaming!', {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'text/event-stream',
+                    },
+                });
+                
+                if (res.ok) {
+                    addResult('✅ Stream endpoint: SUCCESS', true);
+                    response.innerHTML = '<strong>Stream Response:</strong><br>Connected to stream...';
+                    
+                    const reader = res.body.getReader();
+                    const decoder = new TextDecoder();
+                    
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        
+                        const chunk = decoder.decode(value);
+                        response.innerHTML += `<br>${chunk}`;
+                    }
+                } else {
+                    addResult(`❌ Stream endpoint: HTTP ${res.status}`, false);
+                }
+            } catch (error) {
+                addResult(`❌ Stream endpoint: ${error.message}`, false);
+            }
+        }
+        
+        // Auto-test on load
+        window.onload = function() {
+            setTimeout(testHealth, 1000);
+        };
+    </script>
+</body>
+</html>

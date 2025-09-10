@@ -44,21 +44,21 @@ export type SSEEventType =
 
 export interface SSEEvent {
   event: SSEEventType
-  data: any
+  data: unknown
   id?: string
   retry?: number
 }
 
 export interface StreamingCallbacks {
   onToken?: (content: string, delta?: string) => void
-  onFunctionCall?: (functionName: string, args: any) => void
-  onToolResult?: (toolName: string, result: any) => void
+  onFunctionCall?: (functionName: string, args: unknown) => void
+  onToolResult?: (toolName: string, result: unknown) => void
   onAgentTaskStart?: (taskId: string, agentType: string, description: string) => void
   onAgentTaskProgress?: (taskId: string, progress: number, status: string) => void
-  onAgentTaskComplete?: (taskId: string, result: any, success: boolean) => void
-  onMetrics?: (metrics: any) => void
+  onAgentTaskComplete?: (taskId: string, result: unknown, success: boolean) => void
+  onMetrics?: (metrics: unknown) => void
   onError?: (error: string, code: string, recoverable: boolean) => void
-  onDone?: (finalResponse: string, metadata: any) => void
+  onDone?: (finalResponse: string, metadata: unknown) => void
 }
 
 // WebSocket Message Types
@@ -66,7 +66,7 @@ export interface WebSocketMessage {
   type: 'auth' | 'chat' | 'ping' | 'pong'
   api_key?: string
   message?: string
-  context?: Record<string, any>
+  context?: Record<string, unknown>
   conversation_id?: string
 }
 
@@ -166,7 +166,7 @@ export class ApiError extends Error {
   constructor(
     public status: number,
     message: string,
-    public response?: any,
+    public response?: unknown,
     public requestId?: string
   ) {
     super(message)
@@ -175,7 +175,7 @@ export class ApiError extends Error {
 }
 
 export class NetworkError extends Error {
-  constructor(message: string, public originalError?: any) {
+  constructor(message: string, public originalError?: unknown) {
     super(message)
     this.name = 'NetworkError'
   }
@@ -323,7 +323,7 @@ export class CartritaApiClient {
   private async request<T>(
     method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
     endpoint: string,
-    data?: any,
+    data?: unknown,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
     const requestConfig: AxiosRequestConfig = {
@@ -333,7 +333,7 @@ export class CartritaApiClient {
       ...config
     }
 
-    let lastError: any
+    let lastError: unknown
 
     for (let attempt = 1; attempt <= this.retryCount; attempt++) {
       try {
@@ -819,7 +819,7 @@ export class CartritaApiClient {
     return this.request('DELETE', `/plugins/${pluginId}`)
   }
 
-  async updatePluginSettings(pluginId: string, settings: Record<string, any>): Promise<ApiResponse<Plugin>> {
+  async updatePluginSettings(pluginId: string, settings: Record<string, unknown>): Promise<ApiResponse<Plugin>> {
     return this.request('PUT', `/plugins/${pluginId}/settings`, { settings })
   }
 
@@ -871,7 +871,7 @@ export class CartritaApiClient {
     return this.request('POST', '/upload', formData, config)
   }
 
-  async uploadMultipleFiles(files: File[], conversationId?: string, onProgress?: (progress: number) => void): Promise<ApiResponse<Array<{ url: string; metadata: any }>>> {
+  async uploadMultipleFiles(files: File[], conversationId?: string, onProgress?: (progress: number) => void): Promise<ApiResponse<Array<{ url: string; metadata: unknown }>>> {
     const formData = new FormData()
     files.forEach((file, index) => {
       formData.append(`files[${index}]`, file)
@@ -922,23 +922,23 @@ export class CartritaApiClient {
     sortBy?: string
     limit?: number
     offset?: number
-  }): Promise<any> {
+  }): Promise<unknown> {
     const response = await this.client.get('/api/search', { params })
     return response.data
   }
 
-  async searchGlobal(query: string, filters?: SearchFilters): Promise<any> {
+  async searchGlobal(query: string, filters?: SearchFilters): Promise<unknown> {
     const params = { q: query, ...filters }
     return this.search(params)
   }
 
   // Settings methods
-  async getSettings(): Promise<any> {
+  async getSettings(): Promise<unknown> {
     const response = await this.client.get('/api/settings')
     return response.data
   }
 
-  async updateSettings(settings: Partial<any>): Promise<any> {
+  async updateSettings(settings: Partial<unknown>): Promise<unknown> {
     const response = await this.client.put('/api/settings', settings)
     return response.data
   }
@@ -948,23 +948,23 @@ export class CartritaApiClient {
     await this.client.delete(`/api/files/${fileId}`)
   }
 
-  async getFiles(params?: { limit?: number; offset?: number }): Promise<any> {
+  async getFiles(params?: { limit?: number; offset?: number }): Promise<unknown> {
     const response = await this.client.get('/api/files', { params })
     return response.data
   }
 
   // Generic HTTP methods for compatibility
-  async post(endpoint: string, data?: any, config?: AxiosRequestConfig): Promise<any> {
+  async post(endpoint: string, data?: unknown, config?: AxiosRequestConfig): Promise<unknown> {
     const response = await this.client.post(endpoint, data, config)
     return response.data
   }
 
-  async put(endpoint: string, data?: any, config?: AxiosRequestConfig): Promise<any> {
+  async put(endpoint: string, data?: unknown, config?: AxiosRequestConfig): Promise<unknown> {
     const response = await this.client.put(endpoint, data, config)
     return response.data
   }
 
-  async patch(endpoint: string, data?: any, config?: AxiosRequestConfig): Promise<any> {
+  async patch(endpoint: string, data?: unknown, config?: AxiosRequestConfig): Promise<unknown> {
     const response = await this.client.patch(endpoint, data, config)
     return response.data
   }

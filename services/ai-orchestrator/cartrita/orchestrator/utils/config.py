@@ -25,7 +25,7 @@ class DatabaseSettings(BaseSettings):
 
     host: str = Field(default="localhost", description="Database host")
     port: int = Field(default=5433, ge=1, le=65535, description="Database port")
-    user: str = Field(default="robert-non-root", description="Database user")
+    user: str = Field(default="robbie", description="Database user")
     password: SecretStr = Field(
         default="punky1", description="Database password"
     )
@@ -93,11 +93,11 @@ class AISettings(BaseSettings):
 
     # Model configurations
     orchestrator_model: str = Field(
-        default="gpt-4.1-turbo", description="GPT-4.1 model for orchestrator"
+        default="gpt-4.1", description="GPT-4.1 model for orchestrator"
     )
     agent_model: str = Field(
-        default="claude-3.5-sonnet-20241022",
-        description="GPT-5 variant for agents",
+        default="gpt-5",
+        description="GPT-5 model for agents",
     )
     embedding_model: str = Field(
         default="text-embedding-3-large", description="Embedding model"
@@ -268,6 +268,11 @@ class ExternalAPISettings(BaseSettings):
     langchain_api_key: SecretStr | None = Field(
         default=None, description="LangChain API key"
     )
+
+    # Code Quality / Codacy
+    codacy_api_token: SecretStr | None = Field(
+        default=None, description="Codacy API token"
+    )
     langchain_project: str = Field(
         default="cartrita-v2", description="LangChain project name"
     )
@@ -298,7 +303,7 @@ class Settings(BaseSettings):
     debug: bool = Field(default=False, description="Debug mode")
 
     # Server settings
-    host: IPvAnyAddress = Field(default="0.0.0.0", description="Server host")
+    host: IPvAnyAddress = Field(default="127.0.0.1", description="Server host")
     port: int = Field(default=8000, ge=1024, le=65535, description="Server port")
     workers: int = Field(default=4, ge=1, le=16, description="Number of workers")
 
@@ -354,7 +359,7 @@ class Settings(BaseSettings):
         return path
 
     class Config:
-        env_file = "/home/robbie/cartrita-ai-os/.env"
+        env_file = ".env"
         env_file_encoding = "utf-8"
         case_sensitive = False
         extra = "allow"
@@ -366,5 +371,13 @@ class Settings(BaseSettings):
         env_nested_delimiter = "__"
 
 
-# Global settings instance
-settings = Settings()
+# Global settings instance - Initialize only when needed
+settings = None
+
+
+def get_settings() -> Settings:
+    """Get global settings instance with lazy initialization."""
+    global settings
+    if settings is None:
+        settings = Settings()
+    return settings

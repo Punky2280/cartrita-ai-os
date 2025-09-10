@@ -1,7 +1,6 @@
 // Cartrita AI OS - Message Bubble Component
 // Enhanced message display with ChatGPT-like sty      // Use ReactMarkdown for safe renderings
 
-'use client'
 
 import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
@@ -30,11 +29,19 @@ import { Badge } from '@/components/ui'
 import { Textarea } from '@/components/ui'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import vscDarkPlus from 'react-syntax-highlighter/dist/esm/styles/prism/vsc-dark-plus'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
 import { useUser } from '@/hooks'
 import type { Message } from '@/types'
+
+// Type for ReactMarkdown code component props
+interface CodeProps {
+  className?: string
+  children?: React.ReactNode
+  inline?: boolean
+  [key: string]: unknown
+}
 
 // Message content renderer with markdown support
 function MessageContent({
@@ -49,7 +56,7 @@ function MessageContent({
   // Simple markdown-like rendering
   const renderContent = (text: string) => {
     // Code blocks
-    const codeBlockRegex = /```(\w+)?\n?([\s\S]*?)```/g
+    const codeBlockRegex = /```(\w+)?\n?([\s\S]*?)\n?```/g
     const parts: Array<{ type: 'text' | 'code', content: string, language?: string }> = []
     let lastIndex = 0
     let match
@@ -87,7 +94,7 @@ function MessageContent({
           <pre key={index} className="bg-muted p-4 rounded-lg overflow-x-auto my-2">
             <SyntaxHighlighter
               language={part.language}
-              style={oneDark as any}
+              style={vscDarkPlus as object}
               className="rounded-md"
             >
               {part.content}
@@ -96,30 +103,17 @@ function MessageContent({
         )
       }
 
-      // Simple text formatting
-      const formattedText = part.content
-        .split('\n')
-        .map((line, lineIndex) => {
-          // Bold
-          line = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-          // Italic
-          line = line.replace(/\*(.*?)\*/g, '<em>$1</em>')
-          // Inline code
-          line = line.replace(/`([^`]+)`/g, '<code class="bg-muted px-1 py-0.5 rounded text-sm">$1</code>')
-
-          return lineIndex === 0 ? line : `<br />${line}`
-        })
-        .join('')
+      // Simple text formatting - let ReactMarkdown handle this safely
 
       return (
         <div key={index} className="prose prose-sm dark:prose-invert max-w-none">
           <ReactMarkdown
             components={{
-              code: ({ node, className, children, ...props }: any) => {
+              code: ({ className, children, ...props }: CodeProps) => {
                 const match = /language-(\w+)/.exec(className || '')
                 return !props.inline && match ? (
                   <SyntaxHighlighter
-                    style={oneDark as any}
+                    style={vscDarkPlus}
                     language={match[1]}
                     PreTag="div"
                     className="rounded-md"
@@ -240,7 +234,7 @@ export function MessageBubble({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       className={cn(
-        'group flex gap-3 max-w-[80%]',
+        'group flex gap-3 max-w-2xl',
         isUser ? 'ml-auto flex-row-reverse' : 'mr-auto'
       )}
     >
@@ -297,7 +291,7 @@ export function MessageBubble({
             <Textarea
               ref={editTextareaRef}
               value={editContent}
-              onChange={(e) => setEditContent(e.target.value)}
+              onChange={(e) => { { setEditContent(e.target.value); ; }}}
               className="min-h-[60px] bg-transparent border-none p-0 resize-none focus:ring-0"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
@@ -322,13 +316,13 @@ export function MessageBubble({
             <div className="flex items-center gap-2 mt-2">
               <button
                 onClick={handleEditSave}
-                className="h-6 px-2"
+                className="h-6 w-6 p-1 bg-green-500 hover:bg-green-600 text-white rounded-sm transition-colors flex items-center justify-center"
               >
                 <Check className="h-3 w-3" />
               </button>
               <button
                 onClick={handleEditCancel}
-                className="h-6 px-2"
+                className="h-6 w-6 p-1 bg-gray-500 hover:bg-gray-600 text-white rounded-sm transition-colors flex items-center justify-center"
               >
                 <X className="h-3 w-3" />
               </button>
@@ -338,16 +332,17 @@ export function MessageBubble({
           {/* Message Actions */}
           {showActions && !isEditing && (
             <div className={cn(
-              'absolute top-0 opacity-0 group-hover:opacity-100 transition-opacity',
-              'flex items-center gap-1',
-              isUser ? '-left-12' : '-right-12'
+              'absolute top-2 opacity-0 group-hover:opacity-100 transition-all duration-200',
+              'flex items-center gap-1 z-10',
+              isUser ? '-left-10 flex-row-reverse' : '-right-10',
+              'bg-background/80 backdrop-blur-sm rounded-md p-1 shadow-sm border'
             )}>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={handleCopy}
-                      className="h-6 w-6 p-0 bg-transparent hover:bg-accent rounded"
+                      className="h-6 w-6 p-1 bg-transparent hover:bg-accent rounded-sm transition-colors flex items-center justify-center"
                     >
                       <Copy className="h-3 w-3" />
                     </button>
@@ -360,8 +355,8 @@ export function MessageBubble({
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <button
-                          onClick={() => handleFeedback('positive')}
-                          className="h-6 w-6 p-0 bg-transparent hover:bg-accent rounded"
+                          onClick={() => { { handleFeedback('positive');; }}}
+                          className="h-6 w-6 p-1 bg-transparent hover:bg-accent rounded-sm transition-colors flex items-center justify-center"
                         >
                           <ThumbsUp className="h-3 w-3" />
                         </button>
@@ -372,8 +367,8 @@ export function MessageBubble({
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <button
-                          onClick={() => handleFeedback('negative')}
-                          className="h-6 w-6 p-0 bg-transparent hover:bg-accent rounded"
+                          onClick={() => { { handleFeedback('negative');; }}}
+                          className="h-6 w-6 p-1 bg-transparent hover:bg-accent rounded-sm transition-colors flex items-center justify-center"
                         >
                           <ThumbsDown className="h-3 w-3" />
                         </button>
@@ -386,20 +381,20 @@ export function MessageBubble({
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <button
-                      className="h-6 w-6 p-0 bg-transparent hover:bg-accent rounded"
+                      className="h-6 w-6 p-1 bg-transparent hover:bg-accent rounded-sm transition-colors flex items-center justify-center"
                     >
                       <MoreVertical className="h-3 w-3" />
                     </button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     {isUser && onEdit && (
-                      <DropdownMenuItem onClick={() => setIsEditing(true)}>
+                      <DropdownMenuItem onClick={() => { { setIsEditing(true);; }}}>
                         <Edit3 className="h-4 w-4 mr-2" />
                         Edit
                       </DropdownMenuItem>
                     )}
                     {!isUser && onRegenerate && (
-                      <DropdownMenuItem onClick={() => onRegenerate(message.id)}>
+                      <DropdownMenuItem onClick={() => { { onRegenerate(message.id);; }}}>
                         <RotateCcw className="h-4 w-4 mr-2" />
                         Regenerate
                       </DropdownMenuItem>
@@ -418,7 +413,7 @@ export function MessageBubble({
                     </DropdownMenuItem>
                     {onDelete && (
                       <DropdownMenuItem
-                        onClick={() => onDelete(message.id)}
+                        onClick={() => { { onDelete(message.id);; }}}
                         className="text-destructive"
                       >
                         <Trash2 className="h-4 w-4 mr-2" />

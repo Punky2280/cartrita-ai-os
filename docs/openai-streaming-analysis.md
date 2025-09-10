@@ -81,7 +81,7 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from sse_starlette import EventSourceResponse
 
-@app.post("/api/chat/stream")
+@app.get("/api/chat/stream")
 async def stream_chat(request: ChatRequest):
     """Stream AI responses using Server-Sent Events."""
     
@@ -177,23 +177,29 @@ async def websocket_chat(websocket: WebSocket, conversation_id: str):
 - **Simple Architecture**: Minimal complexity requirements
 
 ```typescript
-// Frontend SSE implementation
-const eventSource = new EventSource('/api/chat/stream', {
-    headers: { 'Authorization': `Bearer ${apiKey}` }
+// Frontend SSE implementation (GET with query params; headers not supported by EventSource)
+const params = new URLSearchParams({
+    message: userMessage,
+    // include other optional fields as needed, e.g., conversation_id, model, etc.
 });
+
+const eventSource = new EventSource(`/api/chat/stream?${params.toString()}`);
 
 eventSource.onmessage = (event) => {
     const data = JSON.parse(event.data);
     appendToChat(data.content);
 };
 
-eventSource.addEventListener('done', (event) => {
+eventSource.addEventListener('done', () => {
     eventSource.close();
     enableChatInput();
 });
 ```
 
-### Use WebSocket When:
+Note: Authentication should be handled by a server-side proxy (e.g., Next.js API route) that injects required headers such as `X-API-Key`. Browsers do not allow custom headers on EventSource connections.
+
+### Use WebSocket When
+
 - **Real-time Collaboration**: Multi-user agent interaction
 - **Voice Applications**: Audio streaming with Realtime API
 - **Interactive Dashboards**: Live agent monitoring and control
@@ -219,9 +225,10 @@ socket.onmessage = (event) => {
 ## Security Considerations
 
 ### SSE Security
+
 ```python
 # SSE with authentication and rate limiting
-@app.post("/api/chat/stream")
+@app.get("/api/chat/stream")
 async def stream_chat(
     request: ChatRequest,
     api_key: str = Depends(verify_api_key),
@@ -244,6 +251,7 @@ async def stream_chat(
 ```
 
 ### WebSocket Security
+
 ```python
 # WebSocket with comprehensive security
 @app.websocket("/ws/chat/{conversation_id}")
@@ -267,12 +275,14 @@ async def websocket_chat(websocket: WebSocket, conversation_id: str):
 ## Performance Optimization
 
 ### SSE Optimization
+
 - **Connection Pooling**: Reuse HTTP connections for multiple streams
 - **Compression**: Enable gzip compression for text streams
 - **Buffering**: Optimize chunk sizes for network efficiency
 - **Keepalive**: Configure appropriate keepalive timeouts
 
 ### WebSocket Optimization
+
 - **Connection Limits**: Manage maximum concurrent connections
 - **Message Queuing**: Buffer messages during high load
 - **Heartbeat**: Implement ping/pong for connection health
@@ -315,11 +325,13 @@ class WebSocketMetrics:
 ## Future Considerations
 
 ### OpenAI Roadmap Integration
+
 - **GPT-5 Streaming**: Enhanced streaming capabilities with improved efficiency
 - **Multi-modal Streaming**: Video and advanced media streaming
 - **MCP Integration**: Model Context Protocol streaming for tool interactions
 
 ### Technology Evolution
+
 - **HTTP/3**: Future HTTP/3 support for improved streaming performance
 - **WebTransport**: Next-generation bidirectional protocol for web applications
 - **Edge Computing**: CDN-based streaming for global performance

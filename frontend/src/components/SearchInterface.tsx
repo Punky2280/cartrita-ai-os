@@ -1,7 +1,6 @@
 // Cartrita AI OS - Search Interface Component
 // Advanced global search with filtering, highlighting, and real-time results
 
-'use client'
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -10,14 +9,11 @@ import {
   Search,
   X,
   Filter,
-  Calendar,
   User,
   MessageSquare,
   Bot,
   FileText,
   Hash,
-  Clock,
-  ArrowUpDown,
   ChevronDown,
   ChevronUp,
   ExternalLink,
@@ -26,7 +22,7 @@ import {
   BookmarkCheck
 } from 'lucide-react'
 import { cn, formatMessageTime, highlightText } from '@/utils'
-import { Button, Input, Badge, Card, CardContent, CardHeader, CardTitle, Tabs, TabsContent, TabsList, TabsTrigger, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Checkbox, Separator, ScrollArea } from '@/components/ui'
+import { Input, Badge, Card, CardContent, CardHeader, CardTitle, Tabs, TabsList, TabsTrigger, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Checkbox, Separator, ScrollArea } from '@/components/ui'
 import { useSearch } from '@/hooks'
 import type { SearchResult, SearchFilters, SearchResultType } from '@/types'
 
@@ -126,7 +122,7 @@ function SearchResultItem({
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
-                      navigator.clipboard.writeText(result.url || result.title)
+                      void void navigator.clipboard.writeText(result.url || result.title)
                       toast.success('Copied to clipboard')
                     }}
                     className="h-8 w-8 p-0 bg-transparent hover:bg-accent hover:text-accent-foreground rounded"
@@ -232,7 +228,7 @@ function SearchFilters({
             Filters
           </CardTitle>
           <button
-            onClick={() => setIsExpanded(!isExpanded)}
+            onClick={() => { { setIsExpanded(!isExpanded);; }}}
             className="h-8 w-8 p-0 bg-transparent hover:bg-accent hover:text-accent-foreground rounded"
           >
             {isExpanded ? (
@@ -398,18 +394,16 @@ export function SearchInterface({
 
   // Filter results by type
   const filteredResults = useMemo(() => {
-    // Temporary fix - use empty array until search is properly implemented
-    const results: any[] = []
-    if (!results || results.length === 0) return []
+    if (!searchResults || searchResults.length === 0) return []
 
     if (activeTab === 'all') {
-      return results.filter(result =>
+      return searchResults.filter(result =>
         filters.types.length === 0 || filters.types.includes(result.type)
       )
     }
 
-    return results.filter(result => result.type === activeTab)
-  }, [activeTab, filters.types])
+    return searchResults.filter(result => result.type === activeTab)
+  }, [searchResults, activeTab, filters.types])
 
   // Get result counts by type
   const resultCounts = useMemo(() => {
@@ -422,9 +416,9 @@ export function SearchInterface({
     }
 
     // Temporary fix - use empty array until search is properly implemented
-    const results: any[] = []
+    const results: unknown[] = []
     if (results) {
-      results.forEach((result: any) => {
+      results.forEach((result: unknown) => {
         const type = result.type as SearchResultType
         if (type in counts) {
           counts[type]++
@@ -483,13 +477,13 @@ export function SearchInterface({
               type="text"
               placeholder="Search conversations, messages, agents, files..."
               value={query}
-              onChange={(e) => handleSearch(e.target.value)}
+              onChange={(e) => { { { handleSearch(e.target.value); ; ; }}}}
               className="pl-10 pr-10"
               autoFocus
             />
             {query && (
               <button
-                onClick={() => setQuery('')}
+                onClick={() => { { setQuery('');; }}}
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 bg-transparent hover:bg-accent hover:text-accent-foreground rounded"
               >
                 <X className="h-4 w-4" />
@@ -552,7 +546,7 @@ export function SearchInterface({
                     <p className="text-destructive mb-2">Search failed</p>
                     <p className="text-sm text-muted-foreground">{error.message}</p>
                     <button
-                      onClick={() => refetch()}
+                      onClick={() => { { refetch();; }}}
                       className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
                     >
                       Try Again
@@ -581,7 +575,7 @@ export function SearchInterface({
                         key={result.id}
                         result={result}
                         query={query}
-                        onClick={() => handleResultClick(result)}
+                        onClick={() => { { handleResultClick(result);; }}}
                         onBookmark={() => handleBookmarkToggle(result.id)}
                         isBookmarked={bookmarkedResults.has(result.id)}
                       />

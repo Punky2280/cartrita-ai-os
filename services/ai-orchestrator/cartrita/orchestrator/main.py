@@ -10,10 +10,11 @@ import asyncio
 import json
 import os
 import structlog
+import time
 import uvicorn
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
@@ -21,15 +22,15 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
 # Load environment variables from .env file
 from dotenv import load_dotenv
-load_dotenv("/home/robbie/cartrita-ai-os/.env")
 
-# Import core components with fallbacks
-try:
-    from cartrita.orchestrator.core.supervisor import (  # type: ignore
-        SupervisorOrchestrator,
-    )
-except ImportError:
-    SupervisorOrchestrator = None
+# Import core components
+from cartrita.orchestrator.core.supervisor import SupervisorOrchestrator
+
+# Load environment variables from current directory or /app/.env (for Docker)
+env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '.env')
+if not os.path.exists(env_path):
+    env_path = '/app/.env'
+load_dotenv(env_path)
 
 try:
     # Import core services with fallbacks
@@ -50,6 +51,18 @@ try:
     )
 except ImportError:
     MetricsCollector = None
+
+try:
+    from cartrita.orchestrator.providers.fallback_provider import (  # type: ignore
+        get_fallback_provider,
+        generate_fallback_response,
+    )
+    FALLBACK_PROVIDER_AVAILABLE = True
+except ImportError:
+    get_fallback_provider = None
+    generate_fallback_response = None
+    FALLBACK_PROVIDER_AVAILABLE = False
+    structlog.get_logger(__name__).warning("Fallback provider not available - install transformers and langchain for enhanced fallback capabilities")
 
 # Import agents with fallbacks
 try:
@@ -98,12 +111,48 @@ try:
         MessageRole,
     )
 except ImportError:
-    ChatRequest = None
-    ChatResponse = None
-    AgentStatusResponse = None
-    HealthResponse = None
-    Message = None
-    MessageRole = None
+    # Provide minimal fallbacks to avoid type annotation errors and keep endpoints functional
+    from enum import Enum
+
+    class MessageRole(str, Enum):
+        USER = "user"
+        ASSISTANT = "assistant"
+        SYSTEM = "system"
+
+    class Message(BaseModel):
+        role: MessageRole
+        content: str
+
+    class ChatRequest(BaseModel):
+        message: str
+        context: Optional[Dict[str, Any]] = None
+        agent_override: Optional[str] = None
+        stream: bool = False
+
+    class ChatResponse(BaseModel):
+        # Fields used across endpoints; additional fields allowed via optionals
+        response: str
+        conversation_id: str
+        agent_used: Optional[str] = None
+        agent_type: Optional[str] = None
+        timestamp: Optional[int] = None
+        messages: Optional[List[Message]] = None
+        context: Optional[Dict[str, Any]] = None
+        task_result: Optional[Any] = None
+        metadata: Optional[Dict[str, Any]] = None
+        processing_time: Optional[float] = None
+        token_usage: Optional[Dict[str, Any]] = None
+
+    class AgentStatusResponse(BaseModel):
+        # Keep flexible to match supervisor payloads
+        # Add fields as needed by your implementation
+        pass
+
+    class HealthResponse(BaseModel):
+        status: str
+        version: str
+        services: Dict[str, str]
+        timestamp: float
 
 
 # Voice Chat Request Model
@@ -140,7 +189,6 @@ try:
     from cartrita.orchestrator.utils.config import Settings  # type: ignore
 except ImportError:
     Settings = None
-
 try:
     from cartrita.orchestrator.utils.logger import (  # type: ignore
         setup_logging,
@@ -189,9 +237,18 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None]:
 
         # Initialize cache
         cache_manager = CacheManager(settings.redis.url)
+        await cache_manager.connect()
 
-        # Initialize metrics
-        # metrics_collector = MetricsCollector()
+        # Initialize metrics collector
+        from cartrita.orchestrator.core.metrics import MetricsCollector, MetricsConfig
+        metrics_config = MetricsConfig(
+            service_name="cartrita-ai-orchestrator",
+            enable_prometheus=True,
+            enable_tracing=True,
+            enable_metrics=True
+        )
+        metrics_collector = MetricsCollector(metrics_config)
+        await metrics_collector.initialize()
 
         # Initialize specialized agents
         # research_agent = ResearchAgent()
@@ -210,15 +267,15 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None]:
         # await task_agent.start()
 
         # Initialize GPT-4.1 Supervisor Orchestrator
-        supervisor = None  # SupervisorOrchestrator(
-        #     db_manager=db_manager,
-        #     cache_manager=cache_manager,
-        #     metrics_collector=metrics_collector,
-        #     settings=settings,
-        # )
+        supervisor = SupervisorOrchestrator(
+            db_manager=db_manager,
+            cache_manager=cache_manager,
+            metrics_collector=metrics_collector,
+            settings=settings,
+        )
 
         # Start background tasks
-        # await supervisor.start()
+        await supervisor.start()
 
         logger.info("✅ Cartrita AI Orchestrator started successfully")
 
@@ -260,6 +317,9 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None]:
         if cache_manager:
             await cache_manager.disconnect()
 
+        if metrics_collector:
+            await metrics_collector.shutdown()
+
         logger.info("✅ Cartrita AI Orchestrator shutdown complete")
 
 
@@ -284,16 +344,72 @@ app = FastAPI(
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure for production
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:3003",  # For Turbopack dev server
+        "https://cartrita-ai-os.com"
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
 # Trusted host middleware
+# Trusted host middleware - restrict to known hosts (configurable)
 app.add_middleware(
-    TrustedHostMiddleware, allowed_hosts=["*"]  # Configure for production
+    TrustedHostMiddleware,
+    allowed_hosts=[
+        "localhost",
+        "127.0.0.1",
+        "cartrita-ai-os.com",
+        "*.cartrita-ai-os.com",
+    ],
 )
+
+
+# ============================================
+# Metrics Middleware
+# ============================================
+
+@app.middleware("http")
+async def metrics_middleware(request: Request, call_next):
+    """Middleware to automatically record metrics for all HTTP requests."""
+    start_time = time.time()
+
+    try:
+        response = await call_next(request)
+
+        # Record successful request metrics
+        if metrics_collector and metrics_collector.is_healthy():
+            duration = time.time() - start_time
+            await metrics_collector.record_request(
+                method=request.method,
+                endpoint=str(request.url.path),
+                status=response.status_code,
+                duration=duration
+            )
+
+        return response
+
+    except Exception as e:
+        # Record error metrics
+        if metrics_collector and metrics_collector.is_healthy():
+            duration = time.time() - start_time
+            status_code = getattr(e, 'status_code', 500)
+            await metrics_collector.record_request(
+                method=request.method,
+                endpoint=str(request.url.path),
+                status=status_code,
+                duration=duration
+            )
+            await metrics_collector.record_error(
+                error_type=type(e).__name__.lower(),
+                endpoint=str(request.url.path)
+            )
+
+        raise
+
 
 # ============================================
 # Request/Response Models
@@ -399,7 +515,7 @@ async def root():
                 "stats": "/api/admin/stats"
             }
         },
-        "frontend": "http://localhost:3001",
+        "frontend": "http://localhost:3001 (or 3003 with Turbopack)",
         "documentation": "Available at /docs"
     }
 
@@ -412,39 +528,138 @@ async def root():
 @app.get("/health", response_model=HealthResponse)
 async def health_check():
     """Comprehensive health check endpoint."""
+    start_time = time.time()
+
     if not all([supervisor, db_manager, cache_manager]):
+        if metrics_collector:
+            duration = time.time() - start_time
+            await metrics_collector.record_request("GET", "/health", 503, duration)
+            await metrics_collector.record_error("service_not_ready", "/health")
         raise HTTPException(status_code=503, detail="Service not ready")
 
-    # Check database connectivity
-    db_healthy = await db_manager.health_check()
+    try:
+        # Check database connectivity
+        db_healthy = await db_manager.health_check()
 
-    # Check cache connectivity
-    cache_healthy = await cache_manager.health_check()
+        # Check cache connectivity
+        cache_healthy = await cache_manager.health_check()
 
-    # Check supervisor status
-    supervisor_healthy = await supervisor.health_check()
+        # Check supervisor status
+        supervisor_healthy = await supervisor.health_check()
 
-    overall_healthy = all([db_healthy, cache_healthy, supervisor_healthy])
+        # Check fallback provider status
+        fallback_healthy = False
+        if FALLBACK_PROVIDER_AVAILABLE and get_fallback_provider:
+            try:
+                provider = get_fallback_provider()
+                capabilities = provider.get_capabilities_info()
+                # Consider fallback healthy if at least one provider is available
+                fallback_healthy = any([
+                    capabilities.get("openai_available", False),
+                    capabilities.get("huggingface_available", False),
+                    capabilities.get("rule_based_available", False),
+                    capabilities.get("emergency_template_available", False)
+                ])
+            except Exception as e:
+                logger.warning(f"Fallback provider health check failed: {e}")
+                fallback_healthy = False
 
-    return HealthResponse(
-        status="healthy" if overall_healthy else "unhealthy",
-        version="2.0.0",
-        services={
-            "database": "healthy" if db_healthy else "unhealthy",
-            "cache": "healthy" if cache_healthy else "unhealthy",
-            "supervisor": "healthy" if supervisor_healthy else "unhealthy",
-        },
-        timestamp=asyncio.get_event_loop().time(),
-    )
+        # Core services must be healthy, fallback is supplementary
+        core_healthy = all([db_healthy, cache_healthy, supervisor_healthy])
+        overall_healthy = core_healthy  # Fallback failure doesn't make service unhealthy
+        status_code = 200 if overall_healthy else 503
+
+        response = HealthResponse(
+            status="healthy" if overall_healthy else "unhealthy",
+            version="2.0.0",
+            services={
+                "database": "healthy" if db_healthy else "unhealthy",
+                "cache": "healthy" if cache_healthy else "unhealthy",
+                "supervisor": "healthy" if supervisor_healthy else "unhealthy",
+                "fallback_provider": "healthy" if fallback_healthy else "degraded",
+            },
+            timestamp=asyncio.get_event_loop().time(),
+        )
+
+        # Record metrics
+        if metrics_collector:
+            duration = time.time() - start_time
+            await metrics_collector.record_request("GET", "/health", status_code, duration)
+
+        if not overall_healthy:
+            raise HTTPException(status_code=503, detail="Service unhealthy")
+
+        return response
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        if metrics_collector:
+            duration = time.time() - start_time
+            await metrics_collector.record_request("GET", "/health", 500, duration)
+            await metrics_collector.record_error("health_check_failed", "/health")
+        logger.error("Health check failed", error=str(e))
+        raise HTTPException(status_code=500, detail="Health check failed") from e
 
 
 @app.get("/metrics")
 async def metrics():
-    """Prometheus metrics endpoint."""
+    """Prometheus metrics endpoint with proper error handling."""
     if not metrics_collector:
-        raise HTTPException(status_code=503, detail="Metrics not available")
+        logger.warning("Metrics collector not available")
+        return JSONResponse(
+            status_code=503,
+            content={
+                "error": "Metrics not available",
+                "message": "Metrics collector is not initialized",
+                "status": "service_unavailable"
+            }
+        )
 
-    return await metrics_collector.get_metrics()
+    try:
+        # Check if metrics collector is healthy
+        if not metrics_collector.is_healthy():
+            logger.warning("Metrics collector is not healthy")
+            return JSONResponse(
+                status_code=503,
+                content={
+                    "error": "Metrics collector unhealthy",
+                    "status": metrics_collector.get_status(),
+                    "message": "Metrics collection is currently unavailable"
+                }
+            )
+
+        # Get metrics data
+        metrics_data = await metrics_collector.get_metrics()
+
+        if metrics_data is None:
+            # Return basic health metrics as fallback
+            return JSONResponse(
+                content={
+                    "service": "cartrita-ai-orchestrator",
+                    "status": "healthy",
+                    "message": "Metrics collection is available but no data collected yet",
+                    "collector_status": metrics_collector.get_status()
+                }
+            )
+
+        # Return Prometheus format metrics
+        from fastapi.responses import Response
+        return Response(
+            content=metrics_data,
+            media_type="text/plain; version=0.0.4; charset=utf-8"
+        )
+
+    except Exception as e:
+        logger.error("Failed to retrieve metrics", error=str(e), exc_info=True)
+        return JSONResponse(
+            status_code=500,
+            content={
+                "error": "Metrics retrieval failed",
+                "message": str(e),
+                "status": "internal_error"
+            }
+        )
 
 
 # ============================================
@@ -454,35 +669,89 @@ async def metrics():
 
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat(
-    request, api_key: str = Depends(verify_api_key)
+    request: ChatRequest, api_key: str = Depends(verify_api_key)
 ):
-    """Main chat endpoint with GPT-4.1 orchestration."""
-    if not supervisor:
-        raise HTTPException(status_code=503, detail="Supervisor not available")
+    """Main chat endpoint with GPT-4.1 orchestration and intelligent fallback."""
+    start_time = time.time()
 
-    try:
-        # Record request metrics
-        if metrics_collector:
-            await metrics_collector.record_request(request, api_key)
+    # Try primary supervisor first
+    if supervisor:
+        try:
+            # Process through GPT-4.1 supervisor
+            response = await supervisor.process_chat_request(
+                message=request.message,
+                context=request.context,
+                agent_override=request.agent_override,
+                stream=request.stream,
+                api_key=api_key,
+            )
 
-        # Process through GPT-4.1 supervisor
-        response = await supervisor.process_chat_request(
-            message=request.message,
-            context=request.context,
-            agent_override=request.agent_override,
-            stream=request.stream,
-            api_key=api_key,
-        )
+            # Record successful request metrics
+            if metrics_collector:
+                duration = time.time() - start_time
+                await metrics_collector.record_request(
+                    method="POST",
+                    endpoint="/api/chat",
+                    status=200,
+                    duration=duration
+                )
 
-        # Record response metrics
-        if metrics_collector:
-            await metrics_collector.record_response(response)
+            return response
 
-        return response
+        except Exception as e:
+            logger.warning(f"Supervisor failed, trying fallback provider: {str(e)}")
+            # Continue to fallback logic below
 
-    except Exception as e:
-        logger.error("Chat request failed", error=str(e), api_key=api_key[:8] + "...")
-        raise HTTPException(status_code=500, detail="Chat processing failed") from e
+    # Fallback: Use fallback provider when supervisor is unavailable or fails
+    if FALLBACK_PROVIDER_AVAILABLE and generate_fallback_response:
+        try:
+            logger.info("Using fallback provider for chat response")
+
+            # Generate fallback response
+            fallback_result = await generate_fallback_response(
+                user_input=request.message,
+                context=request.context or {}
+            )
+
+            # Create ChatResponse in the expected format
+            response = ChatResponse(
+                response=fallback_result["response"],
+                conversation_id="fallback-" + str(int(time.time())),
+                agent_used="fallback",
+                timestamp=int(time.time()),
+                metadata={
+                    **fallback_result["metadata"],
+                    "fallback_used": True,
+                    "supervisor_available": supervisor is not None
+                }
+            )
+
+            # Record fallback usage metrics
+            if metrics_collector:
+                duration = time.time() - start_time
+                await metrics_collector.record_request(
+                    method="POST",
+                    endpoint="/api/chat",
+                    status=200,
+                    duration=duration
+                )
+                await metrics_collector.record_error("fallback_used", "/api/chat")
+
+            logger.info(f"Fallback response generated using {fallback_result['metadata']['provider_used']}")
+            return response
+
+        except Exception as fallback_error:
+            logger.error(f"Fallback provider failed: {str(fallback_error)}")
+            # Continue to final error handling
+
+    # Final fallback: Return error if everything fails
+    if metrics_collector:
+        await metrics_collector.record_error("all_providers_failed", "/api/chat")
+
+    raise HTTPException(
+        status_code=503,
+        detail="Chat service temporarily unavailable - all providers failed"
+    )
 
 
 @app.post("/api/chat/voice", response_model=ChatResponse)
@@ -598,9 +867,7 @@ async def chat_stream(
     agent_override: Optional[str] = None,
     api_key: str = Depends(verify_api_key)
 ):
-    """SSE endpoint for streaming chat responses."""
-    if not supervisor:
-        raise HTTPException(status_code=503, detail="Supervisor not available")
+    """SSE endpoint for streaming chat responses with intelligent fallback."""
 
     async def generate():
         try:
@@ -612,18 +879,63 @@ async def chat_stream(
                 except json.JSONDecodeError:
                     context_dict = {"raw_context": context}
 
-            # Process through supervisor (currently non-streaming)
-            response = await supervisor.process_chat_request(
-                message=message,
-                context=context_dict,
-                agent_override=agent_override,
-                stream=False,  # Supervisor doesn't support streaming yet
-                api_key=api_key,
-            )
+            response = None
 
-            # Send response as SSE event
-            yield f"data: {json.dumps(response)}\n\n"
-            yield "data: [DONE]\n\n"
+            # Try primary supervisor first
+            if supervisor:
+                try:
+                    response = await supervisor.process_chat_request(
+                        message=message,
+                        context=context_dict,
+                        agent_override=agent_override,
+                        stream=False,  # Supervisor doesn't support streaming yet
+                        api_key=api_key,
+                    )
+                except Exception as e:
+                    logger.warning(f"Supervisor failed in streaming, trying fallback: {str(e)}")
+                    response = None
+
+            # Fallback: Use fallback provider if supervisor fails or unavailable
+            if not response and FALLBACK_PROVIDER_AVAILABLE and generate_fallback_response:
+                try:
+                    logger.info("Using fallback provider for streaming response")
+
+                    fallback_result = await generate_fallback_response(
+                        user_input=message,
+                        context=context_dict
+                    )
+
+                    # Create ChatResponse format for streaming
+                    response = ChatResponse(
+                        response=fallback_result["response"],
+                        conversation_id="fallback-stream-" + str(int(time.time())),
+                        agent_used="fallback",
+                        timestamp=int(time.time()),
+                        metadata={
+                            **fallback_result["metadata"],
+                            "fallback_used": True,
+                            "supervisor_available": supervisor is not None,
+                            "streaming": True
+                        }
+                    )
+
+                except Exception as fallback_error:
+                    logger.error(f"Fallback provider failed in streaming: {str(fallback_error)}")
+                    yield f"data: {json.dumps({'error': 'All providers failed', 'details': 'Both supervisor and fallback provider are unavailable'})}\n\n"
+                    return
+
+            if response:
+                # Send response as SSE event (convert Pydantic model to JSON)
+                if hasattr(response, 'model_dump_json'):
+                    response_json = response.model_dump_json()
+                elif hasattr(response, 'json'):
+                    response_json = response.json()
+                else:
+                    response_json = json.dumps(response, default=str)
+                yield f"data: {response_json}\n\n"
+                yield "data: [DONE]\n\n"
+            else:
+                yield f"data: {json.dumps({'error': 'No providers available', 'details': 'All chat providers are currently unavailable'})}\n\n"
 
         except Exception as e:
             logger.error("Streaming chat failed", error=str(e))
@@ -675,13 +987,20 @@ async def voice_chat_stream(
             )
 
             # Send response as SSE event with voice-specific metadata
+            if hasattr(response, 'model_dump'):
+                response_dict = response.model_dump()
+            elif hasattr(response, 'dict'):
+                response_dict = response.dict()
+            else:
+                response_dict = response
+
             event_data = {
-                **response,
+                **response_dict,
                 "conversationId": conversationId,
                 "timestamp": asyncio.get_event_loop().time(),
                 "voiceMode": True
             }
-            yield f"data: {json.dumps(event_data)}\n\n"
+            yield f"data: {json.dumps(event_data, default=str)}\n\n"
             yield "data: [DONE]\n\n"
 
         except Exception as e:
@@ -809,7 +1128,7 @@ if __name__ == "__main__":
     # Development server configuration
     uvicorn.run(
         "cartrita.orchestrator.main:app",
-        host="0.0.0.0",
+        host="127.0.0.1",  # Bind to localhost for security
         port=int(os.getenv("AI_ORCHESTRATOR_PORT", "8000")),
         reload=True,
         log_level="info",

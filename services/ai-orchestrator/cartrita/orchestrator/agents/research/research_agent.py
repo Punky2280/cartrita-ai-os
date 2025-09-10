@@ -12,7 +12,6 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
-from cartrita.orchestrator.utils.config import settings
 
 # Configure logger
 logger = structlog.get_logger(__name__)
@@ -65,10 +64,14 @@ class ResearchAgent:
         tavily_api_key: str | None = None,
     ):
         """Initialize the research agent."""
+        # Get settings with proper initialization
+        from cartrita.orchestrator.utils.config import get_settings
+        _settings = get_settings()
+        
         self.model = model
-        self.api_key = api_key or settings.ai.openai_api_key
+        self.api_key = api_key or _settings.ai.openai_api_key
         self.tavily_api_key = tavily_api_key or getattr(
-            settings.external, "tavily_api_key", None
+            _settings.external, "tavily_api_key", None
         )
 
         # Initialize LLM

@@ -16,15 +16,22 @@ import structlog
 try:
     from langchain_core.messages import HumanMessage, SystemMessage
 except ImportError as e:
-    logger.error("Failed to import langchain_core.messages", error=str(e))
-    raise  # Or handle gracefully, e.g., set to None and check later
+    # Defer logging until logger is configured below
+    _import_error = e  # store for later
+    HumanMessage = None  # type: ignore
+    SystemMessage = None  # type: ignore
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
-from cartrita.orchestrator.utils.config import settings
 
 # Configure logger
 logger = structlog.get_logger(__name__)
+
+# Log deferred import error if present
+_tmp_err = globals().get("_import_error")
+if _tmp_err is not None:
+    logger.error("Failed to import langchain_core.messages", error=str(_tmp_err))
+    _import_error = None
 
 
 # ============================================
@@ -124,17 +131,21 @@ class CodeAgent:
 
     def __init__(
         self,
-        model: str = settings.ai.agent_model,
+        model: str | None = None,
         api_key: str | None = None,
     ):
-        self.model = model
-        self.api_key = api_key or settings.ai.openai_api_key.get_secret_value()
+        # Get settings with proper initialization
+        from cartrita.orchestrator.utils.config import get_settings
+        _settings = get_settings()
+        
+        self.model = model or _settings.ai.agent_model
+        self.api_key = api_key or _settings.ai.openai_api_key.get_secret_value()
 
         # Initialize GPT-5 code model
         self.code_llm = ChatOpenAI(
             model=self.model,
             temperature=0.2,  # Slightly higher temperature for creative code generation
-            max_tokens=8192,  # Higher token limit for code generation
+            max_completion_tokens=8192,  # Higher token limit for code generation
             openai_api_key=self.api_key,
         )
 

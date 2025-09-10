@@ -34,11 +34,26 @@ def setup_logging(
 
     # Use settings if not provided
     if level is None:
-        level = getattr(settings.monitoring, "log_level", "INFO")
+        try:
+            from cartrita.orchestrator.utils.config import get_settings
+            _settings = get_settings()
+            level = getattr(_settings.monitoring, "log_level", "INFO")
+        except Exception:
+            level = "INFO"
     if format_type is None:
-        format_type = getattr(settings.monitoring, "log_format", "json")
+        try:
+            from cartrita.orchestrator.utils.config import get_settings
+            _settings = get_settings()
+            format_type = getattr(_settings.monitoring, "log_format", "json")
+        except Exception:
+            format_type = "json"
     if log_file is None:
-        log_file = getattr(settings.monitoring, "log_file", None)
+        try:
+            from cartrita.orchestrator.utils.config import get_settings
+            _settings = get_settings()
+            log_file = getattr(_settings.monitoring, "log_file", None)
+        except Exception:
+            log_file = None
 
     # Ensure level is a string
     if not isinstance(level, str):

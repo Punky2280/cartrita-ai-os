@@ -1,9 +1,9 @@
 // Cartrita AI OS - File Upload Component
 // Advanced file upload with drag-and-drop, progress tracking, and preview
 
-'use client'
 
 import { useState, useRef, useCallback } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
 import {
@@ -15,15 +15,12 @@ import {
   Music,
   FileText,
   Archive,
-  CheckCircle,
   AlertCircle,
   Loader2,
-  Download,
-  Eye,
-  Trash2
+  Eye
 } from 'lucide-react'
 import { cn, formatFileSize, getFileExtension, isImageFile } from '@/utils'
-import { Progress, Badge, Card, CardContent, Alert, AlertDescription } from '@/components/ui'
+import { Progress, Alert, AlertDescription } from '@/components/ui'
 import { useFileUpload, useMultipleFileUpload } from '@/hooks'
 
 // File type icons
@@ -83,11 +80,13 @@ function FilePreview({
           <div className="flex-shrink-0">
             {preview ? (
               <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-muted">
-                <img
+                <Image
                   src={preview}
                   alt={file.name}
+                  width={48}
+                  height={48}
                   className="w-full h-full object-cover cursor-pointer"
-                  onClick={() => setShowPreview(true)}
+                  onClick={() => { { setShowPreview(true);; }}}
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                   <Eye className="h-4 w-4 text-white opacity-0 group-hover:opacity-100" />
@@ -123,7 +122,7 @@ function FilePreview({
             {preview && (
               <button
                 className="h-8 w-8 p-0"
-                onClick={() => setShowPreview(true)}
+                onClick={() => { { setShowPreview(true);; }}}
               >
                 <Eye className="h-4 w-4" />
               </button>
@@ -149,7 +148,7 @@ function FilePreview({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
-            onClick={() => setShowPreview(false)}
+            onClick={() => { { setShowPreview(false);; }}}
           >
             <motion.div
               initial={{ scale: 0.9 }}
@@ -158,14 +157,16 @@ function FilePreview({
               className="relative max-w-4xl max-h-full"
               onClick={(e) => e.stopPropagation()}
             >
-              <img
+              <Image
                 src={preview}
                 alt={file.name}
+                width={800}
+                height={600}
                 className="max-w-full max-h-full object-contain rounded-lg"
               />
               <button
                 className="h-8 w-8 p-0"
-                onClick={() => setShowPreview(false)}
+                onClick={() => { { setShowPreview(false);; }}}
               >
                 <X className="h-4 w-4" />
               </button>
@@ -307,7 +308,7 @@ export function FileUpload({
     const valid: File[] = []
     const errors: string[] = []
 
-    files.forEach((file, index) => {
+    files.forEach((file) => {
       // Check file size
       if (file.size > maxSize) {
         errors.push(`${file.name}: File size exceeds ${formatFileSize(maxSize)}`)
@@ -372,7 +373,7 @@ export function FileUpload({
           toast.success(`${selectedFiles.length} files uploaded successfully`)
         }
       }
-    } catch (error) {
+    } catch {
       toast.error('Upload failed')
     }
   }, [selectedFiles, uploadFile, uploadMultipleFiles])
@@ -408,7 +409,7 @@ export function FileUpload({
               </h4>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={handleUpload}
+                  onClick={() => { { { handleUpload();;; }}}}
                   disabled={uploadFile.isPending || uploadMultipleFiles.isPending}
                 >
                   {uploadFile.isPending || uploadMultipleFiles.isPending ? (

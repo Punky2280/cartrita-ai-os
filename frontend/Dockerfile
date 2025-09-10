@@ -17,8 +17,8 @@ FROM base AS deps
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies (generate package-lock.json if missing)
-RUN npm install --only=production --no-audit --no-fund --legacy-peer-deps
+# Install all dependencies (dev + prod) for build tools like TypeScript/ESLint
+RUN npm ci --no-audit --no-fund --legacy-peer-deps || npm install --no-audit --no-fund --legacy-peer-deps
 
 # ============================================
 # BUILDER STAGE

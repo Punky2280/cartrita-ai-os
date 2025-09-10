@@ -14,7 +14,6 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
-from cartrita.orchestrator.utils.config import settings
 
 # Configure logger
 logger = structlog.get_logger(__name__)
@@ -108,19 +107,23 @@ class TaskAgent:
 
     def __init__(
         self,
-        model: str = settings.ai.agent_model,
+        model: str | None = None,
         api_key: str | None = None,
         db_manager: Any | None = None,
     ):
-        self.model = model
-        self.api_key = api_key or settings.ai.openai_api_key.get_secret_value()
+        # Get settings with proper initialization
+        from cartrita.orchestrator.utils.config import get_settings
+
+        _settings = get_settings()
+        self.model = model or _settings.ai.agent_model
+        self.api_key = api_key or _settings.ai.openai_api_key.get_secret_value()
         self.db_manager = db_manager
 
         # Initialize GPT-5 task model
         self.task_llm = ChatOpenAI(
             model=self.model,
             temperature=0.2,  # Moderate temperature for creative planning
-            max_tokens=4096,
+            max_completion_tokens=4096,
             openai_api_key=self.api_key,
         )
 

@@ -4,13 +4,10 @@ Cartrita AI OS - Command Line Interface
 Main entry point for the Cartrita CLI
 """
 
-import asyncio
 import sys
-from typing import Optional
 
 import typer
 import uvicorn
-from rich import print as rich_print
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table

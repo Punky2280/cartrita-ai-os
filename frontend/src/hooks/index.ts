@@ -2,7 +2,7 @@
 // Comprehensive data fetching and mutation hooks
 
 import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query'
-import { useAtomValue, useSetAtom, useAtom } from 'jotai'
+import { useSetAtom, useAtomValue } from 'jotai'
 import { toast } from 'sonner'
 import { apiClient } from '@/services/api'
 import {
@@ -10,41 +10,22 @@ import {
   conversationsAtom,
   currentConversationIdAtom,
   messagesAtom,
-  streamingMessageAtom,
   agentsAtom,
-  workspacesAtom,
-  pluginsAtom,
-  notificationsAtom,
   searchResultsAtom,
   searchLoadingAtom,
-  searchErrorAtom,
   authTokenAtom,
   isLoadingAuthAtom,
-  authErrorAtom,
-  conversationsLoadingAtom,
-  conversationsErrorAtom,
   agentsLoadingAtom,
-  agentsErrorAtom,
-  workspacesLoadingAtom,
-  workspacesErrorAtom,
-  pluginsLoadingAtom,
-  notificationsLoadingAtom,
   messagesLoadingAtom,
-  messagesErrorAtom,
   settingsAtom
 } from '@/stores'
 import type {
   User,
   Conversation,
-  Message,
-  Agent,
-  Workspace,
-  Plugin,
-  Notification,
-  ChatRequest,
   SearchFilters,
   VoiceSettings,
-  ThemeConfig
+  ThemeConfig,
+  ApiResponse
 } from '@/types'
 
 // Query Keys
@@ -77,7 +58,7 @@ export function useAuth() {
     onMutate: () => {
       setIsLoading(true)
     },
-    onSuccess: (response: any) => {
+    onSuccess: (response: ApiResponse<{ user: User; token: string }>) => {
       if (response.success && response.data) {
         setUser(response.data.user)
         setAuthToken(response.data.token)
@@ -85,7 +66,7 @@ export function useAuth() {
         toast.success('Login successful')
       }
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error(error.message || 'Login failed')
     },
     onSettled: () => {
@@ -99,7 +80,7 @@ export function useAuth() {
     onMutate: () => {
       setIsLoading(true)
     },
-    onSuccess: (response: any) => {
+    onSuccess: (response: ApiResponse<{ user: User; token: string }>) => {
       if (response.success && response.data) {
         setUser(response.data.user)
         setAuthToken(response.data.token)
@@ -107,7 +88,7 @@ export function useAuth() {
         toast.success('Registration successful')
       }
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error(error.message || 'Registration failed')
     },
     onSettled: () => {
@@ -123,7 +104,7 @@ export function useAuth() {
       apiClient.removeAuthToken()
       toast.success('Logged out successfully')
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error('Logout failed')
     }
   })
@@ -151,14 +132,14 @@ export function useUser() {
   const updatePreferencesMutation = useMutation({
     mutationFn: (preferences: Partial<User['preferences']>) =>
       apiClient.updateUserPreferences(preferences),
-    onSuccess: (response: any) => {
+    onSuccess: (response: unknown) => {
       if (response.success && response.data) {
         setUser(response.data)
-        queryClient.invalidateQueries({ queryKey: queryKeys.user })
+        void void queryClient.invalidateQueries({ queryKey: queryKeys.user })
         toast.success('Preferences updated')
       }
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error('Failed to update preferences')
     }
   })
@@ -166,14 +147,14 @@ export function useUser() {
   const updateThemeMutation = useMutation({
     mutationFn: (themeConfig: ThemeConfig) =>
       apiClient.updateThemeConfig(themeConfig),
-    onSuccess: (response: any) => {
+    onSuccess: (response: ApiResponse<User>) => {
       if (response.success && response.data) {
         setUser(response.data)
-        queryClient.invalidateQueries({ queryKey: queryKeys.user })
+        void void queryClient.invalidateQueries({ queryKey: queryKeys.user })
         toast.success('Theme updated')
       }
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error('Failed to update theme')
     }
   })
@@ -181,14 +162,14 @@ export function useUser() {
   const updateVoiceSettingsMutation = useMutation({
     mutationFn: (voiceSettings: VoiceSettings) =>
       apiClient.updateVoiceSettings(voiceSettings),
-    onSuccess: (response: any) => {
+    onSuccess: (response: ApiResponse<User>) => {
       if (response.success && response.data) {
         setUser(response.data)
-        queryClient.invalidateQueries({ queryKey: queryKeys.user })
+        void void queryClient.invalidateQueries({ queryKey: queryKeys.user })
         toast.success('Voice settings updated')
       }
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error('Failed to update voice settings')
     }
   })
@@ -207,9 +188,6 @@ export function useUser() {
 
 // Conversations Hooks
 export function useConversations(filters?: SearchFilters) {
-  const setConversations = useSetAtom(conversationsAtom)
-  const setLoading = useSetAtom(conversationsLoadingAtom)
-
   return useQuery({
     queryKey: [...queryKeys.conversations, filters],
     queryFn: () => apiClient.getConversations(filters),
@@ -243,19 +221,19 @@ export function useCreateConversation() {
       workspaceId?: string
       initialMessage?: string
     }) => apiClient.createConversation(data),
-    onSuccess: (response: any) => {
+    onSuccess: (response: unknown) => {
       if (response.success && response.data) {
         // Add to conversations list
         setConversations(prev => [response.data, ...prev])
         setCurrentConversationId(response.data.id)
 
         // Invalidate related queries
-        queryClient.invalidateQueries({ queryKey: queryKeys.conversations })
+        void void queryClient.invalidateQueries({ queryKey: queryKeys.conversations })
 
         toast.success('Conversation created')
       }
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error('Failed to create conversation')
     }
   })
@@ -273,7 +251,7 @@ export function useUpdateConversation() {
       id: string
       updates: Partial<Pick<Conversation, 'title' | 'isArchived' | 'tags'>>
     }) => apiClient.updateConversation(id, updates),
-    onSuccess: (response: any, { id }) => {
+    onSuccess: (response: unknown, { id }) => {
       if (response.success && response.data) {
         // Update in conversations list
         setConversations(prev =>
@@ -286,7 +264,7 @@ export function useUpdateConversation() {
         toast.success('Conversation updated')
       }
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error('Failed to update conversation')
     }
   })
@@ -312,7 +290,7 @@ export function useDeleteConversation() {
 
       toast.success('Conversation deleted')
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error('Failed to delete conversation')
     }
   })
@@ -346,7 +324,7 @@ export function useInfiniteMessages(conversationId: string, limit = 50) {
       apiClient.getMessages(conversationId, { limit, offset: pageParam }),
     initialPageParam: 0,
     enabled: !!conversationId,
-    getNextPageParam: (lastPage: any, allPages) => {
+    getNextPageParam: (lastPage: unknown, allPages) => {
       if (lastPage.data && lastPage.data.length === limit) {
         return allPages.length * limit
       }
@@ -375,7 +353,7 @@ export function useInfiniteMessages(conversationId: string, limit = 50) {
 //       conversationId: string
 //       message: ChatRequest
 //     }) => apiClient.sendMessage(conversationId, message),
-//     onSuccess: (response: any, { conversationId }) => {
+//     onSuccess: (response: unknown, { conversationId }) => {
 //       if (response.success && response.data) {
 //         // Add the response message to the conversation
 //         const newMessage: Message = {
@@ -390,7 +368,7 @@ export function useInfiniteMessages(conversationId: string, limit = 50) {
 //         // Update messages cache
 //         queryClient.setQueryData(
 //           queryKeys.messages(conversationId),
-//           (old: any) => ({
+//           (old: unknown) => ({
 //             ...old,
 //             data: [...(old?.data || []), newMessage]
 //           })
@@ -400,12 +378,12 @@ export function useInfiniteMessages(conversationId: string, limit = 50) {
 //         setStreamingMessage(null)
 
 //         // Update conversation's last message timestamp
-//         queryClient.invalidateQueries({
+//         void void queryClient.invalidateQueries({
 //           queryKey: queryKeys.conversation(conversationId)
 //         })
 //       }
 //     },
-//     onError: (error: any) => {
+//     onError: (error: unknown) => {
 //       setStreamingMessage(null)
 //       toast.error('Failed to send message')
 //     }
@@ -424,7 +402,7 @@ export function useInfiniteMessages(conversationId: string, limit = 50) {
 //       conversationId: string
 //       message: ChatRequest
 //     }) => {
-//       const chunks: any[] = []
+//       const chunks: unknown[] = []
 //       for await (const chunk of apiClient.streamChat(conversationId, message)) {
 //         chunks.push(chunk)
 //         setStreamingMessage(chunk)
@@ -448,7 +426,7 @@ export function useInfiniteMessages(conversationId: string, limit = 50) {
 //         // This will be handled by the component that uses this hook
 //       }
 //     },
-//     onError: (error: any) => {
+//     onError: (error: unknown) => {
 //       setStreamingMessage(null)
 //       toast.error('Streaming failed')
 //     }
@@ -480,9 +458,6 @@ export function useAgent(id: string) {
 
 // Workspaces Hooks
 export function useWorkspaces() {
-  const setWorkspaces = useSetAtom(workspacesAtom)
-  const setLoading = useSetAtom(workspacesLoadingAtom)
-
   return useQuery({
     queryKey: queryKeys.workspaces,
     queryFn: () => apiClient.getWorkspaces(),
@@ -492,9 +467,6 @@ export function useWorkspaces() {
 
 // Plugins Hooks
 export function usePlugins() {
-  const setPlugins = useSetAtom(pluginsAtom)
-  const setLoading = useSetAtom(pluginsLoadingAtom)
-
   return useQuery({
     queryKey: queryKeys.plugins,
     queryFn: () => apiClient.getPlugins(),
@@ -504,9 +476,6 @@ export function usePlugins() {
 
 // Notifications Hooks
 export function useNotifications() {
-  const setNotifications = useSetAtom(notificationsAtom)
-  const setLoading = useSetAtom(notificationsLoadingAtom)
-
   return useQuery({
     queryKey: queryKeys.notifications,
     queryFn: () => apiClient.getNotifications(),
@@ -594,7 +563,7 @@ export function useTranscribeAudio() {
     onSuccess: () => {
       toast.success('Audio transcribed successfully')
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error('Audio transcription failed')
     }
   })
@@ -612,7 +581,7 @@ export function useGenerateSpeech() {
     onSuccess: () => {
       toast.success('Speech generated successfully')
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error('Speech generation failed')
     }
   })
@@ -647,7 +616,7 @@ export function useUpdateSettings() {
   const setSettings = useSetAtom(settingsAtom)
 
   return useMutation({
-    mutationFn: async (updates: any) => {
+    mutationFn: async (updates: Partial<User['preferences']>) => {
       // Handle different types of updates
       if (updates.theme || updates.notifications || updates.privacy) {
         // User preferences update
@@ -658,9 +627,9 @@ export function useUpdateSettings() {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.user })
+      void void queryClient.invalidateQueries({ queryKey: queryKeys.user })
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error('Failed to update settings')
     }
   })

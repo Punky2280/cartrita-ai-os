@@ -114,7 +114,7 @@ export const searchFiltersAtom = atom<SearchFilters>({
   dateRange: 'all',
   sortBy: 'relevance'
 })
-export const searchResultsAtom = atom<any[]>([])
+export const searchResultsAtom = atom<unknown[]>([])
 export const searchLoadingAtom = atom(false)
 export const searchErrorAtom = atom<string | null>(null)
 
@@ -140,7 +140,7 @@ export const transcriptionLoadingAtom = atom(false)
 export const modalStackAtom = atom<Array<{
   id: string
   type: string
-  props?: Record<string, any>
+  props?: Record<string, unknown>
 }>>([])
 export const activeModalAtom = atom((get) => {
   const stack = get(modalStackAtom)
@@ -178,7 +178,7 @@ export const performanceMetricsAtom = atom({
 })
 
 // Cache state
-export const cacheAtom = atom<Map<string, any>>(new Map())
+export const cacheAtom = atom<Map<string, unknown>>(new Map())
 export const cacheTimestampsAtom = atom<Map<string, number>>(new Map())
 
 // Derived atoms for computed state
@@ -225,7 +225,7 @@ export const agentStatsAtom = atom((get) => {
 })
 
 // Optimistic updates
-export const optimisticUpdatesAtom = atom<Map<string, any>>(new Map())
+export const optimisticUpdatesAtom = atom<Map<string, unknown>>(new Map())
 
 // Pending operations
 export const pendingOperationsAtom = atom(new Set<string>())

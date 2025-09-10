@@ -16,6 +16,7 @@ export interface VoiceOutputOptions {
   voice?: string
   speed?: number
   volume?: number
+  pitch?: number
   priority?: 'low' | 'normal' | 'high'
 }
 
@@ -44,7 +45,8 @@ export class VoiceOutputService {
         language: 'en',
         voice: options.voice || 'aura-asteria-en',
         speed: options.speed || 1.0,
-        volume: options.volume || 80
+        volume: options.volume || 80,
+        pitch: options.pitch || 1.0
       },
       priority: options.priority || 'normal',
       timestamp: Date.now()
@@ -116,7 +118,8 @@ export class VoiceOutputService {
       language: 'en',
       voice: options.voice || 'aura-asteria-en',
       speed: options.speed || 1.0,
-      volume: options.volume || 80
+      volume: options.volume || 80,
+      pitch: options.pitch || 1.0
     }
 
     await this.voiceService.synthesizeSpeech(text, {

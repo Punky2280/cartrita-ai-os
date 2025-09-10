@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Bot, MessageSquare, Settings, Search, Mic, FileText, BarChart3 } from 'lucide-react';
+import { cn } from '@/utils';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -25,10 +26,13 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   return (
     <motion.div
-      initial={{ x: -320 }}
-      animate={{ x: isOpen ? 0 : -320 }}
+      initial={{ width: 0 }}
+      animate={{ width: isOpen ? 320 : 0 }}
       transition={{ type: 'tween', duration: 0.3 }}
-      className="fixed left-0 top-16 z-40 h-[calc(100vh-4rem)] w-80 bg-copilot-blue border-r border-gray-600 flex flex-col text-white"
+      className={cn(
+        "bg-copilot-blue border-r border-gray-600 flex flex-col text-white overflow-hidden",
+        "hidden md:flex" // Hide on mobile, show on desktop
+      )}
     >
       {/* New Chat Button */}
       <div className="p-4">

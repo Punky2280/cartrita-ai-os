@@ -1,13 +1,10 @@
-// Cartrita AI OS - Main Chat Interface
-// ChatGPT-like interface with enhanced Cartrita AI OS features
-
-'use client'
+// Cartrita AI OS - Modern Chat Interface
+// Redesigned ChatGPT-like interface with proper architecture
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { useAtom, useAtomValue } from 'jotai'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
-import { useVoice } from '@/hooks/useVoice'
 import {
   Send,
   Settings,
@@ -21,18 +18,22 @@ import {
   Loader2,
   Search,
   BarChart3,
-  Volume2
+  Volume2,
+  Plus,
+  MessageSquare
 } from 'lucide-react'
 import { cn } from '@/utils'
 import {
   currentConversationAtom,
   conversationsAtom,
   currentMessagesAtom,
+  messagesAtom,
   selectedAgentAtom,
+  selectedAgentIdAtom,
   agentsAtom,
+  currentConversationIdAtom,
   sidebarOpenAtom,
   chatInputAtom,
-  chatInputFocusedAtom,
   isStreamingAtom,
   streamingMessageAtom,
   userAtom,
@@ -40,24 +41,17 @@ import {
   settingsAtom,
   featureFlagsAtom
 } from '@/stores'
-import {
-  useConversations,
-  useCreateConversation,
-  useMessages
-} from '@/hooks'
-import { useSSEChat, useStreamingChat } from '@/hooks/useSSEChat'
-import type { Message, Conversation, Agent } from '@/types'
+import { streamingService } from '@/services/streaming'
+import { apiClient } from '@/services/api'
+import type { Message, Agent, ChatRequest, Conversation } from '@/types'
 
 // Components
 import {
-  Input,
   Textarea,
   ScrollArea,
   Avatar,
   AvatarFallback,
-  AvatarImage,
   Badge,
-  Separator,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -67,49 +61,29 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui'
-import { MessageBubble } from '@/components/MessageBubble'
-import { AgentSelector } from '@/components/AgentSelector'
-import { StreamingIndicator } from '@/components/StreamingIndicator'
-import { VoiceInput } from '@/components/VoiceInput'
-import { VoiceOutput } from '@/components/VoiceOutput'
-import { FileUpload } from '@/components/FileUpload'
-import { SearchInterface } from '@/components/SearchInterface'
-import { SettingsPanel } from '@/components/SettingsPanel'
-import AudioAnalyticsSidebar from '@/components/AudioAnalyticsSidebar'
-import HeaderBar from '@/components/ui/HeaderBar'
-import Sidebar from '@/components/ui/Sidebar'
-import StatusBar from '@/components/ui/StatusBar'
+
+interface VoiceState {
+  isRecording: boolean
+  isProcessing: boolean
+  currentTranscription: string
+  audioLevel: number
+}
 
 // Main Chat Interface Component
 export default function ChatInterface() {
-  // State
+  // Core state
   const [sidebarOpen, setSidebarOpen] = useAtom(sidebarOpenAtom)
   const [chatInput, setChatInput] = useAtom(chatInputAtom)
-  const [isInputFocused, setIsInputFocused] = useAtom(chatInputFocusedAtom)
-  const [showSearch, setShowSearch] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
-  const [showAudioAnalytics, setShowAudioAnalytics] = useState(false)
-  const [voiceOutputMode, setVoiceOutputMode] = useState(false)
-
-  // Voice functionality - Real Deepgram integration
-  const voice = useVoice({
-    enableAnalytics: true,
-    enableMetrics: true,
-    onTranscription: (transcription) => {
-      if (transcription.is_final && transcription.text.trim()) {
-        setChatInput(prev => prev + ' ' + transcription.text)
-      }
-    },
-    onResponse: (response) => {
-      // Handle AI voice response
-      toast.success('Voice response received')
-    },
-    onError: (error) => {
-      toast.error('Voice error: ' + error.message)
-    }
+  const [showSearch, setShowSearch] = useState(false)
+  const [voiceState, setVoiceState] = useState<VoiceState>({
+    isRecording: false,
+    isProcessing: false,
+    currentTranscription: '',
+    audioLevel: 0
   })
 
-  // Data
+  // Atom values
   const user = useAtomValue(userAtom)
   const theme = useAtomValue(themeAtom)
   const settings = useAtomValue(settingsAtom)
@@ -120,40 +94,79 @@ export default function ChatInterface() {
   const selectedAgent = useAtomValue(selectedAgentAtom)
   const agents = useAtomValue(agentsAtom)
   const isStreaming = useAtomValue(isStreamingAtom)
-  const streamingMessage = useAtomValue(streamingMessageAtom)
-
-  // Hooks
-  const { data: conversationsData, isLoading: conversationsLoading } = useConversations()
-  const { data: messagesData, isLoading: messagesLoading } = useMessages(currentConversation?.id || '')
-  const createConversation = useCreateConversation()
   
-  // SSE Chat hooks
-  const streamingChat = useStreamingChat()
-  const simpleChat = useSSEChat({
-    enableStreaming: false,
-    onComplete: (response) => {
-      console.log('Chat response received:', response)
-      toast.success('Message sent successfully')
-    },
-    onError: (error) => {
-      console.error('Chat error:', error)
-      toast.error('Failed to send message: ' + error.message)
-    },
-    onAgentTask: (taskId, status, progress) => {
-      if (status === 'started') {
-        toast.info(`Agent task started: ${taskId}`)
-      } else if (status === 'completed') {
-        toast.success(`Agent task completed: ${taskId}`)
-      } else if (status === 'failed') {
-        toast.error(`Agent task failed: ${taskId}`)
-      }
-    }
-  })
+  // Atom setters
+  const [streamingMessage, setStreamingMessage] = useAtom(streamingMessageAtom) as [Message | null, (value: Message | null) => void]
+  
+  // Get message setter for current conversation
+  const setMessages = useSetAtom(
+    currentConversation ? messagesAtom(currentConversation.id) : messagesAtom('default')
+  )
+  
+  // Additional atom setters for initialization
+  const setAgents = useSetAtom(agentsAtom)
+  const setSelectedAgentId = useSetAtom(selectedAgentIdAtom)
+  const setConversations = useSetAtom(conversationsAtom)
+  const setCurrentConversationId = useSetAtom(currentConversationIdAtom)
 
   // Refs
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Initialize default data
+  useEffect(() => {
+    // Initialize default supervisor agent if none exists
+    if (agents.length === 0) {
+      const defaultAgent: Agent = {
+        id: 'supervisor-default',
+        name: 'Cartrita Supervisor',
+        type: 'supervisor',
+        status: 'idle',
+        model: 'gpt-4',
+        description: 'AI Assistant',
+        capabilities: ['general', 'conversation'],
+        metadata: {
+          lastActive: new Date().toISOString(),
+          totalRequests: 0,
+          successRate: 100,
+          averageResponseTime: 1000,
+          specialties: ['General AI assistance'],
+          limitations: []
+        }
+      }
+      setAgents([defaultAgent])
+      setSelectedAgentId(defaultAgent.id)
+    } else if (!selectedAgent && agents.length > 0) {
+      setSelectedAgentId(agents[0].id)
+    }
+
+    // Initialize default conversation if none exists
+    if (conversations.length === 0) {
+      const defaultConversation: Conversation = {
+        id: 'default-conversation',
+        title: 'New Chat',
+        userId: 'default-user',
+        messages: [],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        isPinned: false,
+        isArchived: false,
+        tags: [],
+        metadata: {
+          totalMessages: 0,
+          lastActivity: new Date().toISOString(),
+          agentUsed: selectedAgent?.id || agents[0]?.id || 'supervisor-default',
+          tokensUsed: 0,
+          processingTime: 0
+        }
+      }
+      setConversations([defaultConversation])
+      setCurrentConversationId(defaultConversation.id)
+    } else if (!currentConversation && conversations.length > 0) {
+      setCurrentConversationId(conversations[0].id)
+    }
+  }, [agents, selectedAgent, conversations, currentConversation, setAgents, setSelectedAgentId, setConversations, setCurrentConversationId])
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -164,10 +177,10 @@ export default function ChatInterface() {
 
   // Focus input when conversation changes
   useEffect(() => {
-    if (currentConversation && inputRef.current && !isInputFocused) {
+    if (currentConversation && inputRef.current) {
       inputRef.current.focus()
     }
-  }, [currentConversation?.id, isInputFocused])
+  }, [currentConversation?.id])
 
   // Handle sending message
   const handleSendMessage = useCallback(async () => {
@@ -176,7 +189,7 @@ export default function ChatInterface() {
     const messageContent = chatInput.trim()
     setChatInput('')
 
-    const chatRequest = {
+    const chatRequest: ChatRequest = {
       message: messageContent,
       conversation_id: currentConversation?.id,
       agent_override: selectedAgent.type,
@@ -188,27 +201,125 @@ export default function ChatInterface() {
       stream: featureFlags.streaming
     }
 
+    // Add user message to the conversation immediately
+    const userMessage: Message = {
+      id: `user-${Date.now()}`,
+      role: 'user',
+      content: messageContent,
+      conversationId: currentConversation?.id || 'default-conversation',
+      metadata: {
+        agent_type: selectedAgent.type
+      },
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      isEdited: false
+    }
+    
+    // Update messages state with user message
+    setMessages((prev) => [...prev, userMessage])
+
     try {
       if (featureFlags.streaming) {
-        // Use streaming chat
-        await streamingChat.sendMessage(chatRequest)
+        // Initialize streaming message
+        const assistantMessage: Message = {
+          id: `assistant-${Date.now()}`,
+          role: 'assistant', 
+          content: '',
+          conversationId: currentConversation?.id || 'default-conversation',
+          metadata: {
+            agent_type: selectedAgent.type
+          },
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          isEdited: false
+        }
+        
+        setStreamingMessage(assistantMessage)
+
+        // Use streaming service
+        await streamingService.streamChat(chatRequest, {
+          onChunk: (chunk) => {
+            console.log('Streaming chunk:', chunk.content)
+            // Update streaming message with new content using callback to avoid closure issues
+            setStreamingMessage(prev => {
+              if (prev) {
+                return {
+                  ...prev,
+                  content: prev.content + chunk.content,
+                  updatedAt: new Date().toISOString()
+                }
+              }
+              return prev
+            })
+          },
+          onComplete: (response) => {
+            console.log('Stream complete:', response.response)
+            
+            // Add final assistant message to conversation
+            const finalMessage: Message = {
+              id: `assistant-${Date.now()}-final`,
+              role: 'assistant',
+              content: response.response,
+              conversationId: currentConversation?.id || 'default-conversation',
+              metadata: {
+                agent_type: selectedAgent.type,
+                conversation_id: response.conversation_id
+              },
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+              isEdited: false
+            }
+            
+            setMessages((prev) => [...prev, finalMessage])
+            setStreamingMessage(null) // Clear streaming message
+            toast.success('Message sent successfully')
+          },
+          onError: (error) => {
+            console.error('Streaming error:', error)
+            setStreamingMessage(null) // Clear streaming message on error
+            toast.error(`Failed to send message: ${error.message}`)
+          },
+          onAgentTask: (taskId, status, progress) => {
+            if (status === 'started') {
+              toast.info(`Agent task started: ${taskId}`)
+            } else if (status === 'completed') {
+              toast.success(`Agent task completed: ${taskId}`)
+            } else if (status === 'failed') {
+              toast.error(`Agent task failed: ${taskId}`)
+            }
+          }
+        })
       } else {
-        // Use simple non-streaming chat
-        await simpleChat.sendMessageNonStreaming(chatRequest)
+        // Use simple API call
+        const response = await apiClient.postChat(chatRequest)
+        if (response.success) {
+          toast.success('Message sent successfully')
+        } else {
+          throw new Error(response.error || 'Failed to send message')
+        }
       }
     } catch (error) {
       console.error('Failed to send message:', error)
-      // Error is handled by the hook's onError callback
+      toast.error(`Failed to send message: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }
-  }, [chatInput, currentConversation, selectedAgent, isStreaming, featureFlags.streaming, setChatInput, streamingChat, simpleChat])
+  }, [chatInput, currentConversation, selectedAgent, isStreaming, featureFlags.streaming, setChatInput, setMessages, setStreamingMessage, streamingMessage])
 
   // Handle creating new conversation
-  const handleNewConversation = useCallback(() => {
-    createConversation.mutate({
-      title: 'New Conversation',
-      agentId: selectedAgent?.id
-    })
-  }, [createConversation, selectedAgent])
+  const handleNewConversation = useCallback(async () => {
+    try {
+      const response = await apiClient.createConversation({
+        title: 'New Conversation',
+        agentId: selectedAgent?.id
+      })
+      
+      if (response.success) {
+        toast.success('New conversation created')
+      }
+    } catch (error) {
+      console.error('Failed to create conversation:', error)
+      toast.error('Failed to create new conversation')
+    }
+  }, [selectedAgent])
 
   // Handle keyboard shortcuts
   useEffect(() => {
@@ -216,13 +327,13 @@ export default function ChatInterface() {
       // Ctrl/Cmd + Enter to send
       if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault()
-        handleSendMessage()
+        void handleSendMessage()
       }
 
       // Ctrl/Cmd + N for new conversation
       if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
         e.preventDefault()
-        handleNewConversation()
+        void handleNewConversation()
       }
 
       // Ctrl/Cmd + K for search
@@ -231,443 +342,342 @@ export default function ChatInterface() {
         setShowSearch(true)
       }
 
-      // Ctrl/Cmd + A for audio analytics
-      if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
-        e.preventDefault()
-        setShowAudioAnalytics(!showAudioAnalytics)
-      }
-
       // Escape to close modals
       if (e.key === 'Escape') {
         setShowSearch(false)
         setShowSettings(false)
-        setShowAudioAnalytics(false)
       }
     }
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [handleSendMessage, handleNewConversation, showAudioAnalytics])
+  }, [handleSendMessage, handleNewConversation])
 
   // Handle file upload
   const handleFileUpload = useCallback((files: File[]) => {
-    // Handle file upload logic here
     console.log('Files uploaded:', files)
     toast.success(`${files.length} file(s) uploaded`)
   }, [])
 
-  // Handle voice input
-  const handleVoiceInput = useCallback(async (transcript: string) => {
-    if (!transcript.trim()) {
-      toast.error('No speech detected')
-      return
-    }
-
-    try {
-      // Stop recording
-      voice.stopRecording()
-
-      // Show processing state
-      toast.info('Processing voice conversation...')
-
-      // Prepare conversation history for context
-      const conversationHistory = messages.map(msg => ({
-        role: msg.role,
-        content: msg.content,
-        timestamp: msg.timestamp
-      }))
-
-      // Send voice conversation request
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/chat/voice`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          conversationId: currentConversation?.id || 'voice-conversation',
-          transcribedText: transcript,
-          conversationHistory: conversationHistory,
-          voiceMode: true
-        })
-      })
-
-      if (!response.ok) {
-        throw new Error('Voice conversation failed')
-      }
-
-      const result = await response.json()
-
-      // Handle voice output if enabled
-      if (voiceOutputMode && result.response) {
-        voice.speak(result.response)
-      }
-
-      // Add AI response to conversation
-      if (result.response) {
-        // This would be handled by the chat system
-        toast.success('Voice conversation completed')
-      }
-
-    } catch (error) {
-      console.error('Voice conversation error:', error)
-      toast.error('Voice conversation failed: ' + (error as Error).message)
-    }
-  }, [voice, messages, currentConversation, voiceOutputMode])
-
-
+  // Handle voice recording
+  const handleVoiceToggle = useCallback(() => {
+    setVoiceState(prev => ({
+      ...prev,
+      isRecording: !prev.isRecording
+    }))
+  }, [])
 
   return (
-    <div className="h-screen flex flex-col bg-chatgpt-grey">
+    <div className="h-screen flex flex-col bg-gradient-to-br from-gray-900 via-gray-800 to-black">
       {/* Header Bar */}
-      <HeaderBar />
+      <div className="flex items-center justify-between p-4 border-b border-gray-700 bg-gray-800/50 backdrop-blur-sm">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => { { setSidebarOpen(true);; }}}
+            className="md:hidden h-9 w-9 p-0 bg-transparent hover:bg-gray-600 rounded-md flex items-center justify-center text-white"
+          >
+            <Menu className="h-4 w-4" />
+          </button>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
+              <Bot className="w-4 h-4 text-white" />
+            </div>
+            <span className="text-lg font-semibold text-white">
+              Cartrita AI OS
+            </span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {isStreaming && (
+            <div className="flex items-center gap-2 text-blue-400">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span className="text-sm">Processing...</span>
+            </div>
+          )}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="h-9 w-9 p-0 bg-transparent hover:bg-gray-600 rounded-md flex items-center justify-center text-white">
+                <MoreVertical className="h-4 w-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => { { setShowSearch(true);; }}}>
+                <Search className="h-4 w-4 mr-2" />
+                Search
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { { setShowSettings(true);; }}}>
+                <Settings className="h-4 w-4 mr-2" />
+                Settings
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
 
       {/* Main Content Area */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <Sidebar
-          isOpen={sidebarOpen}
-          onToggle={() => setSidebarOpen(!sidebarOpen)}
-          onNewChat={handleNewConversation}
-          conversations={conversations}
-          selectedAgent={selectedAgent}
-          onAgentSelect={() => {}} // TODO: Implement agent selection
-          onSettings={() => setShowSettings(true)}
-          onSearch={() => setShowSearch(true)}
-        />
-
-        {/* Main Chat Interface */}
-        <div className="flex-1 flex flex-col bg-chatgpt-grey">
-          {/* Chat Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-600 bg-chatgpt-grey-light">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="md:hidden h-9 w-9 p-0 bg-transparent hover:bg-gray-600 rounded-md flex items-center justify-center text-white"
-              >
-                <Menu className="h-4 w-4" />
-              </button>
-              <div>
-                <h1 className="text-lg font-semibold text-white">
-                  {currentConversation?.title || 'New Chat'}
-                </h1>
-                {selectedAgent && (
-                  <p className="text-sm text-gray-300 flex items-center gap-2">
-                    <Bot className="h-4 w-4" />
-                    {selectedAgent.name}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              {isStreaming && <StreamingIndicator />}
-              <button
-                onClick={() => setShowAudioAnalytics(!showAudioAnalytics)}
-                className={cn(
-                  "h-9 w-9 p-0 rounded-md flex items-center justify-center text-white transition-colors",
-                  showAudioAnalytics
-                    ? "bg-cartrita-blue hover:bg-cartrita-blue-light"
-                    : "bg-transparent hover:bg-gray-600"
-                )}
-                title="Audio Analytics (Ctrl+A)"
-              >
-                <BarChart3 className="h-4 w-4" />
-              </button>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button className="h-9 w-9 p-0 bg-transparent hover:bg-gray-600 rounded-md flex items-center justify-center text-white">
-                    <MoreVertical className="h-4 w-4" />
+        <AnimatePresence>
+          {sidebarOpen && (
+            <motion.div
+              initial={{ x: -320 }}
+              animate={{ x: 0 }}
+              exit={{ x: -320 }}
+              transition={{ type: 'tween', duration: 0.3 }}
+              className="fixed left-0 top-0 z-40 h-full w-80 bg-gray-800 border-r border-gray-700 flex flex-col text-white md:relative md:translate-x-0"
+            >
+              {/* Sidebar Header */}
+              <div className="p-4 border-b border-gray-700">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-semibold">Conversations</h2>
+                  <button
+                    onClick={() => { { setSidebarOpen(false);; }}}
+                    className="md:hidden h-8 w-8 p-0 bg-transparent hover:bg-gray-600 rounded-md flex items-center justify-center"
+                  >
+                    <X className="h-4 w-4" />
                   </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem onClick={() => setShowSearch(true)}>
-                    <Search className="h-4 w-4 mr-2" />
-                    Search
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setShowAudioAnalytics(!showAudioAnalytics)}>
-                    <BarChart3 className="h-4 w-4 mr-2" />
-                    Audio Analytics
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setShowSettings(true)}>
-                    <Settings className="h-4 w-4 mr-2" />
-                    Settings
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </div>
+                </div>
+              </div>
 
-          {/* Messages Area with Audio Analytics Sidebar */}
-          <div className="flex flex-1 overflow-hidden">
-            <div className="flex-1 flex flex-col">
-              {/* Messages Area */}
-              <ScrollArea className="flex-1 p-4 bg-chatgpt-grey">
-                <div className="max-w-4xl mx-auto space-y-6">
-                  {messagesLoading ? (
-                    <div className="space-y-4">
-                      {Array.from({ length: 3 }).map((_, i) => (
-                        <div key={i} className={cn('flex gap-3', i % 2 === 0 ? 'justify-end' : 'justify-start')}>
-                          <div className="max-w-[80%] space-y-2">
-                            <div className="h-4 bg-chatgpt-grey-light rounded animate-pulse" />
-                            <div className="h-4 bg-chatgpt-grey-light rounded w-3/4 animate-pulse" />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : messages.length === 0 && !streamingMessage ? (
-                    <div className="text-center py-12">
-                      <Bot className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                      <h2 className="text-xl font-semibold mb-2 text-white">How can I help you today?</h2>
-                      <p className="text-gray-300">
-                        Start a conversation with {selectedAgent?.name || 'an AI agent'}
-                      </p>
-                    </div>
-                  ) : (
-                    <>
-                      <AnimatePresence>
-                        {messages.map((message) => (
-                          <MessageBubble
-                            key={message.id}
-                            message={message}
-                            isUser={message.role === 'user'}
-                          />
-                        ))}
-                      </AnimatePresence>
+              {/* New Chat Button */}
+              <div className="p-4">
+                <button
+                  onClick={handleNewConversation}
+                  className="w-full flex items-center gap-3 h-12 px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 rounded-lg transition-all duration-200 font-medium"
+                >
+                  <Plus className="h-5 w-5" />
+                  New Chat
+                </button>
+              </div>
 
-                      {/* Streaming message */}
-                      {streamingMessage && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="flex gap-3 justify-start"
-                        >
-                          <Avatar className="h-8 w-8">
-                            <AvatarFallback className="bg-cartrita-blue">
-                              <Bot className="h-4 w-4" />
-                            </AvatarFallback>
-                          </Avatar>
-                          <div className="max-w-[80%]">
-                            <div className="glassmorphism rounded-lg p-4 text-white">
-                              <div className="prose prose-sm dark:prose-invert max-w-none">
-                                {streamingMessage.content}
-                                <span className="animate-pulse">|</span>
-                              </div>
-                            </div>
-                          </div>
-                        </motion.div>
+              {/* Conversations List */}
+              <ScrollArea className="flex-1 px-4">
+                <div className="space-y-2">
+                  {conversations.map((conv) => (
+                    <div
+                      key={conv.id}
+                      className={cn(
+                        "flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer transition-colors",
+                        currentConversation?.id === conv.id && "bg-gray-700"
                       )}
-                    </>
-                  )}
-                  <div ref={messagesEndRef} />
+                    >
+                      <MessageSquare className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm truncate">{conv.title || 'Untitled'}</p>
+                        <p className="text-xs text-gray-400">
+                          {new Date(conv.updatedAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </ScrollArea>
 
-              {/* Multi-Modal Input Area */}
-              <div className="p-4 border-t border-gray-600 bg-chatgpt-grey-light">
-                <div className="max-w-4xl mx-auto">
-                  <div className="relative">
-                    <Textarea
-                      ref={inputRef}
-                      value={chatInput}
-                      onChange={(e) => setChatInput(e.target.value)}
-                      onFocus={() => setIsInputFocused(true)}
-                      onBlur={() => setIsInputFocused(false)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' && !e.shiftKey) {
-                          e.preventDefault()
-                          handleSendMessage()
-                        }
-                      }}
-                      placeholder={`Message ${selectedAgent?.name || 'AI agent'}...`}
-                      className="min-h-[60px] max-h-32 resize-none pr-24 bg-chatgpt-grey-dark border-gray-600 text-white placeholder-gray-400 focus:border-cartrita-blue"
-                      disabled={isStreaming}
-                    />
-
-                    {/* Action Buttons */}
-                    <div className="absolute right-2 bottom-2 flex items-center gap-1">
-                      <button
-                        onClick={() => fileInputRef.current?.click()}
-                        disabled={isStreaming}
-                        className="h-9 w-9 p-0 bg-transparent hover:bg-gray-600 rounded-md disabled:pointer-events-none disabled:opacity-50 flex items-center justify-center text-white"
-                      >
-                        <Paperclip className="h-4 w-4" />
-                      </button>
-
-                      <button
-                        onClick={voice.toggleRecording}
-                        disabled={isStreaming || voice.isProcessing}
-                        className={cn(
-                          "h-9 w-9 p-0 bg-transparent hover:bg-fuschia-pink rounded-md disabled:pointer-events-none disabled:opacity-50 transition-all flex items-center justify-center",
-                          voice.isRecording && 'bg-fuschia-pink animate-pulse-fuschia',
-                          voice.isProcessing && 'bg-orange-500',
-                          voice.isSpeaking && 'bg-green-500'
-                        )}
-                      >
-                        {voice.isRecording ? (
-                          <MicOff className="h-4 w-4" />
-                        ) : voice.isProcessing ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          <Mic className="h-4 w-4" />
-                        )}
-                      </button>
-
-                      <button
-                        onClick={() => setVoiceOutputMode(!voiceOutputMode)}
-                        disabled={isStreaming}
-                        className={cn(
-                          "h-9 w-9 p-0 bg-transparent hover:bg-blue-500 rounded-md disabled:pointer-events-none disabled:opacity-50 transition-all flex items-center justify-center",
-                          voiceOutputMode && 'bg-blue-500'
-                        )}
-                      >
-                        <Volume2 className="h-4 w-4" />
-                      </button>
-
-                      <button
-                        onClick={handleSendMessage}
-                        disabled={!chatInput.trim() || !selectedAgent || isStreaming}
-                        className="ml-1 h-9 w-9 p-0 bg-cartrita-blue hover:bg-cartrita-blue/80 rounded-md disabled:pointer-events-none disabled:opacity-50 flex items-center justify-center text-white"
-                      >
-                        {isStreaming ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          <Send className="h-4 w-4" />
-                        )}
-                      </button>
-                    </div>
+              {/* Agent Selector */}
+              <div className="p-4 border-t border-gray-700">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-700">
+                  <Bot className="h-4 w-4 text-blue-400" />
+                  <div>
+                    <p className="text-sm font-medium">{selectedAgent?.name || 'Cartrita'}</p>
+                    <p className="text-xs text-gray-400">
+                      {selectedAgent?.description || 'AI Assistant'}
+                    </p>
                   </div>
+                </div>
               </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-              {/* Hidden file input */}
-              <input
-                ref={fileInputRef}
-                type="file"
-                multiple
-                className="hidden"
-                onChange={(e) => {
-                  const files = Array.from(e.target.files || [])
-                  if (files.length > 0) {
-                    handleFileUpload(files)
-                  }
-                }}
-              />
-
-              {/* Voice input component */}
-              {(voice.isRecording || voice.currentTranscription) && (
-                <div className="bg-chatgpt-grey border border-gray-600 rounded-lg p-4 mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className={cn(
-                      "h-3 w-3 rounded-full animate-pulse",
-                      voice.isRecording ? "bg-fuschia-pink" : "bg-cartrita-blue"
-                    )}>
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm text-gray-300">
-                        {voice.isRecording ? "Listening..." : "Processing..."}
-                      </div>
-                      {voice.currentTranscription && (
-                        <div className="text-white">
-                          {voice.currentTranscription}
-                        </div>
+        {/* Main Chat Interface */}
+        <div className="flex-1 flex flex-col min-w-0">
+          {/* Messages Area */}
+          <ScrollArea className="flex-1 p-6">
+            <div className="max-w-4xl mx-auto space-y-6">
+              {messages.length === 0 && !streamingMessage ? (
+                <div className="text-center py-12">
+                  <Bot className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+                  <h2 className="text-xl font-semibold mb-2 text-white">
+                    How can I help you today?
+                  </h2>
+                  <p className="text-gray-300">
+                    Start a conversation with {selectedAgent?.name || 'an AI agent'}
+                  </p>
+                </div>
+              ) : (
+                <>
+                  {messages.map((message) => (
+                    <motion.div
+                      key={message.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={cn(
+                        "flex gap-4 max-w-4xl",
+                        message.role === 'user' ? 'justify-end' : 'justify-start'
                       )}
-                      {voice.finalTranscription && (
-                        <div className="text-white font-medium">
-                          {voice.finalTranscription}
-                        </div>
-                      )}
-                    </div>
-                    <button
-                      onClick={() => voice.stopRecording()}
-                      className="text-gray-400 hover:text-white"
                     >
-                      <X className="h-4 w-4" />
-                    </button>
-                  </div>
-
-                  {/* Voice quality indicator */}
-                  {voice.isRecording && (
-                    <div className="mt-2 flex items-center gap-2">
-                      <div className="text-xs text-gray-400">
-                        Signal: {voice.signalQuality}
-                      </div>
-                      <div className="flex-1 bg-chatgpt-grey-dark rounded-full h-1">
-                        <div
-                          className="bg-cartrita-blue rounded-full h-full transition-all duration-150"
-                          style={{ width: `${(voice.audioLevel / 255) * 100}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Voice analytics */}
-                  {voice.analytics && (
-                    <div className="mt-2 flex items-center gap-4 text-xs text-gray-400">
-                      <span>Sentiment: {voice.analytics.sentiment.label}</span>
-                      {voice.analytics.language_detected && (
-                        <span>Language: {voice.analytics.language_detected}</span>
+                      {message.role !== 'user' && (
+                        <Avatar className="h-8 w-8 flex-shrink-0">
+                          <AvatarFallback className="bg-gradient-to-r from-purple-600 to-blue-600">
+                            <Bot className="h-4 w-4 text-white" />
+                          </AvatarFallback>
+                        </Avatar>
                       )}
-                    </div>
+
+                      <div className={cn(
+                        "max-w-[80%] rounded-xl px-4 py-3",
+                        message.role === 'user'
+                          ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white ml-auto"
+                          : "bg-gray-800/50 border border-gray-700 text-white"
+                      )}>
+                        <div className="prose prose-sm dark:prose-invert max-w-none">
+                          {message.content}
+                        </div>
+                      </div>
+
+                      {message.role === 'user' && (
+                        <Avatar className="h-8 w-8 flex-shrink-0">
+                          <AvatarFallback>
+                            {user?.name?.[0] || 'U'}
+                          </AvatarFallback>
+                        </Avatar>
+                      )}
+                    </motion.div>
+                  ))}
+
+                  {/* Streaming message */}
+                  {streamingMessage && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex gap-4 justify-start max-w-4xl"
+                    >
+                      <Avatar className="h-8 w-8 flex-shrink-0">
+                        <AvatarFallback className="bg-gradient-to-r from-purple-600 to-blue-600">
+                          <Bot className="h-4 w-4 text-white" />
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="max-w-[80%] rounded-xl px-4 py-3 bg-gray-800/50 border border-gray-700 text-white">
+                        <div className="prose prose-sm dark:prose-invert max-w-none">
+                          {streamingMessage.content}
+                          <span className="animate-pulse">|</span>
+                        </div>
+                      </div>
+                    </motion.div>
                   )}
-                </div>
+                </>
               )}
+              <div ref={messagesEndRef} />
+            </div>
+          </ScrollArea>
 
-              {/* Voice Output Component */}
-              {voiceOutputMode && (
-                <div className="mb-4">
-                  <VoiceOutput
-                    onVoiceStart={() => toast.info('Voice output started')}
-                    onVoiceEnd={() => toast.success('Voice output completed')}
-                    onError={(error) => toast.error(`Voice error: ${error.message}`)}
-                  />
-                </div>
-              )}
+          {/* Input Area */}
+          <div className="p-6 border-t border-gray-700 bg-gray-900/50 backdrop-blur-sm">
+            <div className="max-w-4xl mx-auto">
+              {/* Message Input Bar */}
+              <div className="flex items-end gap-3 bg-gray-800/50 border border-gray-600 rounded-2xl p-3 focus-within:border-purple-500 transition-colors">
+                {/* Attach Files Button */}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        onClick={() => { { fileInputRef.current?.click();; }}}
+                        disabled={isStreaming}
+                        className="h-10 w-10 flex-shrink-0 bg-transparent hover:bg-gray-700 rounded-lg disabled:pointer-events-none disabled:opacity-50 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+                      >
+                        <Paperclip className="h-5 w-5" />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>Attach files</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
 
-              {/* File upload component */}
-              <FileUpload
-                onFilesSelected={handleFileUpload}
-                disabled={isStreaming}
-              />
+                {/* Text Input */}
+                <Textarea
+                  ref={inputRef}
+                  value={chatInput}
+                  onChange={(e) => { { setChatInput(e.target.value); ; }}}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault()
+                      void handleSendMessage()
+                    }
+                  }}
+                  placeholder={`Message ${selectedAgent?.name || 'Cartrita'}...`}
+                  className="flex-1 min-h-[44px] max-h-32 resize-none border-0 bg-transparent text-white placeholder-gray-400 focus:ring-0 focus:outline-none p-0"
+                  disabled={isStreaming}
+                />
+
+                {/* Voice Input Button */}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        onClick={handleVoiceToggle}
+                        disabled={isStreaming}
+                        className={cn(
+                          "h-10 w-10 flex-shrink-0 rounded-lg disabled:pointer-events-none disabled:opacity-50 flex items-center justify-center transition-colors",
+                          voiceState.isRecording
+                            ? "bg-red-500 hover:bg-red-600 text-white"
+                            : "bg-transparent hover:bg-gray-700 text-gray-400 hover:text-white"
+                        )}
+                      >
+                        {voiceState.isRecording ? (
+                          <MicOff className="h-5 w-5" />
+                        ) : (
+                          <Mic className="h-5 w-5" />
+                        )}
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      {voiceState.isRecording ? 'Stop recording' : 'Start voice input'}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                {/* Send Button */}
+                <button
+                  onClick={handleSendMessage}
+                  disabled={!chatInput.trim() || !selectedAgent || isStreaming}
+                  className="h-10 w-10 flex-shrink-0 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 rounded-lg disabled:pointer-events-none disabled:opacity-50 flex items-center justify-center text-white transition-all duration-200"
+                >
+                  {isStreaming ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <Send className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
             </div>
 
-            {/* Audio Analytics Sidebar */}
-            <AudioAnalyticsSidebar
-              isOpen={showAudioAnalytics}
-              onToggle={() => setShowAudioAnalytics(!showAudioAnalytics)}
-              messages={messages}
-              isStreaming={isStreaming}
+            {/* Hidden file input */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              multiple
+              className="hidden"
+              onChange={(e) => { { {
+                const files = Array.from(e.target.files || [])
+                if (files.length > 0) {
+                  handleFileUpload(files)
+                ; ; }}}
+              }}
             />
           </div>
         </div>
       </div>
 
-      {/* Status Bar */}
-      <StatusBar
-        currentModel={selectedAgent?.name || 'Cartrita'}
-        tokenCount={messages.reduce((acc, msg) => acc + (msg.content?.length || 0), 0) / 4} // Rough token estimate
-        voiceActivity={voice.isRecording}
-        currentTime={new Date()}
-      />
-
-      {/* Modals */}
-      <AnimatePresence>
-        {showSearch && (
-          <SearchInterface isOpen={showSearch} onClose={() => setShowSearch(false)} />
-        )}
-        {showSettings && (
-          <SettingsPanel isOpen={showSettings} onClose={() => setShowSettings(false)} />
-        )}
-      </AnimatePresence>
-
-      {/* Overlay for mobile */}
+      {/* Overlay for mobile sidebar */}
       {sidebarOpen && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-30 bg-black/50 md:hidden"
-          onClick={() => setSidebarOpen(false)}
+          onClick={() => { { setSidebarOpen(false);; }}}
         />
       )}
-    </div>
     </div>
   )
 }

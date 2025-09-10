@@ -139,10 +139,10 @@ See `.env` files for environment-specific configuration:
 
 ### Documentation Links
 
-- **OpenAI Platform**: https://platform.openai.com/docs/
-- **LangChain Docs**: https://docs.langchain.com/
-- **FastAPI Docs**: https://fastapi.tiangolo.com/
-- **Docker Best Practices**: https://docs.docker.com/develop/dev-best-practices/
+ **OpenAI Platform**: https://platform.openai.com/docs/
+ **LangChain Docs**: https://docs.langchain.com/
+ **FastAPI Docs**: https://fastapi.tiangolo.com/
+ **Docker Best Practices**: https://docs.docker.com/develop/dev-best-practices/
 
 ### Community Resources
 
