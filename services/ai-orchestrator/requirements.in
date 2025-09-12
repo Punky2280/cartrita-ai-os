@@ -35,6 +35,7 @@ pydantic-extra-types==2.9.0
 sqlalchemy==2.0.34
 asyncpg==0.29.0
 alembic==1.13.2
+greenlet==3.2.4  # required by SQLAlchemy; explicit pin to satisfy --require-hashes
 
 # HTTP & Async
 httpx==0.27.2
