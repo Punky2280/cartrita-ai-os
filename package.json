@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "lint:md": "markdownlint-cli2 '**/*.md' '**/*.mdx' --config .markdownlint.jsonc"
+    "lint:md": "markdownlint-cli2 '**/*.md' '**/*.mdx' --config .markdownlint.jsonc",
+    "lint:md:ci": "markdownlint-cli2 --config .markdownlint.jsonc --formatter markdown '**/*.md' '**/*.mdx'",
+    "lint:md:staged": "git diff --name-only --cached --diff-filter=ACMRTUXB | grep -E '\\.(md|mdx)$' | xargs -r markdownlint-cli2 --config .markdownlint.jsonc"
   },
   "devDependencies": {
     "@anthropic-ai/claude-code": "^1.0.102",
