@@ -147,28 +147,29 @@ export function useSSEChat(options: UseSSEChatOptions = {}): UseSSEChatReturn {
     },
 
     onDone: (finalResponse: string, metadata: unknown) => {
+      const meta = (metadata && typeof metadata === 'object') ? metadata as any : {}
       // Create final response object
       const response: ChatResponse = {
         response: finalResponse,
-        conversation_id: metadata.conversation_id || request.conversation_id || currentConversation?.id || '',
-        agent_type: metadata.agent_type || 'supervisor',
+        conversation_id: meta.conversation_id || request.conversation_id || currentConversation?.id || '',
+        agent_type: meta.agent_type || 'supervisor',
         message: {
-          id: metadata.message_id || crypto.randomUUID(),
-          conversationId: metadata.conversation_id || request.conversation_id || currentConversation?.id || '',
+          id: meta.message_id || crypto.randomUUID(),
+          conversationId: meta.conversation_id || request.conversation_id || currentConversation?.id || '',
           role: 'assistant',
           content: finalResponse,
           attachments: [],
-          metadata: metadata || {},
+          metadata: meta || {},
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
           isEdited: false,
-          tokens: metadata.token_usage?.total_tokens,
-          processingTime: metadata.processing_time
+          tokens: meta.token_usage?.total_tokens,
+          processingTime: meta.processing_time
         },
-        metadata: metadata,
-        processing_time: metadata.processing_time,
-        token_usage: metadata.token_usage,
-        sources: metadata.sources || []
+        metadata: meta,
+        processing_time: meta.processing_time,
+        token_usage: meta.token_usage,
+        sources: meta.sources || []
       }
 
       setLastResponse(response)

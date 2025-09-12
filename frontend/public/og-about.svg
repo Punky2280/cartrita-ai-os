@@ -1,0 +1,17 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cartrita AI OS About">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#3b0764"/>
+      <stop offset="50%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#312e81"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <g font-family="Inter, ui-sans-serif, system-ui" fill="#fff">
+    <text x="72" y="152" font-size="64" font-weight="800" fill="#fde68a">Cartrita AI OS</text>
+    <text x="72" y="220" font-size="40" opacity="0.9">About • Hierarchical Multi‑Agent Orchestrator</text>
+    <text x="72" y="300" font-size="28" opacity="0.9">Born in Hialeah • Miami‑Caribbean Heritage • Voice‑first, Human‑centered AI</text>
+    <text x="72" y="360" font-size="22" opacity="0.85">Values: Family • Hard work • Helping others • Cultural pride • Authenticity</text>
+    <text x="72" y="420" font-size="22" opacity="0.85">Agents: Research • Code • Knowledge • Task • Computer Use • Audio • Image • Reasoning</text>
+  </g>
+</svg>

@@ -13,18 +13,39 @@ from typing import AsyncGenerator, Optional, Dict, Any, Union
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse, Response
 
+# Updated import logic to avoid unresolved import error when dependency missing
+import importlib
 try:
-    from prometheus_client import (
-        CollectorRegistry,
-        Counter,
-        Gauge,
-        Histogram,
-        generate_latest,
-    )
-    PROMETHEUS_AVAILABLE = True
-except ImportError:
+    _spec = importlib.util.find_spec("prometheus_client")
+    if _spec:
+        from prometheus_client import (  
+            Counter,
+            Gauge,
+            Histogram,
+            generate_latest,
+        )
+        PROMETHEUS_AVAILABLE = True
+    else:
+        PROMETHEUS_AVAILABLE = False
+except Exception:
     PROMETHEUS_AVAILABLE = False
-    Counter = Gauge = Histogram = CollectorRegistry = generate_latest = None
+
+if not PROMETHEUS_AVAILABLE:
+    # Lightweight no-op fallbacks so static analysis doesn't flag missing symbols
+    class _NoopMetric:
+        def labels(self, **_kw):
+            return self
+
+        def inc(self, *_, **__):
+            return None
+        def observe(self, *_, **__):
+            return None
+    class _NoopRegistry:
+        pass
+    def generate_latest(_registry): 
+        return b""
+    Counter = Gauge = Histogram = _NoopMetric  
+    CollectorRegistry = _NoopRegistry 
 
 
 @dataclass
@@ -200,6 +221,18 @@ async def metrics() -> Union[JSONResponse, Response]:
             }
         )
     
+    # New: graceful success (200) when Prometheus library not installed
+    if not PROMETHEUS_AVAILABLE:
+        return JSONResponse(
+            status_code=200,
+            content={
+                "service": "cartrita-isolated-test",
+                "status": "metrics_unavailable_optional",
+                "message": "prometheus_client not installed; exporting disabled",
+                "collector_status": metrics_collector.get_status()
+            }
+        )
+
     if not metrics_collector.is_healthy():
         return JSONResponse(
             status_code=503,

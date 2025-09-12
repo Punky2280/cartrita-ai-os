@@ -64,7 +64,7 @@ The Cartrita AI OS project has been comprehensively analyzed, researched, and op
 
 1. **[2025-technology-research.md](docs/2025-technology-research.md)** - Comprehensive technology analysis
 2. **[openai-streaming-analysis.md](docs/openai-streaming-analysis.md)** - SSE vs WebSocket comparison
-3. **[configuration-integrity-audit.md](docs/configuration-integrity-audit.md)** - Security and compliance audit
+3. **[configuration-integrity-audit.md](../security/configuration-integrity-audit.md)** - Security and compliance audit
 4. **[architecture/README.md](docs/architecture/README.md)** - Architecture overview and guidelines
 
 ### 🔧 Configuration Improvements

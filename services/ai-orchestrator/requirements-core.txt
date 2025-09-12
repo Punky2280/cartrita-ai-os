@@ -5,14 +5,16 @@
 # Core AI/ML Libraries
 # ============================================
 openai>=1.40.0
-anthropic>=0.30.0
 langchain>=0.2.10
 langchain-openai>=0.1.20
-langchain-anthropic>=0.1.20
-langchain-community>=0.2.10
+langchain-community>=0.3.27
 langchain-core>=0.3.40
 langgraph>=0.6.0
 langsmith>=0.1.100
+
+# HuggingFace for transformers and models
+transformers>=4.53.0
+torch>=2.0.0
 
 # ============================================
 # Vector Databases & Search
@@ -42,7 +44,7 @@ alembic>=1.13.0
 # ============================================
 httpx>=0.27.0
 websockets>=12.0
-aiohttp>=3.9.4
+aiohttp>=3.12.14
 
 # ============================================
 # Data Processing (Essential only)
@@ -76,9 +78,9 @@ sentry-sdk>=2.10.0
 # ============================================
 # Security & Authentication
 # ============================================
-python-jose[cryptography]>=3.3.0
+python-jose[cryptography]>=3.4.0
 passlib[bcrypt]>=1.7.4
-python-multipart>=0.0.9
+python-multipart>=0.0.18
 
 # ============================================
 # Caching & Performance

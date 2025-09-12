@@ -208,7 +208,7 @@ class CartritaMCPProtocol:
                         "prompt": {"type": "string", "description": "Input prompt"},
                         "model": {
                             "type": "string",
-                            "enum": ["gpt-4", "claude-3", "gemini-pro"],
+                            "enum": ["gpt-4"],
                         },
                         "temperature": {"type": "number", "default": 0.7},
                         "max_tokens": {"type": "integer", "default": 1000},

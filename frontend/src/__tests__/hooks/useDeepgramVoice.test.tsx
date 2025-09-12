@@ -65,7 +65,7 @@ global.AudioContext = vi.fn().mockImplementation(() => ({
 }))
 
 // Mock MediaRecorder
-global.MediaRecorder = vi.fn().mockImplementation(() => ({
+const MockMediaRecorder = vi.fn().mockImplementation(() => ({
   start: vi.fn(),
   stop: vi.fn(),
   pause: vi.fn(),
@@ -79,6 +79,9 @@ global.MediaRecorder = vi.fn().mockImplementation(() => ({
   onstop: null,
   onerror: null
 }))
+
+MockMediaRecorder.isTypeSupported = vi.fn().mockReturnValue(true)
+global.MediaRecorder = MockMediaRecorder
 
 describe('useDeepgramVoice', () => {
   beforeEach(() => {

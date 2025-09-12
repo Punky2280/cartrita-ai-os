@@ -204,8 +204,8 @@ export function createStreamingChunk(
     done,
     metadata: {
       tokens: content.split(' ').length,
-      agent: metadata?.agent,
-      confidence: metadata?.confidence,
+      agent: typeof metadata?.agent === 'string' ? metadata.agent : undefined,
+      confidence: typeof metadata?.confidence === 'number' ? metadata.confidence : undefined,
       ...metadata
     }
   }

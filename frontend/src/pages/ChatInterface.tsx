@@ -5,6 +5,9 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
+import SettingsModal from '@/components/SettingsModal'
+import AttachmentsBar, { AttachmentItem } from '@/components/AttachmentsBar'
+import MessageList, { type ChatMessage as MLMessage } from '@/components/MessageList'
 import {
   Send,
   Settings,
@@ -42,6 +45,8 @@ import {
   featureFlagsAtom
 } from '@/stores'
 import { streamingService } from '@/services/streaming'
+// Narrow type helper (Message already strongly typed; kept for safety in functional updates)
+const isMessage = (val: unknown): val is Message => !!val && typeof val === 'object' && 'role' in (val as any) && 'content' in (val as any)
 import { apiClient } from '@/services/api'
 import type { Message, Agent, ChatRequest, Conversation } from '@/types'
 
@@ -59,8 +64,14 @@ import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger
+  TooltipTrigger,
+  Button
 } from '@/components/ui'
+import { Dialog } from '@/components/ui'
+import { FileUploader } from '@/components/ui'
+import { Progress } from '@/components/ui'
+import { RealtimeService } from '@/services/realtime/socket'
+import AgentTaskTimeline from '@/components/AgentTaskTimeline'
 
 interface VoiceState {
   isRecording: boolean
@@ -74,6 +85,7 @@ export default function ChatInterface() {
   // Core state
   const [sidebarOpen, setSidebarOpen] = useAtom(sidebarOpenAtom)
   const [chatInput, setChatInput] = useAtom(chatInputAtom)
+  const [attachments, setAttachments] = useState<AttachmentItem[]>([])
   const [showSettings, setShowSettings] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
   const [voiceState, setVoiceState] = useState<VoiceState>({
@@ -82,6 +94,12 @@ export default function ChatInterface() {
     currentTranscription: '',
     audioLevel: 0
   })
+  const [showUploadDialog, setShowUploadDialog] = useState(false)
+  const [uploadProgress, setUploadProgress] = useState(0)
+  const [typingUsers, setTypingUsers] = useState<Record<string, boolean>>({})
+  const [agentEvents, setAgentEvents] = useState<{ id: string; status: 'started' | 'progress' | 'completed'; progress?: number }[]>([])
+  const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const realtimeRef = useRef<RealtimeService | null>(null)
 
   // Atom values
   const user = useAtomValue(userAtom)
@@ -96,7 +114,7 @@ export default function ChatInterface() {
   const isStreaming = useAtomValue(isStreamingAtom)
   
   // Atom setters
-  const [streamingMessage, setStreamingMessage] = useAtom(streamingMessageAtom) as [Message | null, (value: Message | null) => void]
+  const [streamingMessage, setStreamingMessage] = useAtom(streamingMessageAtom)
   
   // Get message setter for current conversation
   const setMessages = useSetAtom(
@@ -175,6 +193,24 @@ export default function ChatInterface() {
     }
   }, [messages, streamingMessage, settings.autoScroll])
 
+  // Realtime: presence & typing wiring
+  useEffect(() => {
+    const wsUrl = process.env.NEXT_PUBLIC_WS_URL as string | undefined
+    if (!wsUrl) return
+    // Initialize only once
+    if (!realtimeRef.current) {
+      realtimeRef.current = new RealtimeService(wsUrl)
+      realtimeRef.current.onTyping((evt) => {
+        if (!currentConversation?.id || evt.conversationId !== currentConversation.id) return
+        setTypingUsers((prev) => ({ ...prev, [evt.userId]: evt.isTyping }))
+      })
+    }
+    return () => {
+      // Do not disconnect globally on rerenders; cleanup at unmount only
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentConversation?.id])
+
   // Focus input when conversation changes
   useEffect(() => {
     if (currentConversation && inputRef.current) {
@@ -183,10 +219,11 @@ export default function ChatInterface() {
   }, [currentConversation?.id])
 
   // Handle sending message
-  const handleSendMessage = useCallback(async () => {
-    if (!chatInput.trim() || !selectedAgent || isStreaming) return
+  const handleSendMessage = useCallback(async (overrideMessage?: string) => {
+    const candidate = overrideMessage ?? chatInput
+    if (!candidate.trim() || !selectedAgent || isStreaming) return
 
-    const messageContent = chatInput.trim()
+    const messageContent = candidate.trim()
     setChatInput('')
 
     const chatRequest: ChatRequest = {
@@ -216,7 +253,7 @@ export default function ChatInterface() {
     }
     
     // Update messages state with user message
-    setMessages((prev) => [...prev, userMessage])
+  setMessages((prev) => [...prev, userMessage])
 
     try {
       if (featureFlags.streaming) {
@@ -234,20 +271,16 @@ export default function ChatInterface() {
           isEdited: false
         }
         
-        setStreamingMessage(assistantMessage)
+  setStreamingMessage(assistantMessage)
 
         // Use streaming service
         await streamingService.streamChat(chatRequest, {
           onChunk: (chunk) => {
             console.log('Streaming chunk:', chunk.content)
             // Update streaming message with new content using callback to avoid closure issues
-            setStreamingMessage(prev => {
-              if (prev) {
-                return {
-                  ...prev,
-                  content: prev.content + chunk.content,
-                  updatedAt: new Date().toISOString()
-                }
+            setStreamingMessage((prev) => {
+              if (prev && typeof prev === 'object') {
+                return { ...(prev as Message), content: (prev as Message).content + chunk.content, updatedAt: new Date().toISOString() }
               }
               return prev
             })
@@ -280,13 +313,15 @@ export default function ChatInterface() {
             toast.error(`Failed to send message: ${error.message}`)
           },
           onAgentTask: (taskId, status, progress) => {
-            if (status === 'started') {
-              toast.info(`Agent task started: ${taskId}`)
-            } else if (status === 'completed') {
-              toast.success(`Agent task completed: ${taskId}`)
-            } else if (status === 'failed') {
-              toast.error(`Agent task failed: ${taskId}`)
-            }
+            setAgentEvents((prev) => {
+              const idx = prev.findIndex((e) => e.id === taskId)
+              if (idx >= 0) {
+                const next = [...prev]
+                next[idx] = { ...next[idx], status: status as any, progress }
+                return next
+              }
+              return [...prev, { id: taskId, status: status as any, progress }]
+            })
           }
         })
       } else {
@@ -303,6 +338,131 @@ export default function ChatInterface() {
       toast.error(`Failed to send message: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }
   }, [chatInput, currentConversation, selectedAgent, isStreaming, featureFlags.streaming, setChatInput, setMessages, setStreamingMessage, streamingMessage])
+
+  // Emit typing events (debounced stop)
+  const emitTyping = useCallback(() => {
+    const conversationId = currentConversation?.id
+    if (!conversationId || !realtimeRef.current) return
+    realtimeRef.current.emitTyping(conversationId, true)
+    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
+    typingTimeoutRef.current = setTimeout(() => {
+      realtimeRef.current?.emitTyping(conversationId, false)
+    }, 1500)
+  }, [currentConversation?.id])
+
+  // Message actions
+  const [editingMessageId, setEditingMessageId] = useState<string | null>(null)
+  const [editingContent, setEditingContent] = useState<string>('')
+
+  const beginEditMessage = useCallback((msgId: string, content: string) => {
+    setEditingMessageId(msgId)
+    setEditingContent(content)
+  }, [])
+
+  const saveEditMessage = useCallback(async () => {
+    if (!editingMessageId || !currentConversation?.id) return
+    try {
+      const res = await apiClient.editMessage(currentConversation.id, editingMessageId, editingContent)
+      if (res.success && res.data) {
+        setMessages((prev) => prev.map(m => m.id === editingMessageId ? { ...m, content: res.data.content, isEdited: true, updatedAt: new Date().toISOString() } : m))
+        toast.success('Message edited')
+      } else {
+        throw new Error(res.error || 'Edit failed')
+      }
+    } catch (e) {
+      console.error(e)
+      toast.error('Failed to edit message')
+    } finally {
+      setEditingMessageId(null)
+      setEditingContent('')
+    }
+  }, [currentConversation?.id, editingMessageId, editingContent, setMessages])
+
+  const deleteMessageById = useCallback(async (msgId: string) => {
+    if (!currentConversation?.id) return
+    try {
+      const res = await apiClient.deleteMessage(currentConversation.id, msgId)
+      if (res.success) {
+        setMessages((prev) => prev.filter(m => m.id !== msgId))
+        toast.success('Message deleted')
+      } else {
+        throw new Error(res.error || 'Delete failed')
+      }
+    } catch (e) {
+      console.error(e)
+      toast.error('Failed to delete message')
+    }
+  }, [currentConversation?.id, setMessages])
+
+  const regenerateFromMessage = useCallback(async (msgId: string) => {
+    const msg = messages.find(m => m.id === msgId)
+    if (!msg) return
+    let toSend = ''
+    if (msg.role === 'user') {
+      toSend = msg.content
+    } else {
+      // find previous user message
+      const idx = messages.findIndex(m => m.id === msgId)
+      const prior = [...messages].slice(0, idx).reverse().find(m => m.role === 'user')
+      toSend = prior?.content || ''
+    }
+    if (toSend) {
+      await handleSendMessage(toSend)
+    }
+  }, [messages, setChatInput, handleSendMessage])
+
+  // Conversation actions
+  const togglePinConversation = useCallback(async (convId: string) => {
+    try {
+      const res = await apiClient.pinConversation(convId)
+      if (res.success && res.data) {
+        setConversations((prev) => prev.map(c => c.id === convId ? { ...c, isPinned: res.data.isPinned } : c))
+      } else {
+        throw new Error(res.error || 'Pin toggle failed')
+      }
+    } catch (e) {
+      console.error(e)
+      toast.error('Failed to toggle pin')
+    }
+  }, [setConversations])
+
+  const archiveConversationById = useCallback(async (convId: string, archive = true) => {
+    try {
+      let res
+      if (archive) {
+        res = await apiClient.archiveConversation(convId)
+      } else {
+        // Unarchive via update endpoint
+        res = await apiClient.updateConversation(convId, { isArchived: false })
+      }
+      if (res.success && res.data) {
+        setConversations((prev) => prev.map(c => c.id === convId ? { ...c, isArchived: res.data.isArchived } : c))
+      } else {
+        throw new Error(res.error || 'Archive action failed')
+      }
+    } catch (e) {
+      console.error(e)
+      toast.error('Failed to update archive state')
+    }
+  }, [setConversations])
+
+  const deleteConversationById = useCallback(async (convId: string) => {
+    try {
+      const res = await apiClient.deleteConversation(convId)
+      if (res.success) {
+        setConversations((prev) => prev.filter(c => c.id !== convId))
+        if (currentConversation?.id === convId && conversations[0]) {
+          setCurrentConversationId(conversations[0].id)
+        }
+        toast.success('Conversation deleted')
+      } else {
+        throw new Error(res.error || 'Delete failed')
+      }
+    } catch (e) {
+      console.error(e)
+      toast.error('Failed to delete conversation')
+    }
+  }, [setConversations, currentConversation?.id, conversations, setCurrentConversationId])
 
   // Handle creating new conversation
   const handleNewConversation = useCallback(async () => {
@@ -373,7 +533,9 @@ export default function ChatInterface() {
       <div className="flex items-center justify-between p-4 border-b border-gray-700 bg-gray-800/50 backdrop-blur-sm">
         <div className="flex items-center gap-3">
           <button
-            onClick={() => { { setSidebarOpen(true);; }}}
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open sidebar"
+            title="Open sidebar"
             className="md:hidden h-9 w-9 p-0 bg-transparent hover:bg-gray-600 rounded-md flex items-center justify-center text-white"
           >
             <Menu className="h-4 w-4" />
@@ -397,16 +559,20 @@ export default function ChatInterface() {
           )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="h-9 w-9 p-0 bg-transparent hover:bg-gray-600 rounded-md flex items-center justify-center text-white">
+              <button
+                aria-label="More options"
+                title="More options"
+                className="h-9 w-9 p-0 bg-transparent hover:bg-gray-600 rounded-md flex items-center justify-center text-white"
+              >
                 <MoreVertical className="h-4 w-4" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => { { setShowSearch(true);; }}}>
+              <DropdownMenuItem onClick={() => setShowSearch(true)}>
                 <Search className="h-4 w-4 mr-2" />
                 Search
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => { { setShowSettings(true);; }}}>
+              <DropdownMenuItem onClick={() => setShowSettings(true)}>
                 <Settings className="h-4 w-4 mr-2" />
                 Settings
               </DropdownMenuItem>
@@ -432,7 +598,9 @@ export default function ChatInterface() {
                 <div className="flex items-center justify-between">
                   <h2 className="text-lg font-semibold">Conversations</h2>
                   <button
-                    onClick={() => { { setSidebarOpen(false);; }}}
+                    onClick={() => setSidebarOpen(false)}
+                    aria-label="Close sidebar"
+                    title="Close sidebar"
                     className="md:hidden h-8 w-8 p-0 bg-transparent hover:bg-gray-600 rounded-md flex items-center justify-center"
                   >
                     <X className="h-4 w-4" />
@@ -461,6 +629,7 @@ export default function ChatInterface() {
                         "flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer transition-colors",
                         currentConversation?.id === conv.id && "bg-gray-700"
                       )}
+                      onClick={() => setCurrentConversationId(conv.id)}
                     >
                       <MessageSquare className="h-4 w-4 text-gray-400 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
@@ -469,6 +638,28 @@ export default function ChatInterface() {
                           {new Date(conv.updatedAt).toLocaleDateString()}
                         </p>
                       </div>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button
+                            aria-label="Conversation actions"
+                            className="h-8 w-8 rounded hover:bg-gray-600 flex items-center justify-center"
+                            onClick={(e) => { e.stopPropagation() }}
+                          >
+                            <MoreVertical className="h-4 w-4" />
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem onClick={(e) => { e.stopPropagation(); togglePinConversation(conv.id) }}>
+                            {conv.isPinned ? 'Unpin' : 'Pin'}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={(e) => { e.stopPropagation(); archiveConversationById(conv.id, !conv.isArchived) }}>
+                            {conv.isArchived ? 'Unarchive' : 'Archive'}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={(e) => { e.stopPropagation(); deleteConversationById(conv.id) }}>
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
                   ))}
                 </div>
@@ -493,27 +684,24 @@ export default function ChatInterface() {
         {/* Main Chat Interface */}
         <div className="flex-1 flex flex-col min-w-0">
           {/* Messages Area */}
-          <ScrollArea className="flex-1 p-6">
-            <div className="max-w-4xl mx-auto space-y-6">
+          <div className="flex-1 p-6 overflow-hidden">
+            <div className="h-full max-w-4xl mx-auto">
               {messages.length === 0 && !streamingMessage ? (
                 <div className="text-center py-12">
                   <Bot className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                  <h2 className="text-xl font-semibold mb-2 text-white">
-                    How can I help you today?
-                  </h2>
-                  <p className="text-gray-300">
-                    Start a conversation with {selectedAgent?.name || 'an AI agent'}
-                  </p>
+                  <h2 className="text-xl font-semibold mb-2 text-white">How can I help you today?</h2>
+                  <p className="text-gray-300">Start a conversation with {selectedAgent?.name || 'an AI agent'}</p>
                 </div>
               ) : (
-                <>
-                  {messages.map((message) => (
-                    <motion.div
-                      key={message.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
+                <MessageList
+                  messages={[...messages, ...(streamingMessage ? [{ id: streamingMessage.id, role: streamingMessage.role as any, content: streamingMessage.content + '|' }] : [])] as MLMessage[]}
+                  fontSize={settings.fontSize as any}
+                  autoScroll={settings.autoScroll}
+                  highlightCode={!settings.reducedMotion}
+                  renderMessage={(message) => (
+                    <div
                       className={cn(
-                        "flex gap-4 max-w-4xl",
+                        'flex gap-4 max-w-4xl my-3',
                         message.role === 'user' ? 'justify-end' : 'justify-start'
                       )}
                     >
@@ -524,57 +712,92 @@ export default function ChatInterface() {
                           </AvatarFallback>
                         </Avatar>
                       )}
-
-                      <div className={cn(
-                        "max-w-[80%] rounded-xl px-4 py-3",
-                        message.role === 'user'
-                          ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white ml-auto"
-                          : "bg-gray-800/50 border border-gray-700 text-white"
-                      )}>
-                        <div className="prose prose-sm dark:prose-invert max-w-none">
-                          {message.content}
+                      <div
+                        className={cn(
+                          'max-w-[80%] rounded-xl px-4 py-3',
+                          message.role === 'user'
+                            ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white ml-auto'
+                            : 'bg-gray-800/50 border border-gray-700 text-white'
+                        )}
+                      >
+                        {editingMessageId === (message as any).id ? (
+                          <div className="space-y-2">
+                            <Textarea
+                              value={editingContent}
+                              onChange={(e) => setEditingContent(e.target.value)}
+                              className="w-full min-h-[80px]"
+                            />
+                            <div className="flex gap-2 justify-end">
+                              <Button
+                                variant="secondary"
+                                onClick={() => {
+                                  setEditingMessageId(null)
+                                  setEditingContent('')
+                                }}
+                              >
+                                Cancel
+                              </Button>
+                              <Button onClick={saveEditMessage}>Save</Button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="prose prose-sm dark:prose-invert max-w-none">
+                            {(message as any).content}
+                          </div>
+                        )}
+                        <div className="flex items-center gap-2 mt-2 opacity-75 text-xs">
+                          {(message as any).isEdited && <Badge variant="secondary">edited</Badge>}
+                        </div>
+                        <div className="mt-2 flex justify-end">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <button
+                                aria-label="Message actions"
+                                className="h-7 w-7 rounded hover:bg-gray-700 flex items-center justify-center"
+                              >
+                                <MoreVertical className="h-4 w-4" />
+                              </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                              {message.role === 'user' && (
+                                <DropdownMenuItem onClick={() => beginEditMessage((message as any).id, (message as any).content)}>
+                                  Edit
+                                </DropdownMenuItem>
+                              )}
+                              <DropdownMenuItem onClick={() => regenerateFromMessage((message as any).id)}>
+                                Regenerate
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => deleteMessageById((message as any).id)}>
+                                Delete
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </div>
                       </div>
-
                       {message.role === 'user' && (
                         <Avatar className="h-8 w-8 flex-shrink-0">
-                          <AvatarFallback>
-                            {user?.name?.[0] || 'U'}
-                          </AvatarFallback>
+                          <AvatarFallback>{user?.name?.[0] || 'U'}</AvatarFallback>
                         </Avatar>
                       )}
-                    </motion.div>
-                  ))}
-
-                  {/* Streaming message */}
-                  {streamingMessage && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="flex gap-4 justify-start max-w-4xl"
-                    >
-                      <Avatar className="h-8 w-8 flex-shrink-0">
-                        <AvatarFallback className="bg-gradient-to-r from-purple-600 to-blue-600">
-                          <Bot className="h-4 w-4 text-white" />
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="max-w-[80%] rounded-xl px-4 py-3 bg-gray-800/50 border border-gray-700 text-white">
-                        <div className="prose prose-sm dark:prose-invert max-w-none">
-                          {streamingMessage.content}
-                          <span className="animate-pulse">|</span>
-                        </div>
-                      </div>
-                    </motion.div>
+                    </div>
                   )}
-                </>
+                />
               )}
+              <AgentTaskTimeline events={agentEvents} />
               <div ref={messagesEndRef} />
             </div>
-          </ScrollArea>
+          </div>
 
           {/* Input Area */}
           <div className="p-6 border-t border-gray-700 bg-gray-900/50 backdrop-blur-sm">
             <div className="max-w-4xl mx-auto">
+              {/* Typing indicator */}
+              {Object.values(typingUsers).some(Boolean) && (
+                <div className="mb-2 text-sm text-blue-300 flex items-center gap-2">
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  Someone is typing…
+                </div>
+              )}
               {/* Message Input Bar */}
               <div className="flex items-end gap-3 bg-gray-800/50 border border-gray-600 rounded-2xl p-3 focus-within:border-purple-500 transition-colors">
                 {/* Attach Files Button */}
@@ -582,8 +805,10 @@ export default function ChatInterface() {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <button
-                        onClick={() => { { fileInputRef.current?.click();; }}}
+                        onClick={() => setShowUploadDialog(true)}
                         disabled={isStreaming}
+                        aria-label="Attach files"
+                        title="Attach files"
                         className="h-10 w-10 flex-shrink-0 bg-transparent hover:bg-gray-700 rounded-lg disabled:pointer-events-none disabled:opacity-50 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
                       >
                         <Paperclip className="h-5 w-5" />
@@ -597,7 +822,7 @@ export default function ChatInterface() {
                 <Textarea
                   ref={inputRef}
                   value={chatInput}
-                  onChange={(e) => { { setChatInput(e.target.value); ; }}}
+                  onChange={(e) => { setChatInput(e.target.value); emitTyping() }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
                       e.preventDefault()
@@ -616,6 +841,9 @@ export default function ChatInterface() {
                       <button
                         onClick={handleVoiceToggle}
                         disabled={isStreaming}
+                        aria-pressed={voiceState.isRecording}
+                        aria-label={voiceState.isRecording ? 'Stop recording' : 'Start voice input'}
+                        title={voiceState.isRecording ? 'Stop recording' : 'Start voice input'}
                         className={cn(
                           "h-10 w-10 flex-shrink-0 rounded-lg disabled:pointer-events-none disabled:opacity-50 flex items-center justify-center transition-colors",
                           voiceState.isRecording
@@ -640,6 +868,8 @@ export default function ChatInterface() {
                 <button
                   onClick={handleSendMessage}
                   disabled={!chatInput.trim() || !selectedAgent || isStreaming}
+                  aria-label="Send message"
+                  title="Send message"
                   className="h-10 w-10 flex-shrink-0 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 rounded-lg disabled:pointer-events-none disabled:opacity-50 flex items-center justify-center text-white transition-all duration-200"
                 >
                   {isStreaming ? (
@@ -651,20 +881,58 @@ export default function ChatInterface() {
               </div>
             </div>
 
-            {/* Hidden file input */}
-            <input
-              ref={fileInputRef}
-              type="file"
-              multiple
-              className="hidden"
-              onChange={(e) => { { {
-                const files = Array.from(e.target.files || [])
-                if (files.length > 0) {
-                  handleFileUpload(files)
-                ; ; }}}
-              }}
-            />
+            {/* Upload Dialog */}
+            {showUploadDialog && (
+              <Dialog
+                open={showUploadDialog}
+                onClose={() => { setShowUploadDialog(false); setUploadProgress(0) }}
+                title="Upload files"
+              >
+                <div className="space-y-4">
+                  <FileUploader
+                    multiple
+                    onFiles={async (files) => {
+                      if (files.length === 0) return
+                      try {
+                        const res = await apiClient.uploadMultipleFiles(files, currentConversation?.id, (p) => setUploadProgress(p))
+                        if (res.success) {
+                          toast.success(`${files.length} file(s) uploaded`)
+                          setAttachments((prev) => [
+                            ...prev,
+                            ...files.map((f, i) => ({
+                              id: `${f.name}-${Date.now()}-${i}`,
+                              name: f.name,
+                              size: f.size,
+                              type: f.type
+                            }))
+                          ])
+                          setShowUploadDialog(false)
+                        } else {
+                          throw new Error(res.error || 'Upload failed')
+                        }
+                      } catch (e) {
+                        console.error(e)
+                        toast.error('File upload failed')
+                      } finally {
+                        setUploadProgress(0)
+                      }
+                    }}
+                  />
+                  {uploadProgress > 0 && (
+                    <div className="space-y-1">
+                      <div className="text-xs text-gray-400">Uploading… {uploadProgress}%</div>
+                      <Progress value={uploadProgress} max={100} />
+                    </div>
+                  )}
+                </div>
+              </Dialog>
+            )}
           </div>
+          {/* Attachments Bar */}
+          <AttachmentsBar
+            items={attachments}
+            onRemove={(id) => setAttachments((list) => list.filter((a) => a.id !== id))}
+          />
         </div>
       </div>
 
@@ -675,9 +943,10 @@ export default function ChatInterface() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-30 bg-black/50 md:hidden"
-          onClick={() => { { setSidebarOpen(false);; }}}
+          onClick={() => setSidebarOpen(false)}
         />
       )}
+      <SettingsModal open={showSettings} onClose={() => setShowSettings(false)} />
     </div>
   )
 }

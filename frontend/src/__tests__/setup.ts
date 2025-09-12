@@ -1,7 +1,7 @@
 // Cartrita AI OS - Test Setup
 // Global test configuration and utilities
 
-import { expect, afterEach } from 'vitest'
+import { expect, afterEach, vi } from 'vitest'
 import { cleanup } from '@testing-library/react'
 import * as matchers from '@testing-library/jest-dom/matchers'
 
@@ -43,18 +43,21 @@ global.IntersectionObserver = vi.fn().mockImplementation(() => ({
 }))
 
 // Mock WebSocket
-global.WebSocket = vi.fn().mockImplementation(() => ({
+const MockWebSocket = vi.fn().mockImplementation(() => ({
   addEventListener: vi.fn(),
   removeEventListener: vi.fn(),
   dispatchEvent: vi.fn(),
   send: vi.fn(),
   close: vi.fn(),
-  readyState: 1,
-  CONNECTING: 0,
-  OPEN: 1,
-  CLOSING: 2,
-  CLOSED: 3
+  readyState: 1
 }))
+
+MockWebSocket.CONNECTING = 0
+MockWebSocket.OPEN = 1
+MockWebSocket.CLOSING = 2
+MockWebSocket.CLOSED = 3
+
+global.WebSocket = MockWebSocket
 
 // Mock MediaDevices
 Object.defineProperty(navigator, 'mediaDevices', {
@@ -79,7 +82,7 @@ global.AudioContext = vi.fn().mockImplementation(() => ({
 }))
 
 // Mock MediaRecorder
-global.MediaRecorder = vi.fn().mockImplementation(() => ({
+const MockMediaRecorder = vi.fn().mockImplementation(() => ({
   start: vi.fn(),
   stop: vi.fn(),
   pause: vi.fn(),
@@ -93,6 +96,10 @@ global.MediaRecorder = vi.fn().mockImplementation(() => ({
   onstop: null,
   onerror: null
 }))
+
+MockMediaRecorder.isTypeSupported = vi.fn().mockReturnValue(true)
+
+global.MediaRecorder = MockMediaRecorder
 
 // Global test utilities
 global.testUtils = {

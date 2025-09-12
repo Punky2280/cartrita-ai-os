@@ -1,5 +1,9 @@
 {
+  "scripts": {
+    "lint:md": "markdownlint-cli2 '**/*.md' '**/*.mdx' --config .markdownlint.jsonc"
+  },
   "devDependencies": {
-    "@anthropic-ai/claude-code": "^1.0.102"
+    "@anthropic-ai/claude-code": "^1.0.102",
+    "markdownlint-cli2": "^0.17.2"
   }
 }

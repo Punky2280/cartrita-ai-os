@@ -11,7 +11,7 @@
         --background: 0 0% 100%;
         --foreground: 222.2 84% 4.9%;
         
-        /* Claude Orange Primary */
+    /* Orange Primary */
         --primary: 18 100% 55%; /* #FF6B1A */
         --primary-foreground: 0 0% 100%;
         --primary-hover: 18 100% 45%; /* #FF8A3D */
@@ -67,8 +67,8 @@
         --background: var(--chatgpt-grey); /* #202123 */
         --foreground: 220 13% 91%; /* #E5E7EB */
         
-        /* Claude Orange Primary (unchanged for consistency) */
-        --primary: 18 100% 55%; /* #FF6B1A */
+    /* Orange Primary */
+    --primary: 18 100% 55%; /* #FF6B1A */
         --primary-foreground: 0 0% 100%;
         --primary-hover: 18 100% 45%;
         

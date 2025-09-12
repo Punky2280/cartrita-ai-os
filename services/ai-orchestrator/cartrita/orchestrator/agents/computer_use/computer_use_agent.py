@@ -148,7 +148,7 @@ class ComputerUseAgent:
         from cartrita.orchestrator.utils.config import get_settings
         _settings = get_settings()
 
-        self.model = model or _settings.ai.agent_model
+        self.model = model or _settings.ai.computer_use_model
         self.api_key = api_key or _settings.ai.openai_api_key.get_secret_value()
         # Normalize safety_mode to a strict boolean
         self.safety_mode = self._normalize_safety_mode(safety_mode)

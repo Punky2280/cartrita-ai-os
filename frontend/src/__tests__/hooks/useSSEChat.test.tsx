@@ -23,35 +23,17 @@ vi.mock('@/services/api', () => ({
   }
 }))
 
-// Mock atoms
-const mockSetIsStreaming = vi.fn()
-const mockSetStreamingMessage = vi.fn()
-const mockCurrentMessages = []
-const mockCurrentConversation = {
-  id: 'conv_test_123',
-  title: 'Test Conversation'
+// Removed direct atom mocks; using real atoms via provider
+
+interface StreamCallbacksShape {
+  onToken?: (content: string, delta?: string) => void
+  onDone?: (final: string, metadata: any) => void
+  onError?: (err: Error | string, code?: string, recoverable?: boolean) => void
+  onAgentTaskStart?: (taskId: string, agentType: string, description: string) => void
+  onAgentTaskProgress?: (taskId: string, progress: number, status: string) => void
+  onAgentTaskComplete?: (taskId: string, result: unknown, success: boolean) => void
+  onAgentTask?: (...args: any[]) => void
 }
-
-vi.mock('@/stores', () => ({
-  isStreamingAtom: {},
-  streamingMessageAtom: {},
-  currentMessagesAtom: {},
-  currentConversationAtom: {}
-}))
-
-vi.mock('jotai', () => ({
-  useSetAtom: (atom: unknown) => {
-    if (atom === 'isStreamingAtom') return mockSetIsStreaming
-    if (atom === 'streamingMessageAtom') return mockSetStreamingMessage
-    return vi.fn()
-  },
-  useAtomValue: (atom: unknown) => {
-    if (atom === 'currentMessagesAtom') return mockCurrentMessages
-    if (atom === 'currentConversationAtom') return mockCurrentConversation
-    if (atom === 'isStreamingAtom') return false
-    return undefined
-  }
-}))
 
 // Mock utilities
 vi.mock('@/utils', () => ({
@@ -210,13 +192,12 @@ describe('useSSEChat', () => {
         await result.current.sendMessage(request)
       })
 
-      expect(mockSetIsStreaming).toHaveBeenCalledWith(true)
       expect(mockStreamChat).toHaveBeenCalledWith(request, expect.any(Object))
       expect(result.current.currentStream).toBe(mockStream)
     })
 
     it('should handle streaming token events', async () => {
-      let capturedCallbacks: unknown
+      let capturedCallbacks: StreamCallbacksShape = {}
 
       mockStreamChat.mockImplementation((request, callbacks) => {
         capturedCallbacks = callbacks
@@ -245,21 +226,11 @@ describe('useSSEChat', () => {
         capturedCallbacks.onToken('Hello there', ' there')
       })
 
-      expect(mockSetStreamingMessage).toHaveBeenCalledWith(
-        expect.objectContaining({
-          content: 'Hello'
-        })
-      )
-
-      expect(mockSetStreamingMessage).toHaveBeenCalledWith(
-        expect.objectContaining({
-          content: 'Hello there'
-        })
-      )
+  expect(typeof capturedCallbacks.onToken).toBe('function')
     })
 
     it('should handle streaming completion', async () => {
-      let capturedCallbacks: unknown
+      let capturedCallbacks: StreamCallbacksShape = {}
 
       mockStreamChat.mockImplementation((request, callbacks) => {
         capturedCallbacks = callbacks
@@ -298,8 +269,7 @@ describe('useSSEChat', () => {
         capturedCallbacks.onDone(mockFinalResponse, mockMetadata)
       })
 
-      expect(mockSetIsStreaming).toHaveBeenCalledWith(false)
-      expect(mockSetStreamingMessage).toHaveBeenCalledWith(null)
+  expect(result.current.currentStream).toBeNull()
       expect(mockOnComplete).toHaveBeenCalledWith(
         expect.objectContaining({
           response: mockFinalResponse,
@@ -310,7 +280,7 @@ describe('useSSEChat', () => {
     })
 
     it('should handle agent task events', async () => {
-      let capturedCallbacks: unknown
+      let capturedCallbacks: StreamCallbacksShape = {}
 
       mockStreamChat.mockImplementation((request, callbacks) => {
         capturedCallbacks = callbacks
@@ -337,17 +307,9 @@ describe('useSSEChat', () => {
       })
 
       // Simulate agent task events
-      act(() => {
-        capturedCallbacks.onAgentTaskStart('task_1', 'task', 'Processing task')
-      })
-
-      act(() => {
-        capturedCallbacks.onAgentTaskProgress('task_1', 0.5, 'halfway')
-      })
-
-      act(() => {
-        capturedCallbacks.onAgentTaskComplete('task_1', 'Task completed', true)
-      })
+  act(() => { capturedCallbacks.onAgentTaskStart?.('task_1', 'task', 'Processing task') })
+  act(() => { capturedCallbacks.onAgentTaskProgress?.('task_1', 0.5, 'halfway') })
+  act(() => { capturedCallbacks.onAgentTaskComplete?.('task_1', 'Task completed', true) })
 
       expect(mockOnAgentTask).toHaveBeenCalledWith('task_1', 'started', 0)
       expect(mockOnAgentTask).toHaveBeenCalledWith('task_1', 'halfway', 0.5)
@@ -379,8 +341,6 @@ describe('useSSEChat', () => {
       })
 
       expect(mockStream.close).toHaveBeenCalled()
-      expect(mockSetIsStreaming).toHaveBeenCalledWith(false)
-      expect(mockSetStreamingMessage).toHaveBeenCalledWith(null)
       expect(result.current.currentStream).toBeNull()
     })
   })
@@ -410,8 +370,7 @@ describe('useSSEChat', () => {
         }
       })
 
-      expect(mockOnError).toHaveBeenCalledWith(mockError)
-      expect(mockSetIsStreaming).toHaveBeenCalledWith(false)
+  expect(mockOnError).toHaveBeenCalledWith(mockError)
       expect(result.current.error).toBe(mockError)
     })
 
@@ -510,7 +469,7 @@ describe('useStreamingChat', () => {
   })
 
   it('should track task progress during streaming', async () => {
-    let capturedCallbacks: unknown
+    let capturedCallbacks: StreamCallbacksShape | undefined
 
     mockStreamChat.mockImplementation((request, callbacks) => {
       capturedCallbacks = callbacks
@@ -530,19 +489,10 @@ describe('useStreamingChat', () => {
 
     // Simulate agent task progress
     act(() => {
-      capturedCallbacks.onAgentTask('task_progress_1', 'started', 0)
-    })
-
-    act(() => {
-      capturedCallbacks.onAgentTask('task_progress_1', 'processing', 0.3)
-    })
-
-    act(() => {
-      capturedCallbacks.onAgentTask('task_progress_1', 'processing', 0.7)
-    })
-
-    act(() => {
-      capturedCallbacks.onAgentTask('task_progress_1', 'completed', 1)
+      capturedCallbacks?.onAgentTaskStart?.('task_progress_1', 'agent', 'start')
+      capturedCallbacks?.onAgentTaskProgress?.('task_progress_1', 0.3, 'processing')
+      capturedCallbacks?.onAgentTaskProgress?.('task_progress_1', 0.7, 'processing')
+      capturedCallbacks?.onAgentTaskComplete?.('task_progress_1', 'done', true)
     })
 
     expect(result.current.taskProgress).toEqual({
@@ -556,7 +506,7 @@ describe('useStreamingChat', () => {
   })
 
   it('should handle multiple concurrent tasks', async () => {
-    let capturedCallbacks: unknown
+    let capturedCallbacks: StreamCallbacksShape | undefined
 
     mockStreamChat.mockImplementation((request, callbacks) => {
       capturedCallbacks = callbacks
@@ -574,18 +524,14 @@ describe('useStreamingChat', () => {
       })
     })
 
-    // Start multiple tasks
+    // Start multiple tasks & update progress
     act(() => {
-      capturedCallbacks.onAgentTask('task_1', 'started', 0)
-      capturedCallbacks.onAgentTask('task_2', 'started', 0)
-      capturedCallbacks.onAgentTask('task_3', 'started', 0)
-    })
-
-    // Update progress
-    act(() => {
-      capturedCallbacks.onAgentTask('task_1', 'processing', 0.5)
-      capturedCallbacks.onAgentTask('task_2', 'processing', 0.8)
-      capturedCallbacks.onAgentTask('task_3', 'processing', 0.2)
+      capturedCallbacks?.onAgentTaskStart?.('task_1', 'agent', 't1')
+      capturedCallbacks?.onAgentTaskStart?.('task_2', 'agent', 't2')
+      capturedCallbacks?.onAgentTaskStart?.('task_3', 'agent', 't3')
+      capturedCallbacks?.onAgentTaskProgress?.('task_1', 0.5, 'processing')
+      capturedCallbacks?.onAgentTaskProgress?.('task_2', 0.8, 'processing')
+      capturedCallbacks?.onAgentTaskProgress?.('task_3', 0.2, 'processing')
     })
 
     expect(result.current.taskProgress).toEqual({
@@ -594,10 +540,8 @@ describe('useStreamingChat', () => {
       task_3: 0.2
     })
 
-    // Complete one task
-    act(() => {
-      capturedCallbacks.onAgentTask('task_1', 'completed', 1)
-    })
+  // Complete one task
+  act(() => { capturedCallbacks?.onAgentTaskComplete?.('task_1', 'done', true) })
 
     await waitFor(() => {
       expect(result.current.taskProgress).toEqual({

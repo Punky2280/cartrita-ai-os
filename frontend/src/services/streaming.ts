@@ -30,7 +30,7 @@ export class StreamingService {
       onComplete,
       onError,
       onAgentTask,
-      timeout = 60000
+      timeout = 30000
     } = options
 
     try {
@@ -94,6 +94,9 @@ export class StreamingService {
           } catch (parseError) {
             // Ignore JSON parsing errors, use default message
           }
+          if (response.status === 503) {
+            errorMessage += ' – The backend is unavailable. Ensure the ai-orchestrator container is healthy and BACKEND_BASE_URL is set for the frontend service.'
+          }
           throw new Error(errorMessage)
         }
 
@@ -115,7 +118,22 @@ export class StreamingService {
         if (fetchError instanceof Error) {
           if (fetchError.name === 'AbortError') {
             if (this.controller?.signal.reason === 'Request timeout') {
-              throw new Error('Request timeout - server took too long to respond')
+              // Provide immediate fallback response for timeout
+              const fallbackResponse: ChatResponse = {
+                response: "I'm experiencing high load or API quota limitations. The request timed out after 30 seconds. This is likely due to OpenAI API quota being exceeded. Please try again later or check the API configuration.",
+                conversation_id: `fallback_${Date.now()}`,
+                agent_type: 'fallback',
+                metadata: {
+                  fallback_used: true,
+                  error_type: 'timeout',
+                  timestamp: new Date().toISOString()
+                },
+                processing_time: 30.0,
+                sources: []
+              }
+              
+              onComplete?.(fallbackResponse)
+              return
             }
             return // Request was cancelled by user
           }
@@ -123,6 +141,11 @@ export class StreamingService {
           // More specific error handling for fetch failures
           if (fetchError instanceof TypeError && fetchError.message.includes('Failed to fetch')) {
             throw new Error('Connection failed: This may be due to proxy timeout, network issues, or CORS problems. The proxy timeout has been increased to 70s.')
+          }
+          
+          // Handle specific API quota errors
+          if (fetchError.message.includes('quota') || fetchError.message.includes('insufficient_quota')) {
+            throw new Error('API quota exceeded: The OpenAI API key has exceeded its quota. Please check your OpenAI billing settings.')
           }
           
           throw fetchError
@@ -159,7 +182,7 @@ export class StreamingService {
       onComplete,
       onError,
       onAgentTask,
-      timeout = 60000
+      timeout = 30000
     } = options
 
     try {

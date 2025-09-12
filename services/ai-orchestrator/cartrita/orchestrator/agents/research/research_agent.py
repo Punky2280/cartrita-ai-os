@@ -56,19 +56,17 @@ class ResearchResult(BaseModel):
 
 class ResearchAgent:
     """Research agent for information gathering and analysis."""
-
     def __init__(
         self,
-        model: str = "gpt-4-turbo-preview",
+        model: str | None = None,
         api_key: str | None = None,
         tavily_api_key: str | None = None,
     ):
-        """Initialize the research agent."""
+        """Initialize the research agent with optimal GPT-4o model."""
         # Get settings with proper initialization
         from cartrita.orchestrator.utils.config import get_settings
         _settings = get_settings()
-        
-        self.model = model
+        self.model = model or _settings.ai.research_model
         self.api_key = api_key or _settings.ai.openai_api_key
         self.tavily_api_key = tavily_api_key or getattr(
             _settings.external, "tavily_api_key", None
@@ -91,6 +89,106 @@ class ResearchAgent:
     async def stop(self) -> None:
         """Stop the research agent."""
         logger.info("Research agent stopped", agent_id=self.agent_id)
+
+    async def process_messages(
+        self, messages: list[dict[str, Any]], context: dict[str, Any] = None
+    ) -> dict[str, Any]:
+        """Process messages using research capabilities."""
+        if context is None:
+            context = {}
+
+        try:
+            # Extract query from messages
+            query = self._extract_query(messages)
+            if not query:
+                return {
+                    "response": "I need a specific research question to investigate. What would you like me to research?",
+                    "success": False,
+                    "metadata": {"agent": "research_agent", "error": "no_query"},
+                }
+
+            # Add real-time context for time-related queries
+            if any(word in query.lower() for word in ["time", "date", "today", "now", "current"]):
+                return await self._handle_time_query(query, context)
+
+            # Perform research
+            result = await self._perform_research(query, context)
+
+            # Format response for orchestrator
+            return {
+                "response": result.get("summary", "Research completed but no summary available."),
+                "success": True,
+                "metadata": {
+                    "agent": "research_agent",
+                    "model": self.model,
+                    "query": query,
+                    "sources_count": len(result.get("sources", [])),
+                    "confidence_score": result.get("confidence_score", 0.0),
+                    "processing_time": time.time(),
+                },
+                "context": {"last_research": result},
+            }
+
+        except Exception as e:
+            logger.error(f"Research agent process_messages failed: {e}")
+            return {
+                "response": f"Research investigation ran into some issues: {str(e)[:100]}...",
+                "success": False,
+                "metadata": {"agent": "research_agent", "error": str(e)},
+            }
+
+    async def _handle_time_query(self, query: str, context: dict[str, Any]) -> dict[str, Any]:
+        """Handle time and date queries with real-time information."""
+        # Mark unused parameters for linter; kept for interface stability
+        _ = (query, context)
+        try:
+            from datetime import datetime
+            import pytz
+
+            # Get current time in Miami timezone
+            miami_tz = pytz.timezone('America/New_York')
+            current_time = datetime.now(miami_tz)
+
+            # Format comprehensive time information
+            formatted_time = current_time.strftime('%I:%M %p')
+            formatted_date = current_time.strftime('%A, %B %d, %Y')
+            timezone_name = current_time.strftime('%Z')
+
+            response = f"""🕐 **Current Time & Date in Miami**
+
+**Time**: {formatted_time} {timezone_name}
+**Date**: {formatted_date}
+**Timezone**: {timezone_name} (Miami/Eastern Time)
+
+**Additional Context**:
+- Miami follows Eastern Standard Time (EST) in winter and Eastern Daylight Time (EDT) in summer
+- Current season: {'Summer Time' if current_time.dst() else 'Standard Time'}
+- This information is accurate as of the moment you asked ⚡
+
+**Quick Miami Time Facts**:
+- Perfect time for cafecito ☕
+- Hurricane season runs June 1 - November 30
+- Beach weather year-round! 🌴"""
+
+            return {
+                "response": response,
+                "success": True,
+                "metadata": {
+                    "agent": "research_agent",
+                    "query_type": "time_date",
+                    "current_time": current_time.isoformat(),
+                    "timezone": str(miami_tz),
+                    "real_time_data": True
+                }
+            }
+
+        except Exception as e:
+            logger.error(f"Time query handling failed: {e}")
+            return {
+                "response": "Had trouble getting the exact time - you can check your device's clock or search 'Miami time' online.",
+                "success": False,
+                "metadata": {"agent": "research_agent", "error": str(e)}
+            }
 
     async def get_status(self) -> dict[str, Any]:
         """Get agent status."""
@@ -176,29 +274,18 @@ class ResearchAgent:
         """Perform the actual research using GPT-5 capabilities."""
         # Use context for future research customization
         _ = context
-        # Create research prompt
-        system_prompt = """You are an expert research assistant with access to web search capabilities.
-        Conduct thorough research on the given topic and provide comprehensive, well-sourced information.
+        # Time awareness
+        from datetime import datetime
+        import pytz
 
-        Your response should include:
-        1. A clear summary of the topic
-        2. Key findings and insights
-        3. Relevant sources and citations
-        4. Confidence score (0.0-1.0) based on source quality and consensus
+        miami_tz = pytz.timezone('America/New_York')
+        current_time = datetime.now(miami_tz).strftime('%A, %B %d, %Y at %I:%M %p %Z')
 
-        Be objective, accurate, and cite your sources properly."""
+        # Build prompts using helpers to reduce method size
+        system_prompt = self._build_system_prompt(current_time)
+        research_prompt = self._build_research_prompt(query)
 
-        research_prompt = f"""Research Topic: {query}
-
-        Please provide a comprehensive research summary with the following structure:
-        - Executive Summary
-        - Key Findings
-        - Sources & Citations
-        - Confidence Assessment
-
-        Focus on reliable, recent information and provide balanced perspectives."""
-
-        # Get research from GPT-5
+        # Invoke LLM
         messages = [
             SystemMessage(content=system_prompt),
             HumanMessage(content=research_prompt),
@@ -211,47 +298,94 @@ class ResearchAgent:
         return self._parse_research_response(research_content, query)
 
     def _parse_research_response(self, content: str, query: str) -> dict[str, Any]:
-        """Parse the research response into structured format."""
-        # This is a simplified parser - in production, you'd want more sophisticated parsing
-        lines = content.split("\n")
-        summary = ""
-        findings = []
-        sources = []
-        citations = []
+        """Parse the research response into structured format with reduced branching."""
+        sections = self._extract_sections(content)
+        summary = sections.get("executive summary") or sections.get("summary") or ""
+        findings_block = sections.get("key findings", "")
+        sources_block = sections.get("sources", "") or sections.get("citations", "")
 
-        current_section = None
-        for line in lines:
+        # Normalize findings: lines starting with '-' or numeric list
+        findings: list[str] = []
+        for line in findings_block.splitlines():
             line = line.strip()
             if not line:
                 continue
-
-            if line.lower().startswith("executive summary"):
-                current_section = "summary"
-                continue
-            elif line.lower().startswith("key findings"):
-                current_section = "findings"
-                continue
-            elif line.lower().startswith("sources") or line.lower().startswith(
-                "citations"
-            ):
-                current_section = "sources"
-                continue
-
-            if current_section == "summary":
-                summary += line + " "
-            elif current_section == "findings" and line.startswith("-"):
+            if line.startswith("-"):
                 findings.append(line[1:].strip())
-            elif current_section == "sources" and line.startswith("-"):
-                sources.append({"title": line[1:].strip(), "url": ""})
-                citations.append(line[1:].strip())
+            elif line[0:2].isdigit() and "." in line:
+                # e.g., "1. point" -> remove number
+                findings.append(line.split(".", 1)[1].strip())
+
+        # Extract sources as plain titles/URLs if present
+        sources: list[dict[str, Any]] = []
+        citations: list[str] = []
+        for line in sources_block.splitlines():
+            t = line.strip().lstrip("- ")
+            if not t:
+                continue
+            sources.append({"title": t, "url": ""})
+            citations.append(t)
 
         return {
             "summary": summary.strip() or f"Research conducted on: {query}",
             "key_findings": findings or [f"Research findings for: {query}"],
             "sources": sources or [{"title": f"Research on {query}", "url": ""}],
             "citations": citations or [f"Research sources for {query}"],
-            "confidence_score": 0.8,  # Default confidence
+            "confidence_score": 0.8,
         }
+
+    # --------------------------------------------
+    # Prompt builders and parsing helpers
+    # --------------------------------------------
+
+    def _build_system_prompt(self, current_time: str) -> str:
+        """Construct a concise research system prompt with clear standards."""
+        return (
+            "You are Cartrita's Research Agent. Perform professional-grade research:"
+            " analyze queries, cross-verify claims, assess source credibility, and"
+            f" account for temporal context (now: {current_time}). Provide an executive"
+            " summary, key findings, sources with brief reliability notes, temporal"
+            " context, and actionable insights. If information is uncertain, state"
+            " limitations and propose next steps."
+        )
+
+    def _build_research_prompt(self, query: str) -> str:
+        """Build the user prompt describing the expected structure."""
+        return (
+            f"Research Topic: {query}\n\n"
+            "Please provide:\n"
+            "- Executive Summary (2-3 sentences)\n"
+            "- Key Findings (bulleted)\n"
+            "- Sources & Citations (credible, recent)\n"
+            "- Temporal Context (recency, trends)\n"
+            "- Actionable Insights (what to do next)\n"
+        )
+
+    def _extract_sections(self, content: str) -> dict[str, str]:
+        """Extract sections by simple heading detection; lowers cyclomatic complexity."""
+        headings = [
+            "executive summary",
+            "summary",
+            "key findings",
+            "deep analysis",
+            "sources",
+            "citations",
+            "temporal context",
+            "actionable insights",
+        ]
+        current = None
+        buckets: dict[str, list[str]] = {h: [] for h in headings}
+        for raw in content.splitlines():
+            line = raw.strip()
+            if not line:
+                continue
+            lower = line.lower().strip(":")
+            if lower in headings:
+                current = lower
+                continue
+            if current:
+                buckets[current].append(line)
+        return {k: "\n".join(v).strip() for k, v in buckets.items() if v}
 
     def _format_research_response(self, research_result: dict[str, Any]) -> str:
         """Format research results into a readable response."""
@@ -280,6 +414,8 @@ class ResearchAgent:
         response += (
             "*This research was conducted using advanced AI analysis and "
             "web search capabilities.*"
+        
         )
-
         return response
+
+

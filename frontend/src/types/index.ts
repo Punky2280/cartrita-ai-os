@@ -152,6 +152,7 @@ export type AgentType =
   | 'computer_use'
   | 'knowledge'
   | 'task'
+  | 'fallback'
 
 export interface AgentMetadata {
   lastActive: string
@@ -696,6 +697,11 @@ export const AGENT_TYPES: Record<AgentType, { name: string; description: string;
     name: 'Task Agent',
     description: 'GPT-5 powered task planning and project management',
     icon: '📋'
+  },
+  fallback: {
+    name: 'Fallback Agent',
+    description: 'Fallback response when other agents are unavailable',
+    icon: '🔄'
   }
 }
 

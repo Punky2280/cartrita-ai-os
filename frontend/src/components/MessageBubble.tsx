@@ -30,6 +30,7 @@ import { Textarea } from '@/components/ui'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import vscDarkPlus from 'react-syntax-highlighter/dist/esm/styles/prism/vsc-dark-plus'
+// Remove PrismStyle import as it's not exported
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
 import { useUser } from '@/hooks'
@@ -94,7 +95,7 @@ function MessageContent({
           <pre key={index} className="bg-muted p-4 rounded-lg overflow-x-auto my-2">
             <SyntaxHighlighter
               language={part.language}
-              style={vscDarkPlus as object}
+              style={vscDarkPlus as any}
               className="rounded-md"
             >
               {part.content}
@@ -113,7 +114,7 @@ function MessageContent({
                 const match = /language-(\w+)/.exec(className || '')
                 return !props.inline && match ? (
                   <SyntaxHighlighter
-                    style={vscDarkPlus}
+                    style={vscDarkPlus as any}
                     language={match[1]}
                     PreTag="div"
                     className="rounded-md"
@@ -437,11 +438,11 @@ export function MessageBubble({
           )}
 
           {message.metadata?.tokens && (
-            <span>{message.metadata.tokens} tokens</span>
+            <span>{String(message.metadata.tokens)} tokens</span>
           )}
 
           {message.metadata?.processingTime && (
-            <span>{message.metadata.processingTime}ms</span>
+            <span>{String(message.metadata.processingTime)}ms</span>
           )}
 
           {status === 'success' && (

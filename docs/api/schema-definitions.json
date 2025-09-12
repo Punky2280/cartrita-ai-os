@@ -1,0 +1,6 @@
+{
+  "Message": "UUID id, role enum(system|user|assistant|tool), content string, timestamp ISO8601",
+  "ChatRequest": "message string (1-4000), conversation_id uuid?, context object, agent_override enum?, stream bool, temperature number 0-2, max_tokens int",
+  "ChatResponse": "response string, conversation_id uuid, agent_type enum, message Message, metadata object, processing_time float, token_usage object",
+  "Agent": "id string, name string, type enum, status enum, model string, capabilities[], usage_count int"
+}

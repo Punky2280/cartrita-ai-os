@@ -1,7 +1,7 @@
 // Cartrita AI OS - Deepgram Voice Service Integration
 // Real implementation with no mock features
 
-import { createClient, LiveTranscriptionEvents, DeepgramError } from '@deepgram/sdk'
+import { createClient, LiveTranscriptionEvents, DeepgramError, DeepgramClient } from '@deepgram/sdk'
 
 export type VoiceState = 'idle' | 'recording' | 'processing' | 'speaking' | 'error'
 
@@ -60,9 +60,30 @@ export interface ConversationMetrics {
   }>
 }
 
+// Minimal surface we rely on from Deepgram live connection to avoid pervasive any
+interface DeepgramLiveConnection {
+  on: (event: string, handler: (...args: any[]) => void) => void
+  send: (data: ArrayBuffer | SharedArrayBuffer | Uint8Array) => void
+  finish: () => void
+  getReadyState: () => number
+}
+
+// Discriminated union for Voice Agent WS messages we handle
+type VoiceAgentMessage =
+  | { type: 'transcription'; transcription: unknown }
+  | { type: 'response'; response: unknown }
+  | { type: 'audio'; audio: string }
+  | { type: 'analytics'; analytics: unknown }
+  | { type: 'error'; error: unknown }
+  | { type: string; [k: string]: unknown }
+
+function isVoiceAgentMessage(value: unknown): value is VoiceAgentMessage {
+  return typeof value === 'object' && value !== null && 'type' in (value as any)
+}
+
 class DeepgramVoiceService {
-  private client: unknown
-  private connection: unknown
+  private client: DeepgramClient
+  private connection: DeepgramLiveConnection | null = null
   private mediaRecorder: MediaRecorder | null = null
   private audioStream: MediaStream | null = null
   private isRecording = false
@@ -70,7 +91,7 @@ class DeepgramVoiceService {
   private eventListeners: Map<string, Function[]> = new Map()
   
   constructor(private config: DeepgramConfig) {
-    this.client = createClient(config.apiKey)
+    this.client = createClient(config.apiKey) as DeepgramClient
     this.setupEventListeners()
   }
 
@@ -114,7 +135,7 @@ class DeepgramVoiceService {
       })
 
       // Setup Deepgram live transcription connection
-      this.connection = this.client.listen.live({
+  this.connection = this.client.listen.live({
         model: this.config.model || 'nova-2',
         language: this.config.language || 'en-US',
         smart_format: this.config.smartFormat ?? true,
@@ -136,21 +157,21 @@ class DeepgramVoiceService {
       })
 
       // Handle transcription results
-      this.connection.on(LiveTranscriptionEvents.Transcript, (data: unknown) => {
-        const transcript = data.channel?.alternatives?.[0]
-        if (transcript) {
+  this.connection.on(LiveTranscriptionEvents.Transcript, (data: any) => {
+        const transcript = data?.channel?.alternatives?.[0]
+        if (transcript && typeof transcript.transcript === 'string') {
           const transcription: VoiceTranscription = {
             text: transcript.transcript,
-            confidence: transcript.confidence,
-            is_final: data.is_final,
-            speaker: transcript.speaker,
+            confidence: typeof transcript.confidence === 'number' ? transcript.confidence : 0,
+            is_final: Boolean(data?.is_final),
+            speaker: typeof transcript.speaker === 'number' ? transcript.speaker : undefined,
             timestamp: Date.now(),
-            words: transcript.words?.map((word: unknown) => ({
-              word: word.word,
-              start: word.start,
-              end: word.end,
-              confidence: word.confidence
-            }))
+            words: Array.isArray(transcript.words) ? transcript.words.map((word: any) => ({
+              word: String(word?.word || ''),
+              start: typeof word?.start === 'number' ? word.start : 0,
+              end: typeof word?.end === 'number' ? word.end : 0,
+              confidence: typeof word?.confidence === 'number' ? word.confidence : 0
+            })) : undefined
           }
 
           this.emit('transcription', transcription)
@@ -163,18 +184,18 @@ class DeepgramVoiceService {
       })
 
       // Handle connection events
-      this.connection.on(LiveTranscriptionEvents.Open, () => {
+  this.connection.on(LiveTranscriptionEvents.Open, () => {
         this.updateVoiceState('recording')
         console.log('Deepgram connection opened')
       })
 
-      this.connection.on(LiveTranscriptionEvents.Error, (error: DeepgramError) => {
+  this.connection.on(LiveTranscriptionEvents.Error, (error: DeepgramError) => {
         console.error('Deepgram error:', error)
         this.updateVoiceState('error')
         this.emit('error', error)
       })
 
-      this.connection.on(LiveTranscriptionEvents.Close, () => {
+  this.connection.on(LiveTranscriptionEvents.Close, () => {
         console.log('Deepgram connection closed')
         this.updateVoiceState('idle')
       })
@@ -216,7 +237,7 @@ class DeepgramVoiceService {
       }
 
       if (this.connection) {
-        this.connection.finish()
+        try { this.connection.finish() } catch (e) { /* swallow */ }
         this.connection = null
       }
 
@@ -404,26 +425,32 @@ class DeepgramVoiceService {
       })
 
       voiceAgentWs.addEventListener('message', (event) => {
-        const data = JSON.parse(event.data)
-        
-        switch (data.type) {
-          case 'transcription':
-            this.emit('transcription', data.transcription)
-            break
-          case 'response':
-            this.emit('response', data.response)
-            break
-          case 'audio':
-            // Play audio response
-            this.playAudioFromBase64(data.audio)
-            break
-          case 'analytics':
-            this.emit('analytics', data.analytics)
-            break
-          case 'error':
-            this.emit('error', data.error)
-            this.updateVoiceState('error')
-            break
+        try {
+          const parsed = JSON.parse(event.data)
+          if (!isVoiceAgentMessage(parsed)) return
+          switch (parsed.type) {
+            case 'transcription':
+              this.emit('transcription', parsed.transcription)
+              break
+            case 'response':
+              this.emit('response', parsed.response)
+              break
+            case 'audio':
+              this.playAudioFromBase64(parsed.audio)
+              break
+            case 'analytics':
+              this.emit('analytics', parsed.analytics)
+              break
+            case 'error':
+              this.emit('error', parsed.error)
+              this.updateVoiceState('error')
+              break
+            default:
+              // ignore unhandled
+              break
+          }
+        } catch (e) {
+          console.error('Voice Agent message parse error', e)
         }
       })
 

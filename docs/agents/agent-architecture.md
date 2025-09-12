@@ -25,15 +25,17 @@ The supervisor serves as the central coordinator and uses GPT-4.1 to:
 ### 2. Specialized Agents
 
 #### Research Agent (`research/research_agent.py`)
+
 - **Purpose**: Web search, information gathering, and research tasks
 - **Model**: GPT-5 with Tavily search integration
-- **Capabilities**: 
+- **Capabilities:**
   - Academic research and fact-checking
   - Market analysis and trend research
   - Technical documentation research
   - Real-time information gathering
 
-#### Code Agent (`code/code_agent.py`) 
+#### Code Agent (`code/code_agent.py`)
+
 - **Purpose**: Code generation, analysis, and programming tasks
 - **Model**: GPT-5 optimized for coding
 - **Capabilities**:
@@ -43,6 +45,7 @@ The supervisor serves as the central coordinator and uses GPT-4.1 to:
   - Architecture design and documentation
 
 #### Computer Use Agent (`computer_use/computer_use_agent.py`)
+
 - **Purpose**: System automation and computer interaction
 - **Model**: GPT-5 with safety constraints
 - **Capabilities**:
@@ -52,6 +55,7 @@ The supervisor serves as the central coordinator and uses GPT-4.1 to:
   - Secure command execution
 
 #### Knowledge Agent (`knowledge/knowledge_agent.py`)
+
 - **Purpose**: Information retrieval from knowledge bases
 - **Model**: GPT-5 with vector database integration
 - **Capabilities**:
@@ -61,6 +65,7 @@ The supervisor serves as the central coordinator and uses GPT-4.1 to:
   - Document similarity analysis
 
 #### Task Agent (`task/task_agent.py`)
+
 - **Purpose**: Task planning and project management
 - **Model**: GPT-5 for structured planning
 - **Capabilities**:
@@ -120,18 +125,21 @@ agent_configs = {
 ## Multi-Agent Workflow
 
 ### 1. Request Processing
+
 1. User submits request via chat interface
 2. Supervisor receives and analyzes request
 3. GPT-4.1 determines optimal agent selection
 4. Request is routed to appropriate specialized agent
 
 ### 2. Agent Execution  
+
 1. Specialized agent processes request using domain-specific logic
 2. Agent leverages appropriate tools and APIs
 3. Response is generated with metadata and confidence scores
 4. Results are returned to supervisor
 
 ### 3. Response Coordination
+
 1. Supervisor receives agent response
 2. Additional processing or agent coordination if needed
 3. Final response is formatted and returned to user
@@ -140,16 +148,19 @@ agent_configs = {
 ## Error Handling & Resilience
 
 ### Graceful Degradation
+
 - Import failures don't crash the system
 - Missing agents trigger fallback responses
 - Configuration errors are logged and handled
 
 ### Retry Logic
+
 - Failed agent calls are retried with exponential backoff
 - Alternative agents can be selected for similar tasks
 - Supervisor provides direct responses when agents fail
 
 ### Monitoring & Observability
+
 - Comprehensive structured logging with correlation IDs
 - Agent performance metrics and execution times
 - Error tracking and debugging information
@@ -157,21 +168,25 @@ agent_configs = {
 ## Benefits of This Architecture
 
 ### 1. Scalability
+
 - New agents can be added without modifying existing code
 - Horizontal scaling through multiple supervisor instances
 - Independent agent deployment and versioning
 
 ### 2. Maintainability
+
 - Clear separation of concerns between agents
 - Modular design enables independent development
 - Standardized agent interface and lifecycle management
 
 ### 3. Flexibility
+
 - Dynamic agent selection based on request analysis
 - Multi-agent coordination for complex tasks
 - Easy configuration and feature toggling
 
 ### 4. Reliability
+
 - Robust error handling and fallback mechanisms
 - Health monitoring and automatic recovery
 - Graceful degradation under failure conditions

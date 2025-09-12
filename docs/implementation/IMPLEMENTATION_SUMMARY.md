@@ -14,7 +14,7 @@ Successfully implemented a comprehensive SSE-first API integration for Cartrita 
 
 ### 2. Schema Definition
 
-- ✅ **Comprehensive JSON Schemas**: Created complete API schemas in `docs/api-schemas.json`
+- ✅ **Comprehensive JSON Schemas**: Created complete API schemas in `docs/api/api-schemas.json`
 - ✅ **SSE Event Types**: Defined all streaming event types (`token`, `function_call`, `tool_result`, `agent_task_*`, `metrics`, `error`, `done`)
 - ✅ **Type Safety**: Updated TypeScript types to match backend API format
 

@@ -1,0 +1,17 @@
+{
+  "name": "Cartrita AI OS",
+  "short_name": "Cartrita",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#202123",
+  "theme_color": "#FF6B1A",
+  "description": "Conversational AI interface with multi-agent orchestration.",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

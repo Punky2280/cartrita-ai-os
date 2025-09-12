@@ -138,7 +138,7 @@ class CodeAgent:
         from cartrita.orchestrator.utils.config import get_settings
         _settings = get_settings()
         
-        self.model = model or _settings.ai.agent_model
+        self.model = model or _settings.ai.code_model
         self.api_key = api_key or _settings.ai.openai_api_key.get_secret_value()
 
         # Initialize GPT-5 code model

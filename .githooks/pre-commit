@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+changed_md=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(md|mdx)$' || true)
+if [ -z "$changed_md" ]; then
+  exit 0
+fi
+
+echo "[pre-commit] Running markdownlint on staged markdown files..."
+
+# Create a temporary include list file for markdownlint-cli2
+tmpfile=$(mktemp)
+echo "$changed_md" | tr '\n' '\0' | xargs -0 -I {} printf '{}\n' >> "$tmpfile"
+
+npx --yes markdownlint-cli2 "{${tmpfile}}" --config .markdownlint.jsonc || {
+  echo "Markdown lint failed. Amend your commit after fixes." >&2
+  rm -f "$tmpfile"
+  exit 1
+}
+
+rm -f "$tmpfile"
+exit 0

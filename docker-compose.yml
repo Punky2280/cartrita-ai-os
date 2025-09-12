@@ -69,6 +69,7 @@ services:
     environment:
       - PYTHON_ENV=${PYTHON_ENV:-production}
       - PYTHONPATH=/app
+      - CARTRITA_SECRET=${CARTRITA_SECRET}
       - EXTERNAL_CODACY_API_TOKEN=${EXTERNAL_CODACY_API_TOKEN}
       - AI_OPENAI_API_KEY=${OPENAI_API_KEY}
       - AI_OPENAI_EMBEDDINGS_API_KEY=${OPENAI_EMBEDDINGS_API_KEY}
@@ -133,9 +134,10 @@ services:
     container_name: cartrita-api-gateway
     restart: unless-stopped
     ports:
-      - "${API_GATEWAY_PORT:-3001}:3000"
+      - "3001:3000"
     environment:
       - NODE_ENV=${NODE_ENV:-production}
+      - CARTRITA_SECRET=${CARTRITA_SECRET}
       - API_GATEWAY_PORT=3000
       - AI_ORCHESTRATOR_URL=http://ai-orchestrator:8000
       - POSTGRES_HOST=postgres
@@ -192,6 +194,8 @@ services:
       - "${FRONTEND_PORT:-3003}:3000"
     environment:
       - NODE_ENV=${NODE_ENV:-production}
+      - CARTRITA_SECRET=${CARTRITA_SECRET}
+      - BACKEND_BASE_URL=http://ai-orchestrator:8000
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:3001}
       - NEXT_PUBLIC_WS_URL=${NEXT_PUBLIC_WS_URL:-ws://localhost:3001}
       - NEXT_PUBLIC_AI_ORCHESTRATOR_URL=${NEXT_PUBLIC_AI_ORCHESTRATOR_URL:-http://localhost:8000}
@@ -200,10 +204,7 @@ services:
       - OTEL_SERVICE_NAME=cartrita-frontend
       - OTEL_TRACES_EXPORTER=otlp
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:14268/api/traces
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - /app/.next
+  # No bind mounts in production; prevents overwriting Next.js standalone build
     depends_on:
       api-gateway:
         condition: service_healthy

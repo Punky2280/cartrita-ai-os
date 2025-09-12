@@ -37,7 +37,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         target: process.env.BACKEND_BASE_URL || 'http://localhost:8000',
         changeOrigin: true,
         selfHandleResponse: false,
-        timeout: 70000,
+        timeout: 35000,
       },
       (err: any) => {
         console.error('Proxy error:', err)

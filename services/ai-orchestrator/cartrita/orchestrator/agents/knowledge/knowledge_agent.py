@@ -95,7 +95,7 @@ class KnowledgeAgent:
         from cartrita.orchestrator.utils.config import get_settings
         _settings = get_settings()
         
-        self.model = model or _settings.ai.agent_model
+        self.model = model or _settings.ai.knowledge_model
         self.api_key = api_key or _settings.ai.openai_api_key.get_secret_value()
         self.db_manager = db_manager
 
@@ -153,7 +153,6 @@ class KnowledgeAgent:
     # ============================================
     # Core Knowledge Methods
     # ============================================
-
     async def execute(
         self,
         messages: list[dict[str, Any]],
@@ -259,67 +258,106 @@ class KnowledgeAgent:
         )
 
     async def _search_documents(self, query: KnowledgeQuery) -> list[KnowledgeDocument]:
-        """Search for relevant documents."""
+        """Search for relevant documents with low complexity and clear flow."""
         try:
-            # This would integrate with vector database search
-            # For now, return mock results
-            mock_sources = [
-                KnowledgeDocument(
-                    id=f"doc_{i}",
-                    title=f"Knowledge Document {i}",
-                    content=f"Content related to {query.query} from source {i}",
-                    source=f"source{i}.com",
-                    relevance_score=0.9 - (i * 0.1),
-                )
-                for i in range(min(query.top_k, 3))
-            ]
+            raw_results: list[dict[str, Any]] = []
+            if self.db_manager is not None:
+                raw_results = await self._db_manager_search(query)
 
+            if not raw_results:
+                logger.info("No search backend or results; returning empty", query=query.query)
+                return []
+
+            sources = self._convert_raw_results(raw_results)
             logger.info(
                 "Document search completed",
                 query=query.query,
-                results=len(mock_sources),
+                results=len(sources),
+                semantic=query.semantic_search,
             )
-            return mock_sources
-
+            return sources
         except Exception as e:
             logger.error("Document search failed", error=str(e), query=query.query)
             return []
+
+    async def _db_manager_search(self, query: KnowledgeQuery) -> list[dict[str, Any]]:
+        """Select and execute the appropriate db_manager search method."""
+        try:
+            semantic_ok = query.semantic_search and hasattr(self.db_manager, "semantic_search")
+            method_name = "semantic_search" if semantic_ok else ("search" if hasattr(self.db_manager, "search") else None)
+            if not method_name:
+                logger.warning("db_manager present but no compatible search method", available=dir(self.db_manager))
+                return []
+
+            search_fn = getattr(self.db_manager, method_name)
+            results = await search_fn(
+                query=query.query,
+                top_k=query.top_k,
+                filters=query.filters,
+                include_metadata=query.include_metadata,
+            )
+            return results or []
+        except Exception as e:
+            logger.error("db_manager search failed", error=str(e))
+            return []
+
+    def _convert_raw_results(self, raw_results: list[dict[str, Any]]) -> list[KnowledgeDocument]:
+        """Convert raw search rows into KnowledgeDocument objects."""
+        sources: list[KnowledgeDocument] = []
+        for i, item in enumerate(raw_results or []):
+            try:
+                meta = item.get("metadata", {}) if isinstance(item, dict) else {}
+                sources.append(
+                    KnowledgeDocument(
+                        id=str(item.get("id", f"doc_{i}")),
+                        title=item.get("title") or meta.get("title") or "Untitled",
+                        content=item.get("content") or item.get("text") or "",
+                        source=item.get("source") or meta.get("source") or "unknown",
+                        relevance_score=float(item.get("score", item.get("relevance", 0.0))) if isinstance(item, dict) else 0.0,
+                        metadata=meta if isinstance(meta, dict) else {},
+                    )
+                )
+            except Exception as conv_err:
+                logger.warning("Failed to convert search result", error=str(conv_err))
+        return sources
 
     async def _generate_answer_with_rag(
         self, query: KnowledgeQuery, sources: list[KnowledgeDocument]
     ) -> str:
         """Generate answer using RAG with GPT-5."""
+        # Build time-aware strings
+        from datetime import datetime
+        import pytz
+
+        miami_tz = pytz.timezone('America/New_York')
+        current_time = datetime.now(miami_tz).strftime('%A, %B %d, %Y at %I:%M %p %Z')
+
+        # If no sources, avoid hallucinations and ask for permission to broaden search
         if not sources:
-            return f"I couldn't find relevant information about '{query.query}' in the knowledge base."
+            return (
+                "I couldn't find sufficiently relevant documents for your query in the connected knowledge base. "
+                f"Query: '{query.query}'. If you'd like, I can expand the search or suggest refined keywords."
+            )
 
-        # Prepare context from sources
-        context_parts = []
-        for source in sources:
-            context_parts.append(f"Source: {source.title}\nContent: {source.content}\n")
+        # Prepare context and footnotes
+        delimited_sources = self._format_sources_block(sources)
+        footnotes = self._format_source_footnotes(sources)
 
-        context = "\n".join(context_parts)
-
-        rag_prompt = f"""Based on the following knowledge sources, provide a comprehensive answer to the query: "{query.query}"
-
-Knowledge Sources:
-{context}
-
-Please provide a well-structured answer that:
-1. Directly addresses the query
-2. Cites relevant sources
-3. Provides comprehensive information
-4. Notes any limitations or gaps in knowledge
-
-Answer:"""
+        # Compose prompts
+        system_msg = self._build_system_prompt()
+        user_msg = self._build_knowledge_prompt(
+            query=query.query,
+            current_time=current_time,
+            sources_block=delimited_sources,
+            footnotes=footnotes,
+        )
 
         try:
             # First try OpenAI if available
             if self.knowledge_llm:
                 messages = [
-                    SystemMessage(
-                        content="You are a knowledgeable assistant using GPT-5. Provide accurate, well-sourced answers based on the provided knowledge context."
-                    ),
-                    HumanMessage(content=rag_prompt),
+                    SystemMessage(content=system_msg),
+                    HumanMessage(content=user_msg),
                 ]
                 response = await self.knowledge_llm.ainvoke(messages)
                 return response.content.strip()
@@ -328,12 +366,13 @@ Answer:"""
 
         except Exception as e:
             logger.error("RAG answer generation failed", error=str(e))
-            
+
             # Use fallback provider for knowledge generation
+            
             if self.fallback_provider:
                 try:
                     fallback_response = await self.fallback_provider.generate_response(
-                        message=rag_prompt,
+                        message=user_msg,
                         conversation_id=f"knowledge-{int(time.time())}",
                         context={"type": "knowledge_rag", "sources_count": len(sources)}
                     )
@@ -341,9 +380,15 @@ Answer:"""
                     return fallback_response
                 except Exception as fallback_error:
                     logger.error("Fallback provider also failed", error=str(fallback_error))
-            
-            # Final fallback - return basic context summary
-            return f"Based on available knowledge sources, here's what I found about '{query.query}':\n\n{context[:800]}..."
+
+            # Final fallback - return basic context summary with footnotes
+            summary = "\n\n".join([
+                f"Query: {query.query}",
+                "Key source excerpts:",
+                "\n".join([f"- {s.title}: {s.content[:240]}" for s in sources[:3]]),
+                footnotes,
+            ])
+            return summary[:1500]
 
     def _calculate_confidence_score(self, sources: list[KnowledgeDocument]) -> float:
         """Calculate confidence score based on sources."""
@@ -361,6 +406,68 @@ Answer:"""
     # ============================================
     # Utility Methods
     # ============================================
+
+    def _build_system_prompt(self) -> str:
+        """Construct a concise, explicit system prompt with strong guardrails.
+
+        Aligned with OpenAI prompt engineering guidance: be explicit about role,
+        constraints, formatting, and refusal to fabricate.
+        """
+        return (
+            "You are Cartrita's Knowledge Agent. Your job is to synthesize accurate, well-attributed, and"
+            " actionable answers strictly from the provided sources. Do not invent facts. If information"
+            " is missing or uncertain, say so and propose next steps. Keep explanations clear and concise."
+        )
+
+    def _build_knowledge_prompt(self, *, query: str, current_time: str, sources_block: str, footnotes: str) -> str:
+        """Build the user prompt with clear delimiters and a strict output structure."""
+        return (
+            f"# Knowledge Synthesis Request\n"
+            f"Time: {current_time}\n"
+            f"Query: \"{query}\"\n\n"
+            f"## Sources (do not assume anything not contained below)\n"
+            f"<<<SOURCES>>>\n{sources_block}\n<<<END_SOURCES>>>\n\n"
+            f"## Instructions\n"
+            f"- Base the answer only on the sources.\n"
+            f"- Identify conflicts and note currency/recency.\n"
+            f"- Separate facts from analysis.\n"
+            f"- Use the output structure exactly.\n\n"
+            f"## Output Structure\n"
+            f"### Direct Answer\n"
+            f"Provide a 2-3 sentence direct answer.\n\n"
+            f"### Details\n"
+            f"Synthesize key points from multiple sources, highlighting agreements and disagreements.\n\n"
+            f"### Sources\n"
+            f"Cite using footnote numbers like [1], [2] that correspond to the list below.\n\n"
+            f"### Gaps or Uncertainty\n"
+            f"State what is unknown or requires verification; suggest next steps or search refinements.\n\n"
+            f"### Related Insights\n"
+            f"Offer 1-3 concise related insights.\n\n"
+            f"## Footnotes\n{footnotes}\n"
+        )
+
+    def _format_sources_block(self, sources: list[KnowledgeDocument]) -> str:
+        """Format the retrieved sources into a delimited block with minimal noise."""
+        lines: list[str] = []
+        for idx, s in enumerate(sources, start=1):
+            lines.append(
+                "\n".join(
+                    [
+                        f"[{idx}] Title: {s.title}",
+                        f"URL/Source: {s.source}",
+                        f"Excerpt: {s.content[:1200]}",
+                    ]
+                )
+            )
+        return "\n\n".join(lines)
+
+    def _format_source_footnotes(self, sources: list[KnowledgeDocument]) -> str:
+        """Create a compact footnote list mapping [n] to source metadata."""
+        rows: list[str] = []
+        for idx, s in enumerate(sources, start=1):
+            score = f"{s.relevance_score:.2f}" if isinstance(s.relevance_score, float) else ""
+            rows.append(f"[{idx}] {s.title} — {s.source} (relevance {score})")
+        return "\n".join(rows)
 
     def _extract_knowledge_query(self, messages: list[dict[str, Any]]) -> str:
         """Extract knowledge query from conversation messages."""

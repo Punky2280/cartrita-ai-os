@@ -1,11 +1,13 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
+import Head from 'next/head'
+import { useEffect } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Provider as JotaiProvider } from 'jotai'
 import { Toaster } from 'sonner'
 import AppInitializer from '@/components/AppInitializer'
-import { useState } from 'react'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 
 // Create a client
 function makeQueryClient() {
@@ -43,19 +45,33 @@ export default function App({ Component, pageProps }: AppProps) {
   // it suspends and there is no boundary
   const queryClient = getQueryClient()
 
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {})
+    }
+  }, [])
+
   return (
-    <JotaiProvider>
-      <QueryClientProvider client={queryClient}>
-        <AppInitializer />
-        <Component {...pageProps} />
-        <Toaster 
-          position="top-right"
-          richColors
-          expand={false}
-          closeButton
-        />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </JotaiProvider>
+    <>
+      <Head>
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <meta name="theme-color" content="#FF6B1A" />
+      </Head>
+      <JotaiProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider>
+            <AppInitializer />
+            <Component {...pageProps} />
+            <Toaster 
+              position="top-right"
+              richColors
+              expand={false}
+              closeButton
+            />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </ThemeProvider>
+        </QueryClientProvider>
+      </JotaiProvider>
+    </>
   )
 }

@@ -20,13 +20,14 @@ import {
   ChevronRight
 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui'
+import type { Message } from '@/types'
 import { useVoice } from '@/hooks/useVoice'
 import { useAudioAnalysis } from '@/hooks/useAudioAnalysis'
 
 interface AudioAnalyticsSidebarProps {
   isOpen: boolean
   onToggle: () => void
-  messages: unknown[]
+  messages: Message[]
   isStreaming: boolean
 }
 
@@ -52,7 +53,11 @@ export default function AudioAnalyticsSidebar({
       ? assistantMessages.reduce((acc, msg) => acc + (msg.content?.length || 0), 0) / assistantMessages.length
       : 0
 
-    const conversationPace = messages.length > 1 ? messages.length / ((Date.now() - messages[0]?.timestamp) / 60000) : 0
+    // Use createdAt or legacy timestamp; guard against missing/invalid values
+    const firstTimestamp = messages[0]?.timestamp ?? messages[0]?.createdAt
+    const startMs = firstTimestamp ? Date.parse(firstTimestamp) : undefined
+    const elapsedMinutes = startMs && !Number.isNaN(startMs) ? (Date.now() - startMs) / 60000 : 0
+    const conversationPace = elapsedMinutes > 0 ? messages.length / elapsedMinutes : 0
 
     return {
       totalMessages: messages.length,

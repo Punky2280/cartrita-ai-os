@@ -91,16 +91,52 @@ class AISettings(BaseSettings):
     )
     openai_project: str | None = Field(default=None, description="OpenAI project ID")
 
-    # Model configurations
+    # Model configurations - Optimized for cost-effectiveness and rate limits
     orchestrator_model: str = Field(
-        default="gpt-4.1", description="GPT-4.1 model for orchestrator"
+        default="gpt-4.1-mini", description="Cost-effective GPT-4.1-mini for orchestration"
     )
     agent_model: str = Field(
-        default="gpt-5",
-        description="GPT-5 model for agents",
+        default="gpt-4o-mini",
+        description="Default high-performance agent model with 2M TPD",
     )
     embedding_model: str = Field(
-        default="text-embedding-3-large", description="Embedding model"
+        default="text-embedding-3-small", description="Cost-effective embedding model"
+    )
+    
+    # Specialized model configurations
+    research_model: str = Field(
+        default="gpt-4o", description="GPT-4o for research tasks requiring web search"
+    )
+    code_model: str = Field(
+        default="gpt-4o", description="GPT-4o for complex code generation"  
+    )
+    knowledge_model: str = Field(
+        default="gpt-4.1-mini", description="GPT-4.1-mini for knowledge retrieval"
+    )
+    task_model: str = Field(
+        default="gpt-4.1-mini", description="GPT-4.1-mini for task planning"
+    )
+    computer_use_model: str = Field(
+        default="gpt-4o", description="GPT-4o for computer use requiring vision"
+    )
+    
+    # Audio and multimodal models
+    audio_model: str = Field(
+        default="gpt-audio", description="GPT-Audio for real-time audio processing"
+    )
+    realtime_model: str = Field(
+        default="gpt-realtime", description="GPT-Realtime for low-latency interactions"
+    )
+    tts_model: str = Field(
+        default="tts-1-hd", description="High-quality text-to-speech model"
+    )
+    
+    # Advanced reasoning models
+    reasoning_model: str = Field(
+        default="o3-mini", description="O3-mini for complex reasoning tasks"
+    )
+    deep_research_model: str = Field(
+        default="o4-mini-deep-research", description="O4-mini for deep research analysis"
     )
 
     # Model parameters

@@ -10,7 +10,7 @@ import {
   Upload,
   X,
   File,
-  Image,
+  Image as ImageIcon,
   Video,
   Music,
   FileText,
@@ -27,7 +27,7 @@ import { useFileUpload, useMultipleFileUpload } from '@/hooks'
 const getFileIcon = (filename: string) => {
   const ext = getFileExtension(filename).toLowerCase()
 
-  if (isImageFile(filename)) return Image
+  if (isImageFile(filename)) return ImageIcon
   if (['mp4', 'avi', 'mov', 'wmv', 'flv', 'webm'].includes(ext)) return Video
   if (['mp3', 'wav', 'flac', 'aac', 'ogg'].includes(ext)) return Music
   if (['pdf', 'doc', 'docx', 'txt', 'rtf'].includes(ext)) return FileText

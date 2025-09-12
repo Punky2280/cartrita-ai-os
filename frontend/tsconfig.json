@@ -6,6 +6,10 @@
             "dom.iterable",
             "es2017"
         ],
+        "types": [
+            "vitest/globals",
+            "node"
+        ],
         "allowJs": true,
         "skipLibCheck": true,
         "strict": false,
@@ -53,6 +57,7 @@
             ]
         },
         "typeRoots": [
+            "./node_modules",
             "./node_modules/@types",
             "./src/types"
         ]

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, Activity } from 'lucide-react';
+import Link from 'next/link';
 
 const HeaderBar: React.FC = () => {
   return (
@@ -36,13 +37,19 @@ const HeaderBar: React.FC = () => {
       </div>
 
       <div className="flex items-center space-x-4">
+        <Link
+          href="/about"
+          className="px-3 py-1.5 rounded-lg bg-white/10 border border-white/20 text-sm hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
+        >
+          About
+        </Link>
         <motion.select
           whileHover={{ scale: 1.02 }}
           className="bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-sm backdrop-blur-sm hover:bg-white/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-400"
         >
           <option className="bg-gray-800">GPT-4.1 (Supervisor)</option>
           <option className="bg-gray-800">GPT-5 (Sub-agents)</option>
-          <option className="bg-gray-800">Claude-3.5</option>
+          <option className="bg-gray-800">GPT-4o</option>
         </motion.select>
 
         <motion.div

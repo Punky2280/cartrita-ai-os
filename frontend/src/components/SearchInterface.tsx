@@ -346,6 +346,11 @@ export function SearchInterface({
     refetch
   } = useSearch(query)
 
+  // Type guard for search results
+  const typedSearchResults: SearchResult[] = Array.isArray((searchResults as any)?.data?.results) 
+    ? (searchResults as any).data.results 
+    : []
+
   const [filters, setFilters] = useState<SearchFilters>({
     types: ['all'],
     dateRange: 'all',
@@ -394,16 +399,16 @@ export function SearchInterface({
 
   // Filter results by type
   const filteredResults = useMemo(() => {
-    if (!searchResults || searchResults.length === 0) return []
+    if (!typedSearchResults || typedSearchResults.length === 0) return []
 
     if (activeTab === 'all') {
-      return searchResults.filter(result =>
+      return typedSearchResults.filter((result: SearchResult) =>
         filters.types.length === 0 || filters.types.includes(result.type)
       )
     }
 
-    return searchResults.filter(result => result.type === activeTab)
-  }, [searchResults, activeTab, filters.types])
+    return typedSearchResults.filter((result: SearchResult) => result.type === activeTab)
+  }, [typedSearchResults, activeTab, filters.types])
 
   // Get result counts by type
   const resultCounts = useMemo(() => {
@@ -415,11 +420,10 @@ export function SearchInterface({
       file: 0
     }
 
-    // Temporary fix - use empty array until search is properly implemented
-    const results: unknown[] = []
-    if (results) {
-      results.forEach((result: unknown) => {
-        const type = result.type as SearchResultType
+    // Count results by type
+    if (typedSearchResults) {
+      typedSearchResults.forEach((result: SearchResult) => {
+        const type = result.type
         if (type in counts) {
           counts[type]++
         }

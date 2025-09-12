@@ -256,7 +256,7 @@ class APIKeyManager:
         # Get settings with proper initialization
         from cartrita.orchestrator.utils.config import get_settings
         _settings = get_settings()
-        
+
         key_mappings = {
             "openai": (
                 _settings.ai.openai_api_key.get_secret_value()

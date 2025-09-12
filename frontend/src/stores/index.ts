@@ -217,9 +217,9 @@ export const agentStatsAtom = atom((get) => {
   return {
     totalAgents: agents.length,
     activeAgents: agents.filter(a => a.status !== 'offline' && a.status !== 'error').length,
-    totalRequests: agents.reduce((sum, a) => sum + a.metadata.totalRequests, 0),
+    totalRequests: agents.reduce((sum, a) => sum + (typeof a.metadata?.totalRequests === 'number' ? a.metadata.totalRequests : 0), 0),
     averageSuccessRate: agents.length > 0
-      ? agents.reduce((sum, a) => sum + a.metadata.successRate, 0) / agents.length
+      ? agents.reduce((sum, a) => sum + (typeof a.metadata?.successRate === 'number' ? a.metadata.successRate : 0), 0) / agents.length
       : 0
   }
 })
@@ -259,6 +259,8 @@ export const settingsAtom = atomWithStorage('settings', {
   codeHighlighting: true,
   markdownRendering: true,
   autoScroll: true,
+  reducedMotion: false,
+  fontSize: 'md' as 'sm' | 'md' | 'lg',
   soundEffects: false,
   typingIndicator: true,
   readReceipts: false,

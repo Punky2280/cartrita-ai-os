@@ -237,7 +237,7 @@ const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
           type="checkbox"
           className="sr-only"
           ref={ref}
-          onChange={(e) => { { onCheckedChange?.(e.target.checked); ; }}}
+          onChange={(e) => onCheckedChange?.(e.target.checked)}
           {...props}
         />
         <div
@@ -592,7 +592,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           'h-4 w-4 rounded border border-primary text-primary focus:ring-2 focus:ring-primary focus:ring-offset-2',
           className
         )}
-        onChange={(e) => { { onCheckedChange?.(e.target.checked); ; }}}
+        onChange={(e) => onCheckedChange?.(e.target.checked)}
         {...props}
       />
     )
@@ -878,3 +878,7 @@ export {
   DropdownMenuContent,
   DropdownMenuItem,
 }
+
+// Re-export Dialog and FileUploader from their files
+export { Dialog } from './Dialog'
+export { FileUploader } from './FileUploader'

@@ -32,7 +32,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { ScrollArea } from '@/components/ui'
 import { Separator } from '@/components/ui'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
-import type { Agent } from '@/types'
+import type { Agent, AgentMetadata } from '@/types'
 
 // Agent type icons
 const getAgentIcon = (type: string) => {
@@ -77,7 +77,8 @@ const getAgentColor = (type: string) => {
 
 // Agent performance indicator
 function AgentPerformanceIndicator({ agent }: { agent: Agent }) {
-  const { totalRequests, successRate, averageResponseTime } = agent.metadata
+  const metadata = agent.metadata as unknown as AgentMetadata
+  const { totalRequests, successRate, averageResponseTime } = metadata
 
   const getPerformanceColor = (rate: number) => {
     if (rate >= 0.95) return 'text-green-500'

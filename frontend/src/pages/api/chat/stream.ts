@@ -10,9 +10,10 @@ const proxy = httpProxy.createProxyServer()
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   return new Promise<void>((resolve, reject) => {
     // Add API key to request headers from environment (EventSource cannot send headers; proxy injects)
-    const apiKey = process.env.BACKEND_API_KEY || process.env.AI_API_KEY || ''
+    const apiKey = process.env.BACKEND_API_KEY || process.env.AI_API_KEY || 'dev-api-key-2025'
     if (apiKey) {
       req.headers['x-api-key'] = apiKey
+      req.headers['authorization'] = `Bearer ${apiKey}`
     }
     
     // Set CORS headers
@@ -30,7 +31,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       target: process.env.BACKEND_BASE_URL || 'http://localhost:8000',
       changeOrigin: true,
       selfHandleResponse: false,
-      timeout: 70000
+      timeout: 35000
     }, (err) => {
       if (err) {
         console.error('Proxy error:', err)

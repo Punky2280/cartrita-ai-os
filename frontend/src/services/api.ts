@@ -30,23 +30,21 @@ import {
 } from '@/utils'
 
 // SSE Event Types based on our schema
-export type SSEEventType = 
-  | 'stream_start'
-  | 'token'
-  | 'function_call'
-  | 'tool_result'
-  | 'agent_task_start'
-  | 'agent_task_progress'
-  | 'agent_task_complete'
-  | 'metrics'
-  | 'error'
-  | 'done'
+export type SSEEvent =
+  | { event: 'stream_start'; data: { conversation_id: string }; id?: string; retry?: number }
+  | { event: 'token'; data: { content: string; delta?: string }; id?: string; retry?: number }
+  | { event: 'function_call'; data: { function_name: string; arguments: unknown }; id?: string; retry?: number }
+  | { event: 'tool_result'; data: { tool_name: string; result: unknown }; id?: string; retry?: number }
+  | { event: 'agent_task_start'; data: { task_id: string; agent_type: string; description: string }; id?: string; retry?: number }
+  | { event: 'agent_task_progress'; data: { task_id: string; progress: number; status: string }; id?: string; retry?: number }
+  | { event: 'agent_task_complete'; data: { task_id: string; result: unknown; success: boolean }; id?: string; retry?: number }
+  | { event: 'metrics'; data: Record<string, unknown>; id?: string; retry?: number }
+  | { event: 'error'; data: { error: string; code?: string; recoverable?: boolean }; id?: string; retry?: number }
+  | { event: 'done'; data: { final_response: string; conversation_id: string; agent_type?: string; processing_time?: number; token_usage?: unknown; sources?: unknown; message_id?: string }; id?: string; retry?: number }
 
-export interface SSEEvent {
-  event: SSEEventType
-  data: unknown
-  id?: string
-  retry?: number
+// Narrow helper
+function isSSEEvent(value: unknown): value is SSEEvent {
+  return typeof value === 'object' && value !== null && 'event' in (value as any) && 'data' in (value as any)
 }
 
 export interface StreamingCallbacks {
@@ -216,7 +214,7 @@ export class CartritaApiClient {
       timeout: this.timeout,
       headers: {
         'Content-Type': 'application/json',
-        'User-Agent': 'Cartrita-Client/2.0.0',
+        'X-Client-Version': 'Cartrita-Client/2.0.0',
         // Support both header formats for compatibility
         'X-API-Key': apiKey,
         'Authorization': `Bearer ${apiKey}`
@@ -544,45 +542,37 @@ export class CartritaApiClient {
     
     eventSource.onmessage = (event) => {
       try {
-        const sseEvent: SSEEvent = JSON.parse(event.data)
-        
+        const parsed = JSON.parse(event.data)
+        if (!isSSEEvent(parsed)) return
+        const sseEvent = parsed
         switch (sseEvent.event) {
           case 'stream_start':
             conversationId = sseEvent.data.conversation_id
             break
-            
           case 'token':
             callbacks.onToken?.(sseEvent.data.content, sseEvent.data.delta)
             break
-            
           case 'function_call':
             callbacks.onFunctionCall?.(sseEvent.data.function_name, sseEvent.data.arguments)
             break
-            
           case 'tool_result':
             callbacks.onToolResult?.(sseEvent.data.tool_name, sseEvent.data.result)
             break
-            
           case 'agent_task_start':
             callbacks.onAgentTaskStart?.(sseEvent.data.task_id, sseEvent.data.agent_type, sseEvent.data.description)
             break
-            
           case 'agent_task_progress':
             callbacks.onAgentTaskProgress?.(sseEvent.data.task_id, sseEvent.data.progress, sseEvent.data.status)
             break
-            
           case 'agent_task_complete':
             callbacks.onAgentTaskComplete?.(sseEvent.data.task_id, sseEvent.data.result, sseEvent.data.success)
             break
-            
           case 'metrics':
             callbacks.onMetrics?.(sseEvent.data)
             break
-            
           case 'error':
-            callbacks.onError?.(sseEvent.data.error, sseEvent.data.code, sseEvent.data.recoverable)
+            callbacks.onError?.(sseEvent.data.error, sseEvent.data.code, sseEvent.data.recoverable ?? false)
             break
-            
           case 'done':
             callbacks.onDone?.(sseEvent.data.final_response, sseEvent.data)
             eventSource.close()

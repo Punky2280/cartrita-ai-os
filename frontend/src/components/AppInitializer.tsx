@@ -82,7 +82,7 @@ const defaultAgents: Agent[] = [
     name: 'Computer Use Agent',
     type: 'computer_use',
     status: 'idle',
-    model: 'claude-3-5-sonnet',
+  model: 'gpt-4o-mini',
     description: 'System interaction and automation specialist',
     capabilities: ['computer_control', 'file_management', 'system_automation', 'tool_usage'],
     last_used_at: new Date().toISOString(),

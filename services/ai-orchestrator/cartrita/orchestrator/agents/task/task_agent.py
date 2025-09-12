@@ -115,7 +115,7 @@ class TaskAgent:
         from cartrita.orchestrator.utils.config import get_settings
 
         _settings = get_settings()
-        self.model = model or _settings.ai.agent_model
+        self.model = model or _settings.ai.task_model
         self.api_key = api_key or _settings.ai.openai_api_key.get_secret_value()
         self.db_manager = db_manager
 

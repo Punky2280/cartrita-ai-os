@@ -1,0 +1,43 @@
+{
+  // Markdown lint configuration enforcing repository documentation standards
+  "default": true,
+  "MD001": true,               // heading increment
+  "MD003": { "style": "consistent" },
+  "MD004": { "style": "dash" },
+  "MD007": { "indent": 2 },
+  "MD009": { "br_spaces": 0 },
+  "MD010": true,               // no hard tabs
+  "MD012": true,               // multiple consecutive blank lines
+  "MD013": { "line_length": 140, "code_blocks": false, "tables": false },
+  "MD018": true,
+  "MD019": true,
+  "MD022": true,               // blanks around headings
+  "MD023": true,               // heading start left
+  "MD024": { "siblings_only": true },
+  "MD025": { "front_matter_title": "^$" },
+  "MD026": { "punctuation": ".;:!" },
+  "MD027": true,
+  "MD028": true,
+  "MD029": { "style": "one" }, // ordered list style
+  "MD030": { "ul_single": 1, "ol_single": 1, "ul_multi": 1, "ol_multi": 1 },
+  "MD031": true,               // fenced code blocks surrounded by blank lines
+  "MD032": true,               // lists surrounded by blank lines
+  "MD033": false,              // allow inline HTML (some docs rely on <details>)
+  "MD034": true,
+  "MD035": { "style": "---" },
+  "MD036": true,
+  "MD037": true,
+  "MD038": true,
+  "MD039": true,
+  "MD040": true,
+  "MD041": false,              // allow files without leading heading (INDEX may start differently)
+  "MD042": true,
+  "MD043": false,              // allow flexible required headings
+  "MD044": { "names": [] },
+  "MD045": true,
+  "MD046": { "style": "fenced" },
+  "MD047": true,
+  "MD048": true,
+  "no-hard-tabs": true,
+  "first-line-heading": false
+}
