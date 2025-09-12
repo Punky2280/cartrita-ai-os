@@ -1,0 +1,32 @@
+######## GPU / Extended ML Dependency Layer ########
+# This file layers GPU-heavy dependencies on top of the lean CPU baseline in requirements.in
+# Regenerate GPU lock with:
+#   pip-compile --generate-hashes --allow-unsafe \
+#       --output-file services/ai-orchestrator/constraints-gpu.txt \
+#       services/ai-orchestrator/requirements-gpu.in
+# Policy: Keep base environment lightweight (no torch / CUDA libs) for faster cold starts and smaller images.
+# Only use this profile in GPU-enabled deployments or for advanced model fine-tuning flows.
+
+-r requirements.in
+
+# Core GPU framework (PyTorch). Pin explicitly to control transitive CUDA libs.
+torch==2.8.0
+
+# Future optional GPU-specific acceleration libraries (add explicitly, never implicit):
+# xformers==<pin>
+# flash-attn==<pin>
+# GPU / heavy ML optional extras
+# Install with: pip install -r requirements-gpu.in -c constraints-gpu.txt
+
+# Core torch stack (CUDA 12.1 example; adjust if different base image / driver)
+torch==2.3.1
+# torchvision / torchaudio versions aligned with torch 2.3 line
+torchvision==0.18.1
+torchaudio==2.3.1
+
+# Performance / optimization
+deepSpeed==0.15.4
+bitsandbytes==0.43.1
+
+# If using GPU accelerate features (already in base for now). Can be removed from base and here pinned instead.
+# accelerate==0.33.0
