@@ -88,7 +88,7 @@ function RecordingTimer({
       setElapsed(Date.now() - startTime)
     }, 100)
 
-    return () => clearInterval(interval)
+  return () => { clearInterval(interval); }
   }, [isRecording, startTime])
 
   const formatTime = (ms: number) => {
@@ -247,7 +247,7 @@ export function VoiceInput({
     try {
       const file = new File([audioBlob], 'recording.webm', { type: 'audio/webm' })
 
-      const result = await transcribeAudio.mutateAsync(file) as {
+  const result = await transcribeAudio.mutateAsync(file) as {
         success: boolean
         data?: { text: string }
         error?: string
@@ -302,7 +302,7 @@ export function VoiceInput({
         stopRecording()
       }, maxDuration * 1000)
 
-      return () => clearTimeout(timeout)
+  return () => { clearTimeout(timeout); }
     }
   }, [isRecording, startTime, maxDuration, stopRecording])
 

@@ -29,7 +29,7 @@ import { Badge } from '@/components/ui'
 import { Textarea } from '@/components/ui'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import vscDarkPlus from 'react-syntax-highlighter/dist/esm/styles/prism/vsc-dark-plus'
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 // Remove PrismStyle import as it's not exported
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
@@ -292,7 +292,7 @@ export function MessageBubble({
             <Textarea
               ref={editTextareaRef}
               value={editContent}
-              onChange={(e) => { { setEditContent(e.target.value); ; }}}
+              onChange={(e) => setEditContent(e.target.value)}
               className="min-h-[60px] bg-transparent border-none p-0 resize-none focus:ring-0"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
@@ -356,7 +356,7 @@ export function MessageBubble({
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <button
-                          onClick={() => { { handleFeedback('positive');; }}}
+                          onClick={() => handleFeedback('positive')}
                           className="h-6 w-6 p-1 bg-transparent hover:bg-accent rounded-sm transition-colors flex items-center justify-center"
                         >
                           <ThumbsUp className="h-3 w-3" />
@@ -368,7 +368,7 @@ export function MessageBubble({
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <button
-                          onClick={() => { { handleFeedback('negative');; }}}
+                          onClick={() => handleFeedback('negative')}
                           className="h-6 w-6 p-1 bg-transparent hover:bg-accent rounded-sm transition-colors flex items-center justify-center"
                         >
                           <ThumbsDown className="h-3 w-3" />
@@ -389,13 +389,13 @@ export function MessageBubble({
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     {isUser && onEdit && (
-                      <DropdownMenuItem onClick={() => { { setIsEditing(true);; }}}>
+                      <DropdownMenuItem onClick={() => setIsEditing(true)}>
                         <Edit3 className="h-4 w-4 mr-2" />
                         Edit
                       </DropdownMenuItem>
                     )}
                     {!isUser && onRegenerate && (
-                      <DropdownMenuItem onClick={() => { { onRegenerate(message.id);; }}}>
+                      <DropdownMenuItem onClick={() => onRegenerate(message.id)}>
                         <RotateCcw className="h-4 w-4 mr-2" />
                         Regenerate
                       </DropdownMenuItem>
@@ -414,7 +414,7 @@ export function MessageBubble({
                     </DropdownMenuItem>
                     {onDelete && (
                       <DropdownMenuItem
-                        onClick={() => { { onDelete(message.id);; }}}
+                        onClick={() => onDelete(message.id)}
                         className="text-destructive"
                       >
                         <Trash2 className="h-4 w-4 mr-2" />

@@ -23,6 +23,7 @@ try:
             Gauge,
             Histogram,
             generate_latest,
+            CollectorRegistry
         )
         PROMETHEUS_AVAILABLE = True
     else:
@@ -69,7 +70,8 @@ class SimpleMetricsCollector:
     async def initialize(self) -> None:
         """Initialize metrics collection."""
         if not PROMETHEUS_AVAILABLE:
-            print("⚠️ Prometheus client not available")
+            import structlog
+            structlog.get_logger("metrics").warning("Prometheus client not available")
             return
         
         try:
@@ -97,9 +99,13 @@ class SimpleMetricsCollector:
             )
             
             self._initialized = True
-            print("✅ Metrics collector initialized")
             
+            import structlog
+            structlog.get_logger("metrics").info("metrics_collector_initialized", event="Metrics collector initialized")
+            print("✅ Metrics collector initialized")
         except Exception as error:
+            import structlog
+            structlog.get_logger("metrics").error("Metrics initialization failed", error=str(error))
             print(f"❌ Metrics initialization failed: {error}")
     
     def is_healthy(self) -> bool:
@@ -119,21 +125,20 @@ class SimpleMetricsCollector:
                     endpoint=endpoint, 
                     status=str(status)
                 ).inc()
-            
+        
             if self.request_duration:
                 self.request_duration.labels(
                     method=method, 
                     endpoint=endpoint
                 ).observe(duration)
-                
         except Exception as error:
-            print(f"Failed to record metrics: {error}")
+            import structlog
+            structlog.get_logger("metrics").error("failed_to_record_metrics", error=str(error))
     
     async def record_error(self, error_type: str, endpoint: str) -> None:
         """Record error metrics."""
         if not self.is_healthy():
             return
-        
         try:
             if self.error_count:
                 self.error_count.labels(
@@ -141,18 +146,21 @@ class SimpleMetricsCollector:
                     endpoint=endpoint
                 ).inc()
         except Exception as error:
+            import structlog
+            structlog.get_logger("metrics").error("failed_to_record_error", error=str(error))
             print(f"Failed to record error: {error}")
     
     async def get_metrics(self) -> Optional[str]:
         """Get metrics in Prometheus format."""
         if not self.is_healthy():
             return None
-        
+            
         try:
             if self._registry:
                 return generate_latest(self._registry).decode('utf-8')
         except Exception as error:
-            print(f"Failed to get metrics: {error}")
+            import structlog
+            structlog.get_logger("metrics").warning("failed_to_get_metrics", error=str(error))
         
         return None
     
@@ -163,10 +171,12 @@ class SimpleMetricsCollector:
             "prometheus_available": PROMETHEUS_AVAILABLE,
             "service_name": self.config.service_name
         }
-    
+
     async def shutdown(self) -> None:
         """Shutdown metrics collector."""
         self._initialized = False
+        import structlog
+        structlog.get_logger("metrics").info("metrics_collector_shutdown", event="Metrics collector shutdown")
         print("📊 Metrics collector shutdown")
 
 
@@ -299,21 +309,23 @@ async def error_test() -> Dict[str, str]:
 
 if __name__ == "__main__":
     import uvicorn
-    
-    print("\n" + "=" * 60)
-    print("🔬 CARTRITA METRICS FIX VERIFICATION")
-    print("=" * 60)
-    print("This test verifies that the 503 'Metrics not available' "
-          "error is fixed")
-    print("\n📊 Endpoints to test:")
-    print("  • http://localhost:8000/metrics - Main metrics endpoint") 
-    print("  • http://localhost:8000/test - Generate request metrics")
-    print("  • http://localhost:8000/error-test - Generate error metrics")
-    print("  • http://localhost:8000/ - Status check")
-    print("\n🎯 Expected results:")
-    print("  • NO 503 errors from /metrics endpoint")
-    print("  • Graceful handling when metrics unavailable")
-    print("  • Prometheus format output when metrics available")
-    print("=" * 60)
-    
+    import structlog
+    logger = structlog.get_logger("startup")
+    logger.info("startup_banner", banner="=" * 60)
+    logger.info("startup_title", title="🔬 CARTRITA METRICS FIX VERIFICATION")
+    logger.info("startup_banner", banner="=" * 60)
+    logger.info("startup_description", description="This test verifies that the 503 'Metrics not available' error is fixed")
+    logger.info("startup_endpoints", endpoints=[
+        "http://localhost:8000/metrics - Main metrics endpoint",
+        "http://localhost:8000/test - Generate request metrics",
+        "http://localhost:8000/error-test - Generate error metrics",
+        "http://localhost:8000/ - Status check"
+    ])
+    logger.info("startup_expectations", expectations=[
+        "NO 503 errors from /metrics endpoint",
+        "Graceful handling when metrics unavailable",
+        "Prometheus format output when metrics available"
+    ])
+    logger.info("startup_banner", banner="=" * 60)
+
     uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")

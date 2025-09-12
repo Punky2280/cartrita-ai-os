@@ -1,0 +1,54 @@
+Error: unknown flag: --directory
+
+Usage:
+  codacy-cli analyze [flags]
+
+Flags:
+      --api-token string      Optional Codacy API token. If defined, configurations will be fetched from Codacy
+      --fix                   Apply auto fix to your issues when available
+      --format string         Output format (use 'sarif' for SARIF format)
+  -h, --help                  help for analyze
+      --organization string   Remote organization name to fetch configurations from Codacy. Required when api-token is provided
+  -o, --output string         Output file for analysis results
+      --provider string       Provider (e.g., gh, bb, gl) to fetch configurations from Codacy. Required when api-token is provided
+      --repository string     Remote repository name to fetch configurations from Codacy. Required when api-token is provided
+  -t, --tool string           Which tool to run analysis with. If not specified, all configured tools will be run
+
+Global Flags:
+      --config string   config file (default ".codacy/codacy.yaml")
+
+Configuration Example (.codacy/codacy.yaml):
+  runtimes:
+    - node@22.2.0
+  tools:
+    - eslint@8.57.0
+
+For more information and examples, visit:
+https://github.com/codacy/codacy-cli-v2
+
+unknown flag: --directory
+Falling back to docker codacy/codacy-analysis-cli:latest
+Unable to find image 'codacy/codacy-analysis-cli:latest' locally
+latest: Pulling from codacy/codacy-analysis-cli
+f18232174bc9: Pulling fs layer
+462e30203a3e: Pulling fs layer
+b1f7d26e3ebc: Pulling fs layer
+73ecb62a9eb1: Pulling fs layer
+73ecb62a9eb1: Waiting
+b1f7d26e3ebc: Verifying Checksum
+b1f7d26e3ebc: Download complete
+f18232174bc9: Verifying Checksum
+f18232174bc9: Download complete
+f18232174bc9: Pull complete
+73ecb62a9eb1: Verifying Checksum
+73ecb62a9eb1: Download complete
+462e30203a3e: Verifying Checksum
+462e30203a3e: Download complete
+462e30203a3e: Pull complete
+b1f7d26e3ebc: Pull complete
+73ecb62a9eb1: Pull complete
+Digest: sha256:1dde7739c282cc06df025b5ced3d16793cfc80b444ca16e7559d003d22d3d685
+Status: Downloaded newer image for codacy/codacy-analysis-cli:latest
+09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/3251787460569316766, make sure it is readable by everybody. 
+09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/4592972644480343246, make sure it is readable by everybody. 
+09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/8861565124924762992, make sure it is readable by everybody. 

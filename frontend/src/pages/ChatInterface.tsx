@@ -115,6 +115,12 @@ export default function ChatInterface() {
   
   // Atom setters
   const [streamingMessage, setStreamingMessage] = useAtom(streamingMessageAtom) as [Message | null, (value: Message | null) => void]
+  const streamingRef = useRef<Message | null>(null)
+  useEffect(() => { streamingRef.current = streamingMessage }, [streamingMessage])
+  const [userAutoScroll, setUserAutoScroll] = useState(true)
+
+  // Abort controller state for UI abort button
+  const abortRef = useRef<() => void>(() => {})
   
   // Get message setter for current conversation
   const setMessages = useSetAtom(
@@ -272,19 +278,15 @@ export default function ChatInterface() {
           isEdited: false
         }
         
-  setStreamingMessage(assistantMessage)
+        setStreamingMessage(assistantMessage)
 
         // Use streaming service
-        await streamingService.streamChat(chatRequest, {
+        const abortable = streamingService.streamChat(chatRequest, {
           onChunk: (chunk) => {
-            console.log('Streaming chunk:', chunk.content)
-            // Update streaming message with new content
-            if (streamingMessage) {
-              setStreamingMessage({ 
-                ...streamingMessage, 
-                content: streamingMessage.content + chunk.content, 
-                updatedAt: new Date().toISOString() 
-              })
+            const current = streamingRef.current
+            if (current) {
+              const updated = { ...current, content: (current.content || '') + chunk.content, updatedAt: new Date().toISOString() }
+              setStreamingMessage(updated)
             }
           },
           onComplete: (response) => {
@@ -326,6 +328,13 @@ export default function ChatInterface() {
             })
           }
         })
+        // Provide a cancel hook
+        abortRef.current = () => {
+          streamingService.cancelRequest()
+          setStreamingMessage(null)
+          toast.message('Streaming cancelled')
+        }
+        await abortable
       } else {
         // Use simple API call
         const response = await apiClient.postChat(chatRequest)
@@ -339,7 +348,7 @@ export default function ChatInterface() {
       console.error('Failed to send message:', error)
       toast.error(`Failed to send message: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }
-  }, [chatInput, currentConversation, selectedAgent, isStreaming, featureFlags.streaming, setChatInput, setMessages, setStreamingMessage, streamingMessage])
+  }, [chatInput, currentConversation, selectedAgent, isStreaming, featureFlags.streaming, setChatInput, setMessages, setStreamingMessage])
 
   // Emit typing events (debounced stop)
   const emitTyping = useCallback(() => {
@@ -696,7 +705,7 @@ export default function ChatInterface() {
                 </div>
               ) : (
                 <MessageList
-                  messages={[...messages, ...(streamingMessage ? [{ id: streamingMessage.id, role: streamingMessage.role as any, content: streamingMessage.content + '|' }] : [])] as MLMessage[]}
+                  messages={[...messages, ...(streamingMessage ? [{ id: streamingMessage.id, role: streamingMessage.role as any, content: streamingMessage.content }] : [])] as MLMessage[]}
                   fontSize={settings.fontSize as any}
                   autoScroll={settings.autoScroll}
                   highlightCode={!settings.reducedMotion}
@@ -743,8 +752,10 @@ export default function ChatInterface() {
                             </div>
                           </div>
                         ) : (
-                          <div className="prose prose-sm dark:prose-invert max-w-none">
-                            {(message as any).content}
+                          <div className="prose prose-sm dark:prose-invert max-w-none" aria-live={message.id === streamingMessage?.id ? 'polite' : undefined}>
+                            {(message as any).content}{message.id === streamingMessage?.id && isStreaming && (
+                              <span className="inline-block w-2 h-4 ml-0.5 align-baseline bg-gradient-to-b from-purple-400 to-blue-500 animate-pulse" />
+                            )}
                           </div>
                         )}
                         <div className="flex items-center gap-2 mt-2 opacity-75 text-xs">
@@ -867,22 +878,26 @@ export default function ChatInterface() {
                 </TooltipProvider>
 
                 {/* Send Button */}
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleSendMessage();
-                  }}
-                  disabled={!chatInput.trim() || !selectedAgent || isStreaming}
-                  aria-label="Send message"
-                  title="Send message"
-                  className="h-10 w-10 flex-shrink-0 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 rounded-lg disabled:pointer-events-none disabled:opacity-50 flex items-center justify-center text-white transition-all duration-200"
-                >
-                  {isStreaming ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
+                {isStreaming && streamingMessage ? (
+                  <button
+                    onClick={(e) => { e.preventDefault(); abortRef.current?.() }}
+                    aria-label="Cancel streaming"
+                    title="Cancel streaming"
+                    className="h-10 px-3 flex-shrink-0 bg-red-600 hover:bg-red-500 rounded-lg text-white flex items-center justify-center transition-all duration-200"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={(e) => { e.preventDefault(); handleSendMessage(); }}
+                    disabled={!chatInput.trim() || !selectedAgent}
+                    aria-label="Send message"
+                    title="Send message"
+                    className="h-10 w-10 flex-shrink-0 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 rounded-lg disabled:pointer-events-none disabled:opacity-50 flex items-center justify-center text-white transition-all duration-200"
+                  >
                     <Send className="h-5 w-5" />
-                  )}
-                </button>
+                  </button>
+                )}
               </div>
             </div>
 

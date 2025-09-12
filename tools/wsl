@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Neutral shim to swallow unintended 'wsl' prefix on native Linux.
+# Executes the intended command directly in current environment.
+# If this is actually WSL, we can forward to real 'wsl' binary if present.
+
+# Determine if a real 'wsl.exe' is available (Windows interop) - typical in true WSL.
+if command -v /mnt/c/Windows/System32/wsl.exe >/dev/null 2>&1; then
+  /mnt/c/Windows/System32/wsl.exe "$@"
+  exit $?
+fi
+
+# Fallback: just exec the arguments natively (Linux host case)
+exec "$@"

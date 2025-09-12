@@ -54,7 +54,7 @@ case "$arch" in
   ;;
 esac
 
-if [ -z "$CODACY_CLI_V2_TMP_FOLDER" ]; then
+if [ -z "${CODACY_CLI_V2_TMP_FOLDER:-}" ]; then
     if [ "$(uname)" = "Linux" ]; then
         CODACY_CLI_V2_TMP_FOLDER="$HOME/.cache/codacy/codacy-cli-v2"
     elif [ "$(uname)" = "Darwin" ]; then
@@ -80,8 +80,8 @@ get_version_from_yaml() {
 
 get_latest_version() {
     local response
-    if [ -n "$GH_TOKEN" ]; then
-        response=$(curl -Lq --header "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/codacy/codacy-cli-v2/releases/latest" 2>/dev/null)
+    if [ -n "${GH_TOKEN:-}" ]; then
+        response=$(curl -Lq --header "Authorization: Bearer ${GH_TOKEN}" "https://api.github.com/repos/codacy/codacy-cli-v2/releases/latest" 2>/dev/null)
     else
         response=$(curl -Lq "https://api.github.com/repos/codacy/codacy-cli-v2/releases/latest" 2>/dev/null)
     fi
@@ -138,7 +138,7 @@ download_cli() {
 }
 
 # Warn if CODACY_CLI_V2_VERSION is set and update is requested
-if [ -n "$CODACY_CLI_V2_VERSION" ] && [ "$1" = "update" ]; then
+if [ -n "${CODACY_CLI_V2_VERSION:-}" ] && [ "$1" = "update" ]; then
     echo "⚠️  Warning: Performing update with forced version $CODACY_CLI_V2_VERSION"
     echo "    Unset CODACY_CLI_V2_VERSION to use the latest version"
 fi
@@ -152,7 +152,7 @@ if [ ! -f "$version_file" ] || [ "$1" = "update" ]; then
 fi
 
 # Set the version to use
-if [ -n "$CODACY_CLI_V2_VERSION" ]; then
+if [ -n "${CODACY_CLI_V2_VERSION:-}" ]; then
     version="$CODACY_CLI_V2_VERSION"
 else
     version=$(get_version_from_yaml)
