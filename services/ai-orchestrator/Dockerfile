@@ -1,7 +1,7 @@
 # Cartrita AI OS - AI Orchestrator Service
-# Python 3.13 + FastAPI with Advanced Multi-Agent Orchestration
+# Python 3.1 + FastAPI with Advanced Multi-Agent Orchestration
 
-FROM python:3.13-slim
+FROM python:3.12
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \

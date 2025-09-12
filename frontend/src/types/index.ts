@@ -53,9 +53,12 @@ export interface Conversation {
   id: string
   title: string
   userId: string
+  agentId?: string
+  workspaceId?: string
   messages: Message[]
   createdAt: string
   updatedAt: string
+  lastMessageAt?: string
   isArchived: boolean
   isPinned: boolean
   tags: string[]

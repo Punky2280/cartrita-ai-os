@@ -8,6 +8,18 @@ The format aims to follow Keep a Changelog principles (unreleased section first)
 
 - Placeholder for upcoming features and fixes.
 
+### Added
+
+- SARIF regression comparison step in Codacy workflow (`security/sarif/tooling/compare.py`) gating merges on new issues ≥ warning severity.
+
+### Security
+
+- Baseline diff mechanism reduces noise from legacy findings, focusing review on newly introduced code risks.
+
+### DevEx
+
+- Regression artifact (`regressions.json`) uploaded when new issues detected for rapid triage.
+
 ## [2025-09-11] Security & QA Hardening
 
 ### Added

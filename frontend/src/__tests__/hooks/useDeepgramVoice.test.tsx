@@ -80,8 +80,11 @@ const MockMediaRecorder = vi.fn().mockImplementation(() => ({
   onerror: null
 }))
 
-MockMediaRecorder.isTypeSupported = vi.fn().mockReturnValue(true)
-global.MediaRecorder = MockMediaRecorder
+// Add static method to MediaRecorder mock
+Object.defineProperty(MockMediaRecorder, 'isTypeSupported', { 
+  value: vi.fn().mockReturnValue(true) 
+})
+global.MediaRecorder = MockMediaRecorder as any
 
 describe('useDeepgramVoice', () => {
   beforeEach(() => {

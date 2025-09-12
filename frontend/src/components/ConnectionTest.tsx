@@ -14,13 +14,19 @@ export default function ConnectionTest() {
     try {
       console.log('Testing backend connection...')
       
-      // Test health endpoint
+      // Test health endpoint with timeout and error handling
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 5000) // 5 second timeout
+      
       const healthResponse = await fetch('http://localhost:8000/health', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
+        signal: controller.signal
       })
+      
+      clearTimeout(timeoutId)
       
       if (!healthResponse.ok) {
         throw new Error(`Health check failed: ${healthResponse.status}`)
@@ -59,7 +65,17 @@ export default function ConnectionTest() {
     } catch (err) {
       console.error('Connection test failed:', err)
       setConnectionStatus('❌ Connection failed')
-      setError(err.message)
+      
+      let errorMessage = 'Unknown error occurred'
+      if (err instanceof Error) {
+        if (err.message.includes('Failed to fetch') || err.name === 'AbortError') {
+          errorMessage = 'Backend service is not running. Please start the Python backend service at http://localhost:8000'
+        } else {
+          errorMessage = err.message
+        }
+      }
+      
+      setError(errorMessage)
     }
   }
 

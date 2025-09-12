@@ -9,7 +9,7 @@ langchain>=0.2.10
 langchain-openai>=0.1.20
 langchain-community>=0.3.27
 langgraph>=0.1.15
-langsmith>=0.1.100
+langsmith>=0.3.27
 
 # ============================================
 # Vector Databases & Search
@@ -122,10 +122,10 @@ gunicorn>=23.0.0
 # ============================================
 torch>=2.8.0
 torchvision>=0.18.0
-torchaudio>=2.3.0
+torchaudio>=2.7.1-rc1
 transformers>=4.53.0
 accelerate>=0.30.0
-bitsandbytes>=0.43.0
+bitsandbytes>=4.53.0
 deepspeed>=0.15.1
 
 # ============================================

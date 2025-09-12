@@ -1,21 +1,22 @@
 import { renderHook, act } from '@testing-library/react';
+import { vi } from 'vitest';
 import { useDeepgramVoice } from '../useDeepgramVoice';
 
 // Mock WebSocket
 const mockWebSocket = {
-  send: jest.fn(),
-  close: jest.fn(),
+  send: vi.fn(),
+  close: vi.fn(),
   onmessage: null,
   onopen: null,
   onclose: null,
   onerror: null,
 };
 
-global.WebSocket = jest.fn(() => mockWebSocket) as any;
+global.WebSocket = vi.fn(() => mockWebSocket) as any;
 
 describe('useDeepgramVoice', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('initializes with correct default state', () => {

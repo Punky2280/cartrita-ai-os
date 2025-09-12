@@ -14,11 +14,15 @@ import uvicorn
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from typing import Any, Dict, List, Optional
-from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket
+from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
+from typing import List
+import shutil
+import os
+import socketio
 # Load environment variables from .env file
 from dotenv import load_dotenv
 load_dotenv("/home/robbie/cartrita-ai-os/.env")
@@ -276,6 +280,23 @@ app = FastAPI(
     redoc_url="/redoc",
     openapi_url="/openapi.json",
 )
+
+# ============================================  
+# Socket.IO Status Endpoint (Simple Alternative)
+# ============================================
+
+@app.get("/socket.io/")
+async def socket_io_status():
+    """Socket.IO compatibility endpoint - returns status without full Socket.IO server."""
+    return {
+        "status": "Socket.IO endpoint available",
+        "transport": "polling fallback",
+        "message": "Full Socket.IO support disabled for compatibility",
+        "alternatives": {
+            "websocket": "/ws/chat",
+            "sse": "/api/chat/stream"
+        }
+    }
 
 # ============================================
 # Middleware Configuration
@@ -723,6 +744,94 @@ async def voice_chat_stream(
 
 
 # ============================================
+# File Upload Endpoints
+# ============================================
+
+@app.post("/upload/multiple")
+async def upload_multiple_files(
+    files: List[UploadFile] = File(...),
+    conversationId: Optional[str] = None,
+    api_key: str = Depends(verify_api_key)
+):
+    """Upload multiple files endpoint."""
+    try:
+        logger.info(f"Processing {len(files)} file uploads", conversation_id=conversationId)
+        
+        # Create upload directory if it doesn't exist
+        upload_dir = "/tmp/uploads"
+        os.makedirs(upload_dir, exist_ok=True)
+        
+        uploaded_files = []
+        for file in files:
+            if file.filename:
+                # Save file temporarily
+                file_path = os.path.join(upload_dir, file.filename)
+                with open(file_path, "wb") as buffer:
+                    shutil.copyfileobj(file.file, buffer)
+                
+                uploaded_files.append({
+                    "filename": file.filename,
+                    "size": os.path.getsize(file_path),
+                    "path": file_path,
+                    "content_type": file.content_type,
+                    "url": f"/files/{file.filename}"
+                })
+        
+        return {
+            "success": True,
+            "data": uploaded_files,
+            "message": f"Successfully uploaded {len(uploaded_files)} files",
+            "conversationId": conversationId
+        }
+        
+    except Exception as e:
+        logger.error("File upload failed", error=str(e), conversation_id=conversationId)
+        raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}")
+
+
+@app.post("/upload")
+async def upload_single_file(
+    file: UploadFile = File(...),
+    conversationId: Optional[str] = None,
+    api_key: str = Depends(verify_api_key)
+):
+    """Upload single file endpoint."""
+    try:
+        logger.info(f"Processing single file upload: {file.filename}", conversation_id=conversationId)
+        
+        # Create upload directory if it doesn't exist
+        upload_dir = "/tmp/uploads"
+        os.makedirs(upload_dir, exist_ok=True)
+        
+        if file.filename:
+            # Save file temporarily
+            file_path = os.path.join(upload_dir, file.filename)
+            with open(file_path, "wb") as buffer:
+                shutil.copyfileobj(file.file, buffer)
+            
+            file_info = {
+                "filename": file.filename,
+                "size": os.path.getsize(file_path),
+                "path": file_path,
+                "content_type": file.content_type,
+                "url": f"/files/{file.filename}"
+            }
+            
+            return {
+                "success": True,
+                "data": file_info,
+                "message": f"Successfully uploaded {file.filename}",
+                "conversationId": conversationId
+            }
+        else:
+            raise HTTPException(status_code=400, detail="No filename provided")
+            
+    except Exception as e:
+        logger.error("Single file upload failed", error=str(e), conversation_id=conversationId)
+        raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}")
+
+
+# ============================================
 # WebSocket Endpoints
 # ============================================
 
@@ -831,7 +940,7 @@ async def get_system_stats(
 if __name__ == "__main__":
     # Development server configuration
     uvicorn.run(
-        "cartrita.orchestrator.main:app",
+        "main:app",  # Use the regular FastAPI app
         host="127.0.0.1",  # Bind to localhost for security
         port=int(os.getenv("AI_ORCHESTRATOR_PORT", "8000")),
         reload=True,

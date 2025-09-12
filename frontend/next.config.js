@@ -7,7 +7,8 @@ const ContentSecurityPolicy = `
   connect-src 'self' 
     ws://localhost:8000 http://localhost:8000 https://localhost:8000 
     ws://127.0.0.1:8000 http://127.0.0.1:8000 
-    ws://localhost:3001 http://localhost:3001;
+    ws://localhost:3001 http://localhost:3001
+    https://fonts.googleapis.com https://fonts.gstatic.com;
   font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;
   object-src 'none';
   frame-ancestors 'none';

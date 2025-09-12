@@ -67,7 +67,8 @@ export function useAuth() {
       }
     },
     onError: (error: unknown) => {
-      toast.error(error.message || 'Login failed')
+      const message = (error as Error)?.message || 'Login failed'
+      toast.error(message)
     },
     onSettled: () => {
       setIsLoading(false)
@@ -89,7 +90,8 @@ export function useAuth() {
       }
     },
     onError: (error: unknown) => {
-      toast.error(error.message || 'Registration failed')
+      const message = (error as Error)?.message || 'Registration failed'
+      toast.error(message)
     },
     onSettled: () => {
       setIsLoading(false)
@@ -132,10 +134,10 @@ export function useUser() {
   const updatePreferencesMutation = useMutation({
     mutationFn: (preferences: Partial<User['preferences']>) =>
       apiClient.updateUserPreferences(preferences),
-    onSuccess: (response: unknown) => {
+    onSuccess: (response: ApiResponse<User>) => {
       if (response.success && response.data) {
         setUser(response.data)
-        void void queryClient.invalidateQueries({ queryKey: queryKeys.user })
+        void queryClient.invalidateQueries({ queryKey: queryKeys.user })
         toast.success('Preferences updated')
       }
     },
@@ -150,7 +152,7 @@ export function useUser() {
     onSuccess: (response: ApiResponse<User>) => {
       if (response.success && response.data) {
         setUser(response.data)
-        void void queryClient.invalidateQueries({ queryKey: queryKeys.user })
+        void queryClient.invalidateQueries({ queryKey: queryKeys.user })
         toast.success('Theme updated')
       }
     },
@@ -165,7 +167,7 @@ export function useUser() {
     onSuccess: (response: ApiResponse<User>) => {
       if (response.success && response.data) {
         setUser(response.data)
-        void void queryClient.invalidateQueries({ queryKey: queryKeys.user })
+        void queryClient.invalidateQueries({ queryKey: queryKeys.user })
         toast.success('Voice settings updated')
       }
     },
@@ -221,14 +223,13 @@ export function useCreateConversation() {
       workspaceId?: string
       initialMessage?: string
     }) => apiClient.createConversation(data),
-    onSuccess: (response: unknown) => {
+    onSuccess: (response: ApiResponse<Conversation>) => {
       if (response.success && response.data) {
-        // Add to conversations list
         setConversations(prev => [response.data, ...prev])
         setCurrentConversationId(response.data.id)
 
         // Invalidate related queries
-        void void queryClient.invalidateQueries({ queryKey: queryKeys.conversations })
+        void queryClient.invalidateQueries({ queryKey: queryKeys.conversations })
 
         toast.success('Conversation created')
       }
@@ -251,16 +252,10 @@ export function useUpdateConversation() {
       id: string
       updates: Partial<Pick<Conversation, 'title' | 'isArchived' | 'tags'>>
     }) => apiClient.updateConversation(id, updates),
-    onSuccess: (response: unknown, { id }) => {
+    onSuccess: (response: ApiResponse<Conversation>, { id }) => {
       if (response.success && response.data) {
-        // Update in conversations list
-        setConversations(prev =>
-          prev.map(conv => conv.id === id ? response.data : conv)
-        )
-
-        // Update in cache
+        setConversations(prev => prev.map(conv => conv.id === id ? response.data as Conversation : conv))
         queryClient.setQueryData(queryKeys.conversation(id), { data: response.data })
-
         toast.success('Conversation updated')
       }
     },
@@ -325,14 +320,14 @@ export function useInfiniteMessages(conversationId: string, limit = 50) {
     initialPageParam: 0,
     enabled: !!conversationId,
     getNextPageParam: (lastPage: unknown, allPages) => {
-      if (lastPage.data && lastPage.data.length === limit) {
+      if ((lastPage as any)?.data && (lastPage as any).data.length === limit) {
         return allPages.length * limit
       }
       return undefined
     },
     select: (data) => {
       // Combine all pages into a single array
-      const allMessages = data.pages.flatMap(page => page.data || [])
+      const allMessages = data.pages.flatMap(page => (page as any)?.data || [])
       setMessages(allMessages)
       return data
     },
@@ -378,7 +373,7 @@ export function useInfiniteMessages(conversationId: string, limit = 50) {
 //         setStreamingMessage(null)
 
 //         // Update conversation's last message timestamp
-//         void void queryClient.invalidateQueries({
+//         void queryClient.invalidateQueries({
 //           queryKey: queryKeys.conversation(conversationId)
 //         })
 //       }
@@ -532,7 +527,7 @@ export function useFileUpload() {
         },
       })
 
-      return response.data
+      return (response as any)?.data
     },
   })
 }
@@ -551,7 +546,7 @@ export function useMultipleFileUpload() {
         },
       })
 
-      return response.data
+      return (response as any)?.data
     },
   })
 }

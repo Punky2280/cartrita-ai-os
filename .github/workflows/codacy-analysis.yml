@@ -11,12 +11,12 @@ on:
 jobs:
   codacy:
     runs-on: ubuntu-latest
+    outputs:
+      regressions: ${{ steps.set-regression-output.outputs.regressions }}
     permissions:
       contents: read
       security-events: write
-    env:
-      # Use primary secret only; runtime script applies fallback.
-      CODACY_TOKEN: ${{ secrets.EXTERNAL_CODACY_API_TOKEN }}
+    env: {}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,32 +37,23 @@ jobs:
           if [ -f package.json ]; then npm ci --ignore-scripts || true; fi
 
       - name: Resolve Codacy token (with fallback)
+        id: token-resolution
         run: |
-          TOKEN="${{ env.CODACY_TOKEN }}"
-          if [ -z "$TOKEN" ]; then
-            TOKEN="${{ secrets.CARTRITA_AI_OS_2025 }}"
-          fi
-          if [ -n "$TOKEN" ]; then
-            echo "[codacy] token: PRESENT"
-            echo "CODACY_TOKEN=$TOKEN" >> "$GITHUB_ENV"
-          else
-            echo "[codacy] token: MISSING"
-          fi
+          if [ -n "$CODACY_TOKEN" ]; then echo "present=true" >> $GITHUB_OUTPUT; echo "[codacy] token env present"; else echo "present=false" >> $GITHUB_OUTPUT; echo "[codacy] token env missing"; fi
 
       # Run Codacy with token when available
       - name: Codacy Analysis CLI (with token)
-        if: ${{ env.CODACY_TOKEN != '' }}
+        if: steps.token-resolution.outputs.present == 'true'
         uses: codacy/codacy-analysis-cli-action@5cc54a75f9ad88159bb54046196d920e40e367a5 # pinned v4.3.0
         with:
           directory: .
           format: sarif
           output: results.sarif
-        env:
-          CODACY_API_TOKEN: ${{ env.CODACY_TOKEN }}
+        env: {}
 
       # Fallback for forks/PRs without access to secrets
       - name: Codacy Analysis CLI (no token)
-        if: ${{ env.CODACY_TOKEN == '' }}
+        if: steps.token-resolution.outputs.present == 'false'
         uses: codacy/codacy-analysis-cli-action@5cc54a75f9ad88159bb54046196d920e40e367a5 # pinned v4.3.0
         with:
           directory: .
@@ -79,6 +70,46 @@ jobs:
         with:
           name: codacy-sarif
           path: results.sarif
+      - name: Compare SARIF against baseline
+        run: |
+          THRESHOLD="warning"
+          REGRESS_REPORT="regressions.json"
+          BASELINE_PATH="security/sarif/baseline.sarif"
+          echo "[sarif-diff] threshold=$THRESHOLD baseline=$BASELINE_PATH current=results.sarif"
+          if [ ! -f security/sarif/tooling/compare.py ]; then
+            echo "ERROR: compare.py script missing" >&2
+            exit 1
+          fi
+          python security/sarif/tooling/compare.py \
+            --baseline "$BASELINE_PATH" \
+            --current results.sarif \
+            --threshold "$THRESHOLD" \
+            --output "$REGRESS_REPORT" || STATUS=$?
+          CODE=${STATUS:-0}
+          if [ $CODE -eq 2 ]; then
+            echo "regressions=true" >> $GITHUB_ENV
+            echo "SARIF regressions detected (exit 2)." >&2
+          elif [ $CODE -eq 0 ]; then
+            echo "regressions=false" >> $GITHUB_ENV
+            echo "No SARIF regressions above threshold." 
+          else
+            echo "compare.py exited with code $CODE (treating as failure)" >&2
+            exit $CODE
+          fi
+          if [ -f "$REGRESS_REPORT" ]; then
+            echo "Archiving regression report"; mv "$REGRESS_REPORT" sarif-regressions.json
+          fi
+        shell: bash
+      - name: Set regression output
+        id: set-regression-output
+        run: |
+          echo "regressions=${regressions:-false}" >> $GITHUB_OUTPUT
+      - name: Upload regression report
+        if: steps.set-regression-output.outputs.regressions == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: sarif-regressions
+          path: sarif-regressions.json
 
   markdownlint:
     runs-on: ubuntu-latest
@@ -110,6 +141,10 @@ jobs:
           fi
           if [ "${{ needs.markdownlint.result }}" != "success" ]; then
             echo "Markdown lint job failed; failing quality gate." >&2
+            exit 1
+          fi
+          if [ "${{ needs.codacy.outputs.regressions }}" = "true" ]; then
+            echo "SARIF regressions present; failing quality gate." >&2
             exit 1
           fi
           echo "Quality gate passed."

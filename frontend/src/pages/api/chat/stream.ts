@@ -37,7 +37,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         console.error('Proxy error:', err)
         
         // Check if it's a connection error (backend not running)
-        if (err.code === 'ECONNREFUSED' || err.code === 'ENOTFOUND') {
+        if ((err as any).code === 'ECONNREFUSED' || (err as any).code === 'ENOTFOUND') {
           res.status(503).json({ 
             error: 'Backend unavailable', 
             details: 'AI service is not running. Please start the backend services.',
@@ -47,7 +47,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           res.status(500).json({ 
             error: 'Proxy failed', 
             details: err.message,
-            code: err.code || 'PROXY_ERROR'
+            code: (err as any).code || 'PROXY_ERROR'
           })
         }
         reject(err)

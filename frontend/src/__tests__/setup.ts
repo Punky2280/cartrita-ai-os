@@ -52,12 +52,13 @@ const MockWebSocket = vi.fn().mockImplementation(() => ({
   readyState: 1
 }))
 
-MockWebSocket.CONNECTING = 0
-MockWebSocket.OPEN = 1
-MockWebSocket.CLOSING = 2
-MockWebSocket.CLOSED = 3
+// Add static properties to mock WebSocket constructor
+Object.defineProperty(MockWebSocket, 'CONNECTING', { value: 0 })
+Object.defineProperty(MockWebSocket, 'OPEN', { value: 1 })
+Object.defineProperty(MockWebSocket, 'CLOSING', { value: 2 })
+Object.defineProperty(MockWebSocket, 'CLOSED', { value: 3 })
 
-global.WebSocket = MockWebSocket
+global.WebSocket = MockWebSocket as any
 
 // Mock MediaDevices
 Object.defineProperty(navigator, 'mediaDevices', {
@@ -97,9 +98,12 @@ const MockMediaRecorder = vi.fn().mockImplementation(() => ({
   onerror: null
 }))
 
-MockMediaRecorder.isTypeSupported = vi.fn().mockReturnValue(true)
+// Add static method to mock MediaRecorder constructor
+Object.defineProperty(MockMediaRecorder, 'isTypeSupported', { 
+  value: vi.fn().mockReturnValue(true) 
+})
 
-global.MediaRecorder = MockMediaRecorder
+global.MediaRecorder = MockMediaRecorder as any
 
 // Global test utilities
 global.testUtils = {

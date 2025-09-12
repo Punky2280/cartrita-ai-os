@@ -1,6 +1,24 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Environment detection (WSL vs native Linux) to avoid incorrect external wrappers.
+is_wsl_kernel() {
+    # Detect if running inside a WSL 1/2 kernel
+    if [ -f /proc/version ]; then
+        grep -qiE 'microsoft|wsl' /proc/version && return 0 || return 1
+    fi
+    return 1
+}
+
+is_command_available() { command -v "$1" >/dev/null 2>&1; }
+
+# If an external invoker prepended 'wsl' erroneously on a native Linux host (no WSL),
+# the command will fail before reaching here. This script cannot intercept that case,
+# but we document runtime environment for diagnostics.
+if [ "${CODACY_CLI_DEBUG:-}" = "1" ]; then
+    echo "[codacy-cli-v2 wrapper] uname=$(uname) arch=$(uname -m) wsl_detected=$(is_wsl_kernel && echo yes || echo no)" >&2
+fi
+
 fatal() {
     echo "ERROR: $*" >&2
     exit 1

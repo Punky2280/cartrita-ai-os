@@ -68,17 +68,19 @@ interface DeepgramLiveConnection {
   getReadyState: () => number
 }
 
-// Discriminated union for Voice Agent WS messages we handle
+// Discriminated union for supported Voice Agent WS messages.
+// Removed broad base variant so literal narrowing works and properties retain specific types.
 type VoiceAgentMessage =
   | { type: 'transcription'; transcription: unknown }
   | { type: 'response'; response: unknown }
   | { type: 'audio'; audio: string }
   | { type: 'analytics'; analytics: unknown }
   | { type: 'error'; error: unknown }
-  | { type: string; [k: string]: unknown }
 
 function isVoiceAgentMessage(value: unknown): value is VoiceAgentMessage {
-  return typeof value === 'object' && value !== null && 'type' in (value as any)
+  if (typeof value !== 'object' || value === null) return false
+  const t = (value as any).type
+  return t === 'transcription' || t === 'response' || t === 'audio' || t === 'analytics' || t === 'error'
 }
 
 class DeepgramVoiceService {
@@ -154,7 +156,7 @@ class DeepgramVoiceService {
         profanity_filter: false,
         redact: false,
         keywords: ['action', 'task', 'reminder', 'important', 'urgent']
-      })
+      }) as any
 
       // Handle transcription results
   this.connection.on(LiveTranscriptionEvents.Transcript, (data: any) => {
@@ -278,24 +280,32 @@ class DeepgramVoiceService {
   // Analyze voice content using Deepgram's intelligence features
   private async analyzeVoiceContent(text: string, data: unknown) {
     try {
+      interface DeepgramAnalyticsSource {
+        sentiment?: { score?: number; label?: string; confidence?: number }
+        topics?: Array<{ name: string; confidence: number; keywords?: string[] }>
+        emotions?: Array<{ name: string; confidence: number }>
+        speaker_id?: string
+        language_detected?: string
+      }
+      const source = data as DeepgramAnalyticsSource
       // Extract sentiment, topics, and other analytics from Deepgram response
       const analytics: VoiceAnalytics = {
         sentiment: {
-          score: data.sentiment?.score || 0,
-          label: data.sentiment?.label || 'neutral',
-          confidence: data.sentiment?.confidence || 0
+          score: source.sentiment?.score || 0,
+          label: (source.sentiment?.label as any) || 'neutral',
+          confidence: source.sentiment?.confidence || 0
         },
-        topics: data.topics?.map((topic: unknown) => ({
+        topics: source.topics?.map(topic => ({
           name: topic.name,
           confidence: topic.confidence,
           keywords: topic.keywords || []
         })) || [],
-        emotions: data.emotions?.map((emotion: unknown) => ({
+        emotions: source.emotions?.map(emotion => ({
           emotion: emotion.name,
           confidence: emotion.confidence
         })) || [],
-        speaker_id: data.speaker_id,
-        language_detected: data.language_detected
+        speaker_id: source.speaker_id,
+        language_detected: source.language_detected
       }
 
       this.emit('analytics', analytics)
@@ -321,7 +331,7 @@ class DeepgramVoiceService {
         { text },
         {
           model: options?.model || 'aura-asteria-en',
-          encoding: options?.encoding || 'linear16',
+          encoding: (options?.encoding || 'linear16') as any,
           sample_rate: options?.sample_rate || 24000,
           container: 'wav'
         }
@@ -426,7 +436,7 @@ class DeepgramVoiceService {
 
       voiceAgentWs.addEventListener('message', (event) => {
         try {
-          const parsed = JSON.parse(event.data)
+          const parsed: unknown = JSON.parse(event.data)
           if (!isVoiceAgentMessage(parsed)) return
           switch (parsed.type) {
             case 'transcription':

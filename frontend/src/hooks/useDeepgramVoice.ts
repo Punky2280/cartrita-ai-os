@@ -127,7 +127,7 @@ export const useDeepgramVoice = (options: UseDeepgramVoiceOptions = {}): UseDeep
       })
 
       serviceRef.current.on('error', (errorData: unknown) => {
-        const errorMessage = errorData?.message || 'Unknown error occurred'
+        const errorMessage = (errorData as any)?.message || 'Unknown error occurred'
         setError(errorMessage)
         setConnectionState('error')
         console.error('Deepgram voice error:', errorData)

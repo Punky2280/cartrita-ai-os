@@ -114,7 +114,7 @@ export default function ChatInterface() {
   const isStreaming = useAtomValue(isStreamingAtom)
   
   // Atom setters
-  const [streamingMessage, setStreamingMessage] = useAtom(streamingMessageAtom)
+  const [streamingMessage, setStreamingMessage] = useAtom(streamingMessageAtom) as [Message | null, (value: Message | null) => void]
   
   // Get message setter for current conversation
   const setMessages = useSetAtom(
@@ -199,11 +199,12 @@ export default function ChatInterface() {
     if (!wsUrl) return
     // Initialize only once
     if (!realtimeRef.current) {
-      realtimeRef.current = new RealtimeService(wsUrl)
-      realtimeRef.current.onTyping((evt) => {
-        if (!currentConversation?.id || evt.conversationId !== currentConversation.id) return
-        setTypingUsers((prev) => ({ ...prev, [evt.userId]: evt.isTyping }))
-      })
+      // Temporarily disabled until Socket.IO backend is implemented
+      // realtimeRef.current = new RealtimeService(wsUrl)
+      // realtimeRef.current.onTyping((evt) => {
+      //   if (!currentConversation?.id || evt.conversationId !== currentConversation.id) return
+      //   setTypingUsers((prev) => ({ ...prev, [evt.userId]: evt.isTyping }))
+      // })
     }
     return () => {
       // Do not disconnect globally on rerenders; cleanup at unmount only
@@ -277,13 +278,14 @@ export default function ChatInterface() {
         await streamingService.streamChat(chatRequest, {
           onChunk: (chunk) => {
             console.log('Streaming chunk:', chunk.content)
-            // Update streaming message with new content using callback to avoid closure issues
-            setStreamingMessage((prev) => {
-              if (prev && typeof prev === 'object') {
-                return { ...(prev as Message), content: (prev as Message).content + chunk.content, updatedAt: new Date().toISOString() }
-              }
-              return prev
-            })
+            // Update streaming message with new content
+            if (streamingMessage) {
+              setStreamingMessage({ 
+                ...streamingMessage, 
+                content: streamingMessage.content + chunk.content, 
+                updatedAt: new Date().toISOString() 
+              })
+            }
           },
           onComplete: (response) => {
             console.log('Stream complete:', response.response)
@@ -866,7 +868,10 @@ export default function ChatInterface() {
 
                 {/* Send Button */}
                 <button
-                  onClick={handleSendMessage}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }}
                   disabled={!chatInput.trim() || !selectedAgent || isStreaming}
                   aria-label="Send message"
                   title="Send message"

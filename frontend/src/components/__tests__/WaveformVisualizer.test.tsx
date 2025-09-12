@@ -221,7 +221,7 @@ describe('WaveformVisualizer', () => {
   describe('Performance Monitoring', () => {
     it('should show FPS in development mode', () => {
       const originalEnv = process.env.NODE_ENV
-      process.env.NODE_ENV = 'development'
+      vi.stubEnv('NODE_ENV', 'development')
 
       render(<WaveformVisualizer analysisData={mockAnalysisData} />)
 
@@ -233,7 +233,7 @@ describe('WaveformVisualizer', () => {
 
     it('should not show FPS in production mode', () => {
       const originalEnv = process.env.NODE_ENV
-      process.env.NODE_ENV = 'production'
+      vi.stubEnv('NODE_ENV', 'production')
 
       render(<WaveformVisualizer analysisData={mockAnalysisData} />)
 
