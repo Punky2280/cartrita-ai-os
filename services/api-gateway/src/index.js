@@ -27,7 +27,7 @@ const gatewayRequests = new promClient.Counter({
 
 fastify.addHook('onResponse', (req, reply, done) => {
   try {
-    const route = req.routerPath || req.url;
+    const route = (req.routeOptions && req.routeOptions.url) || req.url;
     gatewayRequests.inc({ method: req.method, route, status: reply.statusCode });
   } catch (_) { /* swallow metrics errors */ }
   done();
@@ -78,9 +78,14 @@ fastify.register(async function (fastify) {
       delete headers['x-forwarded-host'];
       delete headers['x-forwarded-proto'];
       delete headers['x-forwarded-for'];
+
+      // Avoid sending user-controlled absolute URLs to the HTTP client
+      const pathOnly = target.pathname;
+
       const response = await axios({
         method: request.method,
-        url: target.toString(),
+        baseURL: base.origin,
+        url: pathOnly,
         data: request.body,
         headers,
         params: request.query
@@ -112,55 +117,46 @@ fastify.register(async function (fastify) {
     rewritePrefix: '/sw.js'
   });
 
-  // Fallback HTML (SSR / SPA) - proxy everything else not matched (except API, metrics, health)
-  fastify.all('*', async (request, reply) => {
-    const skip = ['/health', '/metrics'];
-    // Check if the request matches a registered route
-    const routeExists = fastify.hasRoute(request.routerPath || request.url);
-    if (
-      !routeExists &&
-      request.url !== '/metrics' &&
-      request.url !== '/health' &&
-      !request.url.startsWith('/api')
-    ) {
-      // Stream proxy to frontend for page rendering
-      const undici = await import('undici');
-      const target = `${frontendInternal}${request.url}`;
-      try {
-        const proxied = await undici.request(target, {
-          method: request.method,
-          headers: request.headers,
-          body:
-            request.body && request.headers['content-type'] &&
-            request.headers['content-type'].includes('application/json')
-              ? JSON.stringify(request.body)
-              : undefined
-        });
-        reply.code(proxied.statusCode);
-        // Filter out hop-by-hop headers per RFC 7230 section 6.1
-        const hopByHopHeaders = [
-          'connection',
-          'keep-alive',
-          'proxy-authenticate',
-          'proxy-authorization',
-          'te',
-          'trailer',
-          'transfer-encoding',
-          'upgrade'
-        ];
-        for (const [h, v] of Object.entries(proxied.headers)) {
-          if (!hopByHopHeaders.includes(h.toLowerCase())) {
-            reply.header(h, v);
-          }
-        }
-        return proxied.body;
-      } catch (e) {
-        reply.code(502);
-        return { error: 'Frontend proxy failed', message: e.message };
-      }
+  // Fallback HTML (SSR / SPA) via notFound handler to avoid OPTIONS conflicts
+  fastify.setNotFoundHandler(async (request, reply) => {
+    if (request.url.startsWith('/api')) {
+      reply.code(404);
+      return { error: 'Not found' };
     }
-    reply.code(404);
-    return { error: 'Not found' };
+    const undici = await import('undici');
+    const target = `${frontendInternal}${request.url}`;
+    try {
+      const proxied = await undici.request(target, {
+        method: request.method,
+        headers: request.headers,
+        body:
+          request.body && request.headers['content-type'] &&
+          request.headers['content-type'].includes('application/json')
+            ? JSON.stringify(request.body)
+            : undefined
+      });
+      reply.code(proxied.statusCode);
+      // Filter out hop-by-hop headers per RFC 7230 section 6.1
+      const hopByHopHeaders = [
+        'connection',
+        'keep-alive',
+        'proxy-authenticate',
+        'proxy-authorization',
+        'te',
+        'trailer',
+        'transfer-encoding',
+        'upgrade'
+      ];
+      for (const [h, v] of Object.entries(proxied.headers)) {
+        if (!hopByHopHeaders.includes(h.toLowerCase())) {
+          reply.header(h, v);
+        }
+      }
+      return proxied.body;
+    } catch (e) {
+      reply.code(502);
+      return { error: 'Frontend proxy failed', message: e.message };
+    }
   });
 });
 
