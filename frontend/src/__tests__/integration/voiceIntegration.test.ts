@@ -64,7 +64,13 @@ const mockDeepgramResponse = {
   },
 };
 
-describe("Voice Integration Tests", () => {
+const VOICE_E2E_ENABLED = Boolean(
+  process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY && process.env.NEXT_PUBLIC_WS_URL,
+);
+
+const voiceDescribe = VOICE_E2E_ENABLED ? describe : describe.skip;
+
+voiceDescribe("Voice Integration Tests", () => {
   beforeEach(() => {
     // Mock browser APIs
     global.WebSocket = MockWebSocket as unknown as typeof WebSocket;

@@ -347,9 +347,18 @@ class WebSearchTool(AdvancedCartritaTool):
         """Execute web search with caching"""
         # Check cache first
         cache_key = f"{query}:{num_results}"
-        if (cache_key in self._search_cache and
-            cache_key in self._cache_expiry and
-            self._cache_expiry[cache_key] > datetime.now()):
+        if (
+            cache_key in self._search_cache
+            and cache_key in self._cache_expiry
+            and self._cache_expiry[cache_key] > datetime.utcnow()
+        ):
+            # Update metrics and call history even on cache hit
+            start_time = time.time()
+            self._last_call_time = start_time
+            self._call_history.append(start_time)
+            cutoff_time = start_time - 3600
+            self._call_history = [t for t in self._call_history if t > cutoff_time]
+            self._update_metrics(True, 0.0)
             return self._search_cache[cache_key]
 
         # Simulate web search (in real implementation, use actual search API)
@@ -370,9 +379,9 @@ class WebSearchTool(AdvancedCartritaTool):
 
         result_text = "\n\n".join(formatted_results)
 
-        # Cache result for 1 hour
+        # Cache result for 1 hour (use UTC for consistency)
         self._search_cache[cache_key] = result_text
-        self._cache_expiry[cache_key] = datetime.now() + timedelta(hours=1)
+        self._cache_expiry[cache_key] = datetime.utcnow() + timedelta(hours=1)
 
         return result_text
 

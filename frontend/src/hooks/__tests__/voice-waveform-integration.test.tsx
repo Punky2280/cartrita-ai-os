@@ -47,7 +47,6 @@ vi.mock("../useAudioAnalysis", () => ({
 }));
 
 vi.mock("../../components/WaveformVisualizer", () => {
-  const React = require("react");
   const Mock = React.forwardRef(function WaveformVisualizerMock(
     { analysisData, width, height, className }: any,
     ref: any,

@@ -11,6 +11,11 @@ export default function ConnectionTest() {
   }, []);
 
   const testConnection = async () => {
+    const isLocalhost =
+      typeof window !== "undefined" &&
+      (window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1");
+
     try {
       console.log("Testing backend connection...");
 
@@ -19,10 +24,6 @@ export default function ConnectionTest() {
       const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
       // Use HTTPS in production, HTTP only for localhost
-      const isLocalhost = typeof window !== 'undefined' &&
-        (window.location.hostname === 'localhost' ||
-         window.location.hostname === '127.0.0.1');
-
       const defaultUrl = isLocalhost ? "http://localhost:8000" : "https://api.cartrita.ai";
       const baseUrl =
         process.env.NEXT_PUBLIC_API_URL ||

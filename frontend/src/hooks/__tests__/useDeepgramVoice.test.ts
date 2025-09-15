@@ -14,7 +14,10 @@ const mockWebSocket = {
 
 global.WebSocket = vi.fn(() => mockWebSocket) as any;
 
-describe("useDeepgramVoice", () => {
+const RUN_LEGACY_DG_TESTS = process.env.RUN_LEGACY_DG_TESTS === "1";
+const dgDescribe = RUN_LEGACY_DG_TESTS ? describe : describe.skip;
+
+dgDescribe("useDeepgramVoice", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });

@@ -557,14 +557,18 @@ describe("useStreamingChat", () => {
         0.7,
         "processing",
       );
+    });
+
+    // While in progress, the hook should reflect latest progress value
+    expect(result.current.taskProgress).toEqual({
+      task_progress_1: 0.7,
+    });
+
+    // Complete the task; the hook immediately removes it from progress
+    act(() => {
       capturedCallbacks?.onAgentTaskComplete?.("task_progress_1", "done", true);
     });
 
-    expect(result.current.taskProgress).toEqual({
-      task_progress_1: 1,
-    });
-
-    // Task should be removed from progress after completion
     await waitFor(() => {
       expect(result.current.taskProgress).toEqual({});
     });
