@@ -1,0 +1,94 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chat_models/langchain_community.chat_models.baichuan.aconnect_httpx_sse.html#langchain_community.chat_models.baichuan.aconnect_httpx_sse",
+  "title": "aconnect_httpx_sse#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "chat_models"
+    },
+    {
+      "type": "li",
+      "content": "aconnect_httpx_sse"
+    },
+    {
+      "type": "p",
+      "content": "Async context manager for connecting to an SSE stream."
+    },
+    {
+      "type": "li",
+      "content": "client(Any) – The httpx client."
+    },
+    {
+      "type": "p",
+      "content": "client(Any) – The httpx client."
+    },
+    {
+      "type": "li",
+      "content": "method(str) – The HTTP method."
+    },
+    {
+      "type": "p",
+      "content": "method(str) – The HTTP method."
+    },
+    {
+      "type": "li",
+      "content": "url(str) – The URL to connect to."
+    },
+    {
+      "type": "p",
+      "content": "url(str) – The URL to connect to."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments to pass to the client."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments to pass to the client."
+    },
+    {
+      "type": "p",
+      "content": "An EventSource object."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator"
+    },
+    {
+      "type": "li",
+      "content": "aconnect_httpx_sse()"
+    }
+  ],
+  "code_examples": [
+    "chat_models",
+    "aconnect_httpx_sse()"
+  ],
+  "api_signatures": [
+    "langchain_community.chat_models.baichuan.aconnect_httpx_sse(client:Any,method:str,url:str,**kwargs:Any,)→AsyncIterator[source]#",
+    "langchain_community.chat_models.baichuan.",
+    "aconnect_httpx_sse",
+    "(",
+    "client:Any",
+    "method:str",
+    "url:str",
+    "**kwargs:Any",
+    ")",
+    "→AsyncIterator",
+    "→",
+    "AsyncIterator"
+  ],
+  "parameters": [
+    "client:Any",
+    "method:str",
+    "url:str",
+    "**kwargs:Any"
+  ]
+}

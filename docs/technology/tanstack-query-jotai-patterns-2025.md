@@ -92,19 +92,19 @@ function useUpdateUser() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData),
       });
-      
+
       if (!response.ok) {
         throw new Error('Update failed');
       }
-      
+
       return response.json();
     },
-    
+
     // Optimistic update
     onMutate: async (updatedUser) => {
       // Cancel outgoing refetches
-      await queryClient.cancelQueries({ 
-        queryKey: userKeys.detail(updatedUser.id) 
+      await queryClient.cancelQueries({
+        queryKey: userKeys.detail(updatedUser.id)
       });
 
       // Snapshot previous value
@@ -136,8 +136,8 @@ function useUpdateUser() {
 
     // Always refetch after success or error
     onSettled: (data, error, updatedUser) => {
-      queryClient.invalidateQueries({ 
-        queryKey: userKeys.detail(updatedUser.id) 
+      queryClient.invalidateQueries({
+        queryKey: userKeys.detail(updatedUser.id)
       });
     },
   });
@@ -160,7 +160,7 @@ function useBatchUpdateUsers() {
       );
 
       const responses = await Promise.allSettled(promises);
-      
+
       const results = await Promise.all(
         responses.map(async (response, index) => {
           if (response.status === 'fulfilled' && response.value.ok) {
@@ -172,8 +172,8 @@ function useBatchUpdateUsers() {
           }
           return {
             success: false,
-            error: response.status === 'fulfilled' 
-              ? await response.value.text() 
+            error: response.status === 'fulfilled'
+              ? await response.value.text()
               : response.reason,
             id: updates[index].id
           };
@@ -230,7 +230,7 @@ function useInfiniteUsers(filters?: Record<string, any>) {
       return response.json();
     },
     initialPageParam: 1,
-    getNextPageParam: (lastPage) => 
+    getNextPageParam: (lastPage) =>
       lastPage.pagination.hasNext ? lastPage.pagination.page + 1 : undefined,
     select: (data) => ({
       pages: data.pages,
@@ -260,7 +260,7 @@ function InfiniteUserList() {
       {data.allUsers.map(user => (
         <UserCard key={user.id} user={user} />
       ))}
-      
+
       {hasNextPage && (
         <button
           onClick={() => fetchNextPage()}
@@ -388,7 +388,7 @@ export const updateUserAtom = atom(
     if (!currentProfile) return;
 
     set(isLoadingAtom, true);
-    
+
     try {
       const response = await fetch(`/api/users/${currentProfile.id}`, {
         method: 'PUT',
@@ -401,10 +401,10 @@ export const updateUserAtom = atom(
       }
 
       const updatedUser = await response.json();
-      
+
       // Trigger refresh of user profile atom
       set(userProfileAtom, updatedUser);
-      
+
       return updatedUser;
     } finally {
       set(isLoadingAtom, false);
@@ -435,9 +435,9 @@ function UserProfileEditor() {
       const formData = new FormData(e.target as HTMLFormElement);
       handleSave(Object.fromEntries(formData));
     }}>
-      <input 
-        name="name" 
-        defaultValue={userProfile.name} 
+      <input
+        name="name"
+        defaultValue={userProfile.name}
         disabled={isLoading}
       />
       <button type="submit" disabled={isLoading}>
@@ -511,7 +511,7 @@ export const persistentUserPreferencesAtom = atomWithStorage<UserPreferences>(
 // Combine persistent local state with server state
 export function usePersistedUserData() {
   const [preferences, setPreferences] = useAtom(persistentUserPreferencesAtom);
-  
+
   const { data: serverUserData, isLoading } = useQuery({
     queryKey: ['user', 'server-data'],
     queryFn: fetchUserFromServer,
@@ -579,10 +579,10 @@ export function useOptimisticMutation<TData, TVariables>(
       // Update optimistic state with error
       setOptimisticData(prev => ({
         ...prev,
-        [context!.optimisticId]: { 
-          status: 'error', 
-          variables, 
-          error: error.message 
+        [context!.optimisticId]: {
+          status: 'error',
+          variables,
+          error: error.message
         }
       }));
 
@@ -663,7 +663,7 @@ export function UserForm() {
   const updateField = useSetAtom(updateFieldAtom);
 
   const createUserMutation = useMutation({
-    mutationFn: (userData: typeof formState.values) => 
+    mutationFn: (userData: typeof formState.values) =>
       createUser(userData),
     onSuccess: () => {
       toast.success('User created!');
@@ -687,9 +687,9 @@ export function UserForm() {
       {formState.touched.name && formState.errors.name && (
         <span className="error">{formState.errors.name}</span>
       )}
-      
-      <button 
-        type="submit" 
+
+      <button
+        type="submit"
         disabled={createUserMutation.isPending || Object.keys(formState.errors).length > 0}
       >
         {createUserMutation.isPending ? 'Creating...' : 'Create User'}
@@ -742,9 +742,9 @@ export const userThemeAtom = atom(
 function UserName() {
   const [name, setName] = useAtom(userNameAtom);
   return (
-    <input 
-      value={name} 
-      onChange={(e) => setName(e.target.value)} 
+    <input
+      value={name}
+      onChange={(e) => setName(e.target.value)}
     />
   );
 }
@@ -768,13 +768,13 @@ export const invalidationPatterns = {
     userKeys.detail(userId),
     userKeys.lists(),
   ],
-  
+
   conversation: (conversationId: string) => [
     ['conversations', conversationId],
     ['conversations', 'list'],
     ['messages', conversationId],
   ],
-  
+
   global: () => [
     ['user'],
     ['conversations'],
@@ -788,9 +788,9 @@ export function useSmartInvalidation() {
 
   const invalidateQueries = useCallback((pattern: keyof typeof invalidationPatterns, id?: string) => {
     const queryKeys = invalidationPatterns[pattern](id as any);
-    
+
     return Promise.all(
-      queryKeys.map(queryKey => 
+      queryKeys.map(queryKey =>
         queryClient.invalidateQueries({ queryKey })
       )
     );

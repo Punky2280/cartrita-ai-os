@@ -24,7 +24,7 @@ except ImportError:
     logging.warning("HuggingFace Transformers not available. Install with: pip install transformers torch")
 
 try:
-    from langchain_openai import ChatOpenAI
+    from cartrita.orchestrator.utils.llm_factory import create_chat_openai
     from langchain_core.language_models import BaseChatModel
     from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
     from langchain_core.output_parsers import StrOutputParser
@@ -326,10 +326,11 @@ class FallbackProvider:
         openai_key = os.getenv("OPENAI_API_KEY", "")
         if openai_key and not openai_key.startswith("sk-test-") and LANGCHAIN_AVAILABLE:
             try:
-                self.openai_client = ChatOpenAI(
+                self.openai_client = create_chat_openai(
                     api_key=openai_key,
                     model="gpt-3.5-turbo",
-                    temperature=0.7
+                    temperature=0.7,
+                    max_completion_tokens=1024
                 )
                 logger.info("OpenAI client initialized successfully")
             except Exception as e:

@@ -1,0 +1,122 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.plugin.AIPlugin.html#langchain_community.tools.plugin.AIPlugin",
+  "title": "AIPlugin#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "AI Plugin Definition."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Instantiate AIPlugin from a URL."
+    },
+    {
+      "type": "li",
+      "content": "AIPluginapiauthcontact_emaildescription_for_humandescription_for_modellegal_info_urllogo_urlname_for_humanname_for_modelschema_versionfrom_url()"
+    },
+    {
+      "type": "li",
+      "content": "contact_email"
+    },
+    {
+      "type": "li",
+      "content": "description_for_human"
+    },
+    {
+      "type": "li",
+      "content": "description_for_model"
+    },
+    {
+      "type": "li",
+      "content": "legal_info_url"
+    },
+    {
+      "type": "li",
+      "content": "name_for_human"
+    },
+    {
+      "type": "li",
+      "content": "name_for_model"
+    },
+    {
+      "type": "li",
+      "content": "schema_version"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "BaseModel",
+    "AIPlugin",
+    "api",
+    "auth",
+    "contact_email",
+    "description_for_human",
+    "description_for_model",
+    "legal_info_url",
+    "logo_url",
+    "name_for_human",
+    "name_for_model",
+    "schema_version",
+    "from_url()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.tools.plugin.AIPlugin[source]#",
+    "langchain_community.tools.plugin.",
+    "AIPlugin",
+    "paramapi:ApiConfig[Required]#",
+    "api",
+    "paramauth:dict|None=None#",
+    "auth",
+    "paramcontact_email:str|None[Required]#",
+    "contact_email",
+    "paramdescription_for_human:str[Required]#",
+    "description_for_human",
+    "paramdescription_for_model:str[Required]#",
+    "description_for_model",
+    "paramlegal_info_url:str|None[Required]#",
+    "legal_info_url",
+    "paramlogo_url:str|None[Required]#",
+    "logo_url",
+    "paramname_for_human:str[Required]#",
+    "name_for_human",
+    "paramname_for_model:str[Required]#",
+    "name_for_model",
+    "paramschema_version:str[Required]#",
+    "schema_version",
+    "classmethodfrom_url(url:str,)→AIPlugin[source]#",
+    "from_url",
+    "(",
+    "url:str",
+    ")",
+    "→AIPlugin",
+    "→",
+    "AIPlugin"
+  ],
+  "parameters": [
+    "url:str"
+  ]
+}

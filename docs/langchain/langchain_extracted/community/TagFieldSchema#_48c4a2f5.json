@@ -1,0 +1,84 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.redis.schema.TagFieldSchema.html#langchain_community.vectorstores.redis.schema.TagFieldSchema",
+  "title": "TagFieldSchema#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "vectorstores"
+    },
+    {
+      "type": "li",
+      "content": "TagFieldSchema"
+    },
+    {
+      "type": "p",
+      "content": "Bases:RedisField"
+    },
+    {
+      "type": "p",
+      "content": "Schema for tag fields in Redis."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "li",
+      "content": "TagFieldSchemacase_sensitivenameno_indexseparatorsortableas_field()"
+    },
+    {
+      "type": "li",
+      "content": "case_sensitive"
+    }
+  ],
+  "code_examples": [
+    "vectorstores",
+    "RedisField",
+    "TagFieldSchema",
+    "case_sensitive",
+    "name",
+    "no_index",
+    "separator",
+    "sortable",
+    "as_field()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.vectorstores.redis.schema.TagFieldSchema[source]#",
+    "langchain_community.vectorstores.redis.schema.",
+    "TagFieldSchema",
+    "paramcase_sensitive:bool=False#",
+    "case_sensitive",
+    "paramname:str[Required]#",
+    "name",
+    "paramno_index:bool=False#",
+    "no_index",
+    "paramseparator:str=','#",
+    "separator",
+    "paramsortable:bool|None=False#",
+    "sortable",
+    "as_field()→TagField[source]#",
+    "as_field",
+    "(",
+    ")",
+    "→TagField",
+    "→",
+    "TagField"
+  ],
+  "parameters": []
+}

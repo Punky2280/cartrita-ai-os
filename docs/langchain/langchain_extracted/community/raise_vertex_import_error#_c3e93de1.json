@@ -1,0 +1,52 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.vertexai.raise_vertex_import_error.html#langchain_community.utilities.vertexai.raise_vertex_import_error",
+  "title": "raise_vertex_import_error#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "raise_vertex_import_error"
+    },
+    {
+      "type": "p",
+      "content": "Raise ImportError related to Vertex SDK being not available."
+    },
+    {
+      "type": "p",
+      "content": "minimum_expected_version(str) – The lowest expected version of the SDK."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– an ImportError that mentions a required version of the SDK."
+    },
+    {
+      "type": "li",
+      "content": "raise_vertex_import_error()"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "raise_vertex_import_error()"
+  ],
+  "api_signatures": [
+    "langchain_community.utilities.vertexai.raise_vertex_import_error(minimum_expected_version:str='1.38.0',)→None[source]#",
+    "langchain_community.utilities.vertexai.",
+    "raise_vertex_import_error",
+    "(",
+    "minimum_expected_version:str='1.38.0'",
+    ")",
+    "→None",
+    "→",
+    "None"
+  ],
+  "parameters": [
+    "minimum_expected_version:str='1.38.0'"
+  ]
+}

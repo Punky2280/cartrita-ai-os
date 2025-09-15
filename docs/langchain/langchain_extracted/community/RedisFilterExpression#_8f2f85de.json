@@ -1,0 +1,193 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.redis.filters.RedisFilterExpression.html#langchain_community.vectorstores.redis.filters.RedisFilterExpression",
+  "title": "RedisFilterExpression#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "vectorstores"
+    },
+    {
+      "type": "li",
+      "content": "RedisFilterExpression"
+    },
+    {
+      "type": "p",
+      "content": "Logical expression of RedisFilterFields."
+    },
+    {
+      "type": "p",
+      "content": "RedisFilterExpressions can be combined using the & and | operators to create\ncomplex logical expressions that evaluate to the Redis Query language."
+    },
+    {
+      "type": "p",
+      "content": "This presents an interface by which users can create complex queries\nwithout having to know the Redis Query language."
+    },
+    {
+      "type": "p",
+      "content": "Filter expressions are not initialized directly. Instead they are built\nby combining RedisFilterFields using the & and | operators."
+    },
+    {
+      "type": "p",
+      "content": "__init__([_filter, operator, left, right])"
+    },
+    {
+      "type": "p",
+      "content": "format_expression(left, right, operator_str)"
+    },
+    {
+      "type": "li",
+      "content": "_filter(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "_filter(str|None)"
+    },
+    {
+      "type": "li",
+      "content": "operator(RedisFilterOperator|None)"
+    },
+    {
+      "type": "p",
+      "content": "operator(RedisFilterOperator|None)"
+    },
+    {
+      "type": "li",
+      "content": "left(RedisFilterExpression|None)"
+    },
+    {
+      "type": "p",
+      "content": "left(RedisFilterExpression|None)"
+    },
+    {
+      "type": "li",
+      "content": "right(RedisFilterExpression|None)"
+    },
+    {
+      "type": "p",
+      "content": "right(RedisFilterExpression|None)"
+    },
+    {
+      "type": "li",
+      "content": "_filter(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "_filter(str|None)"
+    },
+    {
+      "type": "li",
+      "content": "operator(RedisFilterOperator|None)"
+    },
+    {
+      "type": "p",
+      "content": "operator(RedisFilterOperator|None)"
+    },
+    {
+      "type": "li",
+      "content": "left(RedisFilterExpression|None)"
+    },
+    {
+      "type": "p",
+      "content": "left(RedisFilterExpression|None)"
+    },
+    {
+      "type": "li",
+      "content": "right(RedisFilterExpression|None)"
+    },
+    {
+      "type": "p",
+      "content": "right(RedisFilterExpression|None)"
+    },
+    {
+      "type": "li",
+      "content": "left(RedisFilterExpression)"
+    },
+    {
+      "type": "p",
+      "content": "left(RedisFilterExpression)"
+    },
+    {
+      "type": "li",
+      "content": "right(RedisFilterExpression)"
+    },
+    {
+      "type": "p",
+      "content": "right(RedisFilterExpression)"
+    },
+    {
+      "type": "li",
+      "content": "operator_str(str)"
+    },
+    {
+      "type": "p",
+      "content": "operator_str(str)"
+    },
+    {
+      "type": "li",
+      "content": "RedisFilterExpression__init__()format_expression()"
+    },
+    {
+      "type": "li",
+      "content": "format_expression()"
+    }
+  ],
+  "code_examples": [
+    "vectorstores",
+    ">>>fromlangchain_community.vectorstores.redisimportRedisTag,RedisNum>>>brand_is_nike=RedisTag(\"brand\")==\"nike\">>>price_is_under_100=RedisNum(\"price\")<100>>>filter=brand_is_nike&price_is_under_100>>>print(str(filter))(@brand:{nike} @price:[-inf (100)])",
+    "__init__",
+    "format_expression",
+    "RedisFilterExpression",
+    "__init__()",
+    "format_expression()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.vectorstores.redis.filters.RedisFilterExpression(_filter:str|None=None,operator:RedisFilterOperator|None=None,left:RedisFilterExpression|None=None,right:RedisFilterExpression|None=None,)[source]#",
+    "langchain_community.vectorstores.redis.filters.",
+    "RedisFilterExpression",
+    "(",
+    "_filter:str|None=None",
+    "operator:RedisFilterOperator|None=None",
+    "left:RedisFilterExpression|None=None",
+    "right:RedisFilterExpression|None=None",
+    ")",
+    "__init__(_filter:str|None=None,operator:RedisFilterOperator|None=None,left:RedisFilterExpression|None=None,right:RedisFilterExpression|None=None,)[source]#",
+    "__init__",
+    "(",
+    "_filter:str|None=None",
+    "operator:RedisFilterOperator|None=None",
+    "left:RedisFilterExpression|None=None",
+    "right:RedisFilterExpression|None=None",
+    ")",
+    "staticformat_expression(left:RedisFilterExpression,right:RedisFilterExpression,operator_str:str,)→str[source]#",
+    "format_expression",
+    "(",
+    "left:RedisFilterExpression",
+    "right:RedisFilterExpression",
+    "operator_str:str",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "_filter:str|None=None",
+    "operator:RedisFilterOperator|None=None",
+    "left:RedisFilterExpression|None=None",
+    "right:RedisFilterExpression|None=None",
+    "_filter:str|None=None",
+    "operator:RedisFilterOperator|None=None",
+    "left:RedisFilterExpression|None=None",
+    "right:RedisFilterExpression|None=None",
+    "left:RedisFilterExpression",
+    "right:RedisFilterExpression",
+    "operator_str:str"
+  ]
+}

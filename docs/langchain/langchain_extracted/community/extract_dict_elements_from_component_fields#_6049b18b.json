@@ -1,0 +1,66 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.clickup.extract_dict_elements_from_component_fields.html",
+  "title": "extract_dict_elements_from_component_fields#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "extract_dict_elements_from_component_fields"
+    },
+    {
+      "type": "p",
+      "content": "Extract elements from a dictionary."
+    },
+    {
+      "type": "li",
+      "content": "data(dict) – The dictionary to extract elements from."
+    },
+    {
+      "type": "p",
+      "content": "data(dict) – The dictionary to extract elements from."
+    },
+    {
+      "type": "li",
+      "content": "component(Type[Component]) – The component to extract elements from."
+    },
+    {
+      "type": "p",
+      "content": "component(Type[Component]) – The component to extract elements from."
+    },
+    {
+      "type": "p",
+      "content": "A dictionary containing the elements from the input dictionary that are also\nin the component."
+    },
+    {
+      "type": "li",
+      "content": "extract_dict_elements_from_component_fields()"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "extract_dict_elements_from_component_fields()"
+  ],
+  "api_signatures": [
+    "langchain_community.utilities.clickup.extract_dict_elements_from_component_fields(data:dict,component:Type[Component],)→dict[source]#",
+    "langchain_community.utilities.clickup.",
+    "extract_dict_elements_from_component_fields",
+    "(",
+    "data:dict",
+    "component:Type[Component]",
+    ")",
+    "→dict",
+    "→",
+    "dict"
+  ],
+  "parameters": [
+    "data:dict",
+    "component:Type[Component]"
+  ]
+}

@@ -1,0 +1,210 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.parsers.html.bs4.BS4HTMLParser.html#langchain_community.document_loaders.parsers.html.bs4.BS4HTMLParser",
+  "title": "BS4HTMLParser#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "BS4HTMLParser"
+    },
+    {
+      "type": "p",
+      "content": "Parse HTML files usingBeautiful Soup."
+    },
+    {
+      "type": "p",
+      "content": "Initialize a bs4 based HTML parser."
+    },
+    {
+      "type": "p",
+      "content": "__init__(*[, features, get_text_separator])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize a bs4 based HTML parser."
+    },
+    {
+      "type": "p",
+      "content": "lazy_parse(blob)"
+    },
+    {
+      "type": "p",
+      "content": "Load HTML document into document objects."
+    },
+    {
+      "type": "p",
+      "content": "parse(blob)"
+    },
+    {
+      "type": "p",
+      "content": "Eagerly parse the blob into a document or documents."
+    },
+    {
+      "type": "li",
+      "content": "features(str)"
+    },
+    {
+      "type": "p",
+      "content": "features(str)"
+    },
+    {
+      "type": "li",
+      "content": "get_text_separator(str)"
+    },
+    {
+      "type": "p",
+      "content": "get_text_separator(str)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Initialize a bs4 based HTML parser."
+    },
+    {
+      "type": "li",
+      "content": "features(str)"
+    },
+    {
+      "type": "p",
+      "content": "features(str)"
+    },
+    {
+      "type": "li",
+      "content": "get_text_separator(str)"
+    },
+    {
+      "type": "p",
+      "content": "get_text_separator(str)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Load HTML document into document objects."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Eagerly parse the blob into a document or documents."
+    },
+    {
+      "type": "p",
+      "content": "This is a convenience method for interactive development environment."
+    },
+    {
+      "type": "p",
+      "content": "Production applications should favor the lazy_parse method instead."
+    },
+    {
+      "type": "p",
+      "content": "Subclasses should generally not over-ride this parse method."
+    },
+    {
+      "type": "p",
+      "content": "blob(Blob) – Blob instance"
+    },
+    {
+      "type": "p",
+      "content": "List of documents"
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "li",
+      "content": "BS4HTMLParser__init__()lazy_parse()parse()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_parse()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "__init__",
+    "lazy_parse",
+    "parse",
+    "BS4HTMLParser",
+    "__init__()",
+    "lazy_parse()",
+    "parse()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.parsers.html.bs4.BS4HTMLParser(*,features:str='lxml',get_text_separator:str='',**kwargs:Any,)[source]#",
+    "langchain_community.document_loaders.parsers.html.bs4.",
+    "BS4HTMLParser",
+    "(",
+    "*",
+    "features:str='lxml'",
+    "get_text_separator:str=''",
+    "**kwargs:Any",
+    ")",
+    "__init__(*,features:str='lxml',get_text_separator:str='',**kwargs:Any,)→None[source]#",
+    "__init__",
+    "(",
+    "*",
+    "features:str='lxml'",
+    "get_text_separator:str=''",
+    "**kwargs:Any",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "lazy_parse(blob:Blob,)→Iterator[Document][source]#",
+    "lazy_parse",
+    "(",
+    "blob:Blob",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "parse(blob:Blob)→list[Document]#",
+    "parse",
+    "(",
+    "blob:Blob",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "*",
+    "features:str='lxml'",
+    "get_text_separator:str=''",
+    "**kwargs:Any",
+    "*",
+    "features:str='lxml'",
+    "get_text_separator:str=''",
+    "**kwargs:Any",
+    "blob:Blob",
+    "blob:Blob"
+  ]
+}

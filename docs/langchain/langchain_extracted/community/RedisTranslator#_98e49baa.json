@@ -1,0 +1,214 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/query_constructors/langchain_community.query_constructors.redis.RedisTranslator.html#langchain_community.query_constructors.redis.RedisTranslator",
+  "title": "RedisTranslator#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "query_constructors"
+    },
+    {
+      "type": "li",
+      "content": "RedisTranslator"
+    },
+    {
+      "type": "p",
+      "content": "Visitor for translating structured queries to Redis filter expressions."
+    },
+    {
+      "type": "p",
+      "content": "allowed_comparators"
+    },
+    {
+      "type": "p",
+      "content": "Subset of allowed logical comparators."
+    },
+    {
+      "type": "p",
+      "content": "allowed_operators"
+    },
+    {
+      "type": "p",
+      "content": "Subset of allowed logical operators."
+    },
+    {
+      "type": "p",
+      "content": "__init__(schema)"
+    },
+    {
+      "type": "p",
+      "content": "from_vectorstore(vectorstore)"
+    },
+    {
+      "type": "p",
+      "content": "visit_comparison(comparison)"
+    },
+    {
+      "type": "p",
+      "content": "Translate a Comparison."
+    },
+    {
+      "type": "p",
+      "content": "visit_operation(operation)"
+    },
+    {
+      "type": "p",
+      "content": "Translate an Operation."
+    },
+    {
+      "type": "p",
+      "content": "visit_structured_query(structured_query)"
+    },
+    {
+      "type": "p",
+      "content": "Translate a StructuredQuery."
+    },
+    {
+      "type": "p",
+      "content": "schema(RedisModel)"
+    },
+    {
+      "type": "p",
+      "content": "schema(RedisModel)"
+    },
+    {
+      "type": "p",
+      "content": "vectorstore(Redis)"
+    },
+    {
+      "type": "p",
+      "content": "RedisTranslator"
+    },
+    {
+      "type": "p",
+      "content": "Translate a Comparison."
+    },
+    {
+      "type": "p",
+      "content": "comparison(Comparison) – Comparison to translate."
+    },
+    {
+      "type": "p",
+      "content": "RedisFilterExpression"
+    },
+    {
+      "type": "p",
+      "content": "Translate an Operation."
+    },
+    {
+      "type": "p",
+      "content": "operation(Operation) – Operation to translate."
+    },
+    {
+      "type": "p",
+      "content": "Translate a StructuredQuery."
+    },
+    {
+      "type": "p",
+      "content": "structured_query(StructuredQuery) – StructuredQuery to translate."
+    },
+    {
+      "type": "p",
+      "content": "Tuple[str, dict]"
+    },
+    {
+      "type": "li",
+      "content": "RedisTranslator__init__()from_vectorstore()visit_comparison()visit_operation()visit_structured_query()"
+    },
+    {
+      "type": "li",
+      "content": "from_vectorstore()"
+    },
+    {
+      "type": "li",
+      "content": "visit_comparison()"
+    },
+    {
+      "type": "li",
+      "content": "visit_operation()"
+    },
+    {
+      "type": "li",
+      "content": "visit_structured_query()"
+    }
+  ],
+  "code_examples": [
+    "query_constructors",
+    "allowed_comparators",
+    "allowed_operators",
+    "__init__",
+    "from_vectorstore",
+    "visit_comparison",
+    "visit_operation",
+    "visit_structured_query",
+    "RedisTranslator",
+    "__init__()",
+    "from_vectorstore()",
+    "visit_comparison()",
+    "visit_operation()",
+    "visit_structured_query()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.query_constructors.redis.RedisTranslator(schema:RedisModel,)[source]#",
+    "langchain_community.query_constructors.redis.",
+    "RedisTranslator",
+    "(",
+    "schema:RedisModel",
+    ")",
+    "__init__(schema:RedisModel,)→None[source]#",
+    "__init__",
+    "(",
+    "schema:RedisModel",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "classmethodfrom_vectorstore(vectorstore:Redis,)→RedisTranslator[source]#",
+    "from_vectorstore",
+    "(",
+    "vectorstore:Redis",
+    ")",
+    "→RedisTranslator",
+    "→",
+    "RedisTranslator",
+    "visit_comparison(comparison:Comparison,)→RedisFilterExpression[source]#",
+    "visit_comparison",
+    "(",
+    "comparison:Comparison",
+    ")",
+    "→RedisFilterExpression",
+    "→",
+    "RedisFilterExpression",
+    "visit_operation(operation:Operation,)→Any[source]#",
+    "visit_operation",
+    "(",
+    "operation:Operation",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "visit_structured_query(structured_query:StructuredQuery,)→Tuple[str,dict][source]#",
+    "visit_structured_query",
+    "(",
+    "structured_query:StructuredQuery",
+    ")",
+    "→Tuple[str,dict]",
+    "→",
+    "Tuple[str,dict]"
+  ],
+  "parameters": [
+    "schema:RedisModel",
+    "schema:RedisModel",
+    "vectorstore:Redis",
+    "comparison:Comparison",
+    "operation:Operation",
+    "structured_query:StructuredQuery"
+  ]
+}

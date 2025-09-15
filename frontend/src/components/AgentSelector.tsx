@@ -1,11 +1,10 @@
 // Cartrita AI OS - Agent Selector Component
 // Enhanced agent selection with ChatGPT-like interface
 
-
-import { useState } from 'react'
-import { useAtom, useAtomValue } from 'jotai'
-import { motion, AnimatePresence } from 'framer-motion'
-import { toast } from 'sonner'
+import { useState } from "react";
+import { useAtom, useAtomValue } from "jotai";
+import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 import {
   Bot,
   ChevronDown,
@@ -21,76 +20,95 @@ import {
   Search,
   Star,
   Users,
-  Sparkles
-} from 'lucide-react'
-import { cn } from '@/utils'
-import { selectedAgentIdAtom, selectedAgentAtom } from '@/stores'
-import { useAgents } from '@/hooks'
-import { Avatar, AvatarFallback } from '@/components/ui'
-import { Badge } from '@/components/ui'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui'
-import { ScrollArea } from '@/components/ui'
-import { Separator } from '@/components/ui'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
-import type { Agent, AgentMetadata } from '@/types'
+  Sparkles,
+  type LucideIcon,
+} from "lucide-react";
+import { cn } from "@/utils";
+import { selectedAgentIdAtom, selectedAgentAtom } from "@/stores";
+import { useAgents } from "@/hooks";
+import { Avatar, AvatarFallback } from "@/components/ui";
+import { Badge } from "@/components/ui";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui";
+import { ScrollArea } from "@/components/ui";
+import { Separator } from "@/components/ui";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui";
+import type { Agent, AgentMetadata } from "@/types";
 
-// Agent type icons
+// Agent type icons (typed record)
+const agentTypeIcons: Record<string, LucideIcon> = {
+  general: Bot,
+  creative: Sparkles,
+  coding: Code,
+  writing: FileText,
+  research: Search,
+  analysis: Brain,
+  communication: MessageSquare,
+  multimodal: Image,
+  music: Music,
+  translation: Globe,
+  specialist: Star,
+  supervisor: Users,
+};
+
 const getAgentIcon = (type: string) => {
-    const iconMap = {
-      'general': Bot,
-      'creative': Sparkles,
-      'coding': Code,
-      'writing': FileText,
-      'research': Search,
-      'analysis': Brain,
-      'communication': MessageSquare,
-      'multimodal': Image,
-      'music': Music,
-      'translation': Globe,
-      'specialist': Star,
-      'supervisor': Users
-    };
-
-    const IconComponent = iconMap[type] || Bot
-    return <IconComponent className="h-4 w-4" />
-}
+  const IconComponent = agentTypeIcons[type] ?? Bot;
+  return <IconComponent className="h-4 w-4" />;
+};
 
 // Agent type colors
 const getAgentColor = (type: string) => {
   const colorMap: Record<string, string> = {
-    'general': 'bg-blue-500',
-    'creative': 'bg-purple-500',
-    'coding': 'bg-green-500',
-    'writing': 'bg-orange-500',
-    'research': 'bg-indigo-500',
-    'analysis': 'bg-red-500',
-    'communication': 'bg-pink-500',
-    'multimodal': 'bg-teal-500',
-    'music': 'bg-violet-500',
-    'translation': 'bg-cyan-500',
-    'specialist': 'bg-yellow-500',
-    'supervisor': 'bg-gray-500'
-  }
+    general: "bg-blue-500",
+    creative: "bg-purple-500",
+    coding: "bg-green-500",
+    writing: "bg-orange-500",
+    research: "bg-indigo-500",
+    analysis: "bg-red-500",
+    communication: "bg-pink-500",
+    multimodal: "bg-teal-500",
+    music: "bg-violet-500",
+    translation: "bg-cyan-500",
+    specialist: "bg-yellow-500",
+    supervisor: "bg-gray-500",
+  };
 
-  return colorMap[type] || 'bg-gray-500'
-}
+  return colorMap[type] || "bg-gray-500";
+};
 
 // Agent performance indicator
 function AgentPerformanceIndicator({ agent }: { agent: Agent }) {
-  const metadata = agent.metadata as unknown as AgentMetadata
-  const { totalRequests, successRate, averageResponseTime } = metadata
+  const metadata = (agent.metadata as Partial<AgentMetadata>) || {};
+  const totalRequests =
+    typeof metadata.totalRequests === "number" ? metadata.totalRequests : 0;
+  const successRate =
+    typeof metadata.successRate === "number" ? metadata.successRate : 0;
+  const averageResponseTime =
+    typeof metadata.averageResponseTime === "number"
+      ? metadata.averageResponseTime
+      : 0;
 
   const getPerformanceColor = (rate: number) => {
-    if (rate >= 0.95) return 'text-green-500'
-    if (rate >= 0.85) return 'text-yellow-500'
-    return 'text-red-500'
-  }
+    if (rate >= 0.95) return "text-green-500";
+    if (rate >= 0.85) return "text-yellow-500";
+    return "text-red-500";
+  };
 
   const getLatencyColor = (latency: number) => {
-    if (latency <= 1000) return 'text-green-500'
-    if (latency <= 3000) return 'text-yellow-500'
-    return 'text-red-500'
-  }
+    if (latency <= 1000) return "text-green-500";
+    if (latency <= 3000) return "text-yellow-500";
+    return "text-red-500";
+  };
 
   return (
     <div className="flex items-center gap-3 text-xs text-muted-foreground">
@@ -109,18 +127,18 @@ function AgentPerformanceIndicator({ agent }: { agent: Agent }) {
         </span>
       </div>
     </div>
-  )
+  );
 }
 
 // Agent card component
 function AgentCard({
   agent,
   isSelected,
-  onSelect
+  onSelect,
 }: {
-  agent: Agent
-  isSelected: boolean
-  onSelect: (agent: Agent) => void
+  agent: Agent;
+  isSelected: boolean;
+  onSelect: (agent: Agent) => void;
 }) {
   return (
     <motion.div
@@ -131,18 +149,20 @@ function AgentCard({
     >
       <Card
         className={cn(
-          'cursor-pointer transition-all duration-200',
+          "cursor-pointer transition-all duration-200",
           isSelected
-            ? 'ring-2 ring-primary bg-primary/5'
-            : 'hover:shadow-md hover:bg-muted/50'
+            ? "ring-2 ring-primary bg-primary/5"
+            : "hover:shadow-md hover:bg-muted/50",
         )}
-        onClick={() => { { onSelect(agent);; }}}
+        onClick={() => onSelect(agent)}
       >
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Avatar className="h-10 w-10">
-                <AvatarFallback className={cn('text-white', getAgentColor(agent.type))}>
+                <AvatarFallback
+                  className={cn("text-white", getAgentColor(agent.type))}
+                >
                   {getAgentIcon(agent.type)}
                 </AvatarFallback>
               </Avatar>
@@ -183,31 +203,29 @@ function AgentCard({
             {/* Model Info */}
             <div className="flex items-center justify-between text-xs text-muted-foreground">
               <span>Model: {agent.model}</span>
-              <Badge
-                className="text-xs"
-              >
-                {agent.status === 'idle' ? 'Active' : 'Inactive'}
+              <Badge className="text-xs">
+                {agent.status === "idle" ? "Active" : "Inactive"}
               </Badge>
             </div>
           </div>
         </CardContent>
       </Card>
     </motion.div>
-  )
+  );
 }
 
 // Main Agent Selector Component
 export function AgentSelector() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedAgentId, setSelectedAgentId] = useAtom(selectedAgentIdAtom)
-  const agentsQuery = useAgents()
-  const selectedAgent = useAtomValue(selectedAgentAtom)
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedAgentId, setSelectedAgentId] = useAtom(selectedAgentIdAtom);
+  const agentsQuery = useAgents();
+  const selectedAgent = useAtomValue(selectedAgentAtom);
 
   const handleAgentSelect = (agent: Agent) => {
-    setSelectedAgentId(agent.id)
-    setIsOpen(false)
-    toast.success(`Switched to ${agent.name}`)
-  }
+    setSelectedAgentId(agent.id);
+    setIsOpen(false);
+    toast.success(`Switched to ${agent.name}`);
+  };
 
   if (agentsQuery.isLoading) {
     return (
@@ -221,7 +239,7 @@ export function AgentSelector() {
           <ChevronDown className="h-4 w-4 text-muted-foreground" />
         </div>
       </div>
-    )
+    );
   }
 
   if (agentsQuery.error) {
@@ -230,29 +248,38 @@ export function AgentSelector() {
         <div className="flex items-center gap-3">
           <Bot className="h-8 w-8 text-destructive" />
           <div className="flex-1">
-            <p className="text-sm font-medium text-destructive">Failed to load agents</p>
-            <p className="text-xs text-muted-foreground">Please try again later</p>
+            <p className="text-sm font-medium text-destructive">
+              Failed to load agents
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Please try again later
+            </p>
           </div>
         </div>
       </div>
-    )
+    );
   }
 
-  // Temporary fix for TypeScript issue
-  const agents: Agent[] = []
+  // agentsQuery.data returns ApiResponse<Agent[]>; unwrap safely
+  const agentsResponse = agentsQuery.data as { data?: Agent[] } | undefined;
+  const agents: Agent[] = Array.isArray(agentsResponse?.data)
+    ? agentsResponse!.data
+    : [];
 
-  if (!agents || agents.length === 0) {
+  if (agents.length === 0) {
     return (
       <div className="p-3 border rounded-lg">
         <div className="flex items-center gap-3">
           <Bot className="h-8 w-8 text-muted-foreground" />
           <div className="flex-1">
             <p className="text-sm font-medium">No agents available</p>
-            <p className="text-xs text-muted-foreground">Please check your configuration</p>
+            <p className="text-xs text-muted-foreground">
+              Please check your configuration
+            </p>
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -260,33 +287,39 @@ export function AgentSelector() {
       {/* Selected Agent Display */}
       <motion.div
         className={cn(
-          'p-3 border rounded-lg cursor-pointer transition-all duration-200',
-          isOpen ? 'ring-2 ring-primary' : 'hover:bg-muted/50'
+          "p-3 border rounded-lg cursor-pointer transition-all duration-200",
+          isOpen ? "ring-2 ring-primary" : "hover:bg-muted/50",
         )}
-        onClick={() => { { setIsOpen(!isOpen);; }}}
+        onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.99 }}
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8">
-              <AvatarFallback className={cn('text-white', getAgentColor(selectedAgent?.type || 'general'))}>
-                {getAgentIcon(selectedAgent?.type || 'general')}
+              <AvatarFallback
+                className={cn(
+                  "text-white",
+                  getAgentColor(selectedAgent?.type || "general"),
+                )}
+              >
+                {getAgentIcon(selectedAgent?.type || "general")}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">
-                {selectedAgent?.name || 'Select Agent'}
+                {selectedAgent?.name || "Select Agent"}
               </p>
               <p className="text-xs text-muted-foreground truncate">
-                {selectedAgent?.description || 'Choose an AI agent for your conversation'}
+                {selectedAgent?.description ||
+                  "Choose an AI agent for your conversation"}
               </p>
             </div>
           </div>
           <ChevronDown
             className={cn(
-              'h-4 w-4 text-muted-foreground transition-transform duration-200',
-              isOpen && 'rotate-180'
+              "h-4 w-4 text-muted-foreground transition-transform duration-200",
+              isOpen && "rotate-180",
             )}
           />
         </div>
@@ -313,7 +346,7 @@ export function AgentSelector() {
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold">Choose Agent</h3>
                 <button
-                  onClick={() => { { setIsOpen(false);; }}}
+                  onClick={() => setIsOpen(false)}
                   className="h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md"
                 >
                   <ChevronDown className="h-4 w-4 rotate-180" />
@@ -336,14 +369,18 @@ export function AgentSelector() {
               {/* Agent Categories */}
               <Separator className="my-4" />
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-muted-foreground">Agent Types</h4>
+                <h4 className="text-sm font-medium text-muted-foreground">
+                  Agent Types
+                </h4>
                 <div className="flex flex-wrap gap-2">
-                  {Array.from(new Set(agents.map(a => a.type))).map((type) => (
-                    <Badge key={type} className="text-xs">
-                      <span className="mr-1">{getAgentIcon(type)}</span>
-                      {type}
-                    </Badge>
-                  ))}
+                  {Array.from(new Set(agents.map((a) => a.type))).map(
+                    (type) => (
+                      <Badge key={type} className="text-xs">
+                        <span className="mr-1">{getAgentIcon(type)}</span>
+                        {type}
+                      </Badge>
+                    ),
+                  )}
                 </div>
               </div>
             </div>
@@ -358,22 +395,24 @@ export function AgentSelector() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-40 bg-black/20"
-          onClick={() => { { setIsOpen(false);; }}}
+          onClick={() => setIsOpen(false)}
         />
       )}
     </div>
-  )
+  );
 }
 
 // Compact Agent Selector for mobile
 export function CompactAgentSelector() {
-  const [selectedAgentId, setSelectedAgentId] = useAtom(selectedAgentIdAtom)
-  const selectedAgent = useAtomValue(selectedAgentAtom)
+  const [selectedAgentId, setSelectedAgentId] = useAtom(selectedAgentIdAtom);
+  const selectedAgent = useAtomValue(selectedAgentAtom);
+  const agentsQuery = useAgents();
+  const agentsResponse2 = agentsQuery.data as { data?: Agent[] } | undefined;
+  const agents: Agent[] = Array.isArray(agentsResponse2?.data)
+    ? agentsResponse2!.data
+    : [];
 
-  // Temporary fix for TypeScript issue
-  const agents: Agent[] = []
-
-  if (!agents || agents.length === 0) return null
+  if (agents.length === 0) return null;
 
   return (
     <TooltipProvider>
@@ -382,31 +421,44 @@ export function CompactAgentSelector() {
           <button
             className="flex items-center gap-2 h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md"
             onClick={() => {
-              // Cycle through agents
-              const currentIndex = agents.findIndex(a => a.id === selectedAgentId)
-              const nextIndex = (currentIndex + 1) % agents.length
-              setSelectedAgentId(agents[nextIndex].id)
-              toast.success(`Switched to ${agents[nextIndex].name}`)
+              const currentIndex = agents.findIndex(
+                (a) => a.id === selectedAgentId,
+              );
+              const nextIndex = agents.length
+                ? (currentIndex + 1 + agents.length) % agents.length
+                : 0;
+              const next = agents[nextIndex];
+              if (next) {
+                setSelectedAgentId(next.id);
+                toast.success(`Switched to ${next.name}`);
+              }
             }}
           >
             <Avatar className="h-6 w-6">
-              <AvatarFallback className={cn('text-white text-xs', getAgentColor(selectedAgent?.type || 'general'))}>
-                {getAgentIcon(selectedAgent?.type || 'general')}
+              <AvatarFallback
+                className={cn(
+                  "text-white text-xs",
+                  getAgentColor(selectedAgent?.type || "general"),
+                )}
+              >
+                {getAgentIcon(selectedAgent?.type || "general")}
               </AvatarFallback>
             </Avatar>
             <span className="text-sm truncate max-w-[100px]">
-              {selectedAgent?.name || 'Agent'}
+              {selectedAgent?.name || "Agent"}
             </span>
           </button>
         </TooltipTrigger>
         <TooltipContent>
           <div className="text-center">
             <p className="font-medium">{selectedAgent?.name}</p>
-            <p className="text-xs text-muted-foreground">{selectedAgent?.description}</p>
+            <p className="text-xs text-muted-foreground">
+              {selectedAgent?.description}
+            </p>
             <p className="text-xs mt-1">Click to switch agent</p>
           </div>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-  )
+  );
 }

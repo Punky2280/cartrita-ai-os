@@ -1,0 +1,74 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.slack.schedule_message.ScheduleMessageSchema.html",
+  "title": "ScheduleMessageSchema#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "ScheduleMessageSchema"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Input for ScheduleMessageTool."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "The channel, private group, or IM channel to send message to."
+    },
+    {
+      "type": "p",
+      "content": "The message to be sent."
+    },
+    {
+      "type": "p",
+      "content": "The datetime for when the message should be sent in the  following format: YYYY-MM-DDTHH:MM:SS±hh:mm, where “T” separates the date  and time components, and the time zone offset is specified as ±hh:mm.  For example: “2023-06-09T10:30:00+03:00” represents June 9th,  2023, at 10:30 AM in a time zone with a positive offset of 3  hours from Coordinated Universal Time (UTC)."
+    },
+    {
+      "type": "li",
+      "content": "ScheduleMessageSchemachannelmessagetimestamp"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "BaseModel",
+    "ScheduleMessageSchema",
+    "channel",
+    "message",
+    "timestamp"
+  ],
+  "api_signatures": [
+    "classlangchain_community.tools.slack.schedule_message.ScheduleMessageSchema[source]#",
+    "langchain_community.tools.slack.schedule_message.",
+    "ScheduleMessageSchema",
+    "paramchannel:str[Required]#",
+    "channel",
+    "parammessage:str[Required]#",
+    "message",
+    "paramtimestamp:str[Required]#",
+    "timestamp"
+  ],
+  "parameters": []
+}

@@ -17,9 +17,16 @@ from cartrita.orchestrator.models.schemas import (
     ChatRequest,
     ChatResponse,
     Message,
+    MessageContent,
     MessageRole,
 )
-from cartrita.orchestrator.utils.config import settings
+from cartrita.orchestrator.utils.config import settings as global_settings, get_settings
+
+try:
+    # Prefer LangChain helper when present to ensure correct OpenAI tool schema
+    from langchain_core.utils.function_calling import convert_to_openai_tool
+except Exception:  # pragma: no cover - optional integration
+    convert_to_openai_tool = None  # type: ignore
 
 logger = structlog.get_logger(__name__)
 
@@ -28,18 +35,26 @@ class OpenAIService:
     """OpenAI service for handling chat completions and tool interactions."""
 
     def __init__(self):
-        """Initialize OpenAI service."""
+        """Initialize OpenAI service with defensive settings load.
+
+        Tests may monkeypatch cartrita.orchestrator.utils.config.settings after import.
+        In some test scenarios the imported symbol can still be None at this point; fall back
+        to calling get_settings() to obtain a concrete settings object. This keeps production
+        path unchanged when global_settings is already initialized.
+        """
+        cfg = global_settings or get_settings()
+        self._settings = cfg  # retain local reference to avoid future None surprises
         self.client = AsyncOpenAI(
-            api_key=settings.ai.openai_api_key.get_secret_value(),
-            organization=settings.ai.openai_organization,
-            project=settings.ai.openai_project,
+            api_key=cfg.ai.openai_api_key.get_secret_value(),
+            organization=cfg.ai.openai_organization,
+            project=cfg.ai.openai_project,
         )
-        self.model = settings.ai.orchestrator_model
-        self.temperature = settings.ai.temperature
-        self.max_tokens = settings.ai.max_tokens
-        self.top_p = settings.ai.top_p
-        self.frequency_penalty = settings.ai.frequency_penalty
-        self.presence_penalty = settings.ai.presence_penalty
+        self.model = cfg.ai.orchestrator_model
+        self.temperature = cfg.ai.temperature
+        self.max_tokens = cfg.ai.max_tokens
+        self.top_p = cfg.ai.top_p
+        self.frequency_penalty = cfg.ai.frequency_penalty
+        self.presence_penalty = cfg.ai.presence_penalty
 
         logger.info("OpenAI service initialized", model=self.model)
 
@@ -237,13 +252,19 @@ class OpenAIService:
             # Handle tool calls
             if tool_calls:
                 for tool_call in tool_calls:
-                    response_messages.append(Message(
-                        role=MessageRole.ASSISTANT,
-                        content=None,
-                        metadata={
-                            "tool_call": tool_call
-                        }
-                    ))
+                    # Emit a tool role message with tool_call_id and result mapping.
+                    # Upstream components will populate result content when the tool executes.
+                    response_messages.append(
+                        Message(
+                            role=MessageRole.TOOL,
+                            content=tool_call.get("function", {}).get("arguments", ""),
+                            metadata={
+                                "tool_call": tool_call,
+                                "tool_call_id": tool_call.get("id"),
+                                "tool_name": tool_call.get("function", {}).get("name"),
+                            },
+                        )
+                    )
 
             return ChatResponse(
                 response=response_content,
@@ -257,7 +278,8 @@ class OpenAIService:
                     "tool_calls": tool_calls if tool_calls else None
                 },
                 processing_time=processing_time,
-                token_usage=None  # TODO: Extract from OpenAI response
+                # Token usage extraction can be added when upstream surfaces usage consistently.
+                token_usage=None
             )
 
         except Exception as e:
@@ -269,47 +291,117 @@ class OpenAIService:
         openai_messages = []
 
         for message in messages:
-            openai_message = {
-                "role": message.role.value,
-                "content": message.content
+            role = message.role.value
+            content: Any = message.content
+
+            # Normalize MessageContent instances (or lists) to plain dict(s)
+            if isinstance(content, MessageContent):
+                content = content.model_dump()
+            elif isinstance(content, list):
+                normalized_list: List[Any] = []
+                for item in content:
+                    if isinstance(item, MessageContent):
+                        normalized_list.append(item.model_dump())
+                    else:
+                        normalized_list.append(item)
+                content = normalized_list
+
+            # If this is a tool result message, set role to 'tool' and include tool_call_id
+            if message.metadata and message.metadata.get("tool_call_id"):
+                role = MessageRole.TOOL.value
+            else:
+                is_tool_result = False
+                if isinstance(content, dict) and content.get("type") == "tool_result":
+                    is_tool_result = True
+                elif isinstance(content, list):
+                    for part in content:
+                        if isinstance(part, dict) and part.get("type") == "tool_result":
+                            is_tool_result = True
+                            break
+                if is_tool_result:
+                    role = MessageRole.TOOL.value
+
+            openai_message: Dict[str, Any] = {
+                "role": role,
+                "content": content,
             }
 
             if message.metadata:
-                # Handle tool calls and other metadata
-                if "tool_call" in message.metadata:
-                    tool_call = message.metadata["tool_call"]
-                    openai_message["tool_call_id"] = tool_call.get("id")
-                    openai_message["content"] = tool_call.get("result", "")
+                tool_call_id = message.metadata.get("tool_call_id")
+                if tool_call_id:
+                    openai_message["tool_call_id"] = tool_call_id
 
             openai_messages.append(openai_message)
 
         return openai_messages
 
     def _prepare_tools(self, tool_names: List[str]) -> List[Dict[str, Any]]:
-        """Prepare tool definitions for OpenAI API."""
-        # TODO: Implement tool definitions based on tool_names
-        # This would map tool names to their OpenAI function definitions
+        """Prepare tool definitions for OpenAI API.
+
+        Uses LangChain's convert_to_openai_tool when available to ensure
+        compatibility with current OpenAI tool schema; otherwise uses
+        static definitions.
+        """
         tools = []
 
         for tool_name in tool_names:
             if tool_name == "web_search":
-                tools.append({
-                    "type": "function",
-                    "function": {
-                        "name": "web_search",
-                        "description": "Search the web for information",
-                        "parameters": {
-                            "type": "object",
-                            "properties": {
-                                "query": {
-                                    "type": "string",
-                                    "description": "Search query"
-                                }
-                            },
-                            "required": ["query"]
-                        }
-                    }
-                })
+                schema = {
+                    "name": "web_search",
+                    "description": "Search the web for information",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "string",
+                                "description": "Search query",
+                            }
+                        },
+                        "required": ["query"],
+                    },
+                }
+                if convert_to_openai_tool:
+                    tools.append(convert_to_openai_tool(schema, strict=True))
+                else:
+                    tools.append({
+                        "type": "function",
+                        "function": schema,
+                    })
+            elif tool_name == "file_op":
+                schema = {
+                    "name": "file_op",
+                    "description": "Perform a safe file system operation inside the sandbox",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "operation": {"type": "string", "enum": ["read", "write", "list"]},
+                            "path": {"type": "string", "description": "Relative path in sandbox"},
+                            "content": {"type": ["string", "null"], "description": "UTF-8 content for write"}
+                        },
+                        "required": ["operation", "path"],
+                    },
+                }
+                if convert_to_openai_tool:
+                    tools.append(convert_to_openai_tool(schema, strict=True))
+                else:
+                    tools.append({"type": "function", "function": schema})
+            elif tool_name == "tavily_search":
+                schema = {
+                    "name": "tavily_search",
+                    "description": "Search the web using Tavily API and return summarized results",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {"type": "string"},
+                            "max_results": {"type": "integer", "minimum": 1, "maximum": 20, "default": 5}
+                        },
+                        "required": ["query"],
+                    },
+                }
+                if convert_to_openai_tool:
+                    tools.append(convert_to_openai_tool(schema, strict=True))
+                else:
+                    tools.append({"type": "function", "function": schema})
             # Add more tools as needed
 
         return tools
@@ -462,7 +554,6 @@ Since this is a voice conversation:
             Pruned conversation history
         """
         # Simple pruning: keep most recent messages
-        # TODO: Implement more sophisticated token-based pruning
         max_messages = 20  # Keep last 20 message pairs
         if len(history) <= max_messages:
             return history

@@ -1,0 +1,235 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/embeddings/langchain_community.embeddings.edenai.EdenAiEmbeddings.html#langchain_community.embeddings.edenai.EdenAiEmbeddings",
+  "title": "EdenAiEmbeddings#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "EdenAiEmbeddings"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel,Embeddings"
+    },
+    {
+      "type": "p",
+      "content": "EdenAI embedding.\nenvironment variableEDENAI_API_KEYset with your API key, or pass\nit as a named parameter."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "EdenAI API Token"
+    },
+    {
+      "type": "p",
+      "content": "model name for above provider (eg: ‘gpt-3.5-turbo-instruct’ for openai)\navailable models are shown onhttps://docs.edenai.co/under ‘available providers’"
+    },
+    {
+      "type": "p",
+      "content": "embedding provider to use (eg: openai,google etc.)"
+    },
+    {
+      "type": "p",
+      "content": "Validate that api key exists in environment."
+    },
+    {
+      "type": "p",
+      "content": "values(Dict)"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed search docs."
+    },
+    {
+      "type": "p",
+      "content": "texts(list[str]) – List of text to embed."
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings."
+    },
+    {
+      "type": "p",
+      "content": "list[list[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed query text."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – Text to embed."
+    },
+    {
+      "type": "p",
+      "content": "list[float]"
+    },
+    {
+      "type": "p",
+      "content": "Embed a list of documents using EdenAI."
+    },
+    {
+      "type": "p",
+      "content": "texts(List[str]) – The list of texts to embed."
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings, one for each text."
+    },
+    {
+      "type": "p",
+      "content": "List[List[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Embed a query using EdenAI."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – The text to embed."
+    },
+    {
+      "type": "p",
+      "content": "Embeddings for the text."
+    },
+    {
+      "type": "p",
+      "content": "List[float]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using EdenAiEmbeddings"
+    },
+    {
+      "type": "li",
+      "content": "EdenAiEmbeddingsedenai_api_keymodelprovidervalidate_environment()get_user_agent()aembed_documents()aembed_query()embed_documents()embed_query()"
+    },
+    {
+      "type": "li",
+      "content": "edenai_api_key"
+    },
+    {
+      "type": "li",
+      "content": "validate_environment()"
+    },
+    {
+      "type": "li",
+      "content": "get_user_agent()"
+    },
+    {
+      "type": "li",
+      "content": "aembed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "aembed_query()"
+    },
+    {
+      "type": "li",
+      "content": "embed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "embed_query()"
+    }
+  ],
+  "code_examples": [
+    "embeddings",
+    "BaseModel",
+    "Embeddings",
+    "EDENAI_API_KEY",
+    "EdenAiEmbeddings",
+    "edenai_api_key",
+    "model",
+    "provider",
+    "validate_environment()",
+    "get_user_agent()",
+    "aembed_documents()",
+    "aembed_query()",
+    "embed_documents()",
+    "embed_query()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.embeddings.edenai.EdenAiEmbeddings[source]#",
+    "langchain_community.embeddings.edenai.",
+    "EdenAiEmbeddings",
+    "paramedenai_api_key:SecretStr|None=None#",
+    "edenai_api_key",
+    "parammodel:str|None=None#",
+    "model",
+    "paramprovider:str='openai'#",
+    "provider",
+    "classmethodvalidate_environment(values:Dict,)→Dict[source]#",
+    "validate_environment",
+    "(",
+    "values:Dict",
+    ")",
+    "→Dict",
+    "→",
+    "Dict",
+    "staticget_user_agent()→str[source]#",
+    "get_user_agent",
+    "(",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "asyncaembed_documents(texts:list[str],)→list[list[float]]#",
+    "aembed_documents",
+    "(",
+    "texts:list[str]",
+    ")",
+    "→list[list[float]]",
+    "→",
+    "list[list[float]]",
+    "asyncaembed_query(text:str)→list[float]#",
+    "aembed_query",
+    "(",
+    "text:str",
+    ")",
+    "→list[float]",
+    "→",
+    "list[float]",
+    "embed_documents(texts:List[str],)→List[List[float]][source]#",
+    "embed_documents",
+    "(",
+    "texts:List[str]",
+    ")",
+    "→List[List[float]]",
+    "→",
+    "List[List[float]]",
+    "embed_query(text:str,)→List[float][source]#",
+    "embed_query",
+    "(",
+    "text:str",
+    ")",
+    "→List[float]",
+    "→",
+    "List[float]"
+  ],
+  "parameters": [
+    "values:Dict",
+    "texts:list[str]",
+    "text:str",
+    "texts:List[str]",
+    "text:str"
+  ]
+}

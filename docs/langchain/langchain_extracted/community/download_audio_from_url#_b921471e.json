@@ -1,0 +1,48 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.azure_ai_services.utils.download_audio_from_url.html#langchain_community.tools.azure_ai_services.utils.download_audio_from_url",
+  "title": "download_audio_from_url#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "download_audio_from_url"
+    },
+    {
+      "type": "p",
+      "content": "Download audio from url to local."
+    },
+    {
+      "type": "p",
+      "content": "audio_url(str)"
+    },
+    {
+      "type": "li",
+      "content": "download_audio_from_url()"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "download_audio_from_url()"
+  ],
+  "api_signatures": [
+    "langchain_community.tools.azure_ai_services.utils.download_audio_from_url(audio_url:str)→str[source]#",
+    "langchain_community.tools.azure_ai_services.utils.",
+    "download_audio_from_url",
+    "(",
+    "audio_url:str",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "audio_url:str"
+  ]
+}

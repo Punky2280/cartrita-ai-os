@@ -1,0 +1,52 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.unstructured.satisfies_min_unstructured_version.html#langchain_community.document_loaders.unstructured.satisfies_min_unstructured_version",
+  "title": "satisfies_min_unstructured_version#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "satisfies_min_unstructured_version"
+    },
+    {
+      "type": "p",
+      "content": "Check if the installedUnstructuredversion exceeds the minimum version\nfor the feature in question."
+    },
+    {
+      "type": "p",
+      "content": "min_version(str)"
+    },
+    {
+      "type": "li",
+      "content": "satisfies_min_unstructured_version()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "satisfies_min_unstructured_version()"
+  ],
+  "api_signatures": [
+    "langchain_community.document_loaders.unstructured.satisfies_min_unstructured_version(min_version:str)→bool[source]#",
+    "langchain_community.document_loaders.unstructured.",
+    "satisfies_min_unstructured_version",
+    "(",
+    "min_version:str",
+    ")",
+    "→bool",
+    "→",
+    "bool"
+  ],
+  "parameters": [
+    "min_version:str"
+  ]
+}

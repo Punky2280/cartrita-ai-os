@@ -1,0 +1,86 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chat_models/langchain_community.chat_models.anthropic.convert_messages_to_prompt_anthropic.html#langchain_community.chat_models.anthropic.convert_messages_to_prompt_anthropic",
+  "title": "convert_messages_to_prompt_anthropic#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "chat_models"
+    },
+    {
+      "type": "li",
+      "content": "convert_messages_to_prompt_anthropic"
+    },
+    {
+      "type": "p",
+      "content": "messages (List[BaseMessage]): List of BaseMessage to combine.\nhuman_prompt (str, optional): Human prompt tag. Defaults to “"
+    },
+    {
+      "type": "p",
+      "content": "ai_prompt (str, optional): AI prompt tag. Defaults to “"
+    },
+    {
+      "type": "p",
+      "content": "str: Combined string with necessary human_prompt and ai_prompt tags."
+    },
+    {
+      "type": "li",
+      "content": "messages(List[BaseMessage])"
+    },
+    {
+      "type": "p",
+      "content": "messages(List[BaseMessage])"
+    },
+    {
+      "type": "li",
+      "content": "human_prompt(str)"
+    },
+    {
+      "type": "p",
+      "content": "human_prompt(str)"
+    },
+    {
+      "type": "li",
+      "content": "ai_prompt(str)"
+    },
+    {
+      "type": "p",
+      "content": "ai_prompt(str)"
+    },
+    {
+      "type": "li",
+      "content": "convert_messages_to_prompt_anthropic()"
+    }
+  ],
+  "code_examples": [
+    "chat_models",
+    "convert_messages_to_prompt_anthropic()"
+  ],
+  "api_signatures": [
+    "langchain_community.chat_models.anthropic.convert_messages_to_prompt_anthropic(messages:List[BaseMessage],*,human_prompt:str='\\n\\nHuman:',ai_prompt:str='\\n\\nAssistant:',)→str[source]#",
+    "langchain_community.chat_models.anthropic.",
+    "convert_messages_to_prompt_anthropic",
+    "(",
+    "messages:List[BaseMessage]",
+    "*",
+    "human_prompt:str='\\n\\nHuman:'",
+    "ai_prompt:str='\\n\\nAssistant:'",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "messages:List[BaseMessage]",
+    "*",
+    "human_prompt:str='\\n\\nHuman:'",
+    "ai_prompt:str='\\n\\nAssistant:'"
+  ]
+}

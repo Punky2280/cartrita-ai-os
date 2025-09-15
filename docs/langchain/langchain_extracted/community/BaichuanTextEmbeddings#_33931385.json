@@ -1,0 +1,216 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/embeddings/langchain_community.embeddings.baichuan.BaichuanTextEmbeddings.html#langchain_community.embeddings.baichuan.BaichuanTextEmbeddings",
+  "title": "BaichuanTextEmbeddings#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "BaichuanTextEmbeddings"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel,Embeddings"
+    },
+    {
+      "type": "p",
+      "content": "Baichuan Text Embedding models."
+    },
+    {
+      "type": "p",
+      "content": "To use, you should set the environment variableBAICHUAN_API_KEYto\nyour API key or pass it as a named parameter to the constructor."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Automatically inferred from env varBAICHUAN_API_KEYif not provided."
+    },
+    {
+      "type": "p",
+      "content": "Chunk size when multiple texts are input"
+    },
+    {
+      "type": "p",
+      "content": "The model used to embed the documents."
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed search docs."
+    },
+    {
+      "type": "p",
+      "content": "texts(list[str]) – List of text to embed."
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings."
+    },
+    {
+      "type": "p",
+      "content": "list[list[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed query text."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – Text to embed."
+    },
+    {
+      "type": "p",
+      "content": "list[float]"
+    },
+    {
+      "type": "p",
+      "content": "Public method to get embeddings for a list of documents."
+    },
+    {
+      "type": "p",
+      "content": "texts(List[str]) – The list of texts to embed."
+    },
+    {
+      "type": "p",
+      "content": "A list of embeddings, one for each text, or None if an error occurs."
+    },
+    {
+      "type": "p",
+      "content": "List[List[float]] | None"
+    },
+    {
+      "type": "p",
+      "content": "Public method to get embedding for a single query text."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – The text to embed."
+    },
+    {
+      "type": "p",
+      "content": "Embeddings for the text, or None if an error occurs."
+    },
+    {
+      "type": "p",
+      "content": "List[float] | None"
+    },
+    {
+      "type": "p",
+      "content": "Examples using BaichuanTextEmbeddings"
+    },
+    {
+      "type": "li",
+      "content": "Baichuan Text Embeddings"
+    },
+    {
+      "type": "p",
+      "content": "Baichuan Text Embeddings"
+    },
+    {
+      "type": "li",
+      "content": "BaichuanTextEmbeddingsbaichuan_api_keychunk_sizemodel_nameaembed_documents()aembed_query()embed_documents()embed_query()"
+    },
+    {
+      "type": "li",
+      "content": "baichuan_api_key"
+    },
+    {
+      "type": "li",
+      "content": "aembed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "aembed_query()"
+    },
+    {
+      "type": "li",
+      "content": "embed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "embed_query()"
+    }
+  ],
+  "code_examples": [
+    "embeddings",
+    "BaseModel",
+    "Embeddings",
+    "BAICHUAN_API_KEY",
+    "exportBAICHUAN_API_KEY=\"your-api-key\"",
+    "fromlangchain_community.embeddingsimportBaichuanTextEmbeddingsembeddings=BaichuanTextEmbeddings()",
+    "# embed the documentsvectors=embeddings.embed_documents([text1,text2,...])# embed the queryvectors=embeddings.embed_query(text)",
+    "BaichuanTextEmbeddings",
+    "baichuan_api_key",
+    "chunk_size",
+    "model_name",
+    "aembed_documents()",
+    "aembed_query()",
+    "embed_documents()",
+    "embed_query()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.embeddings.baichuan.BaichuanTextEmbeddings[source]#",
+    "langchain_community.embeddings.baichuan.",
+    "BaichuanTextEmbeddings",
+    "parambaichuan_api_key:SecretStr[Optional](alias'api_key')#",
+    "baichuan_api_key",
+    "paramchunk_size:int=16#",
+    "chunk_size",
+    "parammodel_name:str='Baichuan-Text-Embedding'(alias'model')#",
+    "model_name",
+    "asyncaembed_documents(texts:list[str],)→list[list[float]]#",
+    "aembed_documents",
+    "(",
+    "texts:list[str]",
+    ")",
+    "→list[list[float]]",
+    "→",
+    "list[list[float]]",
+    "asyncaembed_query(text:str,)→list[float]#",
+    "aembed_query",
+    "(",
+    "text:str",
+    ")",
+    "→list[float]",
+    "→",
+    "list[float]",
+    "embed_documents(texts:List[str],)→List[List[float]]|None[source]#",
+    "embed_documents",
+    "(",
+    "texts:List[str]",
+    ")",
+    "→List[List[float]]|None",
+    "→",
+    "List[List[float]]|None",
+    "embed_query(text:str,)→List[float]|None[source]#",
+    "embed_query",
+    "(",
+    "text:str",
+    ")",
+    "→List[float]|None",
+    "→",
+    "List[float]|None"
+  ],
+  "parameters": [
+    "texts:list[str]",
+    "text:str",
+    "texts:List[str]",
+    "text:str"
+  ]
+}

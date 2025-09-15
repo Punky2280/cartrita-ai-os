@@ -25,6 +25,7 @@ from dotenv import load_dotenv
 
 # Import core components
 from cartrita.orchestrator.agents.cartrita_core.orchestrator import CartritaOrchestrator
+from cartrita.orchestrator.utils.sentry_config import init_sentry, track_ai_errors, capture_ai_error
 
 # Import models with fallbacks
 try:
@@ -105,11 +106,10 @@ except ImportError:
     # Fallback auth function
     async def verify_api_key(api_key: Optional[str] = None) -> str:
         """Fallback API key verification."""
-        if not api_key:
-            expected_key = os.getenv("CARTRITA_API_KEY", "dev-api-key-2025")
-            if api_key != expected_key:
-                raise HTTPException(status_code=403, detail="Invalid API key")
-        return api_key or "dev-api-key-2025"
+        expected_key = os.getenv("CARTRITA_API_KEY", "dev-api-key-2025")
+        if not api_key or api_key != expected_key:
+            raise HTTPException(status_code=403, detail="Invalid API key")
+        return api_key
 
 
 try:
@@ -208,7 +208,7 @@ async def _get_fallback_text(message: str, context: dict[str, Any]) -> Optional[
     if get_fallback_provider_v2:
         try:
             provider = get_fallback_provider_v2()
-            return await provider.generate_response(message=message, context=context)
+            return await provider.generate_response(user_input=message, context=context)
         except Exception as e:  # pragma: no cover
             logger.error("Fallback v2 failed", error=str(e))
     return None
@@ -226,7 +226,7 @@ except ImportError:
 
 try:
     # Prefer v2 adapter for capabilities + simple string responses
-    from cartrita.orchestrator.providers.fallback_provider_v2 import (  # type: ignore
+    from cartrita.orchestrator.providers.fallback_provider import (  # type: ignore
         get_fallback_provider as get_fallback_provider_v2,
     )
 except ImportError:
@@ -435,13 +435,30 @@ async def _initialize_core_components() -> None:
     global db_manager, cache_manager, metrics_collector
     settings = Settings()
 
-    # Initialize database
-    db_manager = DatabaseManager(settings)
-    await db_manager.connect()
+    # Initialize Sentry monitoring
+    try:
+        init_sentry(
+            dsn=settings.monitoring.sentry_dsn,
+            environment=settings.monitoring.sentry_environment,
+            traces_sample_rate=settings.monitoring.sentry_traces_sample_rate,
+            debug=settings.environment == "development"
+        )
+        logger.info("Sentry monitoring initialized successfully")
+    except Exception as e:
+        logger.error(f"Failed to initialize Sentry: {e}")
 
-    # Initialize cache
-    cache_manager = CacheManager(settings.redis.url)
-    await cache_manager.connect()
+    # Respect disable flag for tests / constrained environments
+    disable_db = os.getenv("CARTRITA_DISABLE_DB", "0") == "1"
+    if disable_db:
+        logger.warning("Database/Cache initialization disabled via CARTRITA_DISABLE_DB=1 (test mode)")
+    else:
+        # Initialize database
+        db_manager = DatabaseManager(settings)
+        await db_manager.connect()
+
+        # Initialize cache
+        cache_manager = CacheManager(settings.redis.url)
+        await cache_manager.connect()
 
     # Initialize metrics collector
     from cartrita.orchestrator.core.metrics import MetricsCollector as _MetricsCollector, MetricsConfig as _MetricsConfig

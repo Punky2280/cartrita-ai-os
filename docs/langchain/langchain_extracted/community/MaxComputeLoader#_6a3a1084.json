@@ -1,0 +1,423 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.max_compute.MaxComputeLoader.html",
+  "title": "MaxComputeLoader#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "MaxComputeLoader"
+    },
+    {
+      "type": "p",
+      "content": "Load fromAlibaba Cloud MaxComputetable."
+    },
+    {
+      "type": "p",
+      "content": "Initialize Alibaba Cloud MaxCompute document loader."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – SQL query to execute."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – SQL query to execute."
+    },
+    {
+      "type": "li",
+      "content": "api_wrapper(MaxComputeAPIWrapper) – MaxCompute API wrapper."
+    },
+    {
+      "type": "p",
+      "content": "api_wrapper(MaxComputeAPIWrapper) – MaxCompute API wrapper."
+    },
+    {
+      "type": "li",
+      "content": "page_content_columns(Optional[Sequence[str]]) – The columns to write into thepage_contentof the\nDocument. If unspecified, all columns will be written topage_content."
+    },
+    {
+      "type": "p",
+      "content": "page_content_columns(Optional[Sequence[str]]) – The columns to write into thepage_contentof the\nDocument. If unspecified, all columns will be written topage_content."
+    },
+    {
+      "type": "li",
+      "content": "metadata_columns(Optional[Sequence[str]]) – The columns to write into themetadataof the Document.\nIf unspecified, all columns not added topage_contentwill be written."
+    },
+    {
+      "type": "p",
+      "content": "metadata_columns(Optional[Sequence[str]]) – The columns to write into themetadataof the Document.\nIf unspecified, all columns not added topage_contentwill be written."
+    },
+    {
+      "type": "p",
+      "content": "__init__(query, api_wrapper, *[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize Alibaba Cloud MaxCompute document loader."
+    },
+    {
+      "type": "p",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "from_params(query, endpoint, project, *[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Convenience constructor that builds the MaxCompute API wrapper from"
+    },
+    {
+      "type": "p",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "load_and_split([text_splitter])"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks."
+    },
+    {
+      "type": "p",
+      "content": "Initialize Alibaba Cloud MaxCompute document loader."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – SQL query to execute."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – SQL query to execute."
+    },
+    {
+      "type": "li",
+      "content": "api_wrapper(MaxComputeAPIWrapper) – MaxCompute API wrapper."
+    },
+    {
+      "type": "p",
+      "content": "api_wrapper(MaxComputeAPIWrapper) – MaxCompute API wrapper."
+    },
+    {
+      "type": "li",
+      "content": "page_content_columns(Sequence[str]|None) – The columns to write into thepage_contentof the\nDocument. If unspecified, all columns will be written topage_content."
+    },
+    {
+      "type": "p",
+      "content": "page_content_columns(Sequence[str]|None) – The columns to write into thepage_contentof the\nDocument. If unspecified, all columns will be written topage_content."
+    },
+    {
+      "type": "li",
+      "content": "metadata_columns(Sequence[str]|None) – The columns to write into themetadataof the Document.\nIf unspecified, all columns not added topage_contentwill be written."
+    },
+    {
+      "type": "p",
+      "content": "metadata_columns(Sequence[str]|None) – The columns to write into themetadataof the Document.\nIf unspecified, all columns not added topage_contentwill be written."
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "given parameters."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – SQL query to execute."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – SQL query to execute."
+    },
+    {
+      "type": "li",
+      "content": "endpoint(str) – MaxCompute endpoint."
+    },
+    {
+      "type": "p",
+      "content": "endpoint(str) – MaxCompute endpoint."
+    },
+    {
+      "type": "li",
+      "content": "project(str) – A project is a basic organizational unit of MaxCompute, which is\nsimilar to a database."
+    },
+    {
+      "type": "p",
+      "content": "project(str) – A project is a basic organizational unit of MaxCompute, which is\nsimilar to a database."
+    },
+    {
+      "type": "li",
+      "content": "access_id(str|None) – MaxCompute access ID. Should be passed in directly or set as the\nenvironment variableMAX_COMPUTE_ACCESS_ID."
+    },
+    {
+      "type": "p",
+      "content": "access_id(str|None) – MaxCompute access ID. Should be passed in directly or set as the\nenvironment variableMAX_COMPUTE_ACCESS_ID."
+    },
+    {
+      "type": "li",
+      "content": "secret_access_key(str|None) – MaxCompute secret access key. Should be passed in\ndirectly or set as the environment variableMAX_COMPUTE_SECRET_ACCESS_KEY."
+    },
+    {
+      "type": "p",
+      "content": "secret_access_key(str|None) – MaxCompute secret access key. Should be passed in\ndirectly or set as the environment variableMAX_COMPUTE_SECRET_ACCESS_KEY."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "MaxComputeLoader"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks. Chunks are returned as Documents."
+    },
+    {
+      "type": "p",
+      "content": "Do not override this method. It should be considered to be deprecated!"
+    },
+    {
+      "type": "p",
+      "content": "text_splitter(Optional[TextSplitter]) – TextSplitter instance to use for splitting documents.\nDefaults to RecursiveCharacterTextSplitter."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If langchain-text-splitters is not installed\n    and no text_splitter is provided."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using MaxComputeLoader"
+    },
+    {
+      "type": "li",
+      "content": "Alibaba Cloud"
+    },
+    {
+      "type": "p",
+      "content": "Alibaba Cloud"
+    },
+    {
+      "type": "li",
+      "content": "Alibaba Cloud MaxCompute"
+    },
+    {
+      "type": "p",
+      "content": "Alibaba Cloud MaxCompute"
+    },
+    {
+      "type": "li",
+      "content": "MaxComputeLoader__init__()alazy_load()aload()from_params()lazy_load()load()load_and_split()"
+    },
+    {
+      "type": "li",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "from_params()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "load_and_split()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "__init__",
+    "alazy_load",
+    "aload",
+    "from_params",
+    "lazy_load",
+    "load",
+    "load_and_split",
+    "MaxComputeLoader",
+    "__init__()",
+    "alazy_load()",
+    "aload()",
+    "from_params()",
+    "lazy_load()",
+    "load()",
+    "load_and_split()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.max_compute.MaxComputeLoader(query:str,api_wrapper:MaxComputeAPIWrapper,*,page_content_columns:Sequence[str]|None=None,metadata_columns:Sequence[str]|None=None,)[source]#",
+    "langchain_community.document_loaders.max_compute.",
+    "MaxComputeLoader",
+    "(",
+    "query:str",
+    "api_wrapper:MaxComputeAPIWrapper",
+    "*",
+    "page_content_columns:Sequence[str]|None=None",
+    "metadata_columns:Sequence[str]|None=None",
+    ")",
+    "__init__(query:str,api_wrapper:MaxComputeAPIWrapper,*,page_content_columns:Sequence[str]|None=None,metadata_columns:Sequence[str]|None=None,)[source]#",
+    "__init__",
+    "(",
+    "query:str",
+    "api_wrapper:MaxComputeAPIWrapper",
+    "*",
+    "page_content_columns:Sequence[str]|None=None",
+    "metadata_columns:Sequence[str]|None=None",
+    ")",
+    "asyncalazy_load()→AsyncIterator[Document]#",
+    "alazy_load",
+    "(",
+    ")",
+    "→AsyncIterator[Document]",
+    "→",
+    "AsyncIterator[Document]",
+    "asyncaload()→list[Document]#",
+    "aload",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "classmethodfrom_params(query:str,endpoint:str,project:str,*,access_id:str|None=None,secret_access_key:str|None=None,**kwargs:Any,)→MaxComputeLoader[source]#",
+    "from_params",
+    "(",
+    "query:str",
+    "endpoint:str",
+    "project:str",
+    "*",
+    "access_id:str|None=None",
+    "secret_access_key:str|None=None",
+    "**kwargs:Any",
+    ")",
+    "→MaxComputeLoader",
+    "→",
+    "MaxComputeLoader",
+    "lazy_load()→Iterator[Document][source]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "load()→list[Document]#",
+    "load",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "load_and_split(text_splitter:TextSplitter|None=None,)→list[Document]#",
+    "load_and_split",
+    "(",
+    "text_splitter:TextSplitter|None=None",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "query:str",
+    "api_wrapper:MaxComputeAPIWrapper",
+    "*",
+    "page_content_columns:Sequence[str]|None=None",
+    "metadata_columns:Sequence[str]|None=None",
+    "query:str",
+    "api_wrapper:MaxComputeAPIWrapper",
+    "*",
+    "page_content_columns:Sequence[str]|None=None",
+    "metadata_columns:Sequence[str]|None=None",
+    "query:str",
+    "endpoint:str",
+    "project:str",
+    "*",
+    "access_id:str|None=None",
+    "secret_access_key:str|None=None",
+    "**kwargs:Any",
+    "text_splitter:TextSplitter|None=None"
+  ]
+}

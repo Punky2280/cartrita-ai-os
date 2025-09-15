@@ -1,12 +1,13 @@
+/* eslint-env node */
 /** @type {import('next').NextConfig} */
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' 'unsafe-eval';
+  script-src 'self' 'unsafe-inline';
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   img-src 'self' data: blob: https://localhost;
-  connect-src 'self' 
-    ws://localhost:8000 http://localhost:8000 https://localhost:8000 
-    ws://127.0.0.1:8000 http://127.0.0.1:8000 
+  connect-src 'self'
+    ws://localhost:8000 http://localhost:8000 https://localhost:8000
+    ws://127.0.0.1:8000 http://127.0.0.1:8000
     ws://localhost:3001 http://localhost:3001
     https://fonts.googleapis.com https://fonts.gstatic.com;
   font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;
@@ -18,7 +19,6 @@ const ContentSecurityPolicy = `
 
 const nextConfig = {
   output: 'standalone',
-  outputFileTracingRoot: require('path').join(__dirname, '../../'),
   images: {
     domains: ['localhost'],
     unoptimized: process.env.NODE_ENV === 'development',
@@ -29,15 +29,6 @@ const nextConfig = {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
     NEXT_PUBLIC_WS_URL: process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8000',
     NEXT_PUBLIC_CARTRITA_API_KEY: process.env.NEXT_PUBLIC_CARTRITA_API_KEY || 'dev-api-key-2025',
-  },
-  // Turbopack configuration (Next.js 15.3+)
-  turbopack: {
-    resolveAlias: {
-      // Optimize common imports
-      'react': 'react',
-      'react-dom': 'react-dom',
-    },
-    resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json'],
   },
 }
 

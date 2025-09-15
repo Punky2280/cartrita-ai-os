@@ -1,0 +1,19 @@
+{
+  "url": "https://python.langchain.com/api_reference/_modules/langchain_community/tools/semanticscholar/tool.html#SemantscholarInput",
+  "title": "Source code for langchain_community.tools.semanticscholar.tool",
+  "sections": [
+    {
+      "type": "li",
+      "content": "Module code"
+    },
+    {
+      "type": "li",
+      "content": "langchain_community.tools.semanticscholar.tool"
+    }
+  ],
+  "code_examples": [
+    "\"\"\"Tool for the SemanticScholar API.\"\"\"fromtypingimportOptional,Typefromlangchain_core.callbacksimportCallbackManagerForToolRunfromlangchain_core.toolsimportBaseToolfrompydanticimportBaseModel,Fieldfromlangchain_community.utilities.semanticscholarimportSemanticScholarAPIWrapper[docs]classSemantscholarInput(BaseModel):\"\"\"Input for the SemanticScholar tool.\"\"\"query:str=Field(description=\"search query to look up\")[docs]classSemanticScholarQueryRun(BaseTool):\"\"\"Tool that searches the semanticscholar API.\"\"\"name:str=\"semanticscholar\"description:str=(\"A wrapper around semantischolar.org \"\"Useful for when you need to answer to questions\"\"from research papers.\"\"Input should be a search query.\")api_wrapper:SemanticScholarAPIWrapper=Field(default_factory=SemanticScholarAPIWrapper# type: ignore[arg-type])args_schema:Type[BaseModel]=SemantscholarInputdef_run(self,query:str,run_manager:Optional[CallbackManagerForToolRun]=None,)->str:\"\"\"Use the Semantic Scholar tool.\"\"\"returnself.api_wrapper.run(query)"
+  ],
+  "api_signatures": [],
+  "parameters": []
+}

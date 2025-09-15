@@ -1,0 +1,58 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/llms/langchain_community.llms.loading.load_llm.html#langchain_community.llms.loading.load_llm",
+  "title": "load_llm#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Load LLM from a file."
+    },
+    {
+      "type": "li",
+      "content": "file(str|Path)"
+    },
+    {
+      "type": "p",
+      "content": "file(str|Path)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Examples using load_llm"
+    }
+  ],
+  "code_examples": [
+    "llms",
+    "load_llm()"
+  ],
+  "api_signatures": [
+    "langchain_community.llms.loading.load_llm(file:str|Path,**kwargs:Any,)→BaseLLM[source]#",
+    "langchain_community.llms.loading.",
+    "load_llm",
+    "(",
+    "file:str|Path",
+    "**kwargs:Any",
+    ")",
+    "→BaseLLM",
+    "→",
+    "BaseLLM"
+  ],
+  "parameters": [
+    "file:str|Path",
+    "**kwargs:Any"
+  ]
+}

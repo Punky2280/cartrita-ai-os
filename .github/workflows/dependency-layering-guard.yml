@@ -1,0 +1,50 @@
+name: dependency-layering-guard
+
+on:
+  pull_request:
+    paths:
+      - 'services/ai-orchestrator/requirements.in'
+      - 'services/ai-orchestrator/requirements-gpu.in'
+      - 'services/ai-orchestrator/constraints.txt'
+      - 'services/ai-orchestrator/constraints-gpu.txt'
+      - '.github/workflows/dependency-layering-guard.yml'
+  push:
+    branches: [ main ]
+    paths:
+      - 'services/ai-orchestrator/requirements.in'
+      - 'services/ai-orchestrator/requirements-gpu.in'
+      - 'services/ai-orchestrator/constraints.txt'
+      - 'services/ai-orchestrator/constraints-gpu.txt'
+
+jobs:
+  verify-layering:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Verify base constraints free of GPU packages
+        run: |
+          if grep -Eq '^(torch|transformers|accelerate|safetensors)==' services/ai-orchestrator/constraints.txt; then
+            echo 'ERROR: GPU packages leaked into base constraints.txt';
+            exit 1;
+          fi
+          echo 'Base constraints clean.'
+
+      - name: Verify overlay contains required GPU packages
+        run: |
+          missing=0
+          for pkg in torch transformers accelerate safetensors; do
+            if ! grep -Eq "^${pkg}==" services/ai-orchestrator/constraints-gpu.txt; then
+              echo "ERROR: ${pkg} missing from constraints-gpu.txt"; missing=1; fi; done
+          if [ "$missing" -ne 0 ]; then exit 1; fi
+          echo 'Overlay constraints contain required GPU stack.'
+
+      - name: Ensure pip version pin rationale present
+        run: |
+          if ! grep -q 'pip version pinned (currently 24.3.1)' services/ai-orchestrator/constraints-gpu.txt; then
+            echo 'WARNING: Pip pin rationale comment missing in constraints-gpu.txt';
+          fi
+
+      - name: Report success
+        run: echo 'Dependency layering guard passed.'

@@ -93,14 +93,14 @@ from sse_starlette import EventSourceResponse
 @app.get("/api/chat/stream")
 async def stream_chat(request: ChatRequest):
 	"""Stream AI responses using Server-Sent Events."""
-    
+
 	async def generate_stream():
 		response = await supervisor.process_chat_request_stream(
 			message=request.message,
 			context=request.context,
 			stream=True
 		)
-        
+
 		async for chunk in response:
 			# Send SSE formatted data
 			yield {
@@ -111,13 +111,13 @@ async def stream_chat(request: ChatRequest):
 					"timestamp": time.time()
 				})
 			}
-        
+
 		# Send completion event
 		yield {
 			"event": "done",
 			"data": json.dumps({"status": "completed"})
 		}
-    
+
 	return EventSourceResponse(generate_stream())
 ```
 
@@ -129,16 +129,16 @@ async def stream_chat(request: ChatRequest):
 async def websocket_chat(websocket: WebSocket, conversation_id: str):
 	"""WebSocket endpoint for real-time multi-agent interaction."""
 	await websocket.accept()
-    
+
 	try:
 		# Authenticate connection
 		auth_data = await websocket.receive_json()
 		api_key = auth_data.get("api_key")
-        
+
 		if not await verify_api_key(api_key):
 			await websocket.send_json({"error": "Invalid API key"})
 			return
-        
+
 		# Handle real-time messages
 		async for message in websocket.iter_json():
 			# Process through multi-agent supervisor
@@ -147,7 +147,7 @@ async def websocket_chat(websocket: WebSocket, conversation_id: str):
 				conversation_id=conversation_id,
 				websocket=websocket
 			)
-            
+
 			# Send real-time response
 			await websocket.send_json({
 				"type": "response",
@@ -155,7 +155,7 @@ async def websocket_chat(websocket: WebSocket, conversation_id: str):
 				"agent": response.agent_type,
 				"timestamp": time.time()
 			})
-            
+
 	except WebSocketDisconnect:
 		logger.info(f"WebSocket disconnected: {conversation_id}")
 	except Exception as e:

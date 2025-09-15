@@ -1,0 +1,44 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chat_message_histories/langchain_community.chat_message_histories.dynamodb.convert_messages.html",
+  "title": "convert_messages#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "chat_message_histories"
+    },
+    {
+      "type": "li",
+      "content": "convert_messages"
+    },
+    {
+      "type": "li",
+      "content": "convert_messages()"
+    }
+  ],
+  "code_examples": [
+    "chat_message_histories",
+    "convert_messages()"
+  ],
+  "api_signatures": [
+    "langchain_community.chat_message_histories.dynamodb.convert_messages(item:List)→List[source]#",
+    "langchain_community.chat_message_histories.dynamodb.",
+    "convert_messages",
+    "(",
+    "item:List",
+    ")",
+    "→List",
+    "→",
+    "List"
+  ],
+  "parameters": [
+    "item:List"
+  ]
+}

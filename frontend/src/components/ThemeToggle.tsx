@@ -1,11 +1,12 @@
-import React from 'react'
-import { useTheme } from '@/contexts/ThemeContext'
-import { Button } from '@/components/ui'
+import React from "react";
+import { useTheme } from "@/contexts/ThemeContext";
+import { Button } from "@/components/ui";
 
 export default function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
 
-  const next = theme === 'light' ? 'dark' : theme === 'dark' ? 'system' : 'light'
+  const next =
+    theme === "light" ? "dark" : theme === "dark" ? "system" : "light";
 
   return (
     <Button
@@ -15,7 +16,7 @@ export default function ThemeToggle() {
       title={`Switch theme (current: ${theme})`}
       onClick={() => setTheme(next)}
     >
-      {theme === 'dark' ? 'Dark' : theme === 'light' ? 'Light' : 'System'}
+      {theme === "dark" ? "Dark" : theme === "light" ? "Light" : "System"}
     </Button>
-  )
+  );
 }

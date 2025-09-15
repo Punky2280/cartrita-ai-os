@@ -1,0 +1,110 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_compressors.html#langchain-community-document-compressors",
+  "title": "document_compressors#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_compressors"
+    },
+    {
+      "type": "p",
+      "content": "document_compressors.dashscope_rerank.DashScopeRerank"
+    },
+    {
+      "type": "p",
+      "content": "Document compressor that usesDashScope Rerank API."
+    },
+    {
+      "type": "p",
+      "content": "document_compressors.flashrank_rerank.FlashrankRerank"
+    },
+    {
+      "type": "p",
+      "content": "Document compressor using Flashrank interface."
+    },
+    {
+      "type": "p",
+      "content": "document_compressors.infinity_rerank.InfinityRerank"
+    },
+    {
+      "type": "p",
+      "content": "Document compressor that usesInfinity Rerank API."
+    },
+    {
+      "type": "p",
+      "content": "document_compressors.jina_rerank.JinaRerank"
+    },
+    {
+      "type": "p",
+      "content": "Document compressor that usesJina Rerank API."
+    },
+    {
+      "type": "p",
+      "content": "document_compressors.llmlingua_filter.LLMLinguaCompressor"
+    },
+    {
+      "type": "p",
+      "content": "Compress using LLMLingua Project."
+    },
+    {
+      "type": "p",
+      "content": "document_compressors.openvino_rerank.OpenVINOReranker"
+    },
+    {
+      "type": "p",
+      "content": "OpenVINO rerank models."
+    },
+    {
+      "type": "p",
+      "content": "document_compressors.openvino_rerank.RerankRequest([...])"
+    },
+    {
+      "type": "p",
+      "content": "Request for reranking."
+    },
+    {
+      "type": "p",
+      "content": "document_compressors.rankllm_rerank.ModelType(value)"
+    },
+    {
+      "type": "p",
+      "content": "document_compressors.rankllm_rerank.RankLLMRerank"
+    },
+    {
+      "type": "p",
+      "content": "Document compressor using Flashrank interface."
+    },
+    {
+      "type": "p",
+      "content": "document_compressors.volcengine_rerank.VolcengineRerank"
+    },
+    {
+      "type": "p",
+      "content": "Document compressor that usesVolcengine Rerank API."
+    }
+  ],
+  "code_examples": [
+    "document_compressors",
+    "document_compressors",
+    "document_compressors.dashscope_rerank.DashScopeRerank",
+    "document_compressors.flashrank_rerank.FlashrankRerank",
+    "document_compressors.infinity_rerank.InfinityRerank",
+    "document_compressors.jina_rerank.JinaRerank",
+    "document_compressors.llmlingua_filter.LLMLinguaCompressor",
+    "document_compressors.openvino_rerank.OpenVINOReranker",
+    "document_compressors.openvino_rerank.RerankRequest",
+    "document_compressors.rankllm_rerank.ModelType",
+    "document_compressors.rankllm_rerank.RankLLMRerank",
+    "document_compressors.volcengine_rerank.VolcengineRerank"
+  ],
+  "api_signatures": [],
+  "parameters": []
+}

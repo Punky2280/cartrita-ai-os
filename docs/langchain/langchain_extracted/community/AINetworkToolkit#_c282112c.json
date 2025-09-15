@@ -1,0 +1,119 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/agent_toolkits/langchain_community.agent_toolkits.ainetwork.toolkit.AINetworkToolkit.html",
+  "title": "AINetworkToolkit#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "agent_toolkits"
+    },
+    {
+      "type": "li",
+      "content": "AINetworkToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for interacting with AINetwork Blockchain."
+    },
+    {
+      "type": "p",
+      "content": "the state of a service; e.g., by reading, creating, updating, deleting\ndata associated with this service."
+    },
+    {
+      "type": "p",
+      "content": "Seehttps://python.langchain.com/docs/securityfor more information."
+    },
+    {
+      "type": "li",
+      "content": "network– Optional. The network to connect to. Default is “testnet”.\nOptions are “mainnet” or “testnet”."
+    },
+    {
+      "type": "p",
+      "content": "network– Optional. The network to connect to. Default is “testnet”.\nOptions are “mainnet” or “testnet”."
+    },
+    {
+      "type": "li",
+      "content": "interface– Optional. The interface to use. If not provided, will\nattempt to authenticate with the network. Default is None."
+    },
+    {
+      "type": "p",
+      "content": "interface– Optional. The interface to use. If not provided, will\nattempt to authenticate with the network. Default is None."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Get the tools in the toolkit."
+    },
+    {
+      "type": "p",
+      "content": "List[BaseTool]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using AINetworkToolkit"
+    },
+    {
+      "type": "li",
+      "content": "AINetwork Toolkit"
+    },
+    {
+      "type": "p",
+      "content": "AINetwork Toolkit"
+    },
+    {
+      "type": "li",
+      "content": "AINetworkToolkitinterfacenetworkget_tools()"
+    },
+    {
+      "type": "li",
+      "content": "get_tools()"
+    }
+  ],
+  "code_examples": [
+    "agent_toolkits",
+    "BaseToolkit",
+    "AINetworkToolkit",
+    "interface",
+    "network",
+    "get_tools()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.agent_toolkits.ainetwork.toolkit.AINetworkToolkit[source]#",
+    "langchain_community.agent_toolkits.ainetwork.toolkit.",
+    "AINetworkToolkit",
+    "paraminterface:Ain|None=None#",
+    "interface",
+    "paramnetwork:Literal['mainnet','testnet']|None='testnet'#",
+    "network",
+    "get_tools()→List[BaseTool][source]#",
+    "get_tools",
+    "(",
+    ")",
+    "→List[BaseTool]",
+    "→",
+    "List[BaseTool]"
+  ],
+  "parameters": []
+}

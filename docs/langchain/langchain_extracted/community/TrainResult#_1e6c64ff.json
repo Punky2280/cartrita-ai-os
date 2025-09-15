@@ -1,0 +1,39 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/llms/langchain_community.llms.gradient_ai.TrainResult.html#langchain_community.llms.gradient_ai.TrainResult",
+  "title": "TrainResult#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "TrainResult"
+    },
+    {
+      "type": "p",
+      "content": "Train result."
+    },
+    {
+      "type": "li",
+      "content": "TrainResultloss"
+    }
+  ],
+  "code_examples": [
+    "llms",
+    "TrainResult",
+    "loss"
+  ],
+  "api_signatures": [
+    "classlangchain_community.llms.gradient_ai.TrainResult[source]#",
+    "langchain_community.llms.gradient_ai.",
+    "TrainResult",
+    "loss:float#",
+    "loss"
+  ],
+  "parameters": []
+}

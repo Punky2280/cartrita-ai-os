@@ -1,0 +1,67 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.you.YouDocument.html#langchain_community.utilities.you.YouDocument",
+  "title": "YouDocument#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "YouDocument"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Output of parsing one snippet."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "One snippet of text"
+    },
+    {
+      "type": "li",
+      "content": "YouDocumentmetadatapage_content"
+    },
+    {
+      "type": "li",
+      "content": "page_content"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "BaseModel",
+    "YouDocument",
+    "metadata",
+    "page_content"
+  ],
+  "api_signatures": [
+    "classlangchain_community.utilities.you.YouDocument[source]#",
+    "langchain_community.utilities.you.",
+    "YouDocument",
+    "parammetadata:YouHitMetadata[Required]#",
+    "metadata",
+    "parampage_content:str[Required]#",
+    "page_content"
+  ],
+  "parameters": []
+}

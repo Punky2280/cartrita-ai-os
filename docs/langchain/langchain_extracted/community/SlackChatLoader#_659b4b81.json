@@ -1,0 +1,139 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chat_loaders/langchain_community.chat_loaders.slack.SlackChatLoader.html",
+  "title": "SlackChatLoader#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "chat_loaders"
+    },
+    {
+      "type": "li",
+      "content": "SlackChatLoader"
+    },
+    {
+      "type": "p",
+      "content": "LoadSlackconversations from a dump zip file."
+    },
+    {
+      "type": "p",
+      "content": "Initialize the chat loader with the path to the exported Slack dump zip file."
+    },
+    {
+      "type": "p",
+      "content": "path(str|Path) – Path to the exported Slack dump zip file."
+    },
+    {
+      "type": "p",
+      "content": "__init__(path)"
+    },
+    {
+      "type": "p",
+      "content": "Initialize the chat loader with the path to the exported Slack dump zip file."
+    },
+    {
+      "type": "p",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "Lazy load the chat sessions from the Slack dump file and yield them in the required format."
+    },
+    {
+      "type": "p",
+      "content": "Eagerly load the chat sessions into memory."
+    },
+    {
+      "type": "p",
+      "content": "Initialize the chat loader with the path to the exported Slack dump zip file."
+    },
+    {
+      "type": "p",
+      "content": "path(str|Path) – Path to the exported Slack dump zip file."
+    },
+    {
+      "type": "p",
+      "content": "Lazy load the chat sessions from the Slack dump file and yield them\nin the required format."
+    },
+    {
+      "type": "p",
+      "content": "Iterator of chat sessions containing messages."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[ChatSession]"
+    },
+    {
+      "type": "p",
+      "content": "Eagerly load the chat sessions into memory."
+    },
+    {
+      "type": "p",
+      "content": "A list of chat sessions."
+    },
+    {
+      "type": "p",
+      "content": "list[ChatSession]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using SlackChatLoader"
+    },
+    {
+      "type": "li",
+      "content": "SlackChatLoader__init__()lazy_load()load()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    }
+  ],
+  "code_examples": [
+    "chat_loaders",
+    "__init__",
+    "lazy_load",
+    "load",
+    "SlackChatLoader",
+    "__init__()",
+    "lazy_load()",
+    "load()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.chat_loaders.slack.SlackChatLoader(path:str|Path)[source]#",
+    "langchain_community.chat_loaders.slack.",
+    "SlackChatLoader",
+    "(",
+    "path:str|Path",
+    ")",
+    "__init__(path:str|Path)[source]#",
+    "__init__",
+    "(",
+    "path:str|Path",
+    ")",
+    "lazy_load()→Iterator[ChatSession][source]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[ChatSession]",
+    "→",
+    "Iterator[ChatSession]",
+    "load()→list[ChatSession]#",
+    "load",
+    "(",
+    ")",
+    "→list[ChatSession]",
+    "→",
+    "list[ChatSession]"
+  ],
+  "parameters": [
+    "path:str|Path",
+    "path:str|Path"
+  ]
+}

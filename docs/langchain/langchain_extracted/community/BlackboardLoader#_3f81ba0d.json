@@ -1,0 +1,621 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.blackboard.BlackboardLoader.html",
+  "title": "BlackboardLoader#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "BlackboardLoader"
+    },
+    {
+      "type": "p",
+      "content": "Load aBlackboardcourse."
+    },
+    {
+      "type": "p",
+      "content": "This loader is not compatible with all Blackboard courses. It is only\ncompatible with courses that use the new Blackboard interface.\nTo use this loader, you must have the BbRouter cookie. You can get this\ncookie by logging into the course and then copying the value of the\nBbRouter cookie from the browser’s developer tools."
+    },
+    {
+      "type": "p",
+      "content": "Initialize with blackboard course url."
+    },
+    {
+      "type": "p",
+      "content": "The BbRouter cookie is required for most blackboard courses."
+    },
+    {
+      "type": "li",
+      "content": "blackboard_course_url(str) – Blackboard course url."
+    },
+    {
+      "type": "p",
+      "content": "blackboard_course_url(str) – Blackboard course url."
+    },
+    {
+      "type": "li",
+      "content": "bbrouter(str) – BbRouter cookie."
+    },
+    {
+      "type": "p",
+      "content": "bbrouter(str) – BbRouter cookie."
+    },
+    {
+      "type": "li",
+      "content": "load_all_recursively(bool) – If True, load all documents recursively."
+    },
+    {
+      "type": "p",
+      "content": "load_all_recursively(bool) – If True, load all documents recursively."
+    },
+    {
+      "type": "li",
+      "content": "basic_auth(Tuple[str,str]|None) – Basic auth credentials."
+    },
+    {
+      "type": "p",
+      "content": "basic_auth(Tuple[str,str]|None) – Basic auth credentials."
+    },
+    {
+      "type": "li",
+      "content": "cookies(dict|None) – Cookies."
+    },
+    {
+      "type": "p",
+      "content": "cookies(dict|None) – Cookies."
+    },
+    {
+      "type": "li",
+      "content": "continue_on_failure(bool) – whether to continue loading the sitemap if an error\noccurs loading a url, emitting a warning instead of raising an\nexception. Setting this to True makes the loader more robust, but also\nmay result in missing data. Default: False"
+    },
+    {
+      "type": "p",
+      "content": "continue_on_failure(bool) – whether to continue loading the sitemap if an error\noccurs loading a url, emitting a warning instead of raising an\nexception. Setting this to True makes the loader more robust, but also\nmay result in missing data. Default: False"
+    },
+    {
+      "type": "li",
+      "content": "show_progress(bool) – whether to show a progress bar while loading. Default: True"
+    },
+    {
+      "type": "p",
+      "content": "show_progress(bool) – whether to show a progress bar while loading. Default: True"
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If blackboard course url is invalid."
+    },
+    {
+      "type": "p",
+      "content": "__init__(blackboard_course_url, bbrouter[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with blackboard course url."
+    },
+    {
+      "type": "p",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "Async lazy load text from the url(s) in web_path."
+    },
+    {
+      "type": "p",
+      "content": "ascrape_all(urls[, parser])"
+    },
+    {
+      "type": "p",
+      "content": "Async fetch all urls, then return soups for all results."
+    },
+    {
+      "type": "p",
+      "content": "check_bs4()"
+    },
+    {
+      "type": "p",
+      "content": "Check if BeautifulSoup4 is installed."
+    },
+    {
+      "type": "p",
+      "content": "download(path)"
+    },
+    {
+      "type": "p",
+      "content": "Download a file from an url."
+    },
+    {
+      "type": "p",
+      "content": "fetch_all(urls)"
+    },
+    {
+      "type": "p",
+      "content": "Fetch all urls concurrently with rate limiting."
+    },
+    {
+      "type": "p",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "Lazy load text from the url(s) in web_path."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "load_and_split([text_splitter])"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks."
+    },
+    {
+      "type": "p",
+      "content": "parse_filename(url)"
+    },
+    {
+      "type": "p",
+      "content": "Parse the filename from an url."
+    },
+    {
+      "type": "p",
+      "content": "scrape([parser])"
+    },
+    {
+      "type": "p",
+      "content": "Scrape data from webpage and return it in BeautifulSoup format."
+    },
+    {
+      "type": "p",
+      "content": "scrape_all(urls[, parser])"
+    },
+    {
+      "type": "p",
+      "content": "Fetch all urls, then return soups for all results."
+    },
+    {
+      "type": "p",
+      "content": "Initialize with blackboard course url."
+    },
+    {
+      "type": "p",
+      "content": "The BbRouter cookie is required for most blackboard courses."
+    },
+    {
+      "type": "li",
+      "content": "blackboard_course_url(str) – Blackboard course url."
+    },
+    {
+      "type": "p",
+      "content": "blackboard_course_url(str) – Blackboard course url."
+    },
+    {
+      "type": "li",
+      "content": "bbrouter(str) – BbRouter cookie."
+    },
+    {
+      "type": "p",
+      "content": "bbrouter(str) – BbRouter cookie."
+    },
+    {
+      "type": "li",
+      "content": "load_all_recursively(bool) – If True, load all documents recursively."
+    },
+    {
+      "type": "p",
+      "content": "load_all_recursively(bool) – If True, load all documents recursively."
+    },
+    {
+      "type": "li",
+      "content": "basic_auth(Tuple[str,str]|None) – Basic auth credentials."
+    },
+    {
+      "type": "p",
+      "content": "basic_auth(Tuple[str,str]|None) – Basic auth credentials."
+    },
+    {
+      "type": "li",
+      "content": "cookies(dict|None) – Cookies."
+    },
+    {
+      "type": "p",
+      "content": "cookies(dict|None) – Cookies."
+    },
+    {
+      "type": "li",
+      "content": "continue_on_failure(bool) – whether to continue loading the sitemap if an error\noccurs loading a url, emitting a warning instead of raising an\nexception. Setting this to True makes the loader more robust, but also\nmay result in missing data. Default: False"
+    },
+    {
+      "type": "p",
+      "content": "continue_on_failure(bool) – whether to continue loading the sitemap if an error\noccurs loading a url, emitting a warning instead of raising an\nexception. Setting this to True makes the loader more robust, but also\nmay result in missing data. Default: False"
+    },
+    {
+      "type": "li",
+      "content": "show_progress(bool) – whether to show a progress bar while loading. Default: True"
+    },
+    {
+      "type": "p",
+      "content": "show_progress(bool) – whether to show a progress bar while loading. Default: True"
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If blackboard course url is invalid."
+    },
+    {
+      "type": "p",
+      "content": "Async lazy load text from the url(s) in web_path."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Deprecated since version 0.3.14:See API reference for updated usage:https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.web_base.WebBaseLoader.htmlIt will not be removed until langchain-community==1.0."
+    },
+    {
+      "type": "p",
+      "content": "Load text from the urls in web_path async into Documents."
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Async fetch all urls, then return soups for all results."
+    },
+    {
+      "type": "li",
+      "content": "urls(List[str])"
+    },
+    {
+      "type": "p",
+      "content": "urls(List[str])"
+    },
+    {
+      "type": "li",
+      "content": "parser(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "parser(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "Check if BeautifulSoup4 is installed."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If BeautifulSoup4 is not installed."
+    },
+    {
+      "type": "p",
+      "content": "Download a file from an url."
+    },
+    {
+      "type": "p",
+      "content": "path(str) – Path to the file."
+    },
+    {
+      "type": "p",
+      "content": "Fetch all urls concurrently with rate limiting."
+    },
+    {
+      "type": "p",
+      "content": "urls(List[str])"
+    },
+    {
+      "type": "p",
+      "content": "Lazy load text from the url(s) in web_path."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks. Chunks are returned as Documents."
+    },
+    {
+      "type": "p",
+      "content": "Do not override this method. It should be considered to be deprecated!"
+    },
+    {
+      "type": "p",
+      "content": "text_splitter(Optional[TextSplitter]) – TextSplitter instance to use for splitting documents.\nDefaults to RecursiveCharacterTextSplitter."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If langchain-text-splitters is not installed\n    and no text_splitter is provided."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Parse the filename from an url."
+    },
+    {
+      "type": "p",
+      "content": "url(str) – Url to parse the filename from."
+    },
+    {
+      "type": "p",
+      "content": "The filename."
+    },
+    {
+      "type": "p",
+      "content": "Scrape data from webpage and return it in BeautifulSoup format."
+    },
+    {
+      "type": "p",
+      "content": "parser(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "Fetch all urls, then return soups for all results."
+    },
+    {
+      "type": "li",
+      "content": "urls(List[str])"
+    },
+    {
+      "type": "p",
+      "content": "urls(List[str])"
+    },
+    {
+      "type": "li",
+      "content": "parser(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "parser(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "Examples using BlackboardLoader"
+    },
+    {
+      "type": "li",
+      "content": "BlackboardLoader__init__()alazy_load()aload()ascrape_all()check_bs4()download()fetch_all()lazy_load()load()load_and_split()parse_filename()scrape()scrape_all()"
+    },
+    {
+      "type": "li",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "ascrape_all()"
+    },
+    {
+      "type": "li",
+      "content": "check_bs4()"
+    },
+    {
+      "type": "li",
+      "content": "fetch_all()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "load_and_split()"
+    },
+    {
+      "type": "li",
+      "content": "parse_filename()"
+    },
+    {
+      "type": "li",
+      "content": "scrape_all()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "fromlangchain_community.document_loadersimportBlackboardLoaderloader=BlackboardLoader(blackboard_course_url=\"https://blackboard.example.com/webapps/blackboard/execute/announcement?method=search&context=course_entry&course_id=_123456_1\",bbrouter=\"expires:12345...\",)documents=loader.load()",
+    "web_path",
+    "__init__",
+    "alazy_load",
+    "aload",
+    "ascrape_all",
+    "check_bs4",
+    "download",
+    "fetch_all",
+    "lazy_load",
+    "load",
+    "load_and_split",
+    "parse_filename",
+    "scrape",
+    "scrape_all",
+    "BlackboardLoader",
+    "__init__()",
+    "alazy_load()",
+    "aload()",
+    "ascrape_all()",
+    "check_bs4()",
+    "download()",
+    "fetch_all()",
+    "lazy_load()",
+    "load()",
+    "load_and_split()",
+    "parse_filename()",
+    "scrape()",
+    "scrape_all()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.blackboard.BlackboardLoader(blackboard_course_url:str,bbrouter:str,load_all_recursively:bool=True,basic_auth:Tuple[str,str]|None=None,cookies:dict|None=None,continue_on_failure:bool=False,show_progress:bool=True,)[source]#",
+    "langchain_community.document_loaders.blackboard.",
+    "BlackboardLoader",
+    "(",
+    "blackboard_course_url:str",
+    "bbrouter:str",
+    "load_all_recursively:bool=True",
+    "basic_auth:Tuple[str,str]|None=None",
+    "cookies:dict|None=None",
+    "continue_on_failure:bool=False",
+    "show_progress:bool=True",
+    ")",
+    "__init__(blackboard_course_url:str,bbrouter:str,load_all_recursively:bool=True,basic_auth:Tuple[str,str]|None=None,cookies:dict|None=None,continue_on_failure:bool=False,show_progress:bool=True,)[source]#",
+    "__init__",
+    "(",
+    "blackboard_course_url:str",
+    "bbrouter:str",
+    "load_all_recursively:bool=True",
+    "basic_auth:Tuple[str,str]|None=None",
+    "cookies:dict|None=None",
+    "continue_on_failure:bool=False",
+    "show_progress:bool=True",
+    ")",
+    "asyncalazy_load()→AsyncIterator[Document]#",
+    "alazy_load",
+    "(",
+    ")",
+    "→AsyncIterator[Document]",
+    "→",
+    "AsyncIterator[Document]",
+    "aload()→List[Document]#",
+    "aload",
+    "(",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]",
+    "asyncascrape_all(urls:List[str],parser:str|None=None,)→List[Any]#",
+    "ascrape_all",
+    "(",
+    "urls:List[str]",
+    "parser:str|None=None",
+    ")",
+    "→List[Any]",
+    "→",
+    "List[Any]",
+    "check_bs4()→None[source]#",
+    "check_bs4",
+    "(",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "download(path:str)→None[source]#",
+    "download",
+    "(",
+    "path:str",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "asyncfetch_all(urls:List[str],)→Any#",
+    "fetch_all",
+    "(",
+    "urls:List[str]",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "lazy_load()→Iterator[Document]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "load()→List[Document][source]#",
+    "load",
+    "(",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]",
+    "load_and_split(text_splitter:TextSplitter|None=None,)→list[Document]#",
+    "load_and_split",
+    "(",
+    "text_splitter:TextSplitter|None=None",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "parse_filename(url:str)→str[source]#",
+    "parse_filename",
+    "(",
+    "url:str",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "scrape(parser:str|None=None,)→Any#",
+    "scrape",
+    "(",
+    "parser:str|None=None",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "scrape_all(urls:List[str],parser:str|None=None,)→List[Any]#",
+    "scrape_all",
+    "(",
+    "urls:List[str]",
+    "parser:str|None=None",
+    ")",
+    "→List[Any]",
+    "→",
+    "List[Any]"
+  ],
+  "parameters": [
+    "blackboard_course_url:str",
+    "bbrouter:str",
+    "load_all_recursively:bool=True",
+    "basic_auth:Tuple[str,str]|None=None",
+    "cookies:dict|None=None",
+    "continue_on_failure:bool=False",
+    "show_progress:bool=True",
+    "blackboard_course_url:str",
+    "bbrouter:str",
+    "load_all_recursively:bool=True",
+    "basic_auth:Tuple[str,str]|None=None",
+    "cookies:dict|None=None",
+    "continue_on_failure:bool=False",
+    "show_progress:bool=True",
+    "urls:List[str]",
+    "parser:str|None=None",
+    "path:str",
+    "urls:List[str]",
+    "text_splitter:TextSplitter|None=None",
+    "url:str",
+    "parser:str|None=None",
+    "urls:List[str]",
+    "parser:str|None=None"
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.google_trends.GoogleTrendsAPIWrapper.html#langchain_community.utilities.google_trends.GoogleTrendsAPIWrapper",
+  "title": "GoogleTrendsAPIWrapper#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "GoogleTrendsAPIWrapper"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Wrapper for SerpApi’s Google Scholar API"
+    },
+    {
+      "type": "p",
+      "content": "You can create SerpApi.com key by signing up at:https://serpapi.com/users/sign_up."
+    },
+    {
+      "type": "p",
+      "content": "The wrapper uses the SerpApi.com python package:https://serpapi.com/integrations/python"
+    },
+    {
+      "type": "p",
+      "content": "To use, you should have the environment variableSERPAPI_API_KEYset with your API key, or passserp_api_keyas a named parameter\nto the constructor."
+    },
+    {
+      "type": "p",
+      "content": "from langchain_community.utilities import GoogleTrendsAPIWrapper\ngoogle_trends = GoogleTrendsAPIWrapper()\ngoogle_trends.run(‘langchain’)"
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Run query through Google Trends with Serpapi"
+    },
+    {
+      "type": "p",
+      "content": "Examples using GoogleTrendsAPIWrapper"
+    },
+    {
+      "type": "li",
+      "content": "Google Trends"
+    },
+    {
+      "type": "p",
+      "content": "Google Trends"
+    },
+    {
+      "type": "li",
+      "content": "GoogleTrendsAPIWrapperserp_api_keyserp_search_enginerun()"
+    },
+    {
+      "type": "li",
+      "content": "serp_api_key"
+    },
+    {
+      "type": "li",
+      "content": "serp_search_engine"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "BaseModel",
+    "SERPAPI_API_KEY",
+    "",
+    "GoogleTrendsAPIWrapper",
+    "serp_api_key",
+    "serp_search_engine",
+    "run()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.utilities.google_trends.GoogleTrendsAPIWrapper[source]#",
+    "langchain_community.utilities.google_trends.",
+    "GoogleTrendsAPIWrapper",
+    "paramserp_api_key:SecretStr|None=None#",
+    "serp_api_key",
+    "paramserp_search_engine:Any=None#",
+    "serp_search_engine",
+    "run(query:str)→str[source]#",
+    "run",
+    "(",
+    "query:str",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "query:str"
+  ]
+}

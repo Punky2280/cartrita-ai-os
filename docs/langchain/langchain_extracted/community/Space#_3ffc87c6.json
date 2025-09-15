@@ -1,0 +1,119 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.clickup.Space.html",
+  "title": "Space#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Component class for a space."
+    },
+    {
+      "type": "p",
+      "content": "__init__(id, name, private, enabled_features)"
+    },
+    {
+      "type": "p",
+      "content": "from_data(data)"
+    },
+    {
+      "type": "li",
+      "content": "private(bool)"
+    },
+    {
+      "type": "p",
+      "content": "private(bool)"
+    },
+    {
+      "type": "li",
+      "content": "enabled_features(Dict[str,Any])"
+    },
+    {
+      "type": "p",
+      "content": "enabled_features(Dict[str,Any])"
+    },
+    {
+      "type": "li",
+      "content": "private(bool)"
+    },
+    {
+      "type": "p",
+      "content": "private(bool)"
+    },
+    {
+      "type": "li",
+      "content": "enabled_features(Dict[str,Any])"
+    },
+    {
+      "type": "p",
+      "content": "enabled_features(Dict[str,Any])"
+    },
+    {
+      "type": "p",
+      "content": "data(Dict[str,Any])"
+    },
+    {
+      "type": "li",
+      "content": "Space__init__()from_data()"
+    },
+    {
+      "type": "li",
+      "content": "from_data()"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "__init__",
+    "from_data",
+    "Space",
+    "__init__()",
+    "from_data()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.utilities.clickup.Space(id:int,name:str,private:bool,enabled_features:Dict[str,Any],)[source]#",
+    "langchain_community.utilities.clickup.",
+    "Space",
+    "(",
+    "id:int",
+    "name:str",
+    "private:bool",
+    "enabled_features:Dict[str,Any]",
+    ")",
+    "__init__(id:int,name:str,private:bool,enabled_features:Dict[str,Any],)→None#",
+    "__init__",
+    "(",
+    "id:int",
+    "name:str",
+    "private:bool",
+    "enabled_features:Dict[str,Any]",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "classmethodfrom_data(data:Dict[str,Any],)→Space[source]#",
+    "from_data",
+    "(",
+    "data:Dict[str,Any]",
+    ")",
+    "→Space",
+    "→",
+    "Space"
+  ],
+  "parameters": [
+    "id:int",
+    "name:str",
+    "private:bool",
+    "enabled_features:Dict[str,Any]",
+    "id:int",
+    "name:str",
+    "private:bool",
+    "enabled_features:Dict[str,Any]",
+    "data:Dict[str,Any]"
+  ]
+}

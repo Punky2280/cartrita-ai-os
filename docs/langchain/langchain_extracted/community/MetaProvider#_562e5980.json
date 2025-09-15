@@ -1,0 +1,70 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/llms/langchain_community.llms.oci_generative_ai.MetaProvider.html",
+  "title": "MetaProvider#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "MetaProvider"
+    },
+    {
+      "type": "p",
+      "content": "stop_sequence_key"
+    },
+    {
+      "type": "p",
+      "content": "completion_response_to_text(response)"
+    },
+    {
+      "type": "p",
+      "content": "response(Any)"
+    },
+    {
+      "type": "li",
+      "content": "MetaProvider__init__()completion_response_to_text()"
+    },
+    {
+      "type": "li",
+      "content": "completion_response_to_text()"
+    }
+  ],
+  "code_examples": [
+    "llms",
+    "stop_sequence_key",
+    "__init__",
+    "completion_response_to_text",
+    "MetaProvider",
+    "__init__()",
+    "completion_response_to_text()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.llms.oci_generative_ai.MetaProvider[source]#",
+    "langchain_community.llms.oci_generative_ai.",
+    "MetaProvider",
+    "__init__()→None[source]#",
+    "__init__",
+    "(",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "completion_response_to_text(response:Any,)→str[source]#",
+    "completion_response_to_text",
+    "(",
+    "response:Any",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "response:Any"
+  ]
+}

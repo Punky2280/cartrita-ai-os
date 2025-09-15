@@ -10,11 +10,7 @@ langchain-openai==0.2.2
 langgraph==0.2.34
 langsmith==0.1.126
 
-# Model / transformers (CPU baseline)
-transformers==4.44.2
-accelerate==0.33.0
-safetensors==0.4.5
-# torch kept out of base to reduce install weight; add in GPU/extended file if needed
+# (Moved transformers / accelerate / safetensors to GPU layer to keep base CPU-only)
 
 # Vector / retrieval
 chromadb==0.5.5

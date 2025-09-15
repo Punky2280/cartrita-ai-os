@@ -1,0 +1,65 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.arcee.ArceeDocument.html#langchain_community.utilities.arcee.ArceeDocument",
+  "title": "ArceeDocument#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "ArceeDocument"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Arcee document."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "li",
+      "content": "ArceeDocumentidindexscoresource"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "BaseModel",
+    "ArceeDocument",
+    "id",
+    "index",
+    "score",
+    "source"
+  ],
+  "api_signatures": [
+    "classlangchain_community.utilities.arcee.ArceeDocument[source]#",
+    "langchain_community.utilities.arcee.",
+    "ArceeDocument",
+    "paramid:str[Required]#",
+    "id",
+    "paramindex:str[Required]#",
+    "index",
+    "paramscore:float[Required]#",
+    "score",
+    "paramsource:ArceeDocumentSource[Required]#",
+    "source"
+  ],
+  "parameters": []
+}

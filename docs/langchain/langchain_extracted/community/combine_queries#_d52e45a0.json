@@ -1,0 +1,75 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.neo4j_vector.combine_queries.html",
+  "title": "combine_queries#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "vectorstores"
+    },
+    {
+      "type": "li",
+      "content": "combine_queries"
+    },
+    {
+      "type": "p",
+      "content": "Deprecated since version 0.3.8:Use:meth:`~langchain_neo4j.vectorstores.neo4j_vector.combine_queries`instead. It will not be removed until langchain-community==1.0."
+    },
+    {
+      "type": "p",
+      "content": "Combine multiple queries with an operator."
+    },
+    {
+      "type": "li",
+      "content": "input_queries(List[Tuple[str,Dict[str,Any]]])"
+    },
+    {
+      "type": "p",
+      "content": "input_queries(List[Tuple[str,Dict[str,Any]]])"
+    },
+    {
+      "type": "li",
+      "content": "operator(str)"
+    },
+    {
+      "type": "p",
+      "content": "operator(str)"
+    },
+    {
+      "type": "p",
+      "content": "Tuple[str,Dict[str,Any]]"
+    },
+    {
+      "type": "li",
+      "content": "combine_queries()"
+    }
+  ],
+  "code_examples": [
+    "vectorstores",
+    ":meth:`~langchain_neo4j.vectorstores.neo4j_vector.combine_queries`",
+    "combine_queries()"
+  ],
+  "api_signatures": [
+    "langchain_community.vectorstores.neo4j_vector.combine_queries(input_queries:List[Tuple[str,Dict[str,Any]]],operator:str,)→Tuple[str,Dict[str,Any]][source]#",
+    "langchain_community.vectorstores.neo4j_vector.",
+    "combine_queries",
+    "(",
+    "input_queries:List[Tuple[str,Dict[str,Any]]]",
+    "operator:str",
+    ")",
+    "→Tuple[str,Dict[str,Any]]",
+    "→",
+    "Tuple[str,Dict[str,Any]]"
+  ],
+  "parameters": [
+    "input_queries:List[Tuple[str,Dict[str,Any]]]",
+    "operator:str"
+  ]
+}

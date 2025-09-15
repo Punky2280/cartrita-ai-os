@@ -1,0 +1,170 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.parsers.language.tree_sitter_segmenter.TreeSitterSegmenter.html#langchain_community.document_loaders.parsers.language.tree_sitter_segmenter.TreeSitterSegmenter.__init__",
+  "title": "TreeSitterSegmenter#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "TreeSitterSegmenter"
+    },
+    {
+      "type": "p",
+      "content": "Abstract class for`CodeSegmenter`s that use the tree-sitter library."
+    },
+    {
+      "type": "p",
+      "content": "__init__(code)"
+    },
+    {
+      "type": "p",
+      "content": "extract_functions_classes()"
+    },
+    {
+      "type": "p",
+      "content": "get_chunk_query()"
+    },
+    {
+      "type": "p",
+      "content": "get_language()"
+    },
+    {
+      "type": "p",
+      "content": "get_parser()"
+    },
+    {
+      "type": "p",
+      "content": "make_line_comment(text)"
+    },
+    {
+      "type": "p",
+      "content": "simplify_code()"
+    },
+    {
+      "type": "li",
+      "content": "TreeSitterSegmenter__init__()extract_functions_classes()get_chunk_query()get_language()get_parser()is_valid()make_line_comment()simplify_code()"
+    },
+    {
+      "type": "li",
+      "content": "extract_functions_classes()"
+    },
+    {
+      "type": "li",
+      "content": "get_chunk_query()"
+    },
+    {
+      "type": "li",
+      "content": "get_language()"
+    },
+    {
+      "type": "li",
+      "content": "get_parser()"
+    },
+    {
+      "type": "li",
+      "content": "make_line_comment()"
+    },
+    {
+      "type": "li",
+      "content": "simplify_code()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "__init__",
+    "extract_functions_classes",
+    "get_chunk_query",
+    "get_language",
+    "get_parser",
+    "is_valid",
+    "make_line_comment",
+    "simplify_code",
+    "TreeSitterSegmenter",
+    "__init__()",
+    "extract_functions_classes()",
+    "get_chunk_query()",
+    "get_language()",
+    "get_parser()",
+    "is_valid()",
+    "make_line_comment()",
+    "simplify_code()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.parsers.language.tree_sitter_segmenter.TreeSitterSegmenter(code:str)[source]#",
+    "langchain_community.document_loaders.parsers.language.tree_sitter_segmenter.",
+    "TreeSitterSegmenter",
+    "(",
+    "code:str",
+    ")",
+    "__init__(code:str)[source]#",
+    "__init__",
+    "(",
+    "code:str",
+    ")",
+    "extract_functions_classes()→List[str][source]#",
+    "extract_functions_classes",
+    "(",
+    ")",
+    "→List[str]",
+    "→",
+    "List[str]",
+    "abstractmethodget_chunk_query()→str[source]#",
+    "get_chunk_query",
+    "(",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "abstractmethodget_language()→Language[source]#",
+    "get_language",
+    "(",
+    ")",
+    "→Language",
+    "→",
+    "Language",
+    "get_parser()→Parser[source]#",
+    "get_parser",
+    "(",
+    ")",
+    "→Parser",
+    "→",
+    "Parser",
+    "is_valid()→bool[source]#",
+    "is_valid",
+    "(",
+    ")",
+    "→bool",
+    "→",
+    "bool",
+    "abstractmethodmake_line_comment(text:str)→str[source]#",
+    "make_line_comment",
+    "(",
+    "text:str",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "simplify_code()→str[source]#",
+    "simplify_code",
+    "(",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "code:str",
+    "code:str",
+    "text:str"
+  ]
+}

@@ -1,0 +1,2897 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.opensearch_vector_search.OpenSearchVectorSearch.html#langchain_community.vectorstores.opensearch_vector_search.OpenSearchVectorSearch.similarity_search_with_score_by_vector",
+  "title": "OpenSearchVectorSearch#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "vectorstores"
+    },
+    {
+      "type": "li",
+      "content": "OpenSearchVectorSearch"
+    },
+    {
+      "type": "p",
+      "content": "Amazon OpenSearch Vector Enginevector store."
+    },
+    {
+      "type": "p",
+      "content": "Initialize with necessary components."
+    },
+    {
+      "type": "p",
+      "content": "Access the query embedding object if available."
+    },
+    {
+      "type": "p",
+      "content": "__init__(opensearch_url, index_name, ...)"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with necessary components."
+    },
+    {
+      "type": "p",
+      "content": "aadd_documents(documents, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Async run more documents through the embeddings and add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "aadd_texts(texts[, metadatas, ids, bulk_size])"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronously run more texts through the embeddings and add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "add_documents(documents, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Add or update documents in the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "add_embeddings(text_embeddings[, metadatas, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Add the given texts and embeddings to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "add_texts(texts[, metadatas, ids, bulk_size])"
+    },
+    {
+      "type": "p",
+      "content": "Run more texts through the embeddings and add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "adelete([ids])"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronously delete by vector ID or other criteria."
+    },
+    {
+      "type": "p",
+      "content": "afrom_documents(documents, embedding, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Async return VectorStore initialized from documents and embeddings."
+    },
+    {
+      "type": "p",
+      "content": "afrom_embeddings(embeddings, texts, embedding)"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronously construct OpenSearchVectorSearch wrapper from pre-vectorized embeddings."
+    },
+    {
+      "type": "p",
+      "content": "afrom_texts(texts, embedding[, metadatas, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronously construct OpenSearchVectorSearch wrapper from raw texts."
+    },
+    {
+      "type": "p",
+      "content": "aget_by_ids(ids, /)"
+    },
+    {
+      "type": "p",
+      "content": "Async get documents by their IDs."
+    },
+    {
+      "type": "p",
+      "content": "amax_marginal_relevance_search(query[, k, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs selected using the maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "amax_marginal_relevance_search_by_vector(...)"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs selected using the maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "as_retriever(**kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Return VectorStoreRetriever initialized from this VectorStore."
+    },
+    {
+      "type": "p",
+      "content": "asearch(query, search_type, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs most similar to query using a specified search type."
+    },
+    {
+      "type": "p",
+      "content": "asimilarity_search(query[, k])"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs most similar to query."
+    },
+    {
+      "type": "p",
+      "content": "asimilarity_search_by_vector(embedding[, k])"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs most similar to embedding vector."
+    },
+    {
+      "type": "p",
+      "content": "asimilarity_search_with_relevance_scores(query)"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs and relevance scores in the range [0, 1]."
+    },
+    {
+      "type": "p",
+      "content": "asimilarity_search_with_score(*args, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Async run similarity search with distance."
+    },
+    {
+      "type": "p",
+      "content": "configure_search_pipelines(pipeline_name[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Configures a search pipeline for hybrid search."
+    },
+    {
+      "type": "p",
+      "content": "create_index(dimension[, index_name])"
+    },
+    {
+      "type": "p",
+      "content": "Create a new Index with given arguments"
+    },
+    {
+      "type": "p",
+      "content": "delete([ids, refresh_indices])"
+    },
+    {
+      "type": "p",
+      "content": "Delete documents from the Opensearch index."
+    },
+    {
+      "type": "p",
+      "content": "delete_index([index_name])"
+    },
+    {
+      "type": "p",
+      "content": "Deletes a given index from vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "from_documents(documents, embedding, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Return VectorStore initialized from documents and embeddings."
+    },
+    {
+      "type": "p",
+      "content": "from_embeddings(embeddings, texts, embedding)"
+    },
+    {
+      "type": "p",
+      "content": "Construct OpenSearchVectorSearch wrapper from pre-vectorized embeddings."
+    },
+    {
+      "type": "p",
+      "content": "from_texts(texts, embedding[, metadatas, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Construct OpenSearchVectorSearch wrapper from raw texts."
+    },
+    {
+      "type": "p",
+      "content": "get_by_ids(ids, /)"
+    },
+    {
+      "type": "p",
+      "content": "Get documents by their IDs."
+    },
+    {
+      "type": "p",
+      "content": "get_search_pipeline_info(pipeline_name)"
+    },
+    {
+      "type": "p",
+      "content": "Get information about a search pipeline."
+    },
+    {
+      "type": "p",
+      "content": "index_exists([index_name])"
+    },
+    {
+      "type": "p",
+      "content": "If given index present in vectorstore, returns True else False."
+    },
+    {
+      "type": "p",
+      "content": "max_marginal_relevance_search(query[, k, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Return docs selected using the maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "max_marginal_relevance_search_by_vector(...)"
+    },
+    {
+      "type": "p",
+      "content": "Return docs selected using the maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "search(query, search_type, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Return docs most similar to query using a specified search type."
+    },
+    {
+      "type": "p",
+      "content": "search_pipeline_exists(pipeline_name)"
+    },
+    {
+      "type": "p",
+      "content": "Checks if a search pipeline exists."
+    },
+    {
+      "type": "p",
+      "content": "similarity_search(query[, k, score_threshold])"
+    },
+    {
+      "type": "p",
+      "content": "Return docs most similar to query."
+    },
+    {
+      "type": "p",
+      "content": "similarity_search_by_vector(embedding[, k, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Return docs most similar to the embedding vector."
+    },
+    {
+      "type": "p",
+      "content": "similarity_search_with_relevance_scores(query)"
+    },
+    {
+      "type": "p",
+      "content": "Return docs and relevance scores in the range [0, 1]."
+    },
+    {
+      "type": "p",
+      "content": "similarity_search_with_score(query[, k, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Return docs and it's scores most similar to query."
+    },
+    {
+      "type": "p",
+      "content": "similarity_search_with_score_by_vector(embedding)"
+    },
+    {
+      "type": "p",
+      "content": "Return docs and it's scores most similar to the embedding vector."
+    },
+    {
+      "type": "li",
+      "content": "opensearch_url(str)"
+    },
+    {
+      "type": "p",
+      "content": "opensearch_url(str)"
+    },
+    {
+      "type": "li",
+      "content": "index_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "index_name(str)"
+    },
+    {
+      "type": "li",
+      "content": "embedding_function(Embeddings)"
+    },
+    {
+      "type": "p",
+      "content": "embedding_function(Embeddings)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with necessary components."
+    },
+    {
+      "type": "li",
+      "content": "opensearch_url(str)"
+    },
+    {
+      "type": "p",
+      "content": "opensearch_url(str)"
+    },
+    {
+      "type": "li",
+      "content": "index_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "index_name(str)"
+    },
+    {
+      "type": "li",
+      "content": "embedding_function(Embeddings)"
+    },
+    {
+      "type": "p",
+      "content": "embedding_function(Embeddings)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Async run more documents through the embeddings and add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "documents(list[Document]) – Documents to add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "documents(list[Document]) – Documents to add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "List of IDs of the added texts."
+    },
+    {
+      "type": "p",
+      "content": "Asynchronously run more texts through the embeddings\nand add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "texts(Iterable[str])"
+    },
+    {
+      "type": "p",
+      "content": "texts(Iterable[str])"
+    },
+    {
+      "type": "li",
+      "content": "metadatas(List[dict]|None)"
+    },
+    {
+      "type": "p",
+      "content": "metadatas(List[dict]|None)"
+    },
+    {
+      "type": "li",
+      "content": "ids(List[str]|None)"
+    },
+    {
+      "type": "p",
+      "content": "ids(List[str]|None)"
+    },
+    {
+      "type": "li",
+      "content": "bulk_size(int|None)"
+    },
+    {
+      "type": "p",
+      "content": "bulk_size(int|None)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Add or update documents in the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "documents(list[Document]) – Documents to add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "documents(list[Document]) – Documents to add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments.\nif kwargs contains ids and documents contain ids,\nthe ids in the kwargs will receive precedence."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments.\nif kwargs contains ids and documents contain ids,\nthe ids in the kwargs will receive precedence."
+    },
+    {
+      "type": "p",
+      "content": "List of IDs of the added texts."
+    },
+    {
+      "type": "p",
+      "content": "Add the given texts and embeddings to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "text_embeddings(Iterable[Tuple[str,List[float]]]) – Iterable pairs of string and embedding to\nadd to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "text_embeddings(Iterable[Tuple[str,List[float]]]) – Iterable pairs of string and embedding to\nadd to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "metadatas(List[dict]|None) – Optional list of metadatas associated with the texts."
+    },
+    {
+      "type": "p",
+      "content": "metadatas(List[dict]|None) – Optional list of metadatas associated with the texts."
+    },
+    {
+      "type": "li",
+      "content": "ids(List[str]|None) – Optional list of ids to associate with the texts."
+    },
+    {
+      "type": "p",
+      "content": "ids(List[str]|None) – Optional list of ids to associate with the texts."
+    },
+    {
+      "type": "li",
+      "content": "bulk_size(int|None) – Bulk API request count; Default: 500"
+    },
+    {
+      "type": "p",
+      "content": "bulk_size(int|None) – Bulk API request count; Default: 500"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "List of ids from adding the texts into the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "vector_field: Document field embeddings are stored in. Defaults to\n“vector_field”."
+    },
+    {
+      "type": "p",
+      "content": "text_field: Document field the text of the document is stored in. Defaults\nto “text”."
+    },
+    {
+      "type": "p",
+      "content": "Run more texts through the embeddings and add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "texts(Iterable[str]) – Iterable of strings to add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "texts(Iterable[str]) – Iterable of strings to add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "metadatas(List[dict]|None) – Optional list of metadatas associated with the texts."
+    },
+    {
+      "type": "p",
+      "content": "metadatas(List[dict]|None) – Optional list of metadatas associated with the texts."
+    },
+    {
+      "type": "li",
+      "content": "ids(List[str]|None) – Optional list of ids to associate with the texts."
+    },
+    {
+      "type": "p",
+      "content": "ids(List[str]|None) – Optional list of ids to associate with the texts."
+    },
+    {
+      "type": "li",
+      "content": "bulk_size(int|None) – Bulk API request count; Default: 500"
+    },
+    {
+      "type": "p",
+      "content": "bulk_size(int|None) – Bulk API request count; Default: 500"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "List of ids from adding the texts into the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "vector_field: Document field embeddings are stored in. Defaults to\n“vector_field”."
+    },
+    {
+      "type": "p",
+      "content": "text_field: Document field the text of the document is stored in. Defaults\nto “text”."
+    },
+    {
+      "type": "p",
+      "content": "Asynchronously delete by vector ID or other criteria."
+    },
+    {
+      "type": "li",
+      "content": "ids(List[str]|None) – List of ids to delete."
+    },
+    {
+      "type": "p",
+      "content": "ids(List[str]|None) – List of ids to delete."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Other keyword arguments that subclasses might use."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Other keyword arguments that subclasses might use."
+    },
+    {
+      "type": "p",
+      "content": "True if deletion is successful,\nFalse otherwise, None if not implemented."
+    },
+    {
+      "type": "p",
+      "content": "Optional[bool]"
+    },
+    {
+      "type": "p",
+      "content": "Async return VectorStore initialized from documents and embeddings."
+    },
+    {
+      "type": "li",
+      "content": "documents(list[Document]) – List of Documents to add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "documents(list[Document]) – List of Documents to add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "embedding(Embeddings) – Embedding function to use."
+    },
+    {
+      "type": "p",
+      "content": "embedding(Embeddings) – Embedding function to use."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "VectorStore initialized from documents and embeddings."
+    },
+    {
+      "type": "p",
+      "content": "VectorStore"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronously construct OpenSearchVectorSearch wrapper from pre-vectorized\nembeddings."
+    },
+    {
+      "type": "p",
+      "content": "OpenSearch by default supports Approximate Search powered by nmslib, faiss\nand lucene engines recommended for large datasets. Also supports brute force\nsearch through Script Scoring and Painless Scripting."
+    },
+    {
+      "type": "p",
+      "content": "vector_field: Document field embeddings are stored in. Defaults to\n“vector_field”."
+    },
+    {
+      "type": "p",
+      "content": "text_field: Document field the text of the document is stored in. Defaults\nto “text”."
+    },
+    {
+      "type": "p",
+      "content": "engine: “nmslib”, “faiss”, “lucene”; default: “nmslib”"
+    },
+    {
+      "type": "p",
+      "content": "space_type: “l2”, “l1”, “cosinesimil”, “linf”, “innerproduct”; default: “l2”"
+    },
+    {
+      "type": "p",
+      "content": "ef_search: Size of the dynamic list used during k-NN searches. Higher values\nlead to more accurate but slower searches; default: 512"
+    },
+    {
+      "type": "p",
+      "content": "ef_construction: Size of the dynamic list used during k-NN graph creation.\nHigher values lead to more accurate graph but slower indexing speed;\ndefault: 512"
+    },
+    {
+      "type": "p",
+      "content": "m: Number of bidirectional links created for each new element. Large impact\non memory consumption. Between 2 and 100; default: 16"
+    },
+    {
+      "type": "p",
+      "content": "is_appx_search: False"
+    },
+    {
+      "type": "li",
+      "content": "embeddings(List[List[float]])"
+    },
+    {
+      "type": "p",
+      "content": "embeddings(List[List[float]])"
+    },
+    {
+      "type": "li",
+      "content": "texts(List[str])"
+    },
+    {
+      "type": "p",
+      "content": "texts(List[str])"
+    },
+    {
+      "type": "li",
+      "content": "embedding(Embeddings)"
+    },
+    {
+      "type": "p",
+      "content": "embedding(Embeddings)"
+    },
+    {
+      "type": "li",
+      "content": "metadatas(List[dict]|None)"
+    },
+    {
+      "type": "p",
+      "content": "metadatas(List[dict]|None)"
+    },
+    {
+      "type": "li",
+      "content": "bulk_size(int|None)"
+    },
+    {
+      "type": "p",
+      "content": "bulk_size(int|None)"
+    },
+    {
+      "type": "li",
+      "content": "ids(List[str]|None)"
+    },
+    {
+      "type": "p",
+      "content": "ids(List[str]|None)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "OpenSearchVectorSearch"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronously construct OpenSearchVectorSearch wrapper from raw texts."
+    },
+    {
+      "type": "p",
+      "content": "OpenSearch by default supports Approximate Search powered by nmslib, faiss\nand lucene engines recommended for large datasets. Also supports brute force\nsearch through Script Scoring and Painless Scripting."
+    },
+    {
+      "type": "p",
+      "content": "vector_field: Document field embeddings are stored in. Defaults to\n“vector_field”."
+    },
+    {
+      "type": "p",
+      "content": "text_field: Document field the text of the document is stored in. Defaults\nto “text”."
+    },
+    {
+      "type": "p",
+      "content": "engine: “nmslib”, “faiss”, “lucene”; default: “nmslib”"
+    },
+    {
+      "type": "p",
+      "content": "space_type: “l2”, “l1”, “cosinesimil”, “linf”, “innerproduct”; default: “l2”"
+    },
+    {
+      "type": "p",
+      "content": "ef_search: Size of the dynamic list used during k-NN searches. Higher values\nlead to more accurate but slower searches; default: 512"
+    },
+    {
+      "type": "p",
+      "content": "ef_construction: Size of the dynamic list used during k-NN graph creation.\nHigher values lead to more accurate graph but slower indexing speed;\ndefault: 512"
+    },
+    {
+      "type": "p",
+      "content": "m: Number of bidirectional links created for each new element. Large impact\non memory consumption. Between 2 and 100; default: 16"
+    },
+    {
+      "type": "p",
+      "content": "is_appx_search: False"
+    },
+    {
+      "type": "li",
+      "content": "texts(List[str])"
+    },
+    {
+      "type": "p",
+      "content": "texts(List[str])"
+    },
+    {
+      "type": "li",
+      "content": "embedding(Embeddings)"
+    },
+    {
+      "type": "p",
+      "content": "embedding(Embeddings)"
+    },
+    {
+      "type": "li",
+      "content": "metadatas(List[dict]|None)"
+    },
+    {
+      "type": "p",
+      "content": "metadatas(List[dict]|None)"
+    },
+    {
+      "type": "li",
+      "content": "bulk_size(int|None)"
+    },
+    {
+      "type": "p",
+      "content": "bulk_size(int|None)"
+    },
+    {
+      "type": "li",
+      "content": "ids(List[str]|None)"
+    },
+    {
+      "type": "p",
+      "content": "ids(List[str]|None)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "OpenSearchVectorSearch"
+    },
+    {
+      "type": "p",
+      "content": "Async get documents by their IDs."
+    },
+    {
+      "type": "p",
+      "content": "The returned documents are expected to have the ID field set to the ID of the\ndocument in the vector store."
+    },
+    {
+      "type": "p",
+      "content": "Fewer documents may be returned than requested if some IDs are not found or\nif there are duplicated IDs."
+    },
+    {
+      "type": "p",
+      "content": "Users should not assume that the order of the returned documents matches\nthe order of the input IDs. Instead, users should rely on the ID field of the\nreturned documents."
+    },
+    {
+      "type": "p",
+      "content": "This method shouldNOTraise exceptions if no documents are found for\nsome IDs."
+    },
+    {
+      "type": "p",
+      "content": "ids(Sequence[str]) – List of ids to retrieve."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Added in version 0.2.11."
+    },
+    {
+      "type": "p",
+      "content": "Async return docs selected using the maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "Maximal marginal relevance optimizes for similarity to query AND diversity\namong selected documents."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Text to look up documents similar to."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Text to look up documents similar to."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "fetch_k(int) – Number of Documents to fetch to pass to MMR algorithm.\nDefault is 20."
+    },
+    {
+      "type": "p",
+      "content": "fetch_k(int) – Number of Documents to fetch to pass to MMR algorithm.\nDefault is 20."
+    },
+    {
+      "type": "li",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5."
+    },
+    {
+      "type": "p",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents selected by maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs selected using the maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "Maximal marginal relevance optimizes for similarity to query AND diversity\namong selected documents."
+    },
+    {
+      "type": "li",
+      "content": "embedding(list[float]) – Embedding to look up documents similar to."
+    },
+    {
+      "type": "p",
+      "content": "embedding(list[float]) – Embedding to look up documents similar to."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "fetch_k(int) – Number of Documents to fetch to pass to MMR algorithm.\nDefault is 20."
+    },
+    {
+      "type": "p",
+      "content": "fetch_k(int) – Number of Documents to fetch to pass to MMR algorithm.\nDefault is 20."
+    },
+    {
+      "type": "li",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5."
+    },
+    {
+      "type": "p",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents selected by maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Return VectorStoreRetriever initialized from this VectorStore."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) –Keyword arguments to pass to the search function.\nCan include:\nsearch_type (Optional[str]): Defines the type of search thatthe Retriever should perform.\nCan be “similarity” (default), “mmr”, or\n“similarity_score_threshold”.search_kwargs (Optional[Dict]): Keyword arguments to pass to thesearch function. Can include things like:k: Amount of documents to return (Default: 4)\nscore_threshold: Minimum relevance thresholdfor similarity_score_thresholdfetch_k: Amount of documents to pass to MMR algorithm(Default: 20)lambda_mult: Diversity of results returned by MMR;1 for minimum diversity and 0 for maximum. (Default: 0.5)filter: Filter by document metadata"
+    },
+    {
+      "type": "p",
+      "content": "Keyword arguments to pass to the search function.\nCan include:\nsearch_type (Optional[str]): Defines the type of search that"
+    },
+    {
+      "type": "p",
+      "content": "the Retriever should perform.\nCan be “similarity” (default), “mmr”, or\n“similarity_score_threshold”."
+    },
+    {
+      "type": "p",
+      "content": "k: Amount of documents to return (Default: 4)\nscore_threshold: Minimum relevance threshold"
+    },
+    {
+      "type": "p",
+      "content": "for similarity_score_threshold"
+    },
+    {
+      "type": "p",
+      "content": "(Default: 20)"
+    },
+    {
+      "type": "p",
+      "content": "1 for minimum diversity and 0 for maximum. (Default: 0.5)"
+    },
+    {
+      "type": "p",
+      "content": "filter: Filter by document metadata"
+    },
+    {
+      "type": "p",
+      "content": "Retriever class for VectorStore."
+    },
+    {
+      "type": "p",
+      "content": "VectorStoreRetriever"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs most similar to query using a specified search type."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "li",
+      "content": "search_type(str) – Type of search to perform. Can be “similarity”,\n“mmr”, or “similarity_score_threshold”."
+    },
+    {
+      "type": "p",
+      "content": "search_type(str) – Type of search to perform. Can be “similarity”,\n“mmr”, or “similarity_score_threshold”."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents most similar to the query."
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If search_type is not one of “similarity”,\n    “mmr”, or “similarity_score_threshold”."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs most similar to query."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents most similar to the query."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs most similar to embedding vector."
+    },
+    {
+      "type": "li",
+      "content": "embedding(list[float]) – Embedding to look up documents similar to."
+    },
+    {
+      "type": "p",
+      "content": "embedding(list[float]) – Embedding to look up documents similar to."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents most similar to the query vector."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs and relevance scores in the range [0, 1]."
+    },
+    {
+      "type": "p",
+      "content": "0 is dissimilar, 1 is most similar."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) –kwargs to be passed to similarity search. Should include:\nscore_threshold: Optional, a floating point value between 0 to 1 tofilter the resulting set of retrieved docs"
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) –kwargs to be passed to similarity search. Should include:\nscore_threshold: Optional, a floating point value between 0 to 1 tofilter the resulting set of retrieved docs"
+    },
+    {
+      "type": "p",
+      "content": "kwargs to be passed to similarity search. Should include:\nscore_threshold: Optional, a floating point value between 0 to 1 to"
+    },
+    {
+      "type": "p",
+      "content": "filter the resulting set of retrieved docs"
+    },
+    {
+      "type": "p",
+      "content": "List of Tuples of (doc, similarity_score)"
+    },
+    {
+      "type": "p",
+      "content": "list[tuple[Document, float]]"
+    },
+    {
+      "type": "p",
+      "content": "Async run similarity search with distance."
+    },
+    {
+      "type": "li",
+      "content": "*args(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "*args(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Tuples of (doc, similarity_score)."
+    },
+    {
+      "type": "p",
+      "content": "list[tuple[Document, float]]"
+    },
+    {
+      "type": "p",
+      "content": "Configures a search pipeline for hybrid search.\n:param pipeline_name: Name of the pipeline\n:param keyword_weight: Weight for keyword search\n:param vector_weight: Weight for vector search"
+    },
+    {
+      "type": "p",
+      "content": "Acknowledgement of the pipeline creation.\n(if there is any error while configuring the pipeline, it will return None)"
+    },
+    {
+      "type": "p",
+      "content": "Exception– If an error occurs"
+    },
+    {
+      "type": "li",
+      "content": "pipeline_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "pipeline_name(str)"
+    },
+    {
+      "type": "li",
+      "content": "keyword_weight(float)"
+    },
+    {
+      "type": "p",
+      "content": "keyword_weight(float)"
+    },
+    {
+      "type": "li",
+      "content": "vector_weight(float)"
+    },
+    {
+      "type": "p",
+      "content": "vector_weight(float)"
+    },
+    {
+      "type": "p",
+      "content": "Create a new Index with given arguments"
+    },
+    {
+      "type": "li",
+      "content": "dimension(int)"
+    },
+    {
+      "type": "p",
+      "content": "dimension(int)"
+    },
+    {
+      "type": "li",
+      "content": "index_name(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "index_name(str|None)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Delete documents from the Opensearch index."
+    },
+    {
+      "type": "li",
+      "content": "ids(List[str]|None) – List of ids of documents to delete."
+    },
+    {
+      "type": "p",
+      "content": "ids(List[str]|None) – List of ids of documents to delete."
+    },
+    {
+      "type": "li",
+      "content": "refresh_indices(bool|None) – Whether to refresh the index\nafter deleting documents. Defaults to True."
+    },
+    {
+      "type": "p",
+      "content": "refresh_indices(bool|None) – Whether to refresh the index\nafter deleting documents. Defaults to True."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "bool | None"
+    },
+    {
+      "type": "p",
+      "content": "Deletes a given index from vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "index_name(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "bool | None"
+    },
+    {
+      "type": "p",
+      "content": "Return VectorStore initialized from documents and embeddings."
+    },
+    {
+      "type": "li",
+      "content": "documents(list[Document]) – List of Documents to add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "documents(list[Document]) – List of Documents to add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "embedding(Embeddings) – Embedding function to use."
+    },
+    {
+      "type": "p",
+      "content": "embedding(Embeddings) – Embedding function to use."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "VectorStore initialized from documents and embeddings."
+    },
+    {
+      "type": "p",
+      "content": "VectorStore"
+    },
+    {
+      "type": "p",
+      "content": "Construct OpenSearchVectorSearch wrapper from pre-vectorized embeddings."
+    },
+    {
+      "type": "p",
+      "content": "OpenSearch by default supports Approximate Search powered by nmslib, faiss\nand lucene engines recommended for large datasets. Also supports brute force\nsearch through Script Scoring and Painless Scripting."
+    },
+    {
+      "type": "p",
+      "content": "vector_field: Document field embeddings are stored in. Defaults to\n“vector_field”."
+    },
+    {
+      "type": "p",
+      "content": "text_field: Document field the text of the document is stored in. Defaults\nto “text”."
+    },
+    {
+      "type": "p",
+      "content": "engine: “nmslib”, “faiss”, “lucene”; default: “nmslib”"
+    },
+    {
+      "type": "p",
+      "content": "space_type: “l2”, “l1”, “cosinesimil”, “linf”, “innerproduct”; default: “l2”"
+    },
+    {
+      "type": "p",
+      "content": "ef_search: Size of the dynamic list used during k-NN searches. Higher values\nlead to more accurate but slower searches; default: 512"
+    },
+    {
+      "type": "p",
+      "content": "ef_construction: Size of the dynamic list used during k-NN graph creation.\nHigher values lead to more accurate graph but slower indexing speed;\ndefault: 512"
+    },
+    {
+      "type": "p",
+      "content": "m: Number of bidirectional links created for each new element. Large impact\non memory consumption. Between 2 and 100; default: 16"
+    },
+    {
+      "type": "p",
+      "content": "is_appx_search: False"
+    },
+    {
+      "type": "li",
+      "content": "embeddings(List[List[float]])"
+    },
+    {
+      "type": "p",
+      "content": "embeddings(List[List[float]])"
+    },
+    {
+      "type": "li",
+      "content": "texts(List[str])"
+    },
+    {
+      "type": "p",
+      "content": "texts(List[str])"
+    },
+    {
+      "type": "li",
+      "content": "embedding(Embeddings)"
+    },
+    {
+      "type": "p",
+      "content": "embedding(Embeddings)"
+    },
+    {
+      "type": "li",
+      "content": "metadatas(List[dict]|None)"
+    },
+    {
+      "type": "p",
+      "content": "metadatas(List[dict]|None)"
+    },
+    {
+      "type": "li",
+      "content": "bulk_size(int|None)"
+    },
+    {
+      "type": "p",
+      "content": "bulk_size(int|None)"
+    },
+    {
+      "type": "li",
+      "content": "ids(List[str]|None)"
+    },
+    {
+      "type": "p",
+      "content": "ids(List[str]|None)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "OpenSearchVectorSearch"
+    },
+    {
+      "type": "p",
+      "content": "Construct OpenSearchVectorSearch wrapper from raw texts."
+    },
+    {
+      "type": "p",
+      "content": "OpenSearch by default supports Approximate Search powered by nmslib, faiss\nand lucene engines recommended for large datasets. Also supports brute force\nsearch through Script Scoring and Painless Scripting."
+    },
+    {
+      "type": "p",
+      "content": "vector_field: Document field embeddings are stored in. Defaults to\n“vector_field”."
+    },
+    {
+      "type": "p",
+      "content": "text_field: Document field the text of the document is stored in. Defaults\nto “text”."
+    },
+    {
+      "type": "p",
+      "content": "engine: “nmslib”, “faiss”, “lucene”; default: “nmslib”"
+    },
+    {
+      "type": "p",
+      "content": "space_type: “l2”, “l1”, “cosinesimil”, “linf”, “innerproduct”; default: “l2”"
+    },
+    {
+      "type": "p",
+      "content": "ef_search: Size of the dynamic list used during k-NN searches. Higher values\nlead to more accurate but slower searches; default: 512"
+    },
+    {
+      "type": "p",
+      "content": "ef_construction: Size of the dynamic list used during k-NN graph creation.\nHigher values lead to more accurate graph but slower indexing speed;\ndefault: 512"
+    },
+    {
+      "type": "p",
+      "content": "m: Number of bidirectional links created for each new element. Large impact\non memory consumption. Between 2 and 100; default: 16"
+    },
+    {
+      "type": "p",
+      "content": "is_appx_search: False"
+    },
+    {
+      "type": "li",
+      "content": "texts(List[str])"
+    },
+    {
+      "type": "p",
+      "content": "texts(List[str])"
+    },
+    {
+      "type": "li",
+      "content": "embedding(Embeddings)"
+    },
+    {
+      "type": "p",
+      "content": "embedding(Embeddings)"
+    },
+    {
+      "type": "li",
+      "content": "metadatas(List[dict]|None)"
+    },
+    {
+      "type": "p",
+      "content": "metadatas(List[dict]|None)"
+    },
+    {
+      "type": "li",
+      "content": "bulk_size(int|None)"
+    },
+    {
+      "type": "p",
+      "content": "bulk_size(int|None)"
+    },
+    {
+      "type": "li",
+      "content": "ids(List[str]|None)"
+    },
+    {
+      "type": "p",
+      "content": "ids(List[str]|None)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "OpenSearchVectorSearch"
+    },
+    {
+      "type": "p",
+      "content": "Get documents by their IDs."
+    },
+    {
+      "type": "p",
+      "content": "The returned documents are expected to have the ID field set to the ID of the\ndocument in the vector store."
+    },
+    {
+      "type": "p",
+      "content": "Fewer documents may be returned than requested if some IDs are not found or\nif there are duplicated IDs."
+    },
+    {
+      "type": "p",
+      "content": "Users should not assume that the order of the returned documents matches\nthe order of the input IDs. Instead, users should rely on the ID field of the\nreturned documents."
+    },
+    {
+      "type": "p",
+      "content": "This method shouldNOTraise exceptions if no documents are found for\nsome IDs."
+    },
+    {
+      "type": "p",
+      "content": "ids(Sequence[str]) – List of ids to retrieve."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Added in version 0.2.11."
+    },
+    {
+      "type": "p",
+      "content": "Get information about a search pipeline."
+    },
+    {
+      "type": "p",
+      "content": "pipeline_name(str) – Name of the pipeline"
+    },
+    {
+      "type": "p",
+      "content": "Information about the pipeline\nNone: If pipeline does not exist"
+    },
+    {
+      "type": "p",
+      "content": "Exception– If an error occurs"
+    },
+    {
+      "type": "p",
+      "content": "If given index present in vectorstore, returns True else False."
+    },
+    {
+      "type": "p",
+      "content": "index_name(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "bool | None"
+    },
+    {
+      "type": "p",
+      "content": "Return docs selected using the maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "Maximal marginal relevance optimizes for similarity to query AND diversity\namong selected documents."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Text to look up documents similar to."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Text to look up documents similar to."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "fetch_k(int) – Number of Documents to fetch to pass to MMR algorithm.\nDefaults to 20."
+    },
+    {
+      "type": "p",
+      "content": "fetch_k(int) – Number of Documents to fetch to pass to MMR algorithm.\nDefaults to 20."
+    },
+    {
+      "type": "li",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5."
+    },
+    {
+      "type": "p",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "List of Documents selected by maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Return docs selected using the maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "Maximal marginal relevance optimizes for similarity to query AND diversity\namong selected documents."
+    },
+    {
+      "type": "li",
+      "content": "embedding(list[float]) – Embedding to look up documents similar to."
+    },
+    {
+      "type": "p",
+      "content": "embedding(list[float]) – Embedding to look up documents similar to."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "fetch_k(int) – Number of Documents to fetch to pass to MMR algorithm.\nDefault is 20."
+    },
+    {
+      "type": "p",
+      "content": "fetch_k(int) – Number of Documents to fetch to pass to MMR algorithm.\nDefault is 20."
+    },
+    {
+      "type": "li",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5."
+    },
+    {
+      "type": "p",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents selected by maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Return docs most similar to query using a specified search type."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Input text"
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Input text"
+    },
+    {
+      "type": "li",
+      "content": "search_type(str) – Type of search to perform. Can be “similarity”,\n“mmr”, or “similarity_score_threshold”."
+    },
+    {
+      "type": "p",
+      "content": "search_type(str) – Type of search to perform. Can be “similarity”,\n“mmr”, or “similarity_score_threshold”."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents most similar to the query."
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If search_type is not one of “similarity”,\n    “mmr”, or “similarity_score_threshold”."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Checks if a search pipeline exists."
+    },
+    {
+      "type": "p",
+      "content": "pipeline_name(str) – Name of the pipeline"
+    },
+    {
+      "type": "p",
+      "content": "True if the pipeline exists, False otherwise"
+    },
+    {
+      "type": "p",
+      "content": "Exception– If an error occurs"
+    },
+    {
+      "type": "p",
+      "content": "Return docs most similar to query."
+    },
+    {
+      "type": "p",
+      "content": "By default, supports Approximate Search.\nAlso supports Script Scoring and Painless Scripting."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Text to look up documents similar to."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Text to look up documents similar to."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "score_threshold(float|None) – Specify a score threshold to return only documents"
+    },
+    {
+      "type": "p",
+      "content": "score_threshold(float|None) – Specify a score threshold to return only documents"
+    },
+    {
+      "type": "li",
+      "content": "0.0.(above the threshold. Defaults to)"
+    },
+    {
+      "type": "p",
+      "content": "0.0.(above the threshold. Defaults to)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "List of Documents most similar to the query."
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "p",
+      "content": "vector_field: Document field embeddings are stored in. Defaults to\n“vector_field”."
+    },
+    {
+      "type": "p",
+      "content": "text_field: Document field the text of the document is stored in. Defaults\nto “text”."
+    },
+    {
+      "type": "p",
+      "content": "metadata_field: Document field that metadata is stored in. Defaults to\n“metadata”.\nCan be set to a special value “*” to include the entire document."
+    },
+    {
+      "type": "p",
+      "content": "search_type: “approximate_search”; default: “approximate_search”"
+    },
+    {
+      "type": "p",
+      "content": "boolean_filter: A Boolean filter is a post filter consists of a Boolean\nquery that contains a k-NN query and a filter."
+    },
+    {
+      "type": "p",
+      "content": "subquery_clause: Query clause on the knn vector field; default: “must”"
+    },
+    {
+      "type": "p",
+      "content": "lucene_filter: the Lucene algorithm decides whether to perform an exact\nk-NN search with pre-filtering or an approximate search with modified\npost-filtering. (deprecated, useefficient_filter)"
+    },
+    {
+      "type": "p",
+      "content": "efficient_filter: the Lucene Engine or Faiss Engine decides whether to\nperform an exact k-NN search with pre-filtering or an approximate search\nwith modified post-filtering."
+    },
+    {
+      "type": "p",
+      "content": "search_type: “script_scoring”; default: “approximate_search”"
+    },
+    {
+      "type": "p",
+      "content": "space_type: “l2”, “l1”, “linf”, “cosinesimil”, “innerproduct”,\n“hammingbit”; default: “l2”"
+    },
+    {
+      "type": "p",
+      "content": "pre_filter: script_score query to pre-filter documents before identifying\nnearest neighbors; default: {“match_all”: {}}"
+    },
+    {
+      "type": "p",
+      "content": "search_type: “painless_scripting”; default: “approximate_search”"
+    },
+    {
+      "type": "p",
+      "content": "space_type: “l2Squared”, “l1Norm”, “cosineSimilarity”; default: “l2Squared”"
+    },
+    {
+      "type": "p",
+      "content": "pre_filter: script_score query to pre-filter documents before identifying\nnearest neighbors; default: {“match_all”: {}}"
+    },
+    {
+      "type": "p",
+      "content": "Return docs most similar to the embedding vector."
+    },
+    {
+      "type": "li",
+      "content": "embedding(List[float])"
+    },
+    {
+      "type": "p",
+      "content": "embedding(List[float])"
+    },
+    {
+      "type": "li",
+      "content": "score_threshold(float|None)"
+    },
+    {
+      "type": "p",
+      "content": "score_threshold(float|None)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Return docs and relevance scores in the range [0, 1]."
+    },
+    {
+      "type": "p",
+      "content": "0 is dissimilar, 1 is most similar."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) –kwargs to be passed to similarity search. Should include:\nscore_threshold: Optional, a floating point value between 0 to 1 tofilter the resulting set of retrieved docs."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) –kwargs to be passed to similarity search. Should include:\nscore_threshold: Optional, a floating point value between 0 to 1 tofilter the resulting set of retrieved docs."
+    },
+    {
+      "type": "p",
+      "content": "kwargs to be passed to similarity search. Should include:\nscore_threshold: Optional, a floating point value between 0 to 1 to"
+    },
+    {
+      "type": "p",
+      "content": "filter the resulting set of retrieved docs."
+    },
+    {
+      "type": "p",
+      "content": "List of Tuples of (doc, similarity_score)."
+    },
+    {
+      "type": "p",
+      "content": "list[tuple[Document, float]]"
+    },
+    {
+      "type": "p",
+      "content": "Return docs and it’s scores most similar to query."
+    },
+    {
+      "type": "p",
+      "content": "By default, supports Approximate Search.\nAlso supports Script Scoring and Painless Scripting."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Text to look up documents similar to."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Text to look up documents similar to."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "score_threshold(float|None) – Specify a score threshold to return only documents"
+    },
+    {
+      "type": "p",
+      "content": "score_threshold(float|None) – Specify a score threshold to return only documents"
+    },
+    {
+      "type": "li",
+      "content": "0.0.(above the threshold. Defaults to)"
+    },
+    {
+      "type": "p",
+      "content": "0.0.(above the threshold. Defaults to)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "List of Documents along with its scores most similar to the query."
+    },
+    {
+      "type": "p",
+      "content": "List[Tuple[Document, float]]"
+    },
+    {
+      "type": "p",
+      "content": "same assimilarity_search"
+    },
+    {
+      "type": "p",
+      "content": "Return docs and it’s scores most similar to the embedding vector."
+    },
+    {
+      "type": "p",
+      "content": "By default, supports Approximate Search.\nAlso supports Script Scoring and Painless Scripting."
+    },
+    {
+      "type": "li",
+      "content": "embedding(List[float]) – Embedding vector to look up documents similar to."
+    },
+    {
+      "type": "p",
+      "content": "embedding(List[float]) – Embedding vector to look up documents similar to."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "score_threshold(float|None) – Specify a score threshold to return only documents"
+    },
+    {
+      "type": "p",
+      "content": "score_threshold(float|None) – Specify a score threshold to return only documents"
+    },
+    {
+      "type": "li",
+      "content": "0.0.(above the threshold. Defaults to)"
+    },
+    {
+      "type": "p",
+      "content": "0.0.(above the threshold. Defaults to)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "List of Documents along with its scores most similar to the query."
+    },
+    {
+      "type": "p",
+      "content": "List[Tuple[Document, float]]"
+    },
+    {
+      "type": "p",
+      "content": "same assimilarity_search"
+    },
+    {
+      "type": "p",
+      "content": "Examples using OpenSearchVectorSearch"
+    },
+    {
+      "type": "li",
+      "content": "OpenSearchVectorSearch__init__()aadd_documents()aadd_texts()add_documents()add_embeddings()add_texts()adelete()afrom_documents()afrom_embeddings()afrom_texts()aget_by_ids()amax_marginal_relevance_search()amax_marginal_relevance_search_by_vector()as_retriever()asearch()asimilarity_search()asimilarity_search_by_vector()asimilarity_search_with_relevance_scores()asimilarity_search_with_score()configure_search_pipelines()create_index()delete()delete_index()from_documents()from_embeddings()from_texts()get_by_ids()get_search_pipeline_info()index_exists()max_marginal_relevance_search()max_marginal_relevance_search_by_vector()search()search_pipeline_exists()similarity_search()similarity_search_by_vector()similarity_search_with_relevance_scores()similarity_search_with_score()similarity_search_with_score_by_vector()"
+    },
+    {
+      "type": "li",
+      "content": "aadd_documents()"
+    },
+    {
+      "type": "li",
+      "content": "aadd_texts()"
+    },
+    {
+      "type": "li",
+      "content": "add_documents()"
+    },
+    {
+      "type": "li",
+      "content": "add_embeddings()"
+    },
+    {
+      "type": "li",
+      "content": "add_texts()"
+    },
+    {
+      "type": "li",
+      "content": "afrom_documents()"
+    },
+    {
+      "type": "li",
+      "content": "afrom_embeddings()"
+    },
+    {
+      "type": "li",
+      "content": "afrom_texts()"
+    },
+    {
+      "type": "li",
+      "content": "aget_by_ids()"
+    },
+    {
+      "type": "li",
+      "content": "amax_marginal_relevance_search()"
+    },
+    {
+      "type": "li",
+      "content": "amax_marginal_relevance_search_by_vector()"
+    },
+    {
+      "type": "li",
+      "content": "as_retriever()"
+    },
+    {
+      "type": "li",
+      "content": "asimilarity_search()"
+    },
+    {
+      "type": "li",
+      "content": "asimilarity_search_by_vector()"
+    },
+    {
+      "type": "li",
+      "content": "asimilarity_search_with_relevance_scores()"
+    },
+    {
+      "type": "li",
+      "content": "asimilarity_search_with_score()"
+    },
+    {
+      "type": "li",
+      "content": "configure_search_pipelines()"
+    },
+    {
+      "type": "li",
+      "content": "create_index()"
+    },
+    {
+      "type": "li",
+      "content": "delete_index()"
+    },
+    {
+      "type": "li",
+      "content": "from_documents()"
+    },
+    {
+      "type": "li",
+      "content": "from_embeddings()"
+    },
+    {
+      "type": "li",
+      "content": "from_texts()"
+    },
+    {
+      "type": "li",
+      "content": "get_by_ids()"
+    },
+    {
+      "type": "li",
+      "content": "get_search_pipeline_info()"
+    },
+    {
+      "type": "li",
+      "content": "index_exists()"
+    },
+    {
+      "type": "li",
+      "content": "max_marginal_relevance_search()"
+    },
+    {
+      "type": "li",
+      "content": "max_marginal_relevance_search_by_vector()"
+    },
+    {
+      "type": "li",
+      "content": "search_pipeline_exists()"
+    },
+    {
+      "type": "li",
+      "content": "similarity_search()"
+    },
+    {
+      "type": "li",
+      "content": "similarity_search_by_vector()"
+    },
+    {
+      "type": "li",
+      "content": "similarity_search_with_relevance_scores()"
+    },
+    {
+      "type": "li",
+      "content": "similarity_search_with_score()"
+    },
+    {
+      "type": "li",
+      "content": "similarity_search_with_score_by_vector()"
+    }
+  ],
+  "code_examples": [
+    "vectorstores",
+    "fromlangchain_community.vectorstoresimportOpenSearchVectorSearchopensearch_vector_search=OpenSearchVectorSearch(\"http://localhost:9200\",\"embeddings\",embedding_function)",
+    "embeddings",
+    "__init__",
+    "aadd_documents",
+    "aadd_texts",
+    "add_documents",
+    "add_embeddings",
+    "add_texts",
+    "adelete",
+    "afrom_documents",
+    "afrom_embeddings",
+    "afrom_texts",
+    "aget_by_ids",
+    "amax_marginal_relevance_search",
+    "amax_marginal_relevance_search_by_vector",
+    "as_retriever",
+    "asearch",
+    "asimilarity_search",
+    "asimilarity_search_by_vector",
+    "asimilarity_search_with_relevance_scores",
+    "asimilarity_search_with_score",
+    "configure_search_pipelines",
+    "create_index",
+    "delete",
+    "delete_index",
+    "from_documents",
+    "from_embeddings",
+    "from_texts",
+    "get_by_ids",
+    "get_search_pipeline_info",
+    "index_exists",
+    "max_marginal_relevance_search",
+    "max_marginal_relevance_search_by_vector",
+    "search",
+    "search_pipeline_exists",
+    "similarity_search",
+    "similarity_search_by_vector",
+    "similarity_search_with_relevance_scores",
+    "similarity_search_with_score",
+    "similarity_search_with_score_by_vector",
+    "fromlangchain_community.vectorstoresimportOpenSearchVectorSearchfromlangchain_community.embeddingsimportOpenAIEmbeddingsembedder=OpenAIEmbeddings()embeddings=awaitembedder.aembed_documents([\"foo\",\"bar\"])opensearch_vector_search=awaitOpenSearchVectorSearch.afrom_embeddings(embeddings,texts,embedder,opensearch_url=\"http://localhost:9200\")",
+    "fromlangchain_community.vectorstoresimportOpenSearchVectorSearchfromlangchain_community.embeddingsimportOpenAIEmbeddingsembeddings=OpenAIEmbeddings()opensearch_vector_search=awaitOpenSearchVectorSearch.afrom_texts(texts,embeddings,opensearch_url=\"http://localhost:9200\")",
+    "# Retrieve more documents with higher diversity# Useful if your dataset has many similar documentsdocsearch.as_retriever(search_type=\"mmr\",search_kwargs={\"k\":6,\"lambda_mult\":0.25})# Fetch more documents for the MMR algorithm to consider# But only return the top 5docsearch.as_retriever(search_type=\"mmr\",search_kwargs={\"k\":5,\"fetch_k\":50})# Only retrieve documents that have a relevance score# Above a certain thresholddocsearch.as_retriever(search_type=\"similarity_score_threshold\",search_kwargs={\"score_threshold\":0.8},)# Only get the single most similar document from the datasetdocsearch.as_retriever(search_kwargs={\"k\":1})# Use a filter to only retrieve documents from a specific paperdocsearch.as_retriever(search_kwargs={\"filter\":{\"paper_title\":\"GPT-4 Technical Report\"}})",
+    "fromlangchain_community.vectorstoresimportOpenSearchVectorSearchfromlangchain_community.embeddingsimportOpenAIEmbeddingsembedder=OpenAIEmbeddings()embeddings=embedder.embed_documents([\"foo\",\"bar\"])opensearch_vector_search=OpenSearchVectorSearch.from_embeddings(embeddings,texts,embedder,opensearch_url=\"http://localhost:9200\")",
+    "fromlangchain_community.vectorstoresimportOpenSearchVectorSearchfromlangchain_community.embeddingsimportOpenAIEmbeddingsembeddings=OpenAIEmbeddings()opensearch_vector_search=OpenSearchVectorSearch.from_texts(texts,embeddings,opensearch_url=\"http://localhost:9200\")",
+    ">>>get_search_pipeline_info(\"my_pipeline_1\"){'search_pipeline_1': {\"description\": \"Post processor for hybrid search\",\"phase_results_processors\": [{\"normalization-processor\": {\"normalization\": {\"technique\": \"min_max\"},\"combination\": {\"technique\": \"arithmetic_mean\",\"parameters\": {\"weights\": [0.7, 0.3]}}}}]}}>>>get_search_pipeline_info(\"my_pipeline_2\")None",
+    ">>>search_pipeline_exists(\"my_pipeline_1\")True>>>search_pipeline_exists(\"my_pipeline_2\")False",
+    "OpenSearchVectorSearch",
+    "__init__()",
+    "aadd_documents()",
+    "aadd_texts()",
+    "add_documents()",
+    "add_embeddings()",
+    "add_texts()",
+    "adelete()",
+    "afrom_documents()",
+    "afrom_embeddings()",
+    "afrom_texts()",
+    "aget_by_ids()",
+    "amax_marginal_relevance_search()",
+    "amax_marginal_relevance_search_by_vector()",
+    "as_retriever()",
+    "asearch()",
+    "asimilarity_search()",
+    "asimilarity_search_by_vector()",
+    "asimilarity_search_with_relevance_scores()",
+    "asimilarity_search_with_score()",
+    "configure_search_pipelines()",
+    "create_index()",
+    "delete()",
+    "delete_index()",
+    "from_documents()",
+    "from_embeddings()",
+    "from_texts()",
+    "get_by_ids()",
+    "get_search_pipeline_info()",
+    "index_exists()",
+    "max_marginal_relevance_search()",
+    "max_marginal_relevance_search_by_vector()",
+    "search()",
+    "search_pipeline_exists()",
+    "similarity_search()",
+    "similarity_search_by_vector()",
+    "similarity_search_with_relevance_scores()",
+    "similarity_search_with_score()",
+    "similarity_search_with_score_by_vector()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.vectorstores.opensearch_vector_search.OpenSearchVectorSearch(opensearch_url:str,index_name:str,embedding_function:Embeddings,**kwargs:Any,)[source]#",
+    "langchain_community.vectorstores.opensearch_vector_search.",
+    "OpenSearchVectorSearch",
+    "(",
+    "opensearch_url:str",
+    "index_name:str",
+    "embedding_function:Embeddings",
+    "**kwargs:Any",
+    ")",
+    "__init__(opensearch_url:str,index_name:str,embedding_function:Embeddings,**kwargs:Any,)[source]#",
+    "__init__",
+    "(",
+    "opensearch_url:str",
+    "index_name:str",
+    "embedding_function:Embeddings",
+    "**kwargs:Any",
+    ")",
+    "asyncaadd_documents(documents:list[Document],**kwargs:Any,)→list[str]#",
+    "aadd_documents",
+    "(",
+    "documents:list[Document]",
+    "**kwargs:Any",
+    ")",
+    "→list[str]",
+    "→",
+    "list[str]",
+    "asyncaadd_texts(texts:Iterable[str],metadatas:List[dict]|None=None,ids:List[str]|None=None,bulk_size:int|None=None,**kwargs:Any,)→List[str][source]#",
+    "aadd_texts",
+    "(",
+    "texts:Iterable[str]",
+    "metadatas:List[dict]|None=None",
+    "ids:List[str]|None=None",
+    "bulk_size:int|None=None",
+    "**kwargs:Any",
+    ")",
+    "→List[str]",
+    "→",
+    "List[str]",
+    "add_documents(documents:list[Document],**kwargs:Any,)→list[str]#",
+    "add_documents",
+    "(",
+    "documents:list[Document]",
+    "**kwargs:Any",
+    ")",
+    "→list[str]",
+    "→",
+    "list[str]",
+    "add_embeddings(text_embeddings:Iterable[Tuple[str,List[float]]],metadatas:List[dict]|None=None,ids:List[str]|None=None,bulk_size:int|None=None,**kwargs:Any,)→List[str][source]#",
+    "add_embeddings",
+    "(",
+    "text_embeddings:Iterable[Tuple[str,List[float]]]",
+    "metadatas:List[dict]|None=None",
+    "ids:List[str]|None=None",
+    "bulk_size:int|None=None",
+    "**kwargs:Any",
+    ")",
+    "→List[str]",
+    "→",
+    "List[str]",
+    "add_texts(texts:Iterable[str],metadatas:List[dict]|None=None,ids:List[str]|None=None,bulk_size:int|None=None,**kwargs:Any,)→List[str][source]#",
+    "add_texts",
+    "(",
+    "texts:Iterable[str]",
+    "metadatas:List[dict]|None=None",
+    "ids:List[str]|None=None",
+    "bulk_size:int|None=None",
+    "**kwargs:Any",
+    ")",
+    "→List[str]",
+    "→",
+    "List[str]",
+    "asyncadelete(ids:List[str]|None=None,**kwargs:Any,)→bool|None[source]#",
+    "adelete",
+    "(",
+    "ids:List[str]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→bool|None",
+    "→",
+    "bool|None",
+    "asyncclassmethodafrom_documents(documents:list[Document],embedding:Embeddings,**kwargs:Any,)→Self#",
+    "afrom_documents",
+    "(",
+    "documents:list[Document]",
+    "embedding:Embeddings",
+    "**kwargs:Any",
+    ")",
+    "→Self",
+    "→",
+    "Self",
+    "asyncclassmethodafrom_embeddings(embeddings:List[List[float]],texts:List[str],embedding:Embeddings,metadatas:List[dict]|None=None,bulk_size:int|None=None,ids:List[str]|None=None,**kwargs:Any,)→OpenSearchVectorSearch[source]#",
+    "afrom_embeddings",
+    "(",
+    "embeddings:List[List[float]]",
+    "texts:List[str]",
+    "embedding:Embeddings",
+    "metadatas:List[dict]|None=None",
+    "bulk_size:int|None=None",
+    "ids:List[str]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→OpenSearchVectorSearch",
+    "→",
+    "OpenSearchVectorSearch",
+    "asyncclassmethodafrom_texts(texts:List[str],embedding:Embeddings,metadatas:List[dict]|None=None,bulk_size:int|None=None,ids:List[str]|None=None,**kwargs:Any,)→OpenSearchVectorSearch[source]#",
+    "afrom_texts",
+    "(",
+    "texts:List[str]",
+    "embedding:Embeddings",
+    "metadatas:List[dict]|None=None",
+    "bulk_size:int|None=None",
+    "ids:List[str]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→OpenSearchVectorSearch",
+    "→",
+    "OpenSearchVectorSearch",
+    "asyncaget_by_ids(ids:Sequence[str],/,)→list[Document]#",
+    "aget_by_ids",
+    "(",
+    "ids:Sequence[str]",
+    "/",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "asyncamax_marginal_relevance_search(query:str,k:int=4,fetch_k:int=20,lambda_mult:float=0.5,**kwargs:Any,)→list[Document]#",
+    "amax_marginal_relevance_search",
+    "(",
+    "query:str",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "**kwargs:Any",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "asyncamax_marginal_relevance_search_by_vector(embedding:list[float],k:int=4,fetch_k:int=20,lambda_mult:float=0.5,**kwargs:Any,)→list[Document]#",
+    "amax_marginal_relevance_search_by_vector",
+    "(",
+    "embedding:list[float]",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "**kwargs:Any",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "as_retriever(**kwargs:Any,)→VectorStoreRetriever#",
+    "as_retriever",
+    "(",
+    "**kwargs:Any",
+    ")",
+    "→VectorStoreRetriever",
+    "→",
+    "VectorStoreRetriever",
+    "asyncasearch(query:str,search_type:str,**kwargs:Any,)→list[Document]#",
+    "asearch",
+    "(",
+    "query:str",
+    "search_type:str",
+    "**kwargs:Any",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "asyncasimilarity_search(query:str,k:int=4,**kwargs:Any,)→list[Document]#",
+    "asimilarity_search",
+    "(",
+    "query:str",
+    "k:int=4",
+    "**kwargs:Any",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "asyncasimilarity_search_by_vector(embedding:list[float],k:int=4,**kwargs:Any,)→list[Document]#",
+    "asimilarity_search_by_vector",
+    "(",
+    "embedding:list[float]",
+    "k:int=4",
+    "**kwargs:Any",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "asyncasimilarity_search_with_relevance_scores(query:str,k:int=4,**kwargs:Any,)→list[tuple[Document,float]]#",
+    "asimilarity_search_with_relevance_scores",
+    "(",
+    "query:str",
+    "k:int=4",
+    "**kwargs:Any",
+    ")",
+    "→list[tuple[Document,float]]",
+    "→",
+    "list[tuple[Document,float]]",
+    "asyncasimilarity_search_with_score(*args:Any,**kwargs:Any,)→list[tuple[Document,float]]#",
+    "asimilarity_search_with_score",
+    "(",
+    "*args:Any",
+    "**kwargs:Any",
+    ")",
+    "→list[tuple[Document,float]]",
+    "→",
+    "list[tuple[Document,float]]",
+    "configure_search_pipelines(pipeline_name:str,keyword_weight:float=0.7,vector_weight:float=0.3,)→dict[source]#",
+    "configure_search_pipelines",
+    "(",
+    "pipeline_name:str",
+    "keyword_weight:float=0.7",
+    "vector_weight:float=0.3",
+    ")",
+    "→dict",
+    "→",
+    "dict",
+    "create_index(dimension:int,index_name:str|None='a70dff5087c04238ab58970d5011cca0',**kwargs:Any,)→str|None[source]#",
+    "create_index",
+    "(",
+    "dimension:int",
+    "index_name:str|None='a70dff5087c04238ab58970d5011cca0'",
+    "**kwargs:Any",
+    ")",
+    "→str|None",
+    "→",
+    "str|None",
+    "delete(ids:List[str]|None=None,refresh_indices:bool|None=True,**kwargs:Any,)→bool|None[source]#",
+    "delete",
+    "(",
+    "ids:List[str]|None=None",
+    "refresh_indices:bool|None=True",
+    "**kwargs:Any",
+    ")",
+    "→bool|None",
+    "→",
+    "bool|None",
+    "delete_index(index_name:str|None=None,)→bool|None[source]#",
+    "delete_index",
+    "(",
+    "index_name:str|None=None",
+    ")",
+    "→bool|None",
+    "→",
+    "bool|None",
+    "classmethodfrom_documents(documents:list[Document],embedding:Embeddings,**kwargs:Any,)→Self#",
+    "from_documents",
+    "(",
+    "documents:list[Document]",
+    "embedding:Embeddings",
+    "**kwargs:Any",
+    ")",
+    "→Self",
+    "→",
+    "Self",
+    "classmethodfrom_embeddings(embeddings:List[List[float]],texts:List[str],embedding:Embeddings,metadatas:List[dict]|None=None,bulk_size:int|None=None,ids:List[str]|None=None,**kwargs:Any,)→OpenSearchVectorSearch[source]#",
+    "from_embeddings",
+    "(",
+    "embeddings:List[List[float]]",
+    "texts:List[str]",
+    "embedding:Embeddings",
+    "metadatas:List[dict]|None=None",
+    "bulk_size:int|None=None",
+    "ids:List[str]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→OpenSearchVectorSearch",
+    "→",
+    "OpenSearchVectorSearch",
+    "classmethodfrom_texts(texts:List[str],embedding:Embeddings,metadatas:List[dict]|None=None,bulk_size:int|None=None,ids:List[str]|None=None,**kwargs:Any,)→OpenSearchVectorSearch[source]#",
+    "from_texts",
+    "(",
+    "texts:List[str]",
+    "embedding:Embeddings",
+    "metadatas:List[dict]|None=None",
+    "bulk_size:int|None=None",
+    "ids:List[str]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→OpenSearchVectorSearch",
+    "→",
+    "OpenSearchVectorSearch",
+    "get_by_ids(ids:Sequence[str],/,)→list[Document]#",
+    "get_by_ids",
+    "(",
+    "ids:Sequence[str]",
+    "/",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "get_search_pipeline_info(pipeline_name:str,)→Dict|None[source]#",
+    "get_search_pipeline_info",
+    "(",
+    "pipeline_name:str",
+    ")",
+    "→Dict|None",
+    "→",
+    "Dict|None",
+    "index_exists(index_name:str|None=None,)→bool|None[source]#",
+    "index_exists",
+    "(",
+    "index_name:str|None=None",
+    ")",
+    "→bool|None",
+    "→",
+    "bool|None",
+    "max_marginal_relevance_search(query:str,k:int=4,fetch_k:int=20,lambda_mult:float=0.5,**kwargs:Any,)→list[Document][source]#",
+    "max_marginal_relevance_search",
+    "(",
+    "query:str",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "**kwargs:Any",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "max_marginal_relevance_search_by_vector(embedding:list[float],k:int=4,fetch_k:int=20,lambda_mult:float=0.5,**kwargs:Any,)→list[Document]#",
+    "max_marginal_relevance_search_by_vector",
+    "(",
+    "embedding:list[float]",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "**kwargs:Any",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "search(query:str,search_type:str,**kwargs:Any,)→list[Document]#",
+    "search",
+    "(",
+    "query:str",
+    "search_type:str",
+    "**kwargs:Any",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "search_pipeline_exists(pipeline_name:str,)→bool[source]#",
+    "search_pipeline_exists",
+    "(",
+    "pipeline_name:str",
+    ")",
+    "→bool",
+    "→",
+    "bool",
+    "similarity_search(query:str,k:int=4,score_threshold:float|None=0.0,**kwargs:Any,)→List[Document][source]#",
+    "similarity_search",
+    "(",
+    "query:str",
+    "k:int=4",
+    "score_threshold:float|None=0.0",
+    "**kwargs:Any",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]",
+    "similarity_search_by_vector(embedding:List[float],k:int=4,score_threshold:float|None=0.0,**kwargs:Any,)→List[Document][source]#",
+    "similarity_search_by_vector",
+    "(",
+    "embedding:List[float]",
+    "k:int=4",
+    "score_threshold:float|None=0.0",
+    "**kwargs:Any",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]",
+    "similarity_search_with_relevance_scores(query:str,k:int=4,**kwargs:Any,)→list[tuple[Document,float]]#",
+    "similarity_search_with_relevance_scores",
+    "(",
+    "query:str",
+    "k:int=4",
+    "**kwargs:Any",
+    ")",
+    "→list[tuple[Document,float]]",
+    "→",
+    "list[tuple[Document,float]]",
+    "similarity_search_with_score(query:str,k:int=4,score_threshold:float|None=0.0,**kwargs:Any,)→List[Tuple[Document,float]][source]#",
+    "similarity_search_with_score",
+    "(",
+    "query:str",
+    "k:int=4",
+    "score_threshold:float|None=0.0",
+    "**kwargs:Any",
+    ")",
+    "→List[Tuple[Document,float]]",
+    "→",
+    "List[Tuple[Document,float]]",
+    "similarity_search_with_score_by_vector(embedding:List[float],k:int=4,score_threshold:float|None=0.0,**kwargs:Any,)→List[Tuple[Document,float]][source]#",
+    "similarity_search_with_score_by_vector",
+    "(",
+    "embedding:List[float]",
+    "k:int=4",
+    "score_threshold:float|None=0.0",
+    "**kwargs:Any",
+    ")",
+    "→List[Tuple[Document,float]]",
+    "→",
+    "List[Tuple[Document,float]]"
+  ],
+  "parameters": [
+    "opensearch_url:str",
+    "index_name:str",
+    "embedding_function:Embeddings",
+    "**kwargs:Any",
+    "opensearch_url:str",
+    "index_name:str",
+    "embedding_function:Embeddings",
+    "**kwargs:Any",
+    "documents:list[Document]",
+    "**kwargs:Any",
+    "texts:Iterable[str]",
+    "metadatas:List[dict]|None=None",
+    "ids:List[str]|None=None",
+    "bulk_size:int|None=None",
+    "**kwargs:Any",
+    "documents:list[Document]",
+    "**kwargs:Any",
+    "text_embeddings:Iterable[Tuple[str,List[float]]]",
+    "metadatas:List[dict]|None=None",
+    "ids:List[str]|None=None",
+    "bulk_size:int|None=None",
+    "**kwargs:Any",
+    "texts:Iterable[str]",
+    "metadatas:List[dict]|None=None",
+    "ids:List[str]|None=None",
+    "bulk_size:int|None=None",
+    "**kwargs:Any",
+    "ids:List[str]|None=None",
+    "**kwargs:Any",
+    "documents:list[Document]",
+    "embedding:Embeddings",
+    "**kwargs:Any",
+    "embeddings:List[List[float]]",
+    "texts:List[str]",
+    "embedding:Embeddings",
+    "metadatas:List[dict]|None=None",
+    "bulk_size:int|None=None",
+    "ids:List[str]|None=None",
+    "**kwargs:Any",
+    "texts:List[str]",
+    "embedding:Embeddings",
+    "metadatas:List[dict]|None=None",
+    "bulk_size:int|None=None",
+    "ids:List[str]|None=None",
+    "**kwargs:Any",
+    "ids:Sequence[str]",
+    "/",
+    "query:str",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "**kwargs:Any",
+    "embedding:list[float]",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "**kwargs:Any",
+    "**kwargs:Any",
+    "query:str",
+    "search_type:str",
+    "**kwargs:Any",
+    "query:str",
+    "k:int=4",
+    "**kwargs:Any",
+    "embedding:list[float]",
+    "k:int=4",
+    "**kwargs:Any",
+    "query:str",
+    "k:int=4",
+    "**kwargs:Any",
+    "*args:Any",
+    "**kwargs:Any",
+    "pipeline_name:str",
+    "keyword_weight:float=0.7",
+    "vector_weight:float=0.3",
+    "dimension:int",
+    "index_name:str|None='a70dff5087c04238ab58970d5011cca0'",
+    "**kwargs:Any",
+    "ids:List[str]|None=None",
+    "refresh_indices:bool|None=True",
+    "**kwargs:Any",
+    "index_name:str|None=None",
+    "documents:list[Document]",
+    "embedding:Embeddings",
+    "**kwargs:Any",
+    "embeddings:List[List[float]]",
+    "texts:List[str]",
+    "embedding:Embeddings",
+    "metadatas:List[dict]|None=None",
+    "bulk_size:int|None=None",
+    "ids:List[str]|None=None",
+    "**kwargs:Any",
+    "texts:List[str]",
+    "embedding:Embeddings",
+    "metadatas:List[dict]|None=None",
+    "bulk_size:int|None=None",
+    "ids:List[str]|None=None",
+    "**kwargs:Any",
+    "ids:Sequence[str]",
+    "/",
+    "pipeline_name:str",
+    "index_name:str|None=None",
+    "query:str",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "**kwargs:Any",
+    "embedding:list[float]",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "**kwargs:Any",
+    "query:str",
+    "search_type:str",
+    "**kwargs:Any",
+    "pipeline_name:str",
+    "query:str",
+    "k:int=4",
+    "score_threshold:float|None=0.0",
+    "**kwargs:Any",
+    "embedding:List[float]",
+    "k:int=4",
+    "score_threshold:float|None=0.0",
+    "**kwargs:Any",
+    "query:str",
+    "k:int=4",
+    "**kwargs:Any",
+    "query:str",
+    "k:int=4",
+    "score_threshold:float|None=0.0",
+    "**kwargs:Any",
+    "embedding:List[float]",
+    "k:int=4",
+    "score_threshold:float|None=0.0",
+    "**kwargs:Any"
+  ]
+}

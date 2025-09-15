@@ -1,0 +1,135 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/agent_toolkits/langchain_community.agent_toolkits.clickup.toolkit.ClickupToolkit.html",
+  "title": "ClickupToolkit#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "agent_toolkits"
+    },
+    {
+      "type": "li",
+      "content": "ClickupToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Clickup Toolkit."
+    },
+    {
+      "type": "p",
+      "content": "the state of a service; e.g., by reading, creating, updating, deleting\ndata associated with this service."
+    },
+    {
+      "type": "p",
+      "content": "Seehttps://python.langchain.com/docs/securityfor more information."
+    },
+    {
+      "type": "p",
+      "content": "tools– List[BaseTool]. The tools in the toolkit. Default is an empty list."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Create a ClickupToolkit from a ClickupAPIWrapper."
+    },
+    {
+      "type": "p",
+      "content": "clickup_api_wrapper(ClickupAPIWrapper) – ClickupAPIWrapper. The Clickup API wrapper."
+    },
+    {
+      "type": "p",
+      "content": "ClickupToolkit. The Clickup toolkit."
+    },
+    {
+      "type": "p",
+      "content": "ClickupToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Get the tools in the toolkit."
+    },
+    {
+      "type": "p",
+      "content": "List[BaseTool]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using ClickupToolkit"
+    },
+    {
+      "type": "li",
+      "content": "ClickUp Toolkit"
+    },
+    {
+      "type": "p",
+      "content": "ClickUp Toolkit"
+    },
+    {
+      "type": "li",
+      "content": "ClickupToolkittoolsfrom_clickup_api_wrapper()get_tools()"
+    },
+    {
+      "type": "li",
+      "content": "from_clickup_api_wrapper()"
+    },
+    {
+      "type": "li",
+      "content": "get_tools()"
+    }
+  ],
+  "code_examples": [
+    "agent_toolkits",
+    "BaseToolkit",
+    "ClickupToolkit",
+    "tools",
+    "from_clickup_api_wrapper()",
+    "get_tools()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.agent_toolkits.clickup.toolkit.ClickupToolkit[source]#",
+    "langchain_community.agent_toolkits.clickup.toolkit.",
+    "ClickupToolkit",
+    "paramtools:List[BaseTool]=[]#",
+    "tools",
+    "classmethodfrom_clickup_api_wrapper(clickup_api_wrapper:ClickupAPIWrapper,)→ClickupToolkit[source]#",
+    "from_clickup_api_wrapper",
+    "(",
+    "clickup_api_wrapper:ClickupAPIWrapper",
+    ")",
+    "→ClickupToolkit",
+    "→",
+    "ClickupToolkit",
+    "get_tools()→List[BaseTool][source]#",
+    "get_tools",
+    "(",
+    ")",
+    "→List[BaseTool]",
+    "→",
+    "List[BaseTool]"
+  ],
+  "parameters": [
+    "clickup_api_wrapper:ClickupAPIWrapper"
+  ]
+}

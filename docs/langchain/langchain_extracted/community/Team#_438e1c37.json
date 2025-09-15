@@ -1,0 +1,95 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.clickup.Team.html#langchain_community.utilities.clickup.Team.from_data",
+  "title": "Team#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Component class for a team."
+    },
+    {
+      "type": "p",
+      "content": "__init__(id, name, members)"
+    },
+    {
+      "type": "p",
+      "content": "from_data(data)"
+    },
+    {
+      "type": "li",
+      "content": "members(List[Member])"
+    },
+    {
+      "type": "p",
+      "content": "members(List[Member])"
+    },
+    {
+      "type": "li",
+      "content": "members(List[Member])"
+    },
+    {
+      "type": "p",
+      "content": "members(List[Member])"
+    },
+    {
+      "type": "li",
+      "content": "Team__init__()from_data()"
+    },
+    {
+      "type": "li",
+      "content": "from_data()"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "__init__",
+    "from_data",
+    "Team",
+    "__init__()",
+    "from_data()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.utilities.clickup.Team(id:int,name:str,members:List[Member],)[source]#",
+    "langchain_community.utilities.clickup.",
+    "Team",
+    "(",
+    "id:int",
+    "name:str",
+    "members:List[Member]",
+    ")",
+    "__init__(id:int,name:str,members:List[Member],)→None#",
+    "__init__",
+    "(",
+    "id:int",
+    "name:str",
+    "members:List[Member]",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "classmethodfrom_data(data:Dict,)→Team[source]#",
+    "from_data",
+    "(",
+    "data:Dict",
+    ")",
+    "→Team",
+    "→",
+    "Team"
+  ],
+  "parameters": [
+    "id:int",
+    "name:str",
+    "members:List[Member]",
+    "id:int",
+    "name:str",
+    "members:List[Member]",
+    "data:Dict"
+  ]
+}

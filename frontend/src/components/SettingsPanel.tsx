@@ -1,10 +1,9 @@
 // Cartrita AI OS - Settings Panel Component
 // Comprehensive user settings with preferences, API keys, and configuration
 
-
-import { useState, useCallback } from 'react'
-import { motion } from 'framer-motion'
-import { toast } from 'sonner'
+import { useState, useCallback } from "react";
+import { motion } from "framer-motion";
+import { toast } from "sonner";
 import {
   Settings,
   User,
@@ -21,9 +20,9 @@ import {
   Save,
   AlertTriangle,
   Info,
-  X
-} from 'lucide-react'
-import { cn } from '@/utils'
+  X,
+} from "lucide-react";
+import { cn } from "@/utils";
 import {
   Input,
   Label,
@@ -43,10 +42,15 @@ import {
   CardHeader,
   CardTitle,
   Alert,
-  AlertDescription
-} from '@/components/ui'
-import { useSettings, useUpdateSettings } from '@/hooks'
-import type { User as UserType, UserSettings, Theme, PrivacySettings } from '@/types'
+  AlertDescription,
+} from "@/components/ui";
+import { useSettings, useUpdateSettings } from "@/hooks";
+import type {
+  User as UserType,
+  UserSettings,
+  Theme,
+  PrivacySettings,
+} from "@/types";
 
 // API Key Input Component
 function ApiKeyInput({
@@ -55,35 +59,35 @@ function ApiKeyInput({
   onChange,
   placeholder,
   description,
-  required = false
+  required = false,
 }: {
-  label: string
-  value: string
-  onChange: (value: string) => void
-  placeholder?: string
-  description?: string
-  required?: boolean
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  description?: string;
+  required?: boolean;
 }) {
-  const [showKey, setShowKey] = useState(false)
+  const [showKey, setShowKey] = useState(false);
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={label.toLowerCase().replace(/\s+/g, '-')}>
+      <Label htmlFor={label.toLowerCase().replace(/\s+/g, "-")}>
         {label}
         {required && <span className="text-destructive ml-1">*</span>}
       </Label>
       <div className="relative">
         <Input
-          id={label.toLowerCase().replace(/\s+/g, '-')}
-          type={showKey ? 'text' : 'password'}
+          id={label.toLowerCase().replace(/\s+/g, "-")}
+          type={showKey ? "text" : "password"}
           value={value}
-          onChange={(e) => { { onChange(e.target.value); ; }}}
+          onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           className="pr-10"
         />
         <button
           type="button"
-          onClick={() => { { setShowKey(!showKey);; }}}
+          onClick={() => setShowKey(!showKey)}
           className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-accent hover:text-accent-foreground rounded-md"
         >
           {showKey ? (
@@ -97,32 +101,32 @@ function ApiKeyInput({
         <p className="text-sm text-muted-foreground">{description}</p>
       )}
     </div>
-  )
+  );
 }
 
 // Profile Settings Tab
 function ProfileSettings({
   settings,
-  onUpdate
+  onUpdate,
 }: {
-  settings: UserSettings
-  onUpdate: (updates: Partial<UserSettings>) => void
+  settings: UserSettings;
+  onUpdate: (updates: Partial<UserSettings>) => void;
 }) {
   const [formData, setFormData] = useState({
-    name: settings.name || '',
-    email: settings.email || '',
-    bio: settings.bio || '',
-    avatar: settings.avatar || ''
-  })
+    name: settings.name || "",
+    email: settings.email || "",
+    bio: settings.bio || "",
+    avatar: settings.avatar || "",
+  });
 
   const handleSave = useCallback(() => {
-    onUpdate(formData)
-    toast.success('Profile updated successfully')
-  }, [formData, onUpdate])
+    onUpdate(formData);
+    toast.success("Profile updated successfully");
+  }, [formData, onUpdate]);
 
   const handleChange = useCallback((field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }, [])
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -140,7 +144,7 @@ function ProfileSettings({
             <Input
               id="name"
               value={formData.name}
-              onChange={(e) => { { { handleChange('name', e.target.value); ; ; }}}}
+              onChange={(e) => handleChange("name", e.target.value)}
               placeholder="Enter your full name"
             />
           </div>
@@ -151,7 +155,7 @@ function ProfileSettings({
               id="email"
               type="email"
               value={formData.email}
-              onChange={(e) => { { handleChange('email', e.target.value); ; }}}
+              onChange={(e) => handleChange("email", e.target.value)}
               placeholder="Enter your email"
             />
           </div>
@@ -162,7 +166,7 @@ function ProfileSettings({
           <Input
             id="avatar"
             value={formData.avatar}
-            onChange={(e) => { { handleChange('avatar', e.target.value); ; }}}
+            onChange={(e) => handleChange("avatar", e.target.value)}
             placeholder="https://example.com/avatar.jpg"
           />
         </div>
@@ -172,7 +176,7 @@ function ProfileSettings({
           <Textarea
             id="bio"
             value={formData.bio}
-            onChange={(e) => { { handleChange('bio', e.target.value); ; }}}
+            onChange={(e) => handleChange("bio", e.target.value)}
             placeholder="Tell us about yourself..."
             rows={3}
           />
@@ -180,52 +184,56 @@ function ProfileSettings({
       </div>
 
       <div className="flex justify-end">
-        <button onClick={handleSave} className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+        <button
+          onClick={handleSave}
+          className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+        >
           <Save className="h-4 w-4 mr-2" />
           Save Changes
         </button>
       </div>
     </div>
-  )
+  );
 }
 
 // API Keys Settings Tab
 function ApiKeysSettings({
   settings,
-  onUpdate
+  onUpdate,
 }: {
-  settings: UserSettings
-  onUpdate: (updates: Partial<UserSettings>) => void
+  settings: UserSettings;
+  onUpdate: (updates: Partial<UserSettings>) => void;
 }) {
   const [apiKeys, setApiKeys] = useState({
-    openai: settings.apiKeys?.openai || '',
-    google: settings.apiKeys?.google || '',
-    huggingface: settings.apiKeys?.huggingface || ''
-  })
+    openai: settings.apiKeys?.openai || "",
+    google: settings.apiKeys?.google || "",
+    huggingface: settings.apiKeys?.huggingface || "",
+  });
 
   const handleSave = useCallback(() => {
-    onUpdate({ apiKeys })
-    toast.success('API keys updated successfully')
-  }, [apiKeys, onUpdate])
+    onUpdate({ apiKeys });
+    toast.success("API keys updated successfully");
+  }, [apiKeys, onUpdate]);
 
   const handleKeyChange = useCallback((provider: string, value: string) => {
-    setApiKeys(prev => ({ ...prev, [provider]: value }))
-  }, [])
+    setApiKeys((prev) => ({ ...prev, [provider]: value }));
+  }, []);
 
   return (
     <div className="space-y-6">
       <div>
         <h3 className="text-lg font-medium">API Keys</h3>
         <p className="text-sm text-muted-foreground">
-          Configure your API keys for different AI providers. Keys are encrypted and stored securely.
+          Configure your API keys for different AI providers. Keys are encrypted
+          and stored securely.
         </p>
       </div>
 
       <Alert>
         <Info className="h-4 w-4" />
         <AlertDescription>
-          Your API keys are encrypted at rest and never exposed in logs or responses.
-          Make sure to keep them secure and rotate them regularly.
+          Your API keys are encrypted at rest and never exposed in logs or
+          responses. Make sure to keep them secure and rotate them regularly.
         </AlertDescription>
       </Alert>
 
@@ -233,7 +241,7 @@ function ApiKeysSettings({
         <ApiKeyInput
           label="OpenAI API Key"
           value={apiKeys.openai}
-          onChange={(value) => { { handleKeyChange('openai', value); ; }}}
+          onChange={(value) => handleKeyChange("openai", value)}
           placeholder="sk-..."
           description="Required for GPT models and DALL-E image generation"
         />
@@ -241,7 +249,7 @@ function ApiKeysSettings({
         <ApiKeyInput
           label="Google AI API Key"
           value={apiKeys.google}
-          onChange={(value) => { { handleKeyChange('google', value); ; }}}
+          onChange={(value) => handleKeyChange("google", value)}
           placeholder="AIza..."
           description="Required for Gemini models and Google services"
         />
@@ -249,43 +257,52 @@ function ApiKeysSettings({
         <ApiKeyInput
           label="Hugging Face API Key"
           value={apiKeys.huggingface}
-          onChange={(value) => { { handleKeyChange('huggingface', value); ; }}}
+          onChange={(value) => handleKeyChange("huggingface", value)}
           placeholder="hf_..."
           description="Required for Hugging Face models and datasets"
         />
       </div>
 
       <div className="flex justify-end">
-        <button onClick={handleSave} className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+        <button
+          onClick={handleSave}
+          className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+        >
           <Save className="h-4 w-4 mr-2" />
           Save API Keys
         </button>
       </div>
     </div>
-  )
+  );
 }
 
 // Appearance Settings Tab
 function AppearanceSettings({
   settings,
-  onUpdate
+  onUpdate,
 }: {
-  settings: UserSettings
-  onUpdate: (updates: Partial<UserSettings>) => void
+  settings: UserSettings;
+  onUpdate: (updates: Partial<UserSettings>) => void;
 }) {
-  const handleThemeChange = useCallback((value: string) => {
-    onUpdate({ theme: value as Theme })
-    toast.success('Theme updated successfully')
-  }, [onUpdate])
+  const handleThemeChange = useCallback(
+    (value: string) => {
+      onUpdate({ theme: value as Theme });
+      toast.success("Theme updated successfully");
+    },
+    [onUpdate],
+  );
 
-  const handleSettingChange = useCallback((key: string, value: unknown) => {
-    onUpdate({
-      appearance: {
-        ...settings.appearance,
-        [key]: value
-      }
-    })
-  }, [settings.appearance, onUpdate])
+  const handleSettingChange = useCallback(
+    (key: string, value: unknown) => {
+      onUpdate({
+        appearance: {
+          ...settings.appearance,
+          [key]: value,
+        },
+      });
+    },
+    [settings.appearance, onUpdate],
+  );
 
   return (
     <div className="space-y-6">
@@ -321,7 +338,9 @@ function AppearanceSettings({
             </div>
             <Switch
               checked={settings.appearance?.compactMode || false}
-              onCheckedChange={(checked) => handleSettingChange('compactMode', checked)}
+              onCheckedChange={(checked) =>
+                handleSettingChange("compactMode", checked)
+              }
             />
           </div>
 
@@ -334,7 +353,9 @@ function AppearanceSettings({
             </div>
             <Switch
               checked={settings.appearance?.showAnimations ?? true}
-              onCheckedChange={(checked) => handleSettingChange('showAnimations', checked)}
+              onCheckedChange={(checked) =>
+                handleSettingChange("showAnimations", checked)
+              }
             />
           </div>
 
@@ -347,31 +368,36 @@ function AppearanceSettings({
             </div>
             <Switch
               checked={settings.appearance?.highContrast || false}
-              onCheckedChange={(checked) => handleSettingChange('highContrast', checked)}
+              onCheckedChange={(checked) =>
+                handleSettingChange("highContrast", checked)
+              }
             />
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // Notifications Settings Tab
 function NotificationsSettings({
   settings,
-  onUpdate
+  onUpdate,
 }: {
-  settings: UserSettings
-  onUpdate: (updates: Partial<UserSettings>) => void
+  settings: UserSettings;
+  onUpdate: (updates: Partial<UserSettings>) => void;
 }) {
-  const handleNotificationChange = useCallback((key: string, value: unknown) => {
-    onUpdate({
-      notifications: {
-        ...settings.notifications,
-        [key]: value
-      }
-    })
-  }, [settings.notifications, onUpdate])
+  const handleNotificationChange = useCallback(
+    (key: string, value: unknown) => {
+      onUpdate({
+        notifications: {
+          ...settings.notifications,
+          [key]: value,
+        },
+      });
+    },
+    [settings.notifications, onUpdate],
+  );
 
   return (
     <div className="space-y-6">
@@ -392,7 +418,9 @@ function NotificationsSettings({
           </div>
           <Switch
             checked={settings.notifications?.email || false}
-            onCheckedChange={(checked) => handleNotificationChange('email', checked)}
+            onCheckedChange={(checked) =>
+              handleNotificationChange("email", checked)
+            }
           />
         </div>
 
@@ -405,7 +433,9 @@ function NotificationsSettings({
           </div>
           <Switch
             checked={settings.notifications?.push || false}
-            onCheckedChange={(checked) => handleNotificationChange('push', checked)}
+            onCheckedChange={(checked) =>
+              handleNotificationChange("push", checked)
+            }
           />
         </div>
 
@@ -418,7 +448,9 @@ function NotificationsSettings({
           </div>
           <Switch
             checked={settings.notifications?.messages ?? true}
-            onCheckedChange={(checked) => handleNotificationChange('messages', checked)}
+            onCheckedChange={(checked) =>
+              handleNotificationChange("messages", checked)
+            }
           />
         </div>
 
@@ -431,7 +463,9 @@ function NotificationsSettings({
           </div>
           <Switch
             checked={settings.notifications?.agentStatus || false}
-            onCheckedChange={(checked) => handleNotificationChange('agentStatus', checked)}
+            onCheckedChange={(checked) =>
+              handleNotificationChange("agentStatus", checked)
+            }
           />
         </div>
 
@@ -444,30 +478,35 @@ function NotificationsSettings({
           </div>
           <Switch
             checked={settings.notifications?.systemUpdates || false}
-            onCheckedChange={(checked) => handleNotificationChange('systemUpdates', checked)}
+            onCheckedChange={(checked) =>
+              handleNotificationChange("systemUpdates", checked)
+            }
           />
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // Privacy Settings Tab
 function PrivacySettings({
   settings,
-  onUpdate
+  onUpdate,
 }: {
-  settings: UserSettings
-  onUpdate: (updates: Partial<UserSettings>) => void
+  settings: UserSettings;
+  onUpdate: (updates: Partial<UserSettings>) => void;
 }) {
-  const handlePrivacyChange = useCallback((key: string, value: unknown) => {
-    onUpdate({
-      privacy: {
-        ...settings.privacy,
-        [key]: value
-      }
-    })
-  }, [settings.privacy, onUpdate])
+  const handlePrivacyChange = useCallback(
+    (key: string, value: unknown) => {
+      onUpdate({
+        privacy: {
+          ...settings.privacy,
+          [key]: value,
+        },
+      });
+    },
+    [settings.privacy, onUpdate],
+  );
 
   return (
     <div className="space-y-6">
@@ -481,7 +520,8 @@ function PrivacySettings({
       <Alert>
         <Shield className="h-4 w-4" />
         <AlertDescription>
-          Your conversations and data are encrypted and never shared with third parties without your consent.
+          Your conversations and data are encrypted and never shared with third
+          parties without your consent.
         </AlertDescription>
       </Alert>
 
@@ -495,7 +535,9 @@ function PrivacySettings({
           </div>
           <Switch
             checked={settings.privacy?.dataCollection ?? true}
-            onCheckedChange={(checked) => handlePrivacyChange('dataCollection', checked)}
+            onCheckedChange={(checked) =>
+              handlePrivacyChange("dataCollection", checked)
+            }
           />
         </div>
 
@@ -508,7 +550,9 @@ function PrivacySettings({
           </div>
           <Switch
             checked={settings.privacy?.saveHistory ?? true}
-            onCheckedChange={(checked) => handlePrivacyChange('saveHistory', checked)}
+            onCheckedChange={(checked) =>
+              handlePrivacyChange("saveHistory", checked)
+            }
           />
         </div>
 
@@ -521,7 +565,9 @@ function PrivacySettings({
           </div>
           <Switch
             checked={settings.privacy?.profileVisibility || false}
-            onCheckedChange={(checked) => handlePrivacyChange('profileVisibility', checked)}
+            onCheckedChange={(checked) =>
+              handlePrivacyChange("profileVisibility", checked)
+            }
           />
         </div>
 
@@ -534,40 +580,42 @@ function PrivacySettings({
           </div>
           <Switch
             checked={settings.privacy?.showActivity ?? true}
-            onCheckedChange={(checked) => handlePrivacyChange('showActivity', checked)}
+            onCheckedChange={(checked) =>
+              handlePrivacyChange("showActivity", checked)
+            }
           />
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // Data Management Tab
 function DataManagement({
   onExport,
   onImport,
-  onDelete
+  onDelete,
 }: {
-  onExport: () => void
-  onImport: (file: File) => void
-  onDelete: () => void
+  onExport: () => void;
+  onImport: (file: File) => void;
+  onDelete: () => void;
 }) {
-  const [confirmDelete, setConfirmDelete] = useState('')
-  const [importFile, setImportFile] = useState<File | null>(null)
+  const [confirmDelete, setConfirmDelete] = useState("");
+  const [importFile, setImportFile] = useState<File | null>(null);
 
   const handleImport = useCallback(() => {
     if (importFile) {
-      onImport(importFile)
-      setImportFile(null)
+      onImport(importFile);
+      setImportFile(null);
     }
-  }, [importFile, onImport])
+  }, [importFile, onImport]);
 
   const handleDelete = useCallback(() => {
-    if (confirmDelete === 'DELETE') {
-      onDelete()
-      setConfirmDelete('')
+    if (confirmDelete === "DELETE") {
+      onDelete();
+      setConfirmDelete("");
     }
-  }, [confirmDelete, onDelete])
+  }, [confirmDelete, onDelete]);
 
   return (
     <div className="space-y-6">
@@ -589,9 +637,13 @@ function DataManagement({
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground mb-4">
-              Download all your conversations, settings, and data in JSON format.
+              Download all your conversations, settings, and data in JSON
+              format.
             </p>
-            <button onClick={onExport} className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+            <button
+              onClick={onExport}
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+            >
               <Download className="h-4 w-4 mr-2" />
               Export Data
             </button>
@@ -614,7 +666,7 @@ function DataManagement({
               <Input
                 type="file"
                 accept=".json"
-                onChange={(e) => { { setImportFile(e.target.files?.[0] || null); ; }}}
+                onChange={(e) => setImportFile(e.target.files?.[0] || null)}
               />
               <button
                 onClick={handleImport}
@@ -638,23 +690,25 @@ function DataManagement({
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground mb-4">
-              Permanently delete all your conversations, settings, and data. This action cannot be undone.
+              Permanently delete all your conversations, settings, and data.
+              This action cannot be undone.
             </p>
             <Alert className="mb-4">
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>
-                This will permanently delete all your data. Type &quot;DELETE&quot; to confirm.
+                This will permanently delete all your data. Type
+                &quot;DELETE&quot; to confirm.
               </AlertDescription>
             </Alert>
             <div className="space-y-2">
               <Input
                 value={confirmDelete}
-                onChange={(e) => { { setConfirmDelete(e.target.value); ; }}}
+                onChange={(e) => setConfirmDelete(e.target.value)}
                 placeholder="Type DELETE to confirm"
               />
               <button
                 onClick={handleDelete}
-                disabled={confirmDelete !== 'DELETE'}
+                disabled={confirmDelete !== "DELETE"}
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2"
               >
                 <Trash2 className="h-4 w-4 mr-2" />
@@ -665,48 +719,51 @@ function DataManagement({
         </Card>
       </div>
     </div>
-  )
+  );
 }
 
 // Main Settings Panel Component
 interface SettingsPanelProps {
-  isOpen: boolean
-  onClose: () => void
-  className?: string
+  isOpen: boolean;
+  onClose: () => void;
+  className?: string;
 }
 
 export function SettingsPanel({
   isOpen,
   onClose,
-  className
+  className,
 }: SettingsPanelProps) {
-  const { data: settings, isLoading } = useSettings()
-  const updateSettings = useUpdateSettings()
+  const { data: settings, isLoading } = useSettings();
+  const updateSettings = useUpdateSettings();
 
-  const handleUpdateSettings = useCallback(async (updates: Partial<UserType['preferences']>) => {
-    try {
-      await updateSettings.mutateAsync(updates)
-    } catch (error) {
-      toast.error('Failed to update settings')
-    }
-  }, [updateSettings])
+  const handleUpdateSettings = useCallback(
+    async (updates: Partial<UserType["preferences"]>) => {
+      try {
+        await updateSettings.mutateAsync(updates);
+      } catch (error) {
+        toast.error("Failed to update settings");
+      }
+    },
+    [updateSettings],
+  );
 
   const handleExport = useCallback(() => {
     // Implement data export
-    toast.success('Data export started')
-  }, [])
+    toast.success("Data export started");
+  }, []);
 
   const handleImport = useCallback((file: File) => {
     // Implement data import
-    toast.success('Data import started')
-  }, [])
+    toast.success("Data import started");
+  }, []);
 
   const handleDelete = useCallback(() => {
     // Implement data deletion
-    toast.success('Data deletion started')
-  }, [])
+    toast.success("Data deletion started");
+  }, []);
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <motion.div
@@ -717,12 +774,12 @@ export function SettingsPanel({
       onClick={onClose}
     >
       <motion.div
-        initial={{ opacity: 0, x: '100%' }}
+        initial={{ opacity: 0, x: "100%" }}
         animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: '100%' }}
+        exit={{ opacity: 0, x: "100%" }}
         className={cn(
-          'fixed right-0 top-0 h-full w-full max-w-2xl bg-background shadow-2xl overflow-hidden',
-          className
+          "fixed right-0 top-0 h-full w-full max-w-2xl bg-background shadow-2xl overflow-hidden",
+          className,
         )}
         onClick={(e) => e.stopPropagation()}
       >
@@ -732,7 +789,10 @@ export function SettingsPanel({
             <Settings className="h-5 w-5" />
             Settings
           </h2>
-          <button onClick={onClose} className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+          <button
+            onClick={onClose}
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
+          >
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -822,7 +882,7 @@ export function SettingsPanel({
               <div className="text-center">
                 <p className="text-muted-foreground">Failed to load settings</p>
                 <button
-                  onClick={() => { { window.location.reload();; }}}
+                  onClick={() => window.location.reload()}
                   className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 mt-4"
                 >
                   Reload
@@ -833,23 +893,26 @@ export function SettingsPanel({
         </div>
       </motion.div>
     </motion.div>
-  )
+  );
 }
 
 // Compact settings button
 export function SettingsButton({
   onClick,
-  className
+  className,
 }: {
-  onClick: () => void
-  className?: string
+  onClick: () => void;
+  className?: string;
 }) {
   return (
     <button
       onClick={onClick}
-      className={cn("inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3", className)}
+      className={cn(
+        "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3",
+        className,
+      )}
     >
       <Settings className="h-4 w-4" />
     </button>
-  )
+  );
 }

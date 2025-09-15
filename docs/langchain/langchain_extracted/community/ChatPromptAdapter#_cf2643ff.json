@@ -1,0 +1,119 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chat_models/langchain_community.chat_models.bedrock.ChatPromptAdapter.html#langchain_community.chat_models.bedrock.ChatPromptAdapter",
+  "title": "ChatPromptAdapter#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "chat_models"
+    },
+    {
+      "type": "li",
+      "content": "ChatPromptAdapter"
+    },
+    {
+      "type": "p",
+      "content": "Adapter class to prepare the inputs from Langchain to prompt format\nthat Chat model expects."
+    },
+    {
+      "type": "p",
+      "content": "convert_messages_to_prompt(provider, messages)"
+    },
+    {
+      "type": "p",
+      "content": "format_messages(provider, messages)"
+    },
+    {
+      "type": "li",
+      "content": "provider(str)"
+    },
+    {
+      "type": "p",
+      "content": "provider(str)"
+    },
+    {
+      "type": "li",
+      "content": "messages(List[BaseMessage])"
+    },
+    {
+      "type": "p",
+      "content": "messages(List[BaseMessage])"
+    },
+    {
+      "type": "li",
+      "content": "provider(str)"
+    },
+    {
+      "type": "p",
+      "content": "provider(str)"
+    },
+    {
+      "type": "li",
+      "content": "messages(List[BaseMessage])"
+    },
+    {
+      "type": "p",
+      "content": "messages(List[BaseMessage])"
+    },
+    {
+      "type": "p",
+      "content": "Tuple[str | None,List[Dict]]"
+    },
+    {
+      "type": "li",
+      "content": "ChatPromptAdapterconvert_messages_to_prompt()format_messages()"
+    },
+    {
+      "type": "li",
+      "content": "convert_messages_to_prompt()"
+    },
+    {
+      "type": "li",
+      "content": "format_messages()"
+    }
+  ],
+  "code_examples": [
+    "chat_models",
+    "convert_messages_to_prompt",
+    "format_messages",
+    "ChatPromptAdapter",
+    "convert_messages_to_prompt()",
+    "format_messages()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.chat_models.bedrock.ChatPromptAdapter[source]#",
+    "langchain_community.chat_models.bedrock.",
+    "ChatPromptAdapter",
+    "classmethodconvert_messages_to_prompt(provider:str,messages:List[BaseMessage],)→str[source]#",
+    "convert_messages_to_prompt",
+    "(",
+    "provider:str",
+    "messages:List[BaseMessage]",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "classmethodformat_messages(provider:str,messages:List[BaseMessage],)→Tuple[str|None,List[Dict]][source]#",
+    "format_messages",
+    "(",
+    "provider:str",
+    "messages:List[BaseMessage]",
+    ")",
+    "→Tuple[str|None,List[Dict]]",
+    "→",
+    "Tuple[str|None,List[Dict]]"
+  ],
+  "parameters": [
+    "provider:str",
+    "messages:List[BaseMessage]",
+    "provider:str",
+    "messages:List[BaseMessage]"
+  ]
+}

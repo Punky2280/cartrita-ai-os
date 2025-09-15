@@ -25,6 +25,9 @@ scrape_configs:
     static_configs:
       - targets: ["postgres:5432"]
 
+  # Redis metrics now collected via redis-exporter (avoids cross-protocol noise)
   - job_name: "redis"
     static_configs:
-      - targets: ["redis:6379"]
+      - targets: ["redis-exporter:9121"]
+    scrape_interval: 15s
+    # Previous direct scrape of redis:6379 intentionally removed.

@@ -19,15 +19,15 @@ jobs:
     env: {}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
         with:
-          python-version: '3.11'
+          python-version: '3.13'
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
         with:
           node-version: '20'
 
@@ -61,12 +61,12 @@ jobs:
           output: results.sarif
 
       - name: Upload SARIF to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@4dd16135b69a43b6c8efb853346f8437d92d3c93 # v3.26.6
         with:
           sarif_file: results.sarif
 
       - name: Archive SARIF artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
         with:
           name: codacy-sarif
           path: results.sarif
@@ -91,7 +91,7 @@ jobs:
             echo "SARIF regressions detected (exit 2)." >&2
           elif [ $CODE -eq 0 ]; then
             echo "regressions=false" >> $GITHUB_ENV
-            echo "No SARIF regressions above threshold." 
+            echo "No SARIF regressions above threshold."
           else
             echo "compare.py exited with code $CODE (treating as failure)" >&2
             exit $CODE
@@ -106,7 +106,7 @@ jobs:
           echo "regressions=${regressions:-false}" >> $GITHUB_OUTPUT
       - name: Upload regression report
         if: steps.set-regression-output.outputs.regressions == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
         with:
           name: sarif-regressions
           path: sarif-regressions.json
@@ -117,9 +117,9 @@ jobs:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
         with:
           node-version: '20'
       - name: Install root dependencies

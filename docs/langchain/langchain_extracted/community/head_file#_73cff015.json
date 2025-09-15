@@ -1,0 +1,42 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.bearly.tool.head_file.html",
+  "title": "head_file#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Get the first n lines of a file."
+    },
+    {
+      "type": "li",
+      "content": "head_file()"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "head_file()"
+  ],
+  "api_signatures": [
+    "langchain_community.tools.bearly.tool.head_file(path:str,n:int)→List[str][source]#",
+    "langchain_community.tools.bearly.tool.",
+    "head_file",
+    "(",
+    "path:str",
+    "n:int",
+    ")",
+    "→List[str]",
+    "→",
+    "List[str]"
+  ],
+  "parameters": [
+    "path:str",
+    "n:int"
+  ]
+}

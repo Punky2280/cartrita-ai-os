@@ -1,0 +1,60 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.passio_nutrition_ai.tool.NutritionAIInputs.html#langchain_community.tools.passio_nutrition_ai.tool.NutritionAIInputs",
+  "title": "NutritionAIInputs#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "NutritionAIInputs"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Inputs to the Passio Nutrition AI tool."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "A query to look up using Passio Nutrition AI, usually a few words."
+    },
+    {
+      "type": "li",
+      "content": "NutritionAIInputsquery"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "BaseModel",
+    "NutritionAIInputs",
+    "query"
+  ],
+  "api_signatures": [
+    "classlangchain_community.tools.passio_nutrition_ai.tool.NutritionAIInputs[source]#",
+    "langchain_community.tools.passio_nutrition_ai.tool.",
+    "NutritionAIInputs",
+    "paramquery:str[Required]#",
+    "query"
+  ],
+  "parameters": []
+}

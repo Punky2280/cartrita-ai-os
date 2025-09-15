@@ -1,0 +1,56 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.redis.schema.RedisField.html#langchain_community.vectorstores.redis.schema.RedisField",
+  "title": "RedisField#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "vectorstores"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Base class for Redis fields."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "li",
+      "content": "RedisFieldname"
+    }
+  ],
+  "code_examples": [
+    "vectorstores",
+    "BaseModel",
+    "RedisField",
+    "name"
+  ],
+  "api_signatures": [
+    "classlangchain_community.vectorstores.redis.schema.RedisField[source]#",
+    "langchain_community.vectorstores.redis.schema.",
+    "RedisField",
+    "paramname:str[Required]#",
+    "name"
+  ],
+  "parameters": []
+}

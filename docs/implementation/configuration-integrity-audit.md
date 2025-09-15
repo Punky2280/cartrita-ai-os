@@ -119,7 +119,7 @@ CMD ["node", "src/index.js"]
 environment:
   - OPENAI_API_KEY=${OPENAI_API_KEY}  # ✅ Good - Uses env vars
   - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}  # ✅ Good - Uses env vars
-  
+
 # MISSING: Secret management for production
 # RECOMMENDATION: Use Docker Secrets or external secret management
 ```

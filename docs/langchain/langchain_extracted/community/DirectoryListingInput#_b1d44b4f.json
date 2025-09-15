@@ -1,0 +1,60 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.file_management.list_dir.DirectoryListingInput.html#langchain_community.tools.file_management.list_dir.DirectoryListingInput",
+  "title": "DirectoryListingInput#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "DirectoryListingInput"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Input for ListDirectoryTool."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Subdirectory to list."
+    },
+    {
+      "type": "li",
+      "content": "DirectoryListingInputdir_path"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "BaseModel",
+    "DirectoryListingInput",
+    "dir_path"
+  ],
+  "api_signatures": [
+    "classlangchain_community.tools.file_management.list_dir.DirectoryListingInput[source]#",
+    "langchain_community.tools.file_management.list_dir.",
+    "DirectoryListingInput",
+    "paramdir_path:str='.'#",
+    "dir_path"
+  ],
+  "parameters": []
+}

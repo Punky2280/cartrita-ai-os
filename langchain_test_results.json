@@ -1,0 +1,55 @@
+{
+  "timestamp": "2025-09-13T20:05:57.060158",
+  "summary": {
+    "passed": 3,
+    "total": 9,
+    "success_rate": 33.33333333333333
+  },
+  "results": [
+    {
+      "test": "Import Tests",
+      "passed": false,
+      "duration": 0.46150660514831543
+    },
+    {
+      "test": "Multi-Provider Orchestrator",
+      "passed": false,
+      "duration": 0.0004661083221435547
+    },
+    {
+      "test": "Reasoning Chain Agent",
+      "passed": false,
+      "duration": 0.0004124641418457031
+    },
+    {
+      "test": "Advanced Tool Agent",
+      "passed": false,
+      "duration": 0.00048279762268066406
+    },
+    {
+      "test": "Supervisor Agent",
+      "passed": false,
+      "duration": 0.0006411075592041016
+    },
+    {
+      "test": "Existing Agents Compatibility",
+      "passed": false,
+      "duration": 0.0005173683166503906
+    },
+    {
+      "test": "LangChain Templates",
+      "passed": true,
+      "duration": 0.0002982616424560547
+    },
+    {
+      "test": "Documentation Availability",
+      "passed": true,
+      "duration": 0.0024526119232177734
+    },
+    {
+      "test": "Requirements",
+      "passed": true,
+      "duration": 8.130073547363281e-05
+    }
+  ]
+}

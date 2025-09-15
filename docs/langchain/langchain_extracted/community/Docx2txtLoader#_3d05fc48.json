@@ -1,0 +1,252 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.word_document.Docx2txtLoader.html#langchain_community.document_loaders.word_document.Docx2txtLoader",
+  "title": "Docx2txtLoader#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "Docx2txtLoader"
+    },
+    {
+      "type": "p",
+      "content": "LoadDOCXfile usingdocx2txtand chunks at character level."
+    },
+    {
+      "type": "p",
+      "content": "Defaults to check for local file, but if the file is a web path, it will download it\nto a temporary file, and use that, then clean up the temporary file after completion"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with file path."
+    },
+    {
+      "type": "p",
+      "content": "__init__(file_path)"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with file path."
+    },
+    {
+      "type": "p",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load given path as single page."
+    },
+    {
+      "type": "p",
+      "content": "load_and_split([text_splitter])"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks."
+    },
+    {
+      "type": "p",
+      "content": "file_path(str|Path)"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with file path."
+    },
+    {
+      "type": "p",
+      "content": "file_path(str|Path)"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load given path as single page."
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks. Chunks are returned as Documents."
+    },
+    {
+      "type": "p",
+      "content": "Do not override this method. It should be considered to be deprecated!"
+    },
+    {
+      "type": "p",
+      "content": "text_splitter(Optional[TextSplitter]) – TextSplitter instance to use for splitting documents.\nDefaults to RecursiveCharacterTextSplitter."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If langchain-text-splitters is not installed\n    and no text_splitter is provided."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using Docx2txtLoader"
+    },
+    {
+      "type": "li",
+      "content": "Microsoft Word"
+    },
+    {
+      "type": "p",
+      "content": "Microsoft Word"
+    },
+    {
+      "type": "li",
+      "content": "Docx2txtLoader__init__()alazy_load()aload()lazy_load()load()load_and_split()"
+    },
+    {
+      "type": "li",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "load_and_split()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "__init__",
+    "alazy_load",
+    "aload",
+    "lazy_load",
+    "load",
+    "load_and_split",
+    "Docx2txtLoader",
+    "__init__()",
+    "alazy_load()",
+    "aload()",
+    "lazy_load()",
+    "load()",
+    "load_and_split()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.word_document.Docx2txtLoader(file_path:str|Path)[source]#",
+    "langchain_community.document_loaders.word_document.",
+    "Docx2txtLoader",
+    "(",
+    "file_path:str|Path",
+    ")",
+    "__init__(file_path:str|Path)[source]#",
+    "__init__",
+    "(",
+    "file_path:str|Path",
+    ")",
+    "asyncalazy_load()→AsyncIterator[Document]#",
+    "alazy_load",
+    "(",
+    ")",
+    "→AsyncIterator[Document]",
+    "→",
+    "AsyncIterator[Document]",
+    "asyncaload()→list[Document]#",
+    "aload",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "lazy_load()→Iterator[Document]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "load()→List[Document][source]#",
+    "load",
+    "(",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]",
+    "load_and_split(text_splitter:TextSplitter|None=None,)→list[Document]#",
+    "load_and_split",
+    "(",
+    "text_splitter:TextSplitter|None=None",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "file_path:str|Path",
+    "file_path:str|Path",
+    "text_splitter:TextSplitter|None=None"
+  ]
+}

@@ -76,14 +76,14 @@ def cpu_intensive_task(data):
 @app.post("/process-data")
 async def process_data(data: dict):
     loop = asyncio.get_event_loop()
-    
+
     # Offload CPU-bound work to thread pool
     result = await loop.run_in_executor(
-        thread_pool, 
-        cpu_intensive_task, 
+        thread_pool,
+        cpu_intensive_task,
         data
     )
-    
+
     return {"result": result}
 ```
 
@@ -152,8 +152,8 @@ async def send_email(email: str, message: str):
 
 @app.post("/send-notification")
 async def send_notification(
-    email: str, 
-    message: str, 
+    email: str,
+    message: str,
     background_tasks: BackgroundTasks
 ):
     background_tasks.add_task(send_email, email, message)
@@ -174,17 +174,17 @@ async def resilient_endpoint():
         async with asyncio.timeout(5.0):
             result1 = await external_api_call_1()
             result2 = await external_api_call_2()
-            
+
         return {"result1": result1, "result2": result2}
-        
+
     except asyncio.TimeoutError:
         raise HTTPException(
-            status_code=408, 
+            status_code=408,
             detail="Request timeout"
         )
     except Exception as e:
         raise HTTPException(
-            status_code=500, 
+            status_code=500,
             detail=f"Internal error: {str(e)}"
         )
 ```
@@ -206,7 +206,7 @@ async def retry_with_backoff(
         except Exception as e:
             if attempt == max_retries - 1:
                 raise e
-            
+
             delay = min(base_delay * (2 ** attempt), max_delay)
             await asyncio.sleep(delay)
 ```
@@ -254,23 +254,23 @@ import hashlib
 def async_cache(expire_time: int = 300):
     def decorator(func):
         cache = {}
-        
+
         @wraps(func)
         async def wrapper(*args, **kwargs):
             # Create cache key
             key_data = f"{func.__name__}:{args}:{kwargs}"
             cache_key = hashlib.md5(key_data.encode()).hexdigest()
-            
+
             # Check cache
             if cache_key in cache:
                 result, timestamp = cache[cache_key]
                 if time.time() - timestamp < expire_time:
                     return result
-            
+
             # Execute function
             result = await func(*args, **kwargs)
             cache[cache_key] = (result, time.time())
-            
+
             return result
         return wrapper
     return decorator
@@ -313,9 +313,9 @@ from unittest.mock import AsyncMock
 async def test_with_mock_db():
     mock_db = AsyncMock()
     mock_db.fetchrow.return_value = {"id": 1, "name": "Test"}
-    
+
     app.dependency_overrides[get_db_pool] = lambda: mock_db
-    
+
     async with httpx.AsyncClient(app=app) as client:
         response = await client.get("/users/1")
         assert response.json()["name"] == "Test"

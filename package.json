@@ -2,10 +2,17 @@
   "scripts": {
     "lint:md": "markdownlint-cli2 '**/*.md' '**/*.mdx' --config .markdownlint.jsonc",
     "lint:md:ci": "markdownlint-cli2 --config .markdownlint.jsonc --formatter markdown '**/*.md' '**/*.mdx'",
-    "lint:md:staged": "git diff --name-only --cached --diff-filter=ACMRTUXB | grep -E '\\.(md|mdx)$' | xargs -r markdownlint-cli2 --config .markdownlint.jsonc"
+    "lint:md:staged": "git diff --name-only --cached --diff-filter=ACMRTUXB | grep -E '\\.(md|mdx)$' | xargs -r markdownlint-cli2 --config .markdownlint.jsonc",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:headed": "playwright test --headed",
+    "playwright:install": "playwright install",
+    "playwright:report": "playwright show-report"
   },
   "devDependencies": {
     "@anthropic-ai/claude-code": "^1.0.102",
+    "@playwright/test": "^1.55.0",
     "markdownlint-cli2": "^0.17.2"
   }
 }

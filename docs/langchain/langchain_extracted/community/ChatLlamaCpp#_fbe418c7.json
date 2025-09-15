@@ -1,0 +1,2447 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chat_models/langchain_community.chat_models.llamacpp.ChatLlamaCpp.html#langchain_community.chat_models.llamacpp.ChatLlamaCpp.use_mmap",
+  "title": "ChatLlamaCpp#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "chat_models"
+    },
+    {
+      "type": "li",
+      "content": "ChatLlamaCpp"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseChatModel"
+    },
+    {
+      "type": "p",
+      "content": "llama.cpp model."
+    },
+    {
+      "type": "p",
+      "content": "To use, you should have the llama-cpp-python library installed, and provide the\npath to the Llama model as a named parameter to the constructor.\nCheck out:abetlen/llama-cpp-python"
+    },
+    {
+      "type": "p",
+      "content": "ChatLlamaCpp implements the standardRunnableInterface. 🏃"
+    },
+    {
+      "type": "p",
+      "content": "TheRunnableInterfacehas additional methods that are available on runnables, such aswith_config,with_types,with_retry,assign,bind,get_graph, and more."
+    },
+    {
+      "type": "p",
+      "content": "Whether to cache the response."
+    },
+    {
+      "type": "li",
+      "content": "If true, will use the global cache."
+    },
+    {
+      "type": "p",
+      "content": "If true, will use the global cache."
+    },
+    {
+      "type": "li",
+      "content": "If false, will not use a cache"
+    },
+    {
+      "type": "p",
+      "content": "If false, will not use a cache"
+    },
+    {
+      "type": "li",
+      "content": "If None, will use the global cache if it’s set, otherwise no cache."
+    },
+    {
+      "type": "p",
+      "content": "If None, will use the global cache if it’s set, otherwise no cache."
+    },
+    {
+      "type": "li",
+      "content": "If instance ofBaseCache, will use the provided cache."
+    },
+    {
+      "type": "p",
+      "content": "If instance ofBaseCache, will use the provided cache."
+    },
+    {
+      "type": "p",
+      "content": "Caching is not currently supported for streaming methods of models."
+    },
+    {
+      "type": "p",
+      "content": "Deprecated since version 0.1.7:Usecallbacks()instead. It will be removed in pydantic==1.0."
+    },
+    {
+      "type": "p",
+      "content": "Callback manager to add to the run trace."
+    },
+    {
+      "type": "p",
+      "content": "Callbacks to add to the run trace."
+    },
+    {
+      "type": "p",
+      "content": "Optional encoder to use for counting tokens."
+    },
+    {
+      "type": "p",
+      "content": "Whether to disable streaming for this model."
+    },
+    {
+      "type": "p",
+      "content": "If streaming is bypassed, thenstream()/astream()/astream_events()will\ndefer toinvoke()/ainvoke()."
+    },
+    {
+      "type": "li",
+      "content": "If True, will always bypass streaming case."
+    },
+    {
+      "type": "p",
+      "content": "If True, will always bypass streaming case."
+    },
+    {
+      "type": "li",
+      "content": "If'tool_calling', will bypass streaming case only when the model is called\nwith atoolskeyword argument. In other words, LangChain will automatically\nswitch to non-streaming behavior (invoke()) only when the tools argument is\nprovided. This offers the best of both worlds."
+    },
+    {
+      "type": "p",
+      "content": "If'tool_calling', will bypass streaming case only when the model is called\nwith atoolskeyword argument. In other words, LangChain will automatically\nswitch to non-streaming behavior (invoke()) only when the tools argument is\nprovided. This offers the best of both worlds."
+    },
+    {
+      "type": "li",
+      "content": "If False (default), will always use streaming case if available."
+    },
+    {
+      "type": "p",
+      "content": "If False (default), will always use streaming case if available."
+    },
+    {
+      "type": "p",
+      "content": "The main reason for this flag is that code might be written usingstream()and\na user may want to swap out a given model for another model whose the implementation\ndoes not properly support streaming."
+    },
+    {
+      "type": "p",
+      "content": "Whether to echo the prompt."
+    },
+    {
+      "type": "p",
+      "content": "Use half-precision for key/value cache."
+    },
+    {
+      "type": "p",
+      "content": "grammar: formal grammar for constraining model outputs. For instance, the grammar\ncan be used to force the model to generate valid JSON or to speak exclusively in\nemojis. At most one of grammar_path and grammar should be passed in."
+    },
+    {
+      "type": "p",
+      "content": "grammar_path: Path to the .gbnf file that defines formal grammars\nfor constraining model outputs. For instance, the grammar can be used\nto force the model to generate valid JSON or to speak exclusively in emojis. At most\none of grammar_path and grammar should be passed in."
+    },
+    {
+      "type": "p",
+      "content": "The number of tokens to look back when applying the repeat_penalty."
+    },
+    {
+      "type": "p",
+      "content": "Return logits for all tokens, not just the last token."
+    },
+    {
+      "type": "p",
+      "content": "The number of logprobs to return. If None, no logprobs are returned."
+    },
+    {
+      "type": "p",
+      "content": "The path to the Llama LoRA base model."
+    },
+    {
+      "type": "p",
+      "content": "The path to the Llama LoRA. If None, no LoRa is loaded."
+    },
+    {
+      "type": "p",
+      "content": "The maximum number of tokens to generate."
+    },
+    {
+      "type": "p",
+      "content": "Metadata to add to the run trace."
+    },
+    {
+      "type": "p",
+      "content": "Any additional parameters to pass to llama_cpp.Llama."
+    },
+    {
+      "type": "p",
+      "content": "The path to the Llama model file."
+    },
+    {
+      "type": "p",
+      "content": "Number of tokens to process in parallel.\nShould be a number between 1 and n_ctx."
+    },
+    {
+      "type": "p",
+      "content": "Token context window."
+    },
+    {
+      "type": "p",
+      "content": "Number of layers to be loaded into gpu memory. Default None."
+    },
+    {
+      "type": "p",
+      "content": "Number of parts to split the model into.\nIf -1, the number of parts is automatically determined."
+    },
+    {
+      "type": "p",
+      "content": "Number of threads to use.\nIf None, the number of threads is automatically determined."
+    },
+    {
+      "type": "p",
+      "content": "An optional rate limiter to use for limiting the number of requests."
+    },
+    {
+      "type": "p",
+      "content": "The penalty to apply to repeated tokens."
+    },
+    {
+      "type": "p",
+      "content": "Base frequency for rope sampling."
+    },
+    {
+      "type": "p",
+      "content": "Scale factor for rope sampling."
+    },
+    {
+      "type": "p",
+      "content": "Seed. If -1, a random seed is used."
+    },
+    {
+      "type": "p",
+      "content": "A list of strings to stop generation when encountered."
+    },
+    {
+      "type": "p",
+      "content": "Whether to stream the results, token by token."
+    },
+    {
+      "type": "p",
+      "content": "A suffix to append to the generated text. If None, no suffix is appended."
+    },
+    {
+      "type": "p",
+      "content": "Tags to add to the run trace."
+    },
+    {
+      "type": "p",
+      "content": "The temperature to use for sampling."
+    },
+    {
+      "type": "p",
+      "content": "The top-k value to use for sampling."
+    },
+    {
+      "type": "p",
+      "content": "The top-p value to use for sampling."
+    },
+    {
+      "type": "p",
+      "content": "Force system to keep model in RAM."
+    },
+    {
+      "type": "p",
+      "content": "Whether to keep the model loaded in RAM"
+    },
+    {
+      "type": "p",
+      "content": "Print verbose output to stderr."
+    },
+    {
+      "type": "p",
+      "content": "Only load the vocabulary, no weights."
+    },
+    {
+      "type": "p",
+      "content": "Deprecated since version 0.1.7:Useinvoke()instead. It will not be removed until langchain-core==1.0."
+    },
+    {
+      "type": "p",
+      "content": "Call the model."
+    },
+    {
+      "type": "li",
+      "content": "messages(list[BaseMessage]) – List of messages."
+    },
+    {
+      "type": "p",
+      "content": "messages(list[BaseMessage]) – List of messages."
+    },
+    {
+      "type": "li",
+      "content": "stop(list[str]|None) – Stop words to use when generating. Model output is cut off at the\nfirst occurrence of any of these substrings."
+    },
+    {
+      "type": "p",
+      "content": "stop(list[str]|None) – Stop words to use when generating. Model output is cut off at the\nfirst occurrence of any of these substrings."
+    },
+    {
+      "type": "li",
+      "content": "callbacks(list[BaseCallbackHandler]|BaseCallbackManager|None) – Callbacks to pass through. Used for executing additional\nfunctionality, such as logging or streaming, throughout generation."
+    },
+    {
+      "type": "p",
+      "content": "callbacks(list[BaseCallbackHandler]|BaseCallbackManager|None) – Callbacks to pass through. Used for executing additional\nfunctionality, such as logging or streaming, throughout generation."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arbitrary additional keyword arguments. These are usually passed\nto the model provider API call."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arbitrary additional keyword arguments. These are usually passed\nto the model provider API call."
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If the generation is not a chat generation."
+    },
+    {
+      "type": "p",
+      "content": "The model output message."
+    },
+    {
+      "type": "p",
+      "content": "BaseMessage"
+    },
+    {
+      "type": "p",
+      "content": "Default implementation runsainvokein parallel usingasyncio.gather."
+    },
+    {
+      "type": "p",
+      "content": "The default implementation ofbatchworks well for IO bound runnables."
+    },
+    {
+      "type": "p",
+      "content": "Subclasses should override this method if they can batch more efficiently;\ne.g., if the underlyingRunnableuses an API which supports a batch mode."
+    },
+    {
+      "type": "li",
+      "content": "inputs(list[Input]) – A list of inputs to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "inputs(list[Input]) – A list of inputs to theRunnable."
+    },
+    {
+      "type": "li",
+      "content": "config(RunnableConfig|list[RunnableConfig]|None) – A config to use when invoking theRunnable.\nThe config supports standard keys like'tags','metadata'for\ntracing purposes,'max_concurrency'for controlling how much work to\ndo in parallel, and other keys. Please refer to theRunnableConfigfor more details. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "config(RunnableConfig|list[RunnableConfig]|None) – A config to use when invoking theRunnable.\nThe config supports standard keys like'tags','metadata'for\ntracing purposes,'max_concurrency'for controlling how much work to\ndo in parallel, and other keys. Please refer to theRunnableConfigfor more details. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "return_exceptions(bool) – Whether to return exceptions instead of raising them.\nDefaults to False."
+    },
+    {
+      "type": "p",
+      "content": "return_exceptions(bool) – Whether to return exceptions instead of raising them.\nDefaults to False."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any|None) – Additional keyword arguments to pass to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any|None) – Additional keyword arguments to pass to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "A list of outputs from theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "list[Output]"
+    },
+    {
+      "type": "p",
+      "content": "Runainvokein parallel on a list of inputs."
+    },
+    {
+      "type": "p",
+      "content": "Yields results as they complete."
+    },
+    {
+      "type": "li",
+      "content": "inputs(Sequence[Input]) – A list of inputs to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "inputs(Sequence[Input]) – A list of inputs to theRunnable."
+    },
+    {
+      "type": "li",
+      "content": "config(RunnableConfig|Sequence[RunnableConfig]|None) – A config to use when invoking theRunnable.\nThe config supports standard keys like'tags','metadata'for\ntracing purposes,'max_concurrency'for controlling how much work to\ndo in parallel, and other keys. Please refer to theRunnableConfigfor more details. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "config(RunnableConfig|Sequence[RunnableConfig]|None) – A config to use when invoking theRunnable.\nThe config supports standard keys like'tags','metadata'for\ntracing purposes,'max_concurrency'for controlling how much work to\ndo in parallel, and other keys. Please refer to theRunnableConfigfor more details. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "return_exceptions(bool) – Whether to return exceptions instead of raising them.\nDefaults to False."
+    },
+    {
+      "type": "p",
+      "content": "return_exceptions(bool) – Whether to return exceptions instead of raising them.\nDefaults to False."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any|None) – Additional keyword arguments to pass to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any|None) – Additional keyword arguments to pass to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "A tuple of the index of the input and the output from theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[tuple[int,Output| Exception]]"
+    },
+    {
+      "type": "p",
+      "content": "Transform a single input into an output."
+    },
+    {
+      "type": "li",
+      "content": "input(LanguageModelInput) – The input to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "input(LanguageModelInput) – The input to theRunnable."
+    },
+    {
+      "type": "li",
+      "content": "config(Optional[RunnableConfig]) – A config to use when invoking theRunnable.\nThe config supports standard keys like'tags','metadata'for\ntracing purposes,'max_concurrency'for controlling how much work to\ndo in parallel, and other keys. Please refer to theRunnableConfigfor more details. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "config(Optional[RunnableConfig]) – A config to use when invoking theRunnable.\nThe config supports standard keys like'tags','metadata'for\ntracing purposes,'max_concurrency'for controlling how much work to\ndo in parallel, and other keys. Please refer to theRunnableConfigfor more details. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "stop(Optional[list[str]])"
+    },
+    {
+      "type": "p",
+      "content": "stop(Optional[list[str]])"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "The output of theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "BaseMessage"
+    },
+    {
+      "type": "p",
+      "content": "Default implementation ofastream, which callsainvoke."
+    },
+    {
+      "type": "p",
+      "content": "Subclasses should override this method if they support streaming output."
+    },
+    {
+      "type": "li",
+      "content": "input(LanguageModelInput) – The input to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "input(LanguageModelInput) – The input to theRunnable."
+    },
+    {
+      "type": "li",
+      "content": "config(Optional[RunnableConfig]) – The config to use for theRunnable. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "config(Optional[RunnableConfig]) – The config to use for theRunnable. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments to pass to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments to pass to theRunnable."
+    },
+    {
+      "type": "li",
+      "content": "stop(Optional[list[str]])"
+    },
+    {
+      "type": "p",
+      "content": "stop(Optional[list[str]])"
+    },
+    {
+      "type": "p",
+      "content": "The output of theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[BaseMessageChunk]"
+    },
+    {
+      "type": "p",
+      "content": "Generate a stream of events."
+    },
+    {
+      "type": "p",
+      "content": "Use to create an iterator overStreamEventsthat provide real-time information\nabout the progress of theRunnable, includingStreamEventsfrom intermediate\nresults."
+    },
+    {
+      "type": "p",
+      "content": "AStreamEventis a dictionary with the following schema:"
+    },
+    {
+      "type": "li",
+      "content": "event:str- Event names are of the format:on_[runnable_type]_(start|stream|end)."
+    },
+    {
+      "type": "p",
+      "content": "event:str- Event names are of the format:on_[runnable_type]_(start|stream|end)."
+    },
+    {
+      "type": "li",
+      "content": "name:str- The name of theRunnablethat generated the event."
+    },
+    {
+      "type": "p",
+      "content": "name:str- The name of theRunnablethat generated the event."
+    },
+    {
+      "type": "li",
+      "content": "run_id:str- randomly generated ID associated with the given\nexecution of theRunnablethat emitted the event. A childRunnablethat gets\ninvoked as part of the execution of a parentRunnableis assigned its own\nunique ID."
+    },
+    {
+      "type": "p",
+      "content": "run_id:str- randomly generated ID associated with the given\nexecution of theRunnablethat emitted the event. A childRunnablethat gets\ninvoked as part of the execution of a parentRunnableis assigned its own\nunique ID."
+    },
+    {
+      "type": "li",
+      "content": "parent_ids:list[str]- The IDs of the parent runnables that generated\nthe event. The rootRunnablewill have an empty list. The order of the parent\nIDs is from the root to the immediate parent. Only available for v2 version of\nthe API. The v1 version of the API will return an empty list."
+    },
+    {
+      "type": "p",
+      "content": "parent_ids:list[str]- The IDs of the parent runnables that generated\nthe event. The rootRunnablewill have an empty list. The order of the parent\nIDs is from the root to the immediate parent. Only available for v2 version of\nthe API. The v1 version of the API will return an empty list."
+    },
+    {
+      "type": "li",
+      "content": "tags:Optional[list[str]]- The tags of theRunnablethat generated\nthe event."
+    },
+    {
+      "type": "p",
+      "content": "tags:Optional[list[str]]- The tags of theRunnablethat generated\nthe event."
+    },
+    {
+      "type": "li",
+      "content": "metadata:Optional[dict[str, Any]]- The metadata of theRunnablethat\ngenerated the event."
+    },
+    {
+      "type": "p",
+      "content": "metadata:Optional[dict[str, Any]]- The metadata of theRunnablethat\ngenerated the event."
+    },
+    {
+      "type": "li",
+      "content": "data:dict[str, Any]"
+    },
+    {
+      "type": "p",
+      "content": "data:dict[str, Any]"
+    },
+    {
+      "type": "p",
+      "content": "Below is a table that illustrates some events that might be emitted by various\nchains. Metadata fields have been omitted from the table for brevity.\nChain definitions have been included after the table."
+    },
+    {
+      "type": "p",
+      "content": "This reference table is for the v2 version of the schema."
+    },
+    {
+      "type": "p",
+      "content": "on_chat_model_start"
+    },
+    {
+      "type": "p",
+      "content": "[model name]"
+    },
+    {
+      "type": "p",
+      "content": "{\"messages\":[[SystemMessage,HumanMessage]]}"
+    },
+    {
+      "type": "p",
+      "content": "on_chat_model_stream"
+    },
+    {
+      "type": "p",
+      "content": "[model name]"
+    },
+    {
+      "type": "p",
+      "content": "AIMessageChunk(content=\"hello\")"
+    },
+    {
+      "type": "p",
+      "content": "on_chat_model_end"
+    },
+    {
+      "type": "p",
+      "content": "[model name]"
+    },
+    {
+      "type": "p",
+      "content": "{\"messages\":[[SystemMessage,HumanMessage]]}"
+    },
+    {
+      "type": "p",
+      "content": "AIMessageChunk(content=\"helloworld\")"
+    },
+    {
+      "type": "p",
+      "content": "on_llm_start"
+    },
+    {
+      "type": "p",
+      "content": "[model name]"
+    },
+    {
+      "type": "p",
+      "content": "{'input':'hello'}"
+    },
+    {
+      "type": "p",
+      "content": "on_llm_stream"
+    },
+    {
+      "type": "p",
+      "content": "[model name]"
+    },
+    {
+      "type": "p",
+      "content": "``’Hello’ ``"
+    },
+    {
+      "type": "p",
+      "content": "[model name]"
+    },
+    {
+      "type": "p",
+      "content": "'Hellohuman!'"
+    },
+    {
+      "type": "p",
+      "content": "on_chain_start"
+    },
+    {
+      "type": "p",
+      "content": "format_docs"
+    },
+    {
+      "type": "p",
+      "content": "on_chain_stream"
+    },
+    {
+      "type": "p",
+      "content": "format_docs"
+    },
+    {
+      "type": "p",
+      "content": "'helloworld!,goodbyeworld!'"
+    },
+    {
+      "type": "p",
+      "content": "on_chain_end"
+    },
+    {
+      "type": "p",
+      "content": "format_docs"
+    },
+    {
+      "type": "p",
+      "content": "[Document(...)]"
+    },
+    {
+      "type": "p",
+      "content": "'helloworld!,goodbyeworld!'"
+    },
+    {
+      "type": "p",
+      "content": "on_tool_start"
+    },
+    {
+      "type": "p",
+      "content": "{\"x\":1,\"y\":\"2\"}"
+    },
+    {
+      "type": "p",
+      "content": "on_tool_end"
+    },
+    {
+      "type": "p",
+      "content": "{\"x\":1,\"y\":\"2\"}"
+    },
+    {
+      "type": "p",
+      "content": "on_retriever_start"
+    },
+    {
+      "type": "p",
+      "content": "[retriever name]"
+    },
+    {
+      "type": "p",
+      "content": "{\"query\":\"hello\"}"
+    },
+    {
+      "type": "p",
+      "content": "on_retriever_end"
+    },
+    {
+      "type": "p",
+      "content": "[retriever name]"
+    },
+    {
+      "type": "p",
+      "content": "{\"query\":\"hello\"}"
+    },
+    {
+      "type": "p",
+      "content": "[Document(...),..]"
+    },
+    {
+      "type": "p",
+      "content": "on_prompt_start"
+    },
+    {
+      "type": "p",
+      "content": "[template_name]"
+    },
+    {
+      "type": "p",
+      "content": "{\"question\":\"hello\"}"
+    },
+    {
+      "type": "p",
+      "content": "on_prompt_end"
+    },
+    {
+      "type": "p",
+      "content": "[template_name]"
+    },
+    {
+      "type": "p",
+      "content": "{\"question\":\"hello\"}"
+    },
+    {
+      "type": "p",
+      "content": "ChatPromptValue(messages:[SystemMessage,...])"
+    },
+    {
+      "type": "p",
+      "content": "In addition to the standard events, users can also dispatch custom events (see example below)."
+    },
+    {
+      "type": "p",
+      "content": "Custom events will be only be surfaced with in the v2 version of the API!"
+    },
+    {
+      "type": "p",
+      "content": "A custom event has following format:"
+    },
+    {
+      "type": "p",
+      "content": "Description"
+    },
+    {
+      "type": "p",
+      "content": "A user defined name for the event."
+    },
+    {
+      "type": "p",
+      "content": "The data associated with the event. This can be anything, though we suggest making it JSON serializable."
+    },
+    {
+      "type": "p",
+      "content": "Here are declarations associated with the standard events shown above:"
+    },
+    {
+      "type": "p",
+      "content": "format_docs:"
+    },
+    {
+      "type": "p",
+      "content": "Example: Dispatch Custom Event"
+    },
+    {
+      "type": "li",
+      "content": "input(Any) – The input to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "input(Any) – The input to theRunnable."
+    },
+    {
+      "type": "li",
+      "content": "config(Optional[RunnableConfig]) – The config to use for theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "config(Optional[RunnableConfig]) – The config to use for theRunnable."
+    },
+    {
+      "type": "li",
+      "content": "version(Literal['v1','v2']) – The version of the schema to use either'v2'or'v1'.\nUsers should use'v2'.'v1'is for backwards compatibility and will be deprecated\nin 0.4.0.\nNo default will be assigned until the API is stabilized.\ncustom events will only be surfaced in'v2'."
+    },
+    {
+      "type": "p",
+      "content": "version(Literal['v1','v2']) – The version of the schema to use either'v2'or'v1'.\nUsers should use'v2'.'v1'is for backwards compatibility and will be deprecated\nin 0.4.0.\nNo default will be assigned until the API is stabilized.\ncustom events will only be surfaced in'v2'."
+    },
+    {
+      "type": "li",
+      "content": "include_names(Optional[Sequence[str]]) – Only include events fromRunnableswith matching names."
+    },
+    {
+      "type": "p",
+      "content": "include_names(Optional[Sequence[str]]) – Only include events fromRunnableswith matching names."
+    },
+    {
+      "type": "li",
+      "content": "include_types(Optional[Sequence[str]]) – Only include events fromRunnableswith matching types."
+    },
+    {
+      "type": "p",
+      "content": "include_types(Optional[Sequence[str]]) – Only include events fromRunnableswith matching types."
+    },
+    {
+      "type": "li",
+      "content": "include_tags(Optional[Sequence[str]]) – Only include events fromRunnableswith matching tags."
+    },
+    {
+      "type": "p",
+      "content": "include_tags(Optional[Sequence[str]]) – Only include events fromRunnableswith matching tags."
+    },
+    {
+      "type": "li",
+      "content": "exclude_names(Optional[Sequence[str]]) – Exclude events fromRunnableswith matching names."
+    },
+    {
+      "type": "p",
+      "content": "exclude_names(Optional[Sequence[str]]) – Exclude events fromRunnableswith matching names."
+    },
+    {
+      "type": "li",
+      "content": "exclude_types(Optional[Sequence[str]]) – Exclude events fromRunnableswith matching types."
+    },
+    {
+      "type": "p",
+      "content": "exclude_types(Optional[Sequence[str]]) – Exclude events fromRunnableswith matching types."
+    },
+    {
+      "type": "li",
+      "content": "exclude_tags(Optional[Sequence[str]]) – Exclude events fromRunnableswith matching tags."
+    },
+    {
+      "type": "p",
+      "content": "exclude_tags(Optional[Sequence[str]]) – Exclude events fromRunnableswith matching tags."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments to pass to theRunnable.\nThese will be passed toastream_logas this implementation\nofastream_eventsis built on top ofastream_log."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments to pass to theRunnable.\nThese will be passed toastream_logas this implementation\nofastream_eventsis built on top ofastream_log."
+    },
+    {
+      "type": "p",
+      "content": "An async stream ofStreamEvents."
+    },
+    {
+      "type": "p",
+      "content": "NotImplementedError– If the version is not'v1'or'v2'."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[StreamEvent]"
+    },
+    {
+      "type": "p",
+      "content": "Default implementation runs invoke in parallel using a thread pool executor."
+    },
+    {
+      "type": "p",
+      "content": "The default implementation of batch works well for IO bound runnables."
+    },
+    {
+      "type": "p",
+      "content": "Subclasses should override this method if they can batch more efficiently;\ne.g., if the underlyingRunnableuses an API which supports a batch mode."
+    },
+    {
+      "type": "li",
+      "content": "inputs(list[Input]) – A list of inputs to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "inputs(list[Input]) – A list of inputs to theRunnable."
+    },
+    {
+      "type": "li",
+      "content": "config(RunnableConfig|list[RunnableConfig]|None) – A config to use when invoking theRunnable.\nThe config supports standard keys like'tags','metadata'for\ntracing purposes,'max_concurrency'for controlling how much work\nto do in parallel, and other keys. Please refer to theRunnableConfigfor more details. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "config(RunnableConfig|list[RunnableConfig]|None) – A config to use when invoking theRunnable.\nThe config supports standard keys like'tags','metadata'for\ntracing purposes,'max_concurrency'for controlling how much work\nto do in parallel, and other keys. Please refer to theRunnableConfigfor more details. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "return_exceptions(bool) – Whether to return exceptions instead of raising them.\nDefaults to False."
+    },
+    {
+      "type": "p",
+      "content": "return_exceptions(bool) – Whether to return exceptions instead of raising them.\nDefaults to False."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any|None) – Additional keyword arguments to pass to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any|None) – Additional keyword arguments to pass to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "A list of outputs from theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "list[Output]"
+    },
+    {
+      "type": "p",
+      "content": "Runinvokein parallel on a list of inputs."
+    },
+    {
+      "type": "p",
+      "content": "Yields results as they complete."
+    },
+    {
+      "type": "li",
+      "content": "inputs(Sequence[Input]) – A list of inputs to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "inputs(Sequence[Input]) – A list of inputs to theRunnable."
+    },
+    {
+      "type": "li",
+      "content": "config(RunnableConfig|Sequence[RunnableConfig]|None) – A config to use when invoking theRunnable.\nThe config supports standard keys like'tags','metadata'for\ntracing purposes,'max_concurrency'for controlling how much work to\ndo in parallel, and other keys. Please refer to theRunnableConfigfor more details. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "config(RunnableConfig|Sequence[RunnableConfig]|None) – A config to use when invoking theRunnable.\nThe config supports standard keys like'tags','metadata'for\ntracing purposes,'max_concurrency'for controlling how much work to\ndo in parallel, and other keys. Please refer to theRunnableConfigfor more details. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "return_exceptions(bool) – Whether to return exceptions instead of raising them.\nDefaults to False."
+    },
+    {
+      "type": "p",
+      "content": "return_exceptions(bool) – Whether to return exceptions instead of raising them.\nDefaults to False."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any|None) – Additional keyword arguments to pass to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any|None) – Additional keyword arguments to pass to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "Tuples of the index of the input and the output from theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[tuple[int,Output| Exception]]"
+    },
+    {
+      "type": "p",
+      "content": "Bind arguments to aRunnable, returning a newRunnable."
+    },
+    {
+      "type": "p",
+      "content": "Useful when aRunnablein a chain requires an argument that is not\nin the output of the previousRunnableor included in the user input."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – The arguments to bind to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "A newRunnablewith the arguments bound."
+    },
+    {
+      "type": "p",
+      "content": "Runnable[Input,Output]"
+    },
+    {
+      "type": "p",
+      "content": "Bind tool-like objects to this chat model"
+    },
+    {
+      "type": "p",
+      "content": "tool-calling API. should be a dict of the form to force this tool\n{“type”: “function”, “function”: {“name”: <<tool_name>>}}."
+    },
+    {
+      "type": "li",
+      "content": "tools(Sequence[Dict[str,Any]|Type[BaseModel]|Callable|BaseTool])"
+    },
+    {
+      "type": "p",
+      "content": "tools(Sequence[Dict[str,Any]|Type[BaseModel]|Callable|BaseTool])"
+    },
+    {
+      "type": "li",
+      "content": "tool_choice(dict|bool|str|None)"
+    },
+    {
+      "type": "p",
+      "content": "tool_choice(dict|bool|str|None)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Runnable[PromptValue| str |Sequence[BaseMessage| list[str] | tuple[str, str] | str | dict[str,Any]],BaseMessage]"
+    },
+    {
+      "type": "p",
+      "content": "Configure alternatives forRunnablesthat can be set at runtime."
+    },
+    {
+      "type": "li",
+      "content": "which(ConfigurableField) – TheConfigurableFieldinstance that will be used to select the\nalternative."
+    },
+    {
+      "type": "p",
+      "content": "which(ConfigurableField) – TheConfigurableFieldinstance that will be used to select the\nalternative."
+    },
+    {
+      "type": "li",
+      "content": "default_key(str) – The default key to use if no alternative is selected.\nDefaults to'default'."
+    },
+    {
+      "type": "p",
+      "content": "default_key(str) – The default key to use if no alternative is selected.\nDefaults to'default'."
+    },
+    {
+      "type": "li",
+      "content": "prefix_keys(bool) – Whether to prefix the keys with theConfigurableFieldid.\nDefaults to False."
+    },
+    {
+      "type": "p",
+      "content": "prefix_keys(bool) – Whether to prefix the keys with theConfigurableFieldid.\nDefaults to False."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Runnable[Input,Output]|Callable[[],Runnable[Input,Output]]) – A dictionary of keys toRunnableinstances or callables that\nreturnRunnableinstances."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Runnable[Input,Output]|Callable[[],Runnable[Input,Output]]) – A dictionary of keys toRunnableinstances or callables that\nreturnRunnableinstances."
+    },
+    {
+      "type": "p",
+      "content": "A newRunnablewith the alternatives configured."
+    },
+    {
+      "type": "p",
+      "content": "RunnableSerializable"
+    },
+    {
+      "type": "p",
+      "content": "Configure particularRunnablefields at runtime."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(ConfigurableField|ConfigurableFieldSingleOption|ConfigurableFieldMultiOption) – A dictionary ofConfigurableFieldinstances to configure."
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If a configuration key is not found in theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "A newRunnablewith the fields configured."
+    },
+    {
+      "type": "p",
+      "content": "RunnableSerializable"
+    },
+    {
+      "type": "p",
+      "content": "Get the number of tokens present in the text."
+    },
+    {
+      "type": "p",
+      "content": "Useful for checking if an input fits in a model’s context window."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – The string input to tokenize."
+    },
+    {
+      "type": "p",
+      "content": "The integer number of tokens in the text."
+    },
+    {
+      "type": "p",
+      "content": "Get the number of tokens in the messages."
+    },
+    {
+      "type": "p",
+      "content": "Useful for checking if an input fits in a model’s context window."
+    },
+    {
+      "type": "p",
+      "content": "The base implementation ofget_num_tokens_from_messagesignores tool\nschemas."
+    },
+    {
+      "type": "li",
+      "content": "messages(list[BaseMessage]) – The message inputs to tokenize."
+    },
+    {
+      "type": "p",
+      "content": "messages(list[BaseMessage]) – The message inputs to tokenize."
+    },
+    {
+      "type": "li",
+      "content": "tools(Sequence|None) – If provided, sequence of dict,BaseModel, function, orBaseToolsto be converted to tool schemas."
+    },
+    {
+      "type": "p",
+      "content": "tools(Sequence|None) – If provided, sequence of dict,BaseModel, function, orBaseToolsto be converted to tool schemas."
+    },
+    {
+      "type": "p",
+      "content": "The sum of the number of tokens across the messages."
+    },
+    {
+      "type": "p",
+      "content": "Return the ordered ids of the tokens in a text."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – The string input to tokenize."
+    },
+    {
+      "type": "p",
+      "content": "A list of ids corresponding to the tokens in the text, in order they occur\nin the text."
+    },
+    {
+      "type": "p",
+      "content": "Transform a single input into an output."
+    },
+    {
+      "type": "li",
+      "content": "input(LanguageModelInput) – The input to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "input(LanguageModelInput) – The input to theRunnable."
+    },
+    {
+      "type": "li",
+      "content": "config(Optional[RunnableConfig]) – A config to use when invoking theRunnable.\nThe config supports standard keys like'tags','metadata'for\ntracing purposes,'max_concurrency'for controlling how much work to\ndo in parallel, and other keys. Please refer to theRunnableConfigfor more details. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "config(Optional[RunnableConfig]) – A config to use when invoking theRunnable.\nThe config supports standard keys like'tags','metadata'for\ntracing purposes,'max_concurrency'for controlling how much work to\ndo in parallel, and other keys. Please refer to theRunnableConfigfor more details. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "stop(Optional[list[str]])"
+    },
+    {
+      "type": "p",
+      "content": "stop(Optional[list[str]])"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "The output of theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "BaseMessage"
+    },
+    {
+      "type": "p",
+      "content": "Default implementation ofstream, which callsinvoke."
+    },
+    {
+      "type": "p",
+      "content": "Subclasses should override this method if they support streaming output."
+    },
+    {
+      "type": "li",
+      "content": "input(LanguageModelInput) – The input to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "input(LanguageModelInput) – The input to theRunnable."
+    },
+    {
+      "type": "li",
+      "content": "config(Optional[RunnableConfig]) – The config to use for theRunnable. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "config(Optional[RunnableConfig]) – The config to use for theRunnable. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments to pass to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments to pass to theRunnable."
+    },
+    {
+      "type": "li",
+      "content": "stop(Optional[list[str]])"
+    },
+    {
+      "type": "p",
+      "content": "stop(Optional[list[str]])"
+    },
+    {
+      "type": "p",
+      "content": "The output of theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[BaseMessageChunk]"
+    },
+    {
+      "type": "p",
+      "content": "Bind async lifecycle listeners to aRunnable."
+    },
+    {
+      "type": "p",
+      "content": "Returns a newRunnable."
+    },
+    {
+      "type": "p",
+      "content": "The Run object contains information about the run, including itsid,type,input,output,error,start_time,end_time, and\nany tags or metadata added to the run."
+    },
+    {
+      "type": "li",
+      "content": "on_start(Optional[AsyncListener]) – Called asynchronously before theRunnablestarts running,\nwith theRunobject. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "on_start(Optional[AsyncListener]) – Called asynchronously before theRunnablestarts running,\nwith theRunobject. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "on_end(Optional[AsyncListener]) – Called asynchronously after theRunnablefinishes running,\nwith theRunobject. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "on_end(Optional[AsyncListener]) – Called asynchronously after theRunnablefinishes running,\nwith theRunobject. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "on_error(Optional[AsyncListener]) – Called asynchronously if theRunnablethrows an error,\nwith theRunobject. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "on_error(Optional[AsyncListener]) – Called asynchronously if theRunnablethrows an error,\nwith theRunobject. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "A newRunnablewith the listeners bound."
+    },
+    {
+      "type": "p",
+      "content": "Runnable[Input, Output]"
+    },
+    {
+      "type": "p",
+      "content": "Bind config to aRunnable, returning a newRunnable."
+    },
+    {
+      "type": "li",
+      "content": "config(RunnableConfig|None) – The config to bind to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "config(RunnableConfig|None) – The config to bind to theRunnable."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments to pass to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments to pass to theRunnable."
+    },
+    {
+      "type": "p",
+      "content": "A newRunnablewith the config bound."
+    },
+    {
+      "type": "p",
+      "content": "Runnable[Input,Output]"
+    },
+    {
+      "type": "p",
+      "content": "Add fallbacks to aRunnable, returning a newRunnable."
+    },
+    {
+      "type": "p",
+      "content": "The newRunnablewill try the originalRunnable, and then each fallback\nin order, upon failures."
+    },
+    {
+      "type": "li",
+      "content": "fallbacks(Sequence[Runnable[Input,Output]]) – A sequence of runnables to try if the originalRunnablefails."
+    },
+    {
+      "type": "p",
+      "content": "fallbacks(Sequence[Runnable[Input,Output]]) – A sequence of runnables to try if the originalRunnablefails."
+    },
+    {
+      "type": "li",
+      "content": "exceptions_to_handle(tuple[type[BaseException],...]) – A tuple of exception types to handle.\nDefaults to(Exception,)."
+    },
+    {
+      "type": "p",
+      "content": "exceptions_to_handle(tuple[type[BaseException],...]) – A tuple of exception types to handle.\nDefaults to(Exception,)."
+    },
+    {
+      "type": "li",
+      "content": "exception_key(Optional[str]) – If string is specified then handled exceptions will be passed\nto fallbacks as part of the input under the specified key.\nIf None, exceptions will not be passed to fallbacks.\nIf used, the baseRunnableand its fallbacks must accept a\ndictionary as input. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "exception_key(Optional[str]) – If string is specified then handled exceptions will be passed\nto fallbacks as part of the input under the specified key.\nIf None, exceptions will not be passed to fallbacks.\nIf used, the baseRunnableand its fallbacks must accept a\ndictionary as input. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "A newRunnablethat will try the originalRunnable, and then each\nfallback in order, upon failures."
+    },
+    {
+      "type": "p",
+      "content": "RunnableWithFallbacksT[Input, Output]"
+    },
+    {
+      "type": "li",
+      "content": "fallbacks(Sequence[Runnable[Input,Output]]) – A sequence of runnables to try if the originalRunnablefails."
+    },
+    {
+      "type": "p",
+      "content": "fallbacks(Sequence[Runnable[Input,Output]]) – A sequence of runnables to try if the originalRunnablefails."
+    },
+    {
+      "type": "li",
+      "content": "exceptions_to_handle(tuple[type[BaseException],...]) – A tuple of exception types to handle."
+    },
+    {
+      "type": "p",
+      "content": "exceptions_to_handle(tuple[type[BaseException],...]) – A tuple of exception types to handle."
+    },
+    {
+      "type": "li",
+      "content": "exception_key(Optional[str]) – If string is specified then handled exceptions will be passed\nto fallbacks as part of the input under the specified key.\nIf None, exceptions will not be passed to fallbacks.\nIf used, the baseRunnableand its fallbacks must accept a\ndictionary as input."
+    },
+    {
+      "type": "p",
+      "content": "exception_key(Optional[str]) – If string is specified then handled exceptions will be passed\nto fallbacks as part of the input under the specified key.\nIf None, exceptions will not be passed to fallbacks.\nIf used, the baseRunnableand its fallbacks must accept a\ndictionary as input."
+    },
+    {
+      "type": "p",
+      "content": "A newRunnablethat will try the originalRunnable, and then each\nfallback in order, upon failures."
+    },
+    {
+      "type": "p",
+      "content": "RunnableWithFallbacksT[Input, Output]"
+    },
+    {
+      "type": "p",
+      "content": "Bind lifecycle listeners to aRunnable, returning a newRunnable."
+    },
+    {
+      "type": "p",
+      "content": "The Run object contains information about the run, including itsid,type,input,output,error,start_time,end_time, and\nany tags or metadata added to the run."
+    },
+    {
+      "type": "li",
+      "content": "on_start(Optional[Union[Callable[[Run],None],Callable[[Run,RunnableConfig],None]]]) – Called before theRunnablestarts running, with theRunobject. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "on_start(Optional[Union[Callable[[Run],None],Callable[[Run,RunnableConfig],None]]]) – Called before theRunnablestarts running, with theRunobject. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "on_end(Optional[Union[Callable[[Run],None],Callable[[Run,RunnableConfig],None]]]) – Called after theRunnablefinishes running, with theRunobject. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "on_end(Optional[Union[Callable[[Run],None],Callable[[Run,RunnableConfig],None]]]) – Called after theRunnablefinishes running, with theRunobject. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "on_error(Optional[Union[Callable[[Run],None],Callable[[Run,RunnableConfig],None]]]) – Called if theRunnablethrows an error, with theRunobject. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "on_error(Optional[Union[Callable[[Run],None],Callable[[Run,RunnableConfig],None]]]) – Called if theRunnablethrows an error, with theRunobject. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "A newRunnablewith the listeners bound."
+    },
+    {
+      "type": "p",
+      "content": "Runnable[Input, Output]"
+    },
+    {
+      "type": "p",
+      "content": "Create a new Runnable that retries the original Runnable on exceptions."
+    },
+    {
+      "type": "li",
+      "content": "retry_if_exception_type(tuple[type[BaseException],...]) – A tuple of exception types to retry on.\nDefaults to (Exception,)."
+    },
+    {
+      "type": "p",
+      "content": "retry_if_exception_type(tuple[type[BaseException],...]) – A tuple of exception types to retry on.\nDefaults to (Exception,)."
+    },
+    {
+      "type": "li",
+      "content": "wait_exponential_jitter(bool) – Whether to add jitter to the wait\ntime between retries. Defaults to True."
+    },
+    {
+      "type": "p",
+      "content": "wait_exponential_jitter(bool) – Whether to add jitter to the wait\ntime between retries. Defaults to True."
+    },
+    {
+      "type": "li",
+      "content": "stop_after_attempt(int) – The maximum number of attempts to make before\ngiving up. Defaults to 3."
+    },
+    {
+      "type": "p",
+      "content": "stop_after_attempt(int) – The maximum number of attempts to make before\ngiving up. Defaults to 3."
+    },
+    {
+      "type": "li",
+      "content": "exponential_jitter_params(Optional[ExponentialJitterParams]) – Parameters fortenacity.wait_exponential_jitter. Namely:initial,max,exp_base, andjitter(all float values)."
+    },
+    {
+      "type": "p",
+      "content": "exponential_jitter_params(Optional[ExponentialJitterParams]) – Parameters fortenacity.wait_exponential_jitter. Namely:initial,max,exp_base, andjitter(all float values)."
+    },
+    {
+      "type": "p",
+      "content": "A new Runnable that retries the original Runnable on exceptions."
+    },
+    {
+      "type": "p",
+      "content": "Runnable[Input, Output]"
+    },
+    {
+      "type": "p",
+      "content": "Model wrapper that returns outputs formatted to match the given schema."
+    },
+    {
+      "type": "li",
+      "content": "schema(Dict|Type[BaseModel]|None) – The output schema as a dict or a Pydantic class. If a Pydantic class\nthen the model output will be an object of that class. If a dict then\nthe model output will be a dict. With a Pydantic class the returned\nattributes will be validated, whereas with a dict they will not be. Ifmethodis “function_calling” andschemais a dict, then the dict\nmust match the OpenAI function-calling spec or be a valid JSON schema\nwith top level ‘title’ and ‘description’ keys specified."
+    },
+    {
+      "type": "p",
+      "content": "schema(Dict|Type[BaseModel]|None) – The output schema as a dict or a Pydantic class. If a Pydantic class\nthen the model output will be an object of that class. If a dict then\nthe model output will be a dict. With a Pydantic class the returned\nattributes will be validated, whereas with a dict they will not be. Ifmethodis “function_calling” andschemais a dict, then the dict\nmust match the OpenAI function-calling spec or be a valid JSON schema\nwith top level ‘title’ and ‘description’ keys specified."
+    },
+    {
+      "type": "li",
+      "content": "include_raw(bool) – If False then only the parsed structured output is returned. If\nan error occurs during model output parsing it will be raised. If True\nthen both the raw model response (a BaseMessage) and the parsed model\nresponse will be returned. If an error occurs during output parsing it\nwill be caught and returned as well. The final output is always a dict\nwith keys “raw”, “parsed”, and “parsing_error”."
+    },
+    {
+      "type": "p",
+      "content": "include_raw(bool) – If False then only the parsed structured output is returned. If\nan error occurs during model output parsing it will be raised. If True\nthen both the raw model response (a BaseMessage) and the parsed model\nresponse will be returned. If an error occurs during output parsing it\nwill be caught and returned as well. The final output is always a dict\nwith keys “raw”, “parsed”, and “parsing_error”."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Any other args to bind to model,self.bind(...,**kwargs)."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Any other args to bind to model,self.bind(...,**kwargs)."
+    },
+    {
+      "type": "p",
+      "content": "If include_raw is True then a dict with keys:raw: BaseMessage\nparsed: Optional[_DictOrPydantic]\nparsing_error: Optional[BaseException]If include_raw is False then just _DictOrPydantic is returned,\nwhere _DictOrPydantic depends on the schema:If schema is a Pydantic class then _DictOrPydantic is the Pydanticclass.If schema is a dict then _DictOrPydantic is a dict."
+    },
+    {
+      "type": "p",
+      "content": "raw: BaseMessage\nparsed: Optional[_DictOrPydantic]\nparsing_error: Optional[BaseException]"
+    },
+    {
+      "type": "p",
+      "content": "If include_raw is False then just _DictOrPydantic is returned,\nwhere _DictOrPydantic depends on the schema:"
+    },
+    {
+      "type": "p",
+      "content": "If schema is a dict then _DictOrPydantic is a dict."
+    },
+    {
+      "type": "p",
+      "content": "A Runnable that takes any ChatModel input and returns as output"
+    },
+    {
+      "type": "p",
+      "content": "Bind input and output types to aRunnable, returning a newRunnable."
+    },
+    {
+      "type": "li",
+      "content": "input_type(type[Input]|None) – The input type to bind to theRunnable. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "input_type(type[Input]|None) – The input type to bind to theRunnable. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "output_type(type[Output]|None) – The output type to bind to theRunnable. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "output_type(type[Output]|None) – The output type to bind to theRunnable. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "A new Runnable with the types bound."
+    },
+    {
+      "type": "p",
+      "content": "Runnable[Input,Output]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using ChatLlamaCpp"
+    },
+    {
+      "type": "li",
+      "content": "ChatLlamaCppcachecallback_managercallbackscustom_get_token_idsdisable_streamingechof16_kvgrammargrammar_pathlast_n_tokens_sizelogits_alllogprobslora_baselora_pathmax_tokensmetadatamodel_kwargsmodel_pathn_batchn_ctxn_gpu_layersn_partsn_threadsrate_limiterrepeat_penaltyrope_freq_baserope_freq_scaleseedstopstreamingsuffixtagstemperaturetop_ktop_puse_mlockuse_mmapverbosevocab_only__call__()abatch()abatch_as_completed()ainvoke()astream()astream_events()batch()batch_as_completed()bind()bind_tools()configurable_alternatives()configurable_fields()get_num_tokens()get_num_tokens_from_messages()get_token_ids()invoke()stream()with_alisteners()with_config()with_fallbacks()with_listeners()with_retry()with_structured_output()with_types()"
+    },
+    {
+      "type": "li",
+      "content": "callback_manager"
+    },
+    {
+      "type": "li",
+      "content": "custom_get_token_ids"
+    },
+    {
+      "type": "li",
+      "content": "disable_streaming"
+    },
+    {
+      "type": "li",
+      "content": "grammar_path"
+    },
+    {
+      "type": "li",
+      "content": "last_n_tokens_size"
+    },
+    {
+      "type": "li",
+      "content": "model_kwargs"
+    },
+    {
+      "type": "li",
+      "content": "n_gpu_layers"
+    },
+    {
+      "type": "li",
+      "content": "rate_limiter"
+    },
+    {
+      "type": "li",
+      "content": "repeat_penalty"
+    },
+    {
+      "type": "li",
+      "content": "rope_freq_base"
+    },
+    {
+      "type": "li",
+      "content": "rope_freq_scale"
+    },
+    {
+      "type": "li",
+      "content": "temperature"
+    },
+    {
+      "type": "li",
+      "content": "abatch_as_completed()"
+    },
+    {
+      "type": "li",
+      "content": "astream_events()"
+    },
+    {
+      "type": "li",
+      "content": "batch_as_completed()"
+    },
+    {
+      "type": "li",
+      "content": "bind_tools()"
+    },
+    {
+      "type": "li",
+      "content": "configurable_alternatives()"
+    },
+    {
+      "type": "li",
+      "content": "configurable_fields()"
+    },
+    {
+      "type": "li",
+      "content": "get_num_tokens()"
+    },
+    {
+      "type": "li",
+      "content": "get_num_tokens_from_messages()"
+    },
+    {
+      "type": "li",
+      "content": "get_token_ids()"
+    },
+    {
+      "type": "li",
+      "content": "with_alisteners()"
+    },
+    {
+      "type": "li",
+      "content": "with_config()"
+    },
+    {
+      "type": "li",
+      "content": "with_fallbacks()"
+    },
+    {
+      "type": "li",
+      "content": "with_listeners()"
+    },
+    {
+      "type": "li",
+      "content": "with_retry()"
+    },
+    {
+      "type": "li",
+      "content": "with_structured_output()"
+    },
+    {
+      "type": "li",
+      "content": "with_types()"
+    }
+  ],
+  "code_examples": [
+    "chat_models",
+    "BaseChatModel",
+    "RunnableInterface",
+    "RunnableInterface",
+    "with_config",
+    "with_types",
+    "with_retry",
+    "assign",
+    "bind",
+    "get_graph",
+    "BaseCache",
+    "callbacks()",
+    "stream()",
+    "astream()",
+    "astream_events()",
+    "invoke()",
+    "ainvoke()",
+    "'tool_calling'",
+    "tools",
+    "invoke()",
+    "stream()",
+    "invoke()",
+    "ainvoke",
+    "asyncio.gather",
+    "batch",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "'tags'",
+    "'metadata'",
+    "'max_concurrency'",
+    "RunnableConfig",
+    "Runnable",
+    "Runnable",
+    "ainvoke",
+    "Runnable",
+    "Runnable",
+    "'tags'",
+    "'metadata'",
+    "'max_concurrency'",
+    "RunnableConfig",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "'tags'",
+    "'metadata'",
+    "'max_concurrency'",
+    "RunnableConfig",
+    "Runnable",
+    "astream",
+    "ainvoke",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "StreamEvents",
+    "Runnable",
+    "StreamEvents",
+    "StreamEvent",
+    "event",
+    "on_[runnable_type]_(start|stream|end)",
+    "name",
+    "Runnable",
+    "run_id",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "parent_ids",
+    "Runnable",
+    "tags",
+    "Runnable",
+    "metadata",
+    "Runnable",
+    "data",
+    "on_chat_model_start",
+    "{\"messages\":[[SystemMessage,HumanMessage]]}",
+    "on_chat_model_stream",
+    "AIMessageChunk(content=\"hello\")",
+    "on_chat_model_end",
+    "{\"messages\":[[SystemMessage,HumanMessage]]}",
+    "AIMessageChunk(content=\"helloworld\")",
+    "on_llm_start",
+    "{'input':'hello'}",
+    "on_llm_stream",
+    "on_llm_end",
+    "'Hellohuman!'",
+    "on_chain_start",
+    "on_chain_stream",
+    "'helloworld!,goodbyeworld!'",
+    "on_chain_end",
+    "[Document(...)]",
+    "'helloworld!,goodbyeworld!'",
+    "on_tool_start",
+    "{\"x\":1,\"y\":\"2\"}",
+    "on_tool_end",
+    "{\"x\":1,\"y\":\"2\"}",
+    "on_retriever_start",
+    "{\"query\":\"hello\"}",
+    "on_retriever_end",
+    "{\"query\":\"hello\"}",
+    "[Document(...),..]",
+    "on_prompt_start",
+    "{\"question\":\"hello\"}",
+    "on_prompt_end",
+    "{\"question\":\"hello\"}",
+    "ChatPromptValue(messages:[SystemMessage,...])",
+    "format_docs",
+    "defformat_docs(docs:list[Document])->str:'''Format the docs.'''return\", \".join([doc.page_contentfordocindocs])format_docs=RunnableLambda(format_docs)",
+    "some_tool",
+    "@tooldefsome_tool(x:int,y:str)->dict:'''Some_tool.'''return{\"x\":x,\"y\":y}",
+    "prompt",
+    "template=ChatPromptTemplate.from_messages([(\"system\",\"You are Cat Agent 007\"),(\"human\",\"{question}\")]).with_config({\"run_name\":\"my_template\",\"tags\":[\"my_template\"]})",
+    "fromlangchain_core.runnablesimportRunnableLambdaasyncdefreverse(s:str)->str:returns[::-1]chain=RunnableLambda(func=reverse)events=[eventasyncforeventinchain.astream_events(\"hello\",version=\"v2\")]# will produce the following events (run_id, and parent_ids# has been omitted for brevity):[{\"data\":{\"input\":\"hello\"},\"event\":\"on_chain_start\",\"metadata\":{},\"name\":\"reverse\",\"tags\":[],},{\"data\":{\"chunk\":\"olleh\"},\"event\":\"on_chain_stream\",\"metadata\":{},\"name\":\"reverse\",\"tags\":[],},{\"data\":{\"output\":\"olleh\"},\"event\":\"on_chain_end\",\"metadata\":{},\"name\":\"reverse\",\"tags\":[],},]",
+    "fromlangchain_core.callbacks.managerimport(adispatch_custom_event,)fromlangchain_core.runnablesimportRunnableLambda,RunnableConfigimportasyncioasyncdefslow_thing(some_input:str,config:RunnableConfig)->str:\"\"\"Do something that takes a long time.\"\"\"awaitasyncio.sleep(1)# Placeholder for some slow operationawaitadispatch_custom_event(\"progress_event\",{\"message\":\"Finished step 1 of 3\"},config=config# Must be included for python < 3.10)awaitasyncio.sleep(1)# Placeholder for some slow operationawaitadispatch_custom_event(\"progress_event\",{\"message\":\"Finished step 2 of 3\"},config=config# Must be included for python < 3.10)awaitasyncio.sleep(1)# Placeholder for some slow operationreturn\"Done\"slow_thing=RunnableLambda(slow_thing)asyncforeventinslow_thing.astream_events(\"some_input\",version=\"v2\"):print(event)",
+    "Runnable",
+    "Runnable",
+    "'v2'",
+    "'v1'",
+    "'v2'",
+    "'v1'",
+    "'v2'",
+    "Runnables",
+    "Runnables",
+    "Runnables",
+    "Runnables",
+    "Runnables",
+    "Runnables",
+    "Runnable",
+    "astream_log",
+    "astream_events",
+    "astream_log",
+    "StreamEvents",
+    "'v1'",
+    "'v2'",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "'tags'",
+    "'metadata'",
+    "'max_concurrency'",
+    "RunnableConfig",
+    "Runnable",
+    "Runnable",
+    "invoke",
+    "Runnable",
+    "Runnable",
+    "'tags'",
+    "'metadata'",
+    "'max_concurrency'",
+    "RunnableConfig",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "fromlangchain_ollamaimportChatOllamafromlangchain_core.output_parsersimportStrOutputParserllm=ChatOllama(model=\"llama2\")# Without bind.chain=llm|StrOutputParser()chain.invoke(\"Repeat quoted words exactly: 'One two three four five.'\")# Output is 'One two three four five.'# With bind.chain=llm.bind(stop=[\"three\"])|StrOutputParser()chain.invoke(\"Repeat quoted words exactly: 'One two three four five.'\")# Output is 'One two'",
+    "Runnables",
+    "ConfigurableField",
+    "'default'",
+    "ConfigurableField",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "fromlangchain_anthropicimportChatAnthropicfromlangchain_core.runnables.utilsimportConfigurableFieldfromlangchain_openaiimportChatOpenAImodel=ChatAnthropic(model_name=\"claude-3-7-sonnet-20250219\").configurable_alternatives(ConfigurableField(id=\"llm\"),default_key=\"anthropic\",openai=ChatOpenAI(),)# uses the default model ChatAnthropicprint(model.invoke(\"which organization created you?\").content)# uses ChatOpenAIprint(model.with_config(configurable={\"llm\":\"openai\"}).invoke(\"which organization created you?\").content)",
+    "Runnable",
+    "ConfigurableField",
+    "Runnable",
+    "Runnable",
+    "fromlangchain_core.runnablesimportConfigurableFieldfromlangchain_openaiimportChatOpenAImodel=ChatOpenAI(max_tokens=20).configurable_fields(max_tokens=ConfigurableField(id=\"output_token_number\",name=\"Max tokens in the output\",description=\"The maximum number of tokens in the output\",))# max_tokens = 20print(\"max_tokens_20: \",model.invoke(\"tell me something about chess\").content)# max_tokens = 200print(\"max_tokens_200: \",model.with_config(configurable={\"output_token_number\":200}).invoke(\"tell me something about chess\").content,)",
+    "get_num_tokens_from_messages",
+    "BaseModel",
+    "BaseTools",
+    "Runnable",
+    "Runnable",
+    "'tags'",
+    "'metadata'",
+    "'max_concurrency'",
+    "RunnableConfig",
+    "Runnable",
+    "stream",
+    "invoke",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "id",
+    "type",
+    "input",
+    "output",
+    "error",
+    "start_time",
+    "end_time",
+    "Runnable",
+    "Run",
+    "Runnable",
+    "Run",
+    "Runnable",
+    "Run",
+    "Runnable",
+    "fromlangchain_core.runnablesimportRunnableLambda,Runnablefromdatetimeimportdatetime,timezoneimporttimeimportasynciodefformat_t(timestamp:float)->str:returndatetime.fromtimestamp(timestamp,tz=timezone.utc).isoformat()asyncdeftest_runnable(time_to_sleep:int):print(f\"Runnable[{time_to_sleep}s]: starts at{format_t(time.time())}\")awaitasyncio.sleep(time_to_sleep)print(f\"Runnable[{time_to_sleep}s]: ends at{format_t(time.time())}\")asyncdeffn_start(run_obj:Runnable):print(f\"on start callback starts at{format_t(time.time())}\")awaitasyncio.sleep(3)print(f\"on start callback ends at{format_t(time.time())}\")asyncdeffn_end(run_obj:Runnable):print(f\"on end callback starts at{format_t(time.time())}\")awaitasyncio.sleep(2)print(f\"on end callback ends at{format_t(time.time())}\")runnable=RunnableLambda(test_runnable).with_alisteners(on_start=fn_start,on_end=fn_end)asyncdefconcurrent_runs():awaitasyncio.gather(runnable.ainvoke(2),runnable.ainvoke(3))asyncio.run(concurrent_runs())Result:onstartcallbackstartsat2025-03-01T07:05:22.875378+00:00onstartcallbackstartsat2025-03-01T07:05:22.875495+00:00onstartcallbackendsat2025-03-01T07:05:25.878862+00:00onstartcallbackendsat2025-03-01T07:05:25.878947+00:00Runnable[2s]:startsat2025-03-01T07:05:25.879392+00:00Runnable[3s]:startsat2025-03-01T07:05:25.879804+00:00Runnable[2s]:endsat2025-03-01T07:05:27.881998+00:00onendcallbackstartsat2025-03-01T07:05:27.882360+00:00Runnable[3s]:endsat2025-03-01T07:05:28.881737+00:00onendcallbackstartsat2025-03-01T07:05:28.882428+00:00onendcallbackendsat2025-03-01T07:05:29.883893+00:00onendcallbackendsat2025-03-01T07:05:30.884831+00:00",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "(Exception,)",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "fromtypingimportIteratorfromlangchain_core.runnablesimportRunnableGeneratordef_generate_immediate_error(input:Iterator)->Iterator[str]:raiseValueError()yield\"\"def_generate(input:Iterator)->Iterator[str]:yield from\"foo bar\"runnable=RunnableGenerator(_generate_immediate_error).with_fallbacks([RunnableGenerator(_generate)])print(\"\".join(runnable.stream({})))# foo bar",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "id",
+    "type",
+    "input",
+    "output",
+    "error",
+    "start_time",
+    "end_time",
+    "Runnable",
+    "Run",
+    "Runnable",
+    "Run",
+    "Runnable",
+    "Run",
+    "Runnable",
+    "fromlangchain_core.runnablesimportRunnableLambdafromlangchain_core.tracers.schemasimportRunimporttimedeftest_runnable(time_to_sleep:int):time.sleep(time_to_sleep)deffn_start(run_obj:Run):print(\"start_time:\",run_obj.start_time)deffn_end(run_obj:Run):print(\"end_time:\",run_obj.end_time)chain=RunnableLambda(test_runnable).with_listeners(on_start=fn_start,on_end=fn_end)chain.invoke(2)",
+    "tenacity.wait_exponential_jitter",
+    "initial",
+    "max",
+    "exp_base",
+    "jitter",
+    "fromlangchain_core.runnablesimportRunnableLambdacount=0def_lambda(x:int)->None:globalcountcount=count+1ifx==1:raiseValueError(\"x is 1\")else:passrunnable=RunnableLambda(_lambda)try:runnable.with_retry(stop_after_attempt=2,retry_if_exception_type=(ValueError,),).invoke(1)exceptValueError:passassertcount==2",
+    "self.bind(...,**kwargs)",
+    "fromlangchain_community.chat_modelsimportChatLlamaCppfrompydanticimportBaseModelclassAnswerWithJustification(BaseModel):'''An answer to the user question along with justification for the answer.'''answer:strjustification:strllm=ChatLlamaCpp(temperature=0.,model_path=\"./SanctumAI-meta-llama-3-8b-instruct.Q8_0.gguf\",n_ctx=10000,n_gpu_layers=4,n_batch=200,max_tokens=512,n_threads=multiprocessing.cpu_count()-1,repeat_penalty=1.5,top_p=0.5,stop=[\"<|end_of_text|>\",\"<|eot_id|>\"],)structured_llm=llm.with_structured_output(AnswerWithJustification)structured_llm.invoke(\"What weighs more a pound of bricks or a pound of feathers\")# -> AnswerWithJustification(#     answer='They weigh the same',#     justification='Both a pound of bricks and a pound of feathers weigh one pound. The weight is the same, but the volume or density of the objects may differ.'# )",
+    "fromlangchain_community.chat_modelsimportChatLlamaCppfrompydanticimportBaseModelclassAnswerWithJustification(BaseModel):'''An answer to the user question along with justification for the answer.'''answer:strjustification:strllm=ChatLlamaCpp(temperature=0.,model_path=\"./SanctumAI-meta-llama-3-8b-instruct.Q8_0.gguf\",n_ctx=10000,n_gpu_layers=4,n_batch=200,max_tokens=512,n_threads=multiprocessing.cpu_count()-1,repeat_penalty=1.5,top_p=0.5,stop=[\"<|end_of_text|>\",\"<|eot_id|>\"],)structured_llm=llm.with_structured_output(AnswerWithJustification,include_raw=True)structured_llm.invoke(\"What weighs more a pound of bricks or a pound of feathers\")# -> {#     'raw': AIMessage(content='', additional_kwargs={'tool_calls': [{'id': 'call_Ao02pnFYXD6GN1yzc0uXPsvF', 'function': {'arguments': '{\"answer\":\"They weigh the same.\",\"justification\":\"Both a pound of bricks and a pound of feathers weigh one pound. The weight is the same, but the volume or density of the objects may differ.\"}', 'name': 'AnswerWithJustification'}, 'type': 'function'}]}),#     'parsed': AnswerWithJustification(answer='They weigh the same.', justification='Both a pound of bricks and a pound of feathers weigh one pound. The weight is the same, but the volume or density of the objects may differ.'),#     'parsing_error': None# }",
+    "fromlangchain_community.chat_modelsimportChatLlamaCppfrompydanticimportBaseModelfromlangchain_core.utils.function_callingimportconvert_to_openai_toolclassAnswerWithJustification(BaseModel):'''An answer to the user question along with justification for the answer.'''answer:strjustification:strdict_schema=convert_to_openai_tool(AnswerWithJustification)llm=ChatLlamaCpp(temperature=0.,model_path=\"./SanctumAI-meta-llama-3-8b-instruct.Q8_0.gguf\",n_ctx=10000,n_gpu_layers=4,n_batch=200,max_tokens=512,n_threads=multiprocessing.cpu_count()-1,repeat_penalty=1.5,top_p=0.5,stop=[\"<|end_of_text|>\",\"<|eot_id|>\"],)structured_llm=llm.with_structured_output(dict_schema)structured_llm.invoke(\"What weighs more a pound of bricks or a pound of feathers\")# -> {#     'answer': 'They weigh the same',#     'justification': 'Both a pound of bricks and a pound of feathers weigh one pound. The weight is the same, but the volume and density of the two substances differ.'# }",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "Runnable",
+    "ChatLlamaCpp",
+    "cache",
+    "callback_manager",
+    "callbacks",
+    "custom_get_token_ids",
+    "disable_streaming",
+    "echo",
+    "f16_kv",
+    "grammar",
+    "grammar_path",
+    "last_n_tokens_size",
+    "logits_all",
+    "logprobs",
+    "lora_base",
+    "lora_path",
+    "max_tokens",
+    "metadata",
+    "model_kwargs",
+    "model_path",
+    "n_batch",
+    "n_ctx",
+    "n_gpu_layers",
+    "n_parts",
+    "n_threads",
+    "rate_limiter",
+    "repeat_penalty",
+    "rope_freq_base",
+    "rope_freq_scale",
+    "seed",
+    "stop",
+    "streaming",
+    "suffix",
+    "tags",
+    "temperature",
+    "top_k",
+    "top_p",
+    "use_mlock",
+    "use_mmap",
+    "verbose",
+    "vocab_only",
+    "__call__()",
+    "abatch()",
+    "abatch_as_completed()",
+    "ainvoke()",
+    "astream()",
+    "astream_events()",
+    "batch()",
+    "batch_as_completed()",
+    "bind()",
+    "bind_tools()",
+    "configurable_alternatives()",
+    "configurable_fields()",
+    "get_num_tokens()",
+    "get_num_tokens_from_messages()",
+    "get_token_ids()",
+    "invoke()",
+    "stream()",
+    "with_alisteners()",
+    "with_config()",
+    "with_fallbacks()",
+    "with_listeners()",
+    "with_retry()",
+    "with_structured_output()",
+    "with_types()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.chat_models.llamacpp.ChatLlamaCpp[source]#",
+    "langchain_community.chat_models.llamacpp.",
+    "ChatLlamaCpp",
+    "paramcache:BaseCache|bool|None=None#",
+    "cache",
+    "paramcallback_manager:BaseCallbackManager|None=None#",
+    "callback_manager",
+    "paramcallbacks:Callbacks=None#",
+    "callbacks",
+    "paramcustom_get_token_ids:Callable[[str],list[int]]|None=None#",
+    "custom_get_token_ids",
+    "paramdisable_streaming:bool|Literal['tool_calling']=False#",
+    "disable_streaming",
+    "paramecho:bool=False#",
+    "echo",
+    "paramf16_kv:bool=True#",
+    "f16_kv",
+    "paramgrammar:Any=None#",
+    "grammar",
+    "paramgrammar_path:str|Path|None=None#",
+    "grammar_path",
+    "paramlast_n_tokens_size:int=64#",
+    "last_n_tokens_size",
+    "paramlogits_all:bool=False#",
+    "logits_all",
+    "paramlogprobs:int|None=None#",
+    "logprobs",
+    "paramlora_base:str|None=None#",
+    "lora_base",
+    "paramlora_path:str|None=None#",
+    "lora_path",
+    "parammax_tokens:int=256#",
+    "max_tokens",
+    "parammetadata:dict[str,Any]|None=None#",
+    "metadata",
+    "parammodel_kwargs:Dict[str,Any][Optional]#",
+    "model_kwargs",
+    "parammodel_path:str[Required]#",
+    "model_path",
+    "paramn_batch:int=8#",
+    "n_batch",
+    "paramn_ctx:int=512#",
+    "n_ctx",
+    "paramn_gpu_layers:int|None=None#",
+    "n_gpu_layers",
+    "paramn_parts:int=-1#",
+    "n_parts",
+    "paramn_threads:int|None=None#",
+    "n_threads",
+    "paramrate_limiter:BaseRateLimiter|None=None#",
+    "rate_limiter",
+    "paramrepeat_penalty:float=1.1#",
+    "repeat_penalty",
+    "paramrope_freq_base:float=10000.0#",
+    "rope_freq_base",
+    "paramrope_freq_scale:float=1.0#",
+    "rope_freq_scale",
+    "paramseed:int=-1#",
+    "seed",
+    "paramstop:List[str]|None=None#",
+    "stop",
+    "paramstreaming:bool=True#",
+    "streaming",
+    "paramsuffix:str|None=None#",
+    "suffix",
+    "paramtags:list[str]|None=None#",
+    "tags",
+    "paramtemperature:float=0.8#",
+    "temperature",
+    "paramtop_k:int=40#",
+    "top_k",
+    "paramtop_p:float=0.95#",
+    "top_p",
+    "paramuse_mlock:bool=False#",
+    "use_mlock",
+    "paramuse_mmap:bool=True#",
+    "use_mmap",
+    "paramverbose:bool=True#",
+    "verbose",
+    "paramvocab_only:bool=False#",
+    "vocab_only",
+    "__call__(messages:list[BaseMessage],stop:list[str]|None=None,callbacks:list[BaseCallbackHandler]|BaseCallbackManager|None=None,**kwargs:Any,)→BaseMessage#",
+    "__call__",
+    "(",
+    "messages:list[BaseMessage]",
+    "stop:list[str]|None=None",
+    "callbacks:list[BaseCallbackHandler]|BaseCallbackManager|None=None",
+    "**kwargs:Any",
+    ")",
+    "→BaseMessage",
+    "→",
+    "BaseMessage",
+    "asyncabatch(inputs:list[Input],config:RunnableConfig|list[RunnableConfig]|None=None,*,return_exceptions:bool=False,**kwargs:Any|None,)→list[Output]#",
+    "abatch",
+    "(",
+    "inputs:list[Input]",
+    "config:RunnableConfig|list[RunnableConfig]|None=None",
+    "*",
+    "return_exceptions:bool=False",
+    "**kwargs:Any|None",
+    ")",
+    "→list[Output]",
+    "→",
+    "list[Output]",
+    "asyncabatch_as_completed(inputs:Sequence[Input],config:RunnableConfig|Sequence[RunnableConfig]|None=None,*,return_exceptions:bool=False,**kwargs:Any|None,)→AsyncIterator[tuple[int,Output|Exception]]#",
+    "abatch_as_completed",
+    "(",
+    "inputs:Sequence[Input]",
+    "config:RunnableConfig|Sequence[RunnableConfig]|None=None",
+    "*",
+    "return_exceptions:bool=False",
+    "**kwargs:Any|None",
+    ")",
+    "→AsyncIterator[tuple[int,Output|Exception]]",
+    "→",
+    "AsyncIterator[tuple[int,Output|Exception]]",
+    "asyncainvoke(input:LanguageModelInput,config:RunnableConfig|None=None,*,stop:list[str]|None=None,**kwargs:Any,)→BaseMessage#",
+    "ainvoke",
+    "(",
+    "input:LanguageModelInput",
+    "config:RunnableConfig|None=None",
+    "*",
+    "stop:list[str]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→BaseMessage",
+    "→",
+    "BaseMessage",
+    "asyncastream(input:LanguageModelInput,config:RunnableConfig|None=None,*,stop:list[str]|None=None,**kwargs:Any,)→AsyncIterator[BaseMessageChunk]#",
+    "astream",
+    "(",
+    "input:LanguageModelInput",
+    "config:RunnableConfig|None=None",
+    "*",
+    "stop:list[str]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→AsyncIterator[BaseMessageChunk]",
+    "→",
+    "AsyncIterator[BaseMessageChunk]",
+    "asyncastream_events(input:Any,config:RunnableConfig|None=None,*,version:Literal['v1','v2']='v2',include_names:Sequence[str]|None=None,include_types:Sequence[str]|None=None,include_tags:Sequence[str]|None=None,exclude_names:Sequence[str]|None=None,exclude_types:Sequence[str]|None=None,exclude_tags:Sequence[str]|None=None,**kwargs:Any,)→AsyncIterator[StreamEvent]#",
+    "astream_events",
+    "(",
+    "input:Any",
+    "config:RunnableConfig|None=None",
+    "*",
+    "version:Literal['v1','v2']='v2'",
+    "include_names:Sequence[str]|None=None",
+    "include_types:Sequence[str]|None=None",
+    "include_tags:Sequence[str]|None=None",
+    "exclude_names:Sequence[str]|None=None",
+    "exclude_types:Sequence[str]|None=None",
+    "exclude_tags:Sequence[str]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→AsyncIterator[StreamEvent]",
+    "→",
+    "AsyncIterator[StreamEvent]",
+    "batch(inputs:list[Input],config:RunnableConfig|list[RunnableConfig]|None=None,*,return_exceptions:bool=False,**kwargs:Any|None,)→list[Output]#",
+    "batch",
+    "(",
+    "inputs:list[Input]",
+    "config:RunnableConfig|list[RunnableConfig]|None=None",
+    "*",
+    "return_exceptions:bool=False",
+    "**kwargs:Any|None",
+    ")",
+    "→list[Output]",
+    "→",
+    "list[Output]",
+    "batch_as_completed(inputs:Sequence[Input],config:RunnableConfig|Sequence[RunnableConfig]|None=None,*,return_exceptions:bool=False,**kwargs:Any|None,)→Iterator[tuple[int,Output|Exception]]#",
+    "batch_as_completed",
+    "(",
+    "inputs:Sequence[Input]",
+    "config:RunnableConfig|Sequence[RunnableConfig]|None=None",
+    "*",
+    "return_exceptions:bool=False",
+    "**kwargs:Any|None",
+    ")",
+    "→Iterator[tuple[int,Output|Exception]]",
+    "→",
+    "Iterator[tuple[int,Output|Exception]]",
+    "bind(**kwargs:Any,)→Runnable[Input,Output]#",
+    "bind",
+    "(",
+    "**kwargs:Any",
+    ")",
+    "→Runnable[Input,Output]",
+    "→",
+    "Runnable[Input,Output]",
+    "bind_tools(tools:Sequence[Dict[str,Any]|Type[BaseModel]|Callable|BaseTool],*,tool_choice:dict|bool|str|None=None,**kwargs:Any,)→Runnable[PromptValue|str|Sequence[BaseMessage|list[str]|tuple[str,str]|str|dict[str,Any]],BaseMessage][source]#",
+    "bind_tools",
+    "(",
+    "tools:Sequence[Dict[str,Any]|Type[BaseModel]|Callable|BaseTool]",
+    "*",
+    "tool_choice:dict|bool|str|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Runnable[PromptValue|str|Sequence[BaseMessage|list[str]|tuple[str,str]|str|dict[str,Any]],BaseMessage]",
+    "→",
+    "Runnable[PromptValue|str|Sequence[BaseMessage|list[str]|tuple[str,str]|str|dict[str,Any]],BaseMessage]",
+    "configurable_alternatives(which:ConfigurableField,*,default_key:str='default',prefix_keys:bool=False,**kwargs:Runnable[Input,Output]|Callable[[],Runnable[Input,Output]],)→RunnableSerializable#",
+    "configurable_alternatives",
+    "(",
+    "which:ConfigurableField",
+    "*",
+    "default_key:str='default'",
+    "prefix_keys:bool=False",
+    "**kwargs:Runnable[Input,Output]|Callable[[],Runnable[Input,Output]]",
+    ")",
+    "→RunnableSerializable",
+    "→",
+    "RunnableSerializable",
+    "configurable_fields(**kwargs:ConfigurableField|ConfigurableFieldSingleOption|ConfigurableFieldMultiOption,)→RunnableSerializable#",
+    "configurable_fields",
+    "(",
+    "**kwargs:ConfigurableField|ConfigurableFieldSingleOption|ConfigurableFieldMultiOption",
+    ")",
+    "→RunnableSerializable",
+    "→",
+    "RunnableSerializable",
+    "get_num_tokens(text:str)→int#",
+    "get_num_tokens",
+    "(",
+    "text:str",
+    ")",
+    "→int",
+    "→",
+    "int",
+    "get_num_tokens_from_messages(messages:list[BaseMessage],tools:Sequence|None=None,)→int#",
+    "get_num_tokens_from_messages",
+    "(",
+    "messages:list[BaseMessage]",
+    "tools:Sequence|None=None",
+    ")",
+    "→int",
+    "→",
+    "int",
+    "get_token_ids(text:str)→list[int]#",
+    "get_token_ids",
+    "(",
+    "text:str",
+    ")",
+    "→list[int]",
+    "→",
+    "list[int]",
+    "invoke(input:LanguageModelInput,config:RunnableConfig|None=None,*,stop:list[str]|None=None,**kwargs:Any,)→BaseMessage#",
+    "invoke",
+    "(",
+    "input:LanguageModelInput",
+    "config:RunnableConfig|None=None",
+    "*",
+    "stop:list[str]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→BaseMessage",
+    "→",
+    "BaseMessage",
+    "stream(input:LanguageModelInput,config:RunnableConfig|None=None,*,stop:list[str]|None=None,**kwargs:Any,)→Iterator[BaseMessageChunk]#",
+    "stream",
+    "(",
+    "input:LanguageModelInput",
+    "config:RunnableConfig|None=None",
+    "*",
+    "stop:list[str]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Iterator[BaseMessageChunk]",
+    "→",
+    "Iterator[BaseMessageChunk]",
+    "with_alisteners(*,on_start:AsyncListener|None=None,on_end:AsyncListener|None=None,on_error:AsyncListener|None=None,)→Runnable[Input,Output]#",
+    "with_alisteners",
+    "(",
+    "*",
+    "on_start:AsyncListener|None=None",
+    "on_end:AsyncListener|None=None",
+    "on_error:AsyncListener|None=None",
+    ")",
+    "→Runnable[Input,Output]",
+    "→",
+    "Runnable[Input,Output]",
+    "with_config(config:RunnableConfig|None=None,**kwargs:Any,)→Runnable[Input,Output]#",
+    "with_config",
+    "(",
+    "config:RunnableConfig|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Runnable[Input,Output]",
+    "→",
+    "Runnable[Input,Output]",
+    "with_fallbacks(fallbacks:Sequence[Runnable[Input,Output]],*,exceptions_to_handle:tuple[type[BaseException],...]=(<class'Exception'>,),exception_key:Optional[str]=None)→RunnableWithFallbacksT[Input,Output]#",
+    "with_fallbacks",
+    "(",
+    "fallbacks:Sequence[Runnable[Input,Output]],*,exceptions_to_handle:tuple[type[BaseException],...]=(<class'Exception'>,),exception_key:Optional[str]=None",
+    ")",
+    "→RunnableWithFallbacksT[Input,Output]",
+    "→",
+    "RunnableWithFallbacksT[Input,Output]",
+    "with_listeners(*,on_start:Callable[[Run],None]|Callable[[Run,RunnableConfig],None]|None=None,on_end:Callable[[Run],None]|Callable[[Run,RunnableConfig],None]|None=None,on_error:Callable[[Run],None]|Callable[[Run,RunnableConfig],None]|None=None,)→Runnable[Input,Output]#",
+    "with_listeners",
+    "(",
+    "*",
+    "on_start:Callable[[Run],None]|Callable[[Run,RunnableConfig],None]|None=None",
+    "on_end:Callable[[Run],None]|Callable[[Run,RunnableConfig],None]|None=None",
+    "on_error:Callable[[Run],None]|Callable[[Run,RunnableConfig],None]|None=None",
+    ")",
+    "→Runnable[Input,Output]",
+    "→",
+    "Runnable[Input,Output]",
+    "with_retry(*,retry_if_exception_type:tuple[type[BaseException],...]=(<class'Exception'>,),wait_exponential_jitter:bool=True,exponential_jitter_params:Optional[ExponentialJitterParams]=None,stop_after_attempt:int=3)→Runnable[Input,Output]#",
+    "with_retry",
+    "(",
+    "*,retry_if_exception_type:tuple[type[BaseException],...]=(<class'Exception'>,),wait_exponential_jitter:bool=True,exponential_jitter_params:Optional[ExponentialJitterParams]=None,stop_after_attempt:int=3",
+    ")",
+    "→Runnable[Input,Output]",
+    "→",
+    "Runnable[Input,Output]",
+    "with_structured_output(schema:Dict|Type[BaseModel]|None=None,*,include_raw:bool=False,**kwargs:Any,)→Runnable[PromptValue|str|Sequence[BaseMessage|list[str]|tuple[str,str]|str|dict[str,Any]],Dict|BaseModel][source]#",
+    "with_structured_output",
+    "(",
+    "schema:Dict|Type[BaseModel]|None=None",
+    "*",
+    "include_raw:bool=False",
+    "**kwargs:Any",
+    ")",
+    "→Runnable[PromptValue|str|Sequence[BaseMessage|list[str]|tuple[str,str]|str|dict[str,Any]],Dict|BaseModel]",
+    "→",
+    "Runnable[PromptValue|str|Sequence[BaseMessage|list[str]|tuple[str,str]|str|dict[str,Any]],Dict|BaseModel]",
+    "with_types(*,input_type:type[Input]|None=None,output_type:type[Output]|None=None,)→Runnable[Input,Output]#",
+    "with_types",
+    "(",
+    "*",
+    "input_type:type[Input]|None=None",
+    "output_type:type[Output]|None=None",
+    ")",
+    "→Runnable[Input,Output]",
+    "→",
+    "Runnable[Input,Output]"
+  ],
+  "parameters": [
+    "messages:list[BaseMessage]",
+    "stop:list[str]|None=None",
+    "callbacks:list[BaseCallbackHandler]|BaseCallbackManager|None=None",
+    "**kwargs:Any",
+    "inputs:list[Input]",
+    "config:RunnableConfig|list[RunnableConfig]|None=None",
+    "*",
+    "return_exceptions:bool=False",
+    "**kwargs:Any|None",
+    "inputs:Sequence[Input]",
+    "config:RunnableConfig|Sequence[RunnableConfig]|None=None",
+    "*",
+    "return_exceptions:bool=False",
+    "**kwargs:Any|None",
+    "input:LanguageModelInput",
+    "config:RunnableConfig|None=None",
+    "*",
+    "stop:list[str]|None=None",
+    "**kwargs:Any",
+    "input:LanguageModelInput",
+    "config:RunnableConfig|None=None",
+    "*",
+    "stop:list[str]|None=None",
+    "**kwargs:Any",
+    "input:Any",
+    "config:RunnableConfig|None=None",
+    "*",
+    "version:Literal['v1','v2']='v2'",
+    "include_names:Sequence[str]|None=None",
+    "include_types:Sequence[str]|None=None",
+    "include_tags:Sequence[str]|None=None",
+    "exclude_names:Sequence[str]|None=None",
+    "exclude_types:Sequence[str]|None=None",
+    "exclude_tags:Sequence[str]|None=None",
+    "**kwargs:Any",
+    "inputs:list[Input]",
+    "config:RunnableConfig|list[RunnableConfig]|None=None",
+    "*",
+    "return_exceptions:bool=False",
+    "**kwargs:Any|None",
+    "inputs:Sequence[Input]",
+    "config:RunnableConfig|Sequence[RunnableConfig]|None=None",
+    "*",
+    "return_exceptions:bool=False",
+    "**kwargs:Any|None",
+    "**kwargs:Any",
+    "tools:Sequence[Dict[str,Any]|Type[BaseModel]|Callable|BaseTool]",
+    "*",
+    "tool_choice:dict|bool|str|None=None",
+    "**kwargs:Any",
+    "which:ConfigurableField",
+    "*",
+    "default_key:str='default'",
+    "prefix_keys:bool=False",
+    "**kwargs:Runnable[Input,Output]|Callable[[],Runnable[Input,Output]]",
+    "**kwargs:ConfigurableField|ConfigurableFieldSingleOption|ConfigurableFieldMultiOption",
+    "text:str",
+    "messages:list[BaseMessage]",
+    "tools:Sequence|None=None",
+    "text:str",
+    "input:LanguageModelInput",
+    "config:RunnableConfig|None=None",
+    "*",
+    "stop:list[str]|None=None",
+    "**kwargs:Any",
+    "input:LanguageModelInput",
+    "config:RunnableConfig|None=None",
+    "*",
+    "stop:list[str]|None=None",
+    "**kwargs:Any",
+    "*",
+    "on_start:AsyncListener|None=None",
+    "on_end:AsyncListener|None=None",
+    "on_error:AsyncListener|None=None",
+    "config:RunnableConfig|None=None",
+    "**kwargs:Any",
+    "fallbacks:Sequence[Runnable[Input,Output]],*,exceptions_to_handle:tuple[type[BaseException],...]=(<class'Exception'>,),exception_key:Optional[str]=None",
+    "*",
+    "on_start:Callable[[Run],None]|Callable[[Run,RunnableConfig],None]|None=None",
+    "on_end:Callable[[Run],None]|Callable[[Run,RunnableConfig],None]|None=None",
+    "on_error:Callable[[Run],None]|Callable[[Run,RunnableConfig],None]|None=None",
+    "*,retry_if_exception_type:tuple[type[BaseException],...]=(<class'Exception'>,),wait_exponential_jitter:bool=True,exponential_jitter_params:Optional[ExponentialJitterParams]=None,stop_after_attempt:int=3",
+    "schema:Dict|Type[BaseModel]|None=None",
+    "*",
+    "include_raw:bool=False",
+    "**kwargs:Any",
+    "*",
+    "input_type:type[Input]|None=None",
+    "output_type:type[Output]|None=None"
+  ]
+}

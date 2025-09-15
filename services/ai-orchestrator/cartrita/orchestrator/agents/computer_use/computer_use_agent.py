@@ -12,7 +12,7 @@ from typing import Any
 
 import structlog
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_openai import ChatOpenAI
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from pydantic import BaseModel, Field, field_validator
 
 
@@ -153,10 +153,10 @@ class ComputerUseAgent:
         # Normalize safety_mode to a strict boolean
         self.safety_mode = self._normalize_safety_mode(safety_mode)
 
-        # Initialize GPT-5 computer use model
-        self.computer_llm = ChatOpenAI(
+        # Initialize GPT-5 computer use model via factory
+        self.computer_llm = create_chat_openai(
             model=self.model,
-            temperature=0.1,  # Low temperature for precise computer operations
+            temperature=0.1,
             max_completion_tokens=4096,
             openai_api_key=self.api_key,
         )
@@ -244,106 +244,186 @@ class ComputerUseAgent:
         start_time = time.time()
 
         try:
-            # Extract computer task from messages
-            computer_task = self._extract_computer_task(messages)
-
-            # Create computer use request
-            computer_request = ComputerUseRequest(
-                task=computer_task,
-                screenshot_needed=context.get("screenshot_needed", False),
-                file_operations=context.get("file_operations", []),
-                system_commands=context.get("system_commands", []),
-                safety_mode=self.safety_mode,
-            )
+            # Prepare request
+            computer_request = self._prepare_computer_request(messages, context)
 
             # Execute computer task
             result = await self._perform_computer_task(computer_request)
 
-            # Format response
-            response = {
-                "response": result.result,
-                "computer_data": result.dict(),
-                "execution_time": time.time() - start_time,
-                "metadata": {
-                    "agent": "computer_use_agent",
-                    "model": self.model,
-                    "safety_mode": self.safety_mode,
-                    "operations_performed": len(result.file_results)
-                    + len(result.command_results),
-                    **metadata,
-                },
-            }
-
-            logger.info(
-                "Computer task completed",
-                operations=len(result.file_results) + len(result.command_results),
-                safety_warnings=len(result.safety_warnings),
-                execution_time=time.time() - start_time,
-            )
+            # Build and return response
+            response = self._build_success_response(result, start_time, metadata)
+            self._log_completion_info(result, start_time)
 
             return response
 
         except Exception as e:
-            logger.error(
-                "Computer use execution failed",
-                error=str(e),
-                task=(
-                    computer_task[:100] if "computer_task" in locals() else "unknown"
-                ),
-            )
-            return {
-                "response": f"I apologize, but I encountered an error while performing the computer task: {str(e)}",
-                "error": str(e),
-                "execution_time": time.time() - start_time,
-                "metadata": {
-                    "agent": "computer_use_agent",
-                    "status": "error",
-                    **metadata,
-                },
-            }
+            return self._build_error_response(e, start_time, metadata, locals())
+
+    def _prepare_computer_request(
+        self, messages: list[dict[str, Any]], context: dict[str, Any]
+    ) -> ComputerUseRequest:
+        """Prepare computer use request from messages and context."""
+        computer_task = self._extract_computer_task(messages)
+
+        return ComputerUseRequest(
+            task=computer_task,
+            screenshot_needed=context.get("screenshot_needed", False),
+            file_operations=context.get("file_operations", []),
+            system_commands=context.get("system_commands", []),
+            safety_mode=self.safety_mode,
+        )
+
+    def _build_success_response(
+        self, result: ComputerUseResponse, start_time: float, metadata: dict[str, Any]
+    ) -> dict[str, Any]:
+        """Build success response from computer task result."""
+        execution_time = time.time() - start_time
+        operations_count = len(result.file_results) + len(result.command_results)
+
+        return {
+            "response": result.result,
+            "computer_data": result.dict(),
+            "execution_time": execution_time,
+            "metadata": {
+                "agent": "computer_use_agent",
+                "model": self.model,
+                "safety_mode": self.safety_mode,
+                "operations_performed": operations_count,
+                **metadata,
+            },
+        }
+
+    def _log_completion_info(self, result: ComputerUseResponse, start_time: float) -> None:
+        """Log information about completed computer task."""
+        operations_count = len(result.file_results) + len(result.command_results)
+        execution_time = time.time() - start_time
+
+        logger.info(
+            "Computer task completed",
+            operations=operations_count,
+            safety_warnings=len(result.safety_warnings),
+            execution_time=execution_time,
+        )
+
+    def _build_error_response(
+        self, error: Exception, start_time: float, metadata: dict[str, Any], local_vars: dict[str, Any]
+    ) -> dict[str, Any]:
+        """Build error response when computer task execution fails."""
+        execution_time = time.time() - start_time
+        task_info = self._extract_task_info_for_error(local_vars)
+
+        logger.error(
+            "Computer use execution failed",
+            error=str(error),
+            task=task_info,
+        )
+
+        return {
+            "response": f"I apologize, but I encountered an error while performing the computer task: {str(error)}",
+            "error": str(error),
+            "execution_time": execution_time,
+            "metadata": {
+                "agent": "computer_use_agent",
+                "status": "error",
+                **metadata,
+            },
+        }
+
+    def _extract_task_info_for_error(self, local_vars: dict[str, Any]) -> str:
+        """Extract task information for error logging."""
+        computer_task = local_vars.get("computer_task")
+        if computer_task:
+            return computer_task[:100]
+        return "unknown"
 
     async def _perform_computer_task(
         self, request: ComputerUseRequest
     ) -> ComputerUseResponse:
         """Perform computer task with safety checks."""
-        safety_warnings = []
+        # Initial safety check
+        safety_warnings = self._perform_initial_safety_check(request)
 
-        # Safety check
-        if request.safety_mode:
-            safety_warnings.extend(self._check_safety(request))
+        # Capture screenshot if needed
+        screenshot = await self._capture_screenshot_if_needed(request)
 
-        # Take screenshot if requested
-        screenshot = None
-        if request.screenshot_needed:
-            screenshot = await self._take_screenshot()
+        # Execute operations
+        file_results = await self._execute_file_operations(request, safety_warnings)
+        command_results = await self._execute_system_commands(request, safety_warnings)
 
-        # Execute file operations
-        file_results = []
-        for operation in request.file_operations:
-            if request.safety_mode and not self._is_safe_file_operation(operation):
-                safety_warnings.append(
-                    f"Unsafe file operation blocked: {operation.operation} on {operation.path}"
-                )
-                continue
-
-            result = await self._execute_file_operation(operation)
-            file_results.append(result)
-
-        # Execute system commands
-        command_results = []
-        for command in request.system_commands:
-            if request.safety_mode and not self._is_safe_command(command):
-                safety_warnings.append(f"Unsafe command blocked: {command.command}")
-                continue
-
-            result = await self._execute_system_command(command)
-            command_results.append(result)
-
-        # Generate comprehensive result using GPT-5
+        # Generate comprehensive result
         result_summary = await self._generate_task_summary(
             request, file_results, command_results, safety_warnings
         )
 
+        return self._build_computer_response(
+            result_summary, screenshot, file_results, command_results,
+            safety_warnings, request
+        )
+
+    def _perform_initial_safety_check(self, request: ComputerUseRequest) -> list[str]:
+        """Perform initial safety checks and return warnings."""
+        if request.safety_mode:
+            return self._check_safety(request)
+        return []
+
+    async def _capture_screenshot_if_needed(self, request: ComputerUseRequest) -> str | None:
+        """Capture screenshot if requested."""
+        if request.screenshot_needed:
+            return await self._take_screenshot()
+        return None
+
+    async def _execute_file_operations(
+        self, request: ComputerUseRequest, safety_warnings: list[str]
+    ) -> list[dict[str, Any]]:
+        """Execute all file operations with safety checks."""
+        file_results = []
+        for operation in request.file_operations:
+            if self._should_block_file_operation(request, operation, safety_warnings):
+                continue
+
+            result = await self._execute_file_operation(operation)
+            file_results.append(result)
+        return file_results
+
+    def _should_block_file_operation(
+        self, request: ComputerUseRequest, operation: FileOperation, safety_warnings: list[str]
+    ) -> bool:
+        """Check if file operation should be blocked for safety."""
+        if request.safety_mode and not self._is_safe_file_operation(operation):
+            safety_warnings.append(
+                f"Unsafe file operation blocked: {operation.operation} on {operation.path}"
+            )
+            return True
+        return False
+
+    async def _execute_system_commands(
+        self, request: ComputerUseRequest, safety_warnings: list[str]
+    ) -> list[dict[str, Any]]:
+        """Execute all system commands with safety checks."""
+        command_results = []
+        for command in request.system_commands:
+            if self._should_block_system_command(request, command, safety_warnings):
+                continue
+
+            result = await self._execute_system_command(command)
+            command_results.append(result)
+        return command_results
+
+    def _should_block_system_command(
+        self, request: ComputerUseRequest, command: SystemCommand, safety_warnings: list[str]
+    ) -> bool:
+        """Check if system command should be blocked for safety."""
+        if request.safety_mode and not self._is_safe_command(command):
+            safety_warnings.append(f"Unsafe command blocked: {command.command}")
+            return True
+        return False
+
+    def _build_computer_response(
+        self, result_summary: str, screenshot: str | None,
+        file_results: list[dict[str, Any]], command_results: list[dict[str, Any]],
+        safety_warnings: list[str], request: ComputerUseRequest
+    ) -> ComputerUseResponse:
+        """Build the computer use response object."""
         return ComputerUseResponse(
             result=result_summary,
             screenshot=screenshot,

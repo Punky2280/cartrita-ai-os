@@ -1,0 +1,296 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.azure_blob_storage_file.AzureBlobStorageFileLoader.html#langchain_community.document_loaders.azure_blob_storage_file.AzureBlobStorageFileLoader",
+  "title": "AzureBlobStorageFileLoader#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "AzureBlobStorageFileLoader"
+    },
+    {
+      "type": "p",
+      "content": "Load fromAzure Blob Storagefiles."
+    },
+    {
+      "type": "p",
+      "content": "Initialize with connection string, container and blob name."
+    },
+    {
+      "type": "p",
+      "content": "__init__(conn_str, container, blob_name)"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with connection string, container and blob name."
+    },
+    {
+      "type": "p",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load documents."
+    },
+    {
+      "type": "p",
+      "content": "load_and_split([text_splitter])"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks."
+    },
+    {
+      "type": "li",
+      "content": "conn_str(str)"
+    },
+    {
+      "type": "p",
+      "content": "conn_str(str)"
+    },
+    {
+      "type": "li",
+      "content": "container(str)"
+    },
+    {
+      "type": "p",
+      "content": "container(str)"
+    },
+    {
+      "type": "li",
+      "content": "blob_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "blob_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with connection string, container and blob name."
+    },
+    {
+      "type": "li",
+      "content": "conn_str(str)"
+    },
+    {
+      "type": "p",
+      "content": "conn_str(str)"
+    },
+    {
+      "type": "li",
+      "content": "container(str)"
+    },
+    {
+      "type": "p",
+      "content": "container(str)"
+    },
+    {
+      "type": "li",
+      "content": "blob_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "blob_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load documents."
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks. Chunks are returned as Documents."
+    },
+    {
+      "type": "p",
+      "content": "Do not override this method. It should be considered to be deprecated!"
+    },
+    {
+      "type": "p",
+      "content": "text_splitter(Optional[TextSplitter]) – TextSplitter instance to use for splitting documents.\nDefaults to RecursiveCharacterTextSplitter."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If langchain-text-splitters is not installed\n    and no text_splitter is provided."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using AzureBlobStorageFileLoader"
+    },
+    {
+      "type": "li",
+      "content": "Azure Blob Storage File"
+    },
+    {
+      "type": "p",
+      "content": "Azure Blob Storage File"
+    },
+    {
+      "type": "li",
+      "content": "AzureBlobStorageFileLoader__init__()alazy_load()aload()lazy_load()load()load_and_split()"
+    },
+    {
+      "type": "li",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "load_and_split()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "__init__",
+    "alazy_load",
+    "aload",
+    "lazy_load",
+    "load",
+    "load_and_split",
+    "AzureBlobStorageFileLoader",
+    "__init__()",
+    "alazy_load()",
+    "aload()",
+    "lazy_load()",
+    "load()",
+    "load_and_split()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.azure_blob_storage_file.AzureBlobStorageFileLoader(conn_str:str,container:str,blob_name:str,)[source]#",
+    "langchain_community.document_loaders.azure_blob_storage_file.",
+    "AzureBlobStorageFileLoader",
+    "(",
+    "conn_str:str",
+    "container:str",
+    "blob_name:str",
+    ")",
+    "__init__(conn_str:str,container:str,blob_name:str,)[source]#",
+    "__init__",
+    "(",
+    "conn_str:str",
+    "container:str",
+    "blob_name:str",
+    ")",
+    "asyncalazy_load()→AsyncIterator[Document]#",
+    "alazy_load",
+    "(",
+    ")",
+    "→AsyncIterator[Document]",
+    "→",
+    "AsyncIterator[Document]",
+    "asyncaload()→list[Document]#",
+    "aload",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "lazy_load()→Iterator[Document]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "load()→List[Document][source]#",
+    "load",
+    "(",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]",
+    "load_and_split(text_splitter:TextSplitter|None=None,)→list[Document]#",
+    "load_and_split",
+    "(",
+    "text_splitter:TextSplitter|None=None",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "conn_str:str",
+    "container:str",
+    "blob_name:str",
+    "conn_str:str",
+    "container:str",
+    "blob_name:str",
+    "text_splitter:TextSplitter|None=None"
+  ]
+}

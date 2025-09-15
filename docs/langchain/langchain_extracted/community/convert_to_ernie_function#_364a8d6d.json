@@ -1,0 +1,60 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chains/langchain_community.chains.ernie_functions.base.convert_to_ernie_function.html",
+  "title": "convert_to_ernie_function#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "convert_to_ernie_function"
+    },
+    {
+      "type": "p",
+      "content": "Convert a raw function/class to an Ernie function."
+    },
+    {
+      "type": "p",
+      "content": "function(Dict[str,Any]|Type[BaseModel]|Callable) – Either a dictionary, a pydantic.BaseModel class, or a Python function.\nIf a dictionary is passed in, it is assumed to already be a valid Ernie\nfunction."
+    },
+    {
+      "type": "p",
+      "content": "A dict version of the passed in function which is compatible with theErnie function-calling API."
+    },
+    {
+      "type": "p",
+      "content": "Ernie function-calling API."
+    },
+    {
+      "type": "p",
+      "content": "Dict[str,Any]"
+    },
+    {
+      "type": "li",
+      "content": "convert_to_ernie_function()"
+    }
+  ],
+  "code_examples": [
+    "chains",
+    "convert_to_ernie_function()"
+  ],
+  "api_signatures": [
+    "langchain_community.chains.ernie_functions.base.convert_to_ernie_function(function:Dict[str,Any]|Type[BaseModel]|Callable,)→Dict[str,Any][source]#",
+    "langchain_community.chains.ernie_functions.base.",
+    "convert_to_ernie_function",
+    "(",
+    "function:Dict[str,Any]|Type[BaseModel]|Callable",
+    ")",
+    "→Dict[str,Any]",
+    "→",
+    "Dict[str,Any]"
+  ],
+  "parameters": [
+    "function:Dict[str,Any]|Type[BaseModel]|Callable"
+  ]
+}

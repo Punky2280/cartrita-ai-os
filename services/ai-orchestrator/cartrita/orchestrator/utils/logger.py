@@ -9,6 +9,7 @@ Implements structured logging with OpenTelemetry integration.
 import logging
 import sys
 from pathlib import Path
+from typing import Any
 
 import structlog
 
@@ -66,37 +67,49 @@ def setup_logging(
         stream=sys.stdout,
     )
 
-    # Configure structlog
-    shared_processors = [
-        structlog.stdlib.filter_by_level,
-        structlog.stdlib.add_logger_name,
-        structlog.stdlib.add_log_level,
-        structlog.stdlib.PositionalArgumentsFormatter(),
-        structlog.processors.TimeStamper(fmt="iso"),
-        structlog.processors.StackInfoRenderer(),
-        structlog.processors.format_exc_info,
-        structlog.processors.UnicodeDecoder(),
-    ]
+    # Configure structlog with graceful degradation
+    try:
+        have_stdlib = hasattr(structlog, "stdlib")
+        have_processors = hasattr(structlog, "processors")
+        have_configure = hasattr(structlog, "configure")
 
-    if format_type == "json":
-        # JSON logging for production
-        shared_processors.append(structlog.processors.JSONRenderer())
-    else:
-        # Human-readable logging for development
-        shared_processors.extend(
-            [
-                structlog.processors.ExceptionPrettyPrinter(),
-                structlog.dev.ConsoleRenderer(colors=True),
-            ]
-        )
+        if have_processors and have_configure:
+            shared_processors = []
+            if have_stdlib:
+                shared_processors.extend([
+                    structlog.stdlib.filter_by_level,
+                    structlog.stdlib.add_logger_name,
+                    structlog.stdlib.add_log_level,
+                    structlog.stdlib.PositionalArgumentsFormatter(),
+                ])
+            shared_processors.extend([
+                structlog.processors.TimeStamper(fmt="iso"),
+                structlog.processors.StackInfoRenderer(),
+                structlog.processors.format_exc_info,
+                structlog.processors.UnicodeDecoder(),
+            ])
+            if format_type == "json" and hasattr(structlog.processors, "JSONRenderer"):
+                shared_processors.append(structlog.processors.JSONRenderer())
+            elif hasattr(structlog, "dev"):
+                shared_processors.append(structlog.dev.ConsoleRenderer(colors=True))
+            structlog.configure(
+                processors=shared_processors,
+                context_class=dict,
+                logger_factory=structlog.stdlib.LoggerFactory() if have_stdlib else structlog.PrintLoggerFactory(),
+                wrapper_class=structlog.stdlib.BoundLogger if have_stdlib else structlog.PrintLogger,
+                cache_logger_on_first_use=True,
+            )
+        else:
+            # Fallback: create a shim logger that mimics structlog interface using stdlib
+            class _ShimLogger(logging.Logger):
+                def bind(self, **kw):  # simple passthrough for structlog-like API
+                    return self
 
-    structlog.configure(
-        processors=shared_processors,
-        context_class=dict,
-        logger_factory=structlog.stdlib.LoggerFactory(),
-        wrapper_class=structlog.stdlib.BoundLogger,
-        cache_logger_on_first_use=True,
-    )
+            logging.getLogger(__name__).debug("Structlog minimal mode - processors unavailable")
+            structlog.get_logger = lambda name=None: logging.getLogger(name or __name__)  # type: ignore
+    except Exception:
+        # Last resort: leave standard logging only
+        logging.getLogger(__name__).debug("Structlog configuration failed; continuing with stdlib logging only")
 
     # Configure loguru for application logging
     from loguru import logger as loguru_logger
@@ -175,7 +188,7 @@ def _configure_third_party_loggers(level: str) -> None:
     logging.getLogger("faiss").setLevel(logging.WARNING)
 
 
-def get_logger(name: str) -> structlog.BoundLogger:
+def get_logger(name: str) -> Any:
     """Get a structured logger instance."""
     return structlog.get_logger(name)
 

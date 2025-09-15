@@ -1,0 +1,214 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/embeddings/langchain_community.embeddings.awa.AwaEmbeddings.html#awaembeddings",
+  "title": "AwaEmbeddings#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "AwaEmbeddings"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel,Embeddings"
+    },
+    {
+      "type": "p",
+      "content": "Embedding documents and queries with Awa DB."
+    },
+    {
+      "type": "p",
+      "content": "The AwaEmbedding client."
+    },
+    {
+      "type": "p",
+      "content": "The name of the model used for embedding.\nDefault is “all-mpnet-base-v2”."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed search docs."
+    },
+    {
+      "type": "p",
+      "content": "texts(list[str]) – List of text to embed."
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings."
+    },
+    {
+      "type": "p",
+      "content": "list[list[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed query text."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – Text to embed."
+    },
+    {
+      "type": "p",
+      "content": "list[float]"
+    },
+    {
+      "type": "p",
+      "content": "Embed a list of documents using AwaEmbedding."
+    },
+    {
+      "type": "p",
+      "content": "texts(List[str]) – The list of texts need to be embedded"
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings, one for each text."
+    },
+    {
+      "type": "p",
+      "content": "List[List[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Compute query embeddings using AwaEmbedding."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – The text to embed."
+    },
+    {
+      "type": "p",
+      "content": "Embeddings for the text."
+    },
+    {
+      "type": "p",
+      "content": "List[float]"
+    },
+    {
+      "type": "p",
+      "content": "Set the model used for embedding.\nThe default model used is all-mpnet-base-v2"
+    },
+    {
+      "type": "p",
+      "content": "model_name(str) – A string which represents the name of model."
+    },
+    {
+      "type": "p",
+      "content": "Examples using AwaEmbeddings"
+    },
+    {
+      "type": "li",
+      "content": "AwaEmbeddingsclientmodelmodelaembed_documents()aembed_query()embed_documents()embed_query()set_model()"
+    },
+    {
+      "type": "li",
+      "content": "aembed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "aembed_query()"
+    },
+    {
+      "type": "li",
+      "content": "embed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "embed_query()"
+    },
+    {
+      "type": "li",
+      "content": "set_model()"
+    }
+  ],
+  "code_examples": [
+    "embeddings",
+    "BaseModel",
+    "Embeddings",
+    "AwaEmbeddings",
+    "client",
+    "model",
+    "model",
+    "aembed_documents()",
+    "aembed_query()",
+    "embed_documents()",
+    "embed_query()",
+    "set_model()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.embeddings.awa.AwaEmbeddings[source]#",
+    "langchain_community.embeddings.awa.",
+    "AwaEmbeddings",
+    "client#",
+    "client",
+    "model#",
+    "model",
+    "parammodel:str='all-mpnet-base-v2'#",
+    "model",
+    "asyncaembed_documents(texts:list[str],)→list[list[float]]#",
+    "aembed_documents",
+    "(",
+    "texts:list[str]",
+    ")",
+    "→list[list[float]]",
+    "→",
+    "list[list[float]]",
+    "asyncaembed_query(text:str)→list[float]#",
+    "aembed_query",
+    "(",
+    "text:str",
+    ")",
+    "→list[float]",
+    "→",
+    "list[float]",
+    "embed_documents(texts:List[str],)→List[List[float]][source]#",
+    "embed_documents",
+    "(",
+    "texts:List[str]",
+    ")",
+    "→List[List[float]]",
+    "→",
+    "List[List[float]]",
+    "embed_query(text:str)→List[float][source]#",
+    "embed_query",
+    "(",
+    "text:str",
+    ")",
+    "→List[float]",
+    "→",
+    "List[float]",
+    "set_model(model_name:str)→None[source]#",
+    "set_model",
+    "(",
+    "model_name:str",
+    ")",
+    "→None",
+    "→",
+    "None"
+  ],
+  "parameters": [
+    "texts:list[str]",
+    "text:str",
+    "texts:List[str]",
+    "text:str",
+    "model_name:str"
+  ]
+}

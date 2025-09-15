@@ -1,0 +1,136 @@
+name: Static Analysis Nightly Drift
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 3 * * *'  # 03:17 UTC daily
+
+jobs:
+  nightly-sarif:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write   # for committing history
+      issues: write     # for creating/updating regression issue
+      pull-requests: read
+    env:
+      SARIF_HISTORY_DIR: sarif-history
+      SARIF_SOFT_MAX_NEW_ERRORS: '0'      # soft threshold for new errors
+      SARIF_SOFT_MAX_NEW_WARNINGS: '10'   # soft threshold for new warnings
+      SARIF_SOFT_MAX_NEW_TOTAL: '25'      # soft threshold for total new findings
+    steps:
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Setup Node
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version: '20'
+
+      - name: Setup Python
+        uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
+        with:
+          python-version: '3.13'
+
+      - name: Install Python deps
+        run: |
+          python -m venv .venv
+          . .venv/bin/activate
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pylint semgrep
+
+      - name: Install Node deps (frontend)
+        working-directory: frontend
+        run: |
+          if [ -f package.json ]; then npm ci --no-audit --no-fund; fi
+
+      - name: (Optional) Install Trivy
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Generate SARIF
+        run: |
+          . .venv/bin/activate
+          python scripts/sarif/generate_sarif.py --output sarif/current.sarif
+
+      - name: Compare (informational)
+        run: |
+          . .venv/bin/activate
+          python scripts/sarif/compare_sarif.py sarif/baseline.sarif sarif/current.sarif \
+            --ignore-column \
+            --json-output sarif/diff-summary.json \
+            --md-output sarif/diff-report.md || true
+
+      - name: Generate HTML report
+        run: |
+          . .venv/bin/activate
+          python scripts/sarif/render_diff_html.py sarif/diff-summary.json sarif/diff-report.html || true
+
+      - name: Archive metrics (commit history)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          set -e
+          TS="$(date -u +%Y%m%d-%H%M%S)"
+          DIR="$SARIF_HISTORY_DIR/$(date -u +%Y)/$(date -u +%m)"
+          mkdir -p "$DIR"
+          cp sarif/diff-summary.json "$DIR/diff-summary-$TS.json"
+          git config user.name 'github-actions'
+          git config user.email 'github-actions@users.noreply.github.com'
+          git add "$SARIF_HISTORY_DIR" || true
+          if git diff --cached --quiet; then
+            echo "No history changes to commit"
+          else
+            git commit -m "chore(sarif): archive nightly diff summary $TS" || true
+            git push || echo "Push skipped (possibly read-only)"
+          fi
+
+      - name: Regression issue automation
+        if: github.ref == 'refs/heads/main'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const fs = require('fs');
+            const summaryPath = 'sarif/diff-summary.json';
+            if (!fs.existsSync(summaryPath)) { core.info('No diff-summary.json'); return; }
+            const data = JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
+            const n = data.counts.new || {};
+            const soft = {
+              errors: parseInt(process.env.SARIF_SOFT_MAX_NEW_ERRORS || '0', 10),
+              warnings: parseInt(process.env.SARIF_SOFT_MAX_NEW_WARNINGS || '0', 10),
+              total: parseInt(process.env.SARIF_SOFT_MAX_NEW_TOTAL || '0', 10)
+            };
+            const breach = (n.error > soft.errors) || (n.warning > soft.warnings) || (n.total > soft.total);
+            if (!breach) { core.info('No soft threshold breach'); return; }
+            const marker = '<!-- sarif-regression-issue -->';
+            // Search existing open issues with marker
+            const issues = await github.paginate(github.rest.issues.listForRepo, { owner: context.repo.owner, repo: context.repo.repo, state: 'open', labels: undefined, per_page: 100 });
+            let existing = issues.find(i => i.body && i.body.includes(marker));
+            const title = 'Static Analysis Regression Detected';
+            const body = `${marker}\nRegression thresholds exceeded. New findings: total=${n.total}, errors=${n.error}, warnings=${n.warning}, notes=${n.note}.\nSoft limits: errors>${soft.errors}, warnings>${soft.warnings}, total>${soft.total}.\nRefer to artifact HTML report and history.`;
+            if (existing) {
+              await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, body });
+              core.info(`Updated regression issue #${existing.number}`);
+            } else {
+              const created = await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo, title, body });
+              core.info(`Created regression issue #${created.data.number}`);
+            }
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
+        with:
+          name: nightly-sarif-${{ github.run_id }}
+          path: |
+            sarif/current.sarif
+            sarif/diff-summary.json
+            sarif/diff-report.md
+            sarif/diff-report.html
+
+      - name: Nightly Summary
+        run: |
+          echo "## Nightly Static Analysis Diff" >> $GITHUB_STEP_SUMMARY
+          if [ -f sarif/diff-report.md ]; then cat sarif/diff-report.md >> $GITHUB_STEP_SUMMARY; fi
+          if [ -f sarif/diff-report.html ]; then echo "HTML report saved as artifact (diff-report.html)" >> $GITHUB_STEP_SUMMARY; fi
+
+    # Non-blocking nightly run
+    continue-on-error: true

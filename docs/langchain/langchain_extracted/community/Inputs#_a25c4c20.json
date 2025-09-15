@@ -1,0 +1,52 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.polygon.financials.Inputs.html#langchain_community.tools.polygon.financials.Inputs",
+  "title": "Inputs#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Inputs for Polygon’s Financials API"
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "li",
+      "content": "Inputsquery"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "BaseModel",
+    "Inputs",
+    "query"
+  ],
+  "api_signatures": [
+    "classlangchain_community.tools.polygon.financials.Inputs[source]#",
+    "langchain_community.tools.polygon.financials.",
+    "Inputs",
+    "paramquery:str[Required]#",
+    "query"
+  ],
+  "parameters": []
+}

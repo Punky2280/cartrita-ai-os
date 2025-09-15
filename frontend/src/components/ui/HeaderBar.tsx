@@ -1,7 +1,7 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Zap, Activity } from 'lucide-react';
-import Link from 'next/link';
+import React from "react";
+import { motion } from "framer-motion";
+import { Zap, Activity } from "lucide-react";
+import Link from "next/link";
 
 const HeaderBar: React.FC = () => {
   return (

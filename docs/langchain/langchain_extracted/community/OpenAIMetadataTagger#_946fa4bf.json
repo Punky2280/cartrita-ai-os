@@ -1,0 +1,171 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_transformers/langchain_community.document_transformers.openai_functions.OpenAIMetadataTagger.html#langchain_community.document_transformers.openai_functions.OpenAIMetadataTagger",
+  "title": "OpenAIMetadataTagger#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_transformers"
+    },
+    {
+      "type": "li",
+      "content": "OpenAIMetadataTagger"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseDocumentTransformer,BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Extract metadata tags from document contents using OpenAI functions."
+    },
+    {
+      "type": "p",
+      "content": "By Roger Ebert"
+    },
+    {
+      "type": "p",
+      "content": "Document(page_content=”Review of The Godfather"
+    },
+    {
+      "type": "p",
+      "content": "By Anonymous"
+    },
+    {
+      "type": "p",
+      "content": "enhanced_documents = document_transformer.transform_documents(original_documents)"
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "The chain used to extract metadata from each document."
+    },
+    {
+      "type": "p",
+      "content": "Asynchronously transform a list of documents."
+    },
+    {
+      "type": "li",
+      "content": "documents(Sequence[Document]) – A sequence of Documents to be transformed."
+    },
+    {
+      "type": "p",
+      "content": "documents(Sequence[Document]) – A sequence of Documents to be transformed."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "A sequence of transformed Documents."
+    },
+    {
+      "type": "p",
+      "content": "Sequence[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Automatically extract and populate metadata\nfor each document according to the provided schema."
+    },
+    {
+      "type": "li",
+      "content": "documents(Sequence[Document])"
+    },
+    {
+      "type": "p",
+      "content": "documents(Sequence[Document])"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Sequence[Document]"
+    },
+    {
+      "type": "li",
+      "content": "OpenAIMetadataTaggertagging_chainatransform_documents()transform_documents()"
+    },
+    {
+      "type": "li",
+      "content": "tagging_chain"
+    },
+    {
+      "type": "li",
+      "content": "atransform_documents()"
+    },
+    {
+      "type": "li",
+      "content": "transform_documents()"
+    }
+  ],
+  "code_examples": [
+    "document_transformers",
+    "BaseDocumentTransformer",
+    "BaseModel",
+    "fromlangchain_community.chat_modelsimportChatOpenAIfromlangchain_community.document_transformersimportOpenAIMetadataTaggerfromlangchain_core.documentsimportDocumentschema={\"properties\":{\"movie_title\":{\"type\":\"string\"},\"critic\":{\"type\":\"string\"},\"tone\":{\"type\":\"string\",\"enum\":[\"positive\",\"negative\"]},\"rating\":{\"type\":\"integer\",\"description\":\"The number of stars the critic rated the movie\"}},\"required\":[\"movie_title\",\"critic\",\"tone\"]}# Must be an OpenAI model that supports functionsllm=ChatOpenAI(temperature=0,model=\"gpt-3.5-turbo-0613\")tagging_chain=create_tagging_chain(schema,llm)document_transformer=OpenAIMetadataTagger(tagging_chain=tagging_chain)original_documents=[Document(page_content=\"Review of The Bee Movie",
+    "OpenAIMetadataTagger",
+    "tagging_chain",
+    "atransform_documents()",
+    "transform_documents()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_transformers.openai_functions.OpenAIMetadataTagger[source]#",
+    "langchain_community.document_transformers.openai_functions.",
+    "OpenAIMetadataTagger",
+    "paramtagging_chain:Any[Required]#",
+    "tagging_chain",
+    "asyncatransform_documents(documents:Sequence[Document],**kwargs:Any,)→Sequence[Document][source]#",
+    "atransform_documents",
+    "(",
+    "documents:Sequence[Document]",
+    "**kwargs:Any",
+    ")",
+    "→Sequence[Document]",
+    "→",
+    "Sequence[Document]",
+    "transform_documents(documents:Sequence[Document],**kwargs:Any,)→Sequence[Document][source]#",
+    "transform_documents",
+    "(",
+    "documents:Sequence[Document]",
+    "**kwargs:Any",
+    ")",
+    "→Sequence[Document]",
+    "→",
+    "Sequence[Document]"
+  ],
+  "parameters": [
+    "documents:Sequence[Document]",
+    "**kwargs:Any",
+    "documents:Sequence[Document]",
+    "**kwargs:Any"
+  ]
+}

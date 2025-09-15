@@ -1,0 +1,168 @@
+name: Static Analysis SARIF
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  sarif:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SARIF_GATE_FAIL_ON_NEW_ERRORS: 'true' # set to 'false' to disable gating
+      SARIF_GATE_MAX_NEW_WARNINGS: ''       # optional integer; leave empty to ignore
+      SARIF_GATE_MAX_NEW_TOTAL: ''          # optional integer; leave empty to ignore
+      SARIF_IGNORE_COLUMN: 'true'           # set to 'false' to include column in matching
+    steps:
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Setup Node
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version: '20'
+
+      - name: Setup Python
+        uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
+        with:
+          python-version: '3.13'
+
+      - name: Install Python deps
+        run: |
+          python -m venv .venv
+          . .venv/bin/activate
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pylint
+
+      - name: Install Node deps (frontend)
+        working-directory: frontend
+        run: |
+          if [ -f package.json ]; then npm ci --no-audit --no-fund; fi
+
+      - name: Install Semgrep
+        run: |
+          . .venv/bin/activate
+          pip install semgrep
+
+      - name: (Optional) Install Trivy
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Generate SARIF
+        run: |
+          . .venv/bin/activate
+          python scripts/sarif/generate_sarif.py --output sarif/current.sarif
+
+      - name: Compare SARIF vs Baseline (with optional gating)
+        id: sarif_compare
+        run: |
+          . .venv/bin/activate
+          CMD="python scripts/sarif/compare_sarif.py sarif/baseline.sarif sarif/current.sarif --json-output sarif/diff-summary.json --md-output sarif/diff-report.md"
+          if [ "${SARIF_IGNORE_COLUMN}" = "true" ]; then
+            CMD="$CMD --ignore-column"
+          fi
+          if [ "${SARIF_GATE_FAIL_ON_NEW_ERRORS}" = "true" ]; then
+            CMD="$CMD --fail-on-new-errors"
+          fi
+          if [ -n "${SARIF_GATE_MAX_NEW_WARNINGS}" ]; then
+            CMD="$CMD --max-new-warnings ${SARIF_GATE_MAX_NEW_WARNINGS}"
+          fi
+            if [ -n "${SARIF_GATE_MAX_NEW_TOTAL}" ]; then
+            CMD="$CMD --max-new-total ${SARIF_GATE_MAX_NEW_TOTAL}"
+          fi
+          echo "Running: $CMD"
+          set +e
+          $CMD
+          EXIT_CODE=$?
+          echo "Comparator exit code: $EXIT_CODE"
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          # Do not fail here; post-step controls failure centrally
+          exit 0
+
+      - name: Enforce SARIF gating (conditional fail)
+        if: ${{ steps.sarif_compare.outputs.exit_code != '0' }}
+        run: |
+          echo "SARIF gating triggered (exit code=${{ steps.sarif_compare.outputs.exit_code }}). Failing job." >&2
+          exit 1
+
+      - name: Upload SARIF Artifacts
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
+        with:
+          name: sarif-analysis
+          path: |
+            sarif/current.sarif
+            sarif/diff-summary.json
+            sarif/diff-report.md
+
+      - name: Summary (Markdown)
+        if: always()
+        run: |
+          echo "## Static Analysis Diff" >> $GITHUB_STEP_SUMMARY
+          if [ -f sarif/diff-report.md ]; then cat sarif/diff-report.md >> $GITHUB_STEP_SUMMARY; fi
+
+      - name: PR Comment (SARIF Diff)
+        if: ${{ github.event_name == 'pull_request' && always() }}
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const fs = require('fs');
+            const path = 'sarif/diff-report.md';
+            const summaryPath = 'sarif/diff-summary.json';
+            if (!fs.existsSync(path)) {
+              core.info('No diff report found');
+              return;
+            }
+            const body = fs.readFileSync(path, 'utf-8');
+            let table = '';
+            if (fs.existsSync(summaryPath)) {
+              try {
+                const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
+                const n = summary.counts.new;
+                const f = summary.counts.fixed;
+                const p = summary.counts.persisted;
+                const row = (c) => `| ${c.total} | ${c.error} | ${c.warning} | ${c.note} |`;
+                table = [
+                  '#### Severity Overview',
+                  '',
+                  '| Category | Total | Errors | Warnings | Notes |',
+                  '|----------|-------|-------:|---------:|------:|',
+                  `| New | ${n.total} | ${n.error} | ${n.warning} | ${n.note} |`,
+                  `| Fixed | ${f.total} | ${f.error} | ${f.warning} | ${f.note} |`,
+                  `| Persisted | ${p.total} | ${p.error} | ${p.warning} | ${p.note} |`,
+                  ''
+                ].join('\n');
+              } catch (e) {
+                core.warning('Failed to parse diff-summary.json for table');
+              }
+            }
+            const header = '### Static Analysis SARIF Diff';
+            // Find existing comment by this workflow to update instead of spamming
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              per_page: 100
+            });
+            const marker = '<!-- sarif-diff-comment -->';
+            const existing = comments.find(c => c.body && c.body.includes(marker));
+            const newBody = `${marker}\n${header}\n\n${table}\n${body}`.slice(0, 65000); // guard size
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body: newBody
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: newBody
+              });
+            }
+
+  # Job now blocking when gating conditions triggered; to revert to non-blocking, uncomment below
+  # continue-on-error: true

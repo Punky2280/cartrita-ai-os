@@ -491,6 +491,8 @@ class TestIntegrationWorkflows:
         with patch.object(
             full_system.cartrita_agent, "process_request", return_value=mock_response
         ):
+            # Ensure orchestrator is in running state
+            await full_system.start()
             result = await full_system.process_chat_request(
                 message="Help me research AI trends",
                 context={"conversation_id": "test_123"},

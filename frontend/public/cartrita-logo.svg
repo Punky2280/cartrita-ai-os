@@ -1,0 +1,73 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Main gradient for logo -->
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06B6D4;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Neural network pattern -->
+    <pattern id="neuralPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="1" fill="rgba(139, 92, 246, 0.3)"/>
+      <line x1="5" y1="5" x2="15" y2="15" stroke="rgba(59, 130, 246, 0.2)" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- Background circle with neural pattern -->
+  <circle cx="60" cy="60" r="55" fill="url(#neuralPattern)" opacity="0.1"/>
+
+  <!-- Main logo shape - stylized 'C' with AI circuit elements -->
+  <g filter="url(#glow)">
+    <!-- Outer ring -->
+    <path d="M 60 10 A 50 50 0 1 0 60 110" stroke="url(#logoGradient)" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+    <!-- Inner neural pathways -->
+    <g opacity="0.8">
+      <!-- Central node -->
+      <circle cx="60" cy="60" r="6" fill="url(#logoGradient)"/>
+
+      <!-- Connection nodes -->
+      <circle cx="35" cy="40" r="3" fill="#8B5CF6"/>
+      <circle cx="85" cy="45" r="3" fill="#3B82F6"/>
+      <circle cx="40" cy="80" r="3" fill="#06B6D4"/>
+      <circle cx="80" cy="75" r="3" fill="#8B5CF6"/>
+
+      <!-- Connecting lines -->
+      <line x1="60" y1="60" x2="35" y2="40" stroke="#8B5CF6" stroke-width="2" opacity="0.6"/>
+      <line x1="60" y1="60" x2="85" y2="45" stroke="#3B82F6" stroke-width="2" opacity="0.6"/>
+      <line x1="60" y1="60" x2="40" y2="80" stroke="#06B6D4" stroke-width="2" opacity="0.6"/>
+      <line x1="60" y1="60" x2="80" y2="75" stroke="#8B5CF6" stroke-width="2" opacity="0.6"/>
+
+      <!-- Additional micro-connections -->
+      <line x1="35" y1="40" x2="85" y2="45" stroke="rgba(59, 130, 246, 0.3)" stroke-width="1"/>
+      <line x1="40" y1="80" x2="80" y2="75" stroke="rgba(6, 182, 212, 0.3)" stroke-width="1"/>
+    </g>
+
+    <!-- Stylized 'C' highlight -->
+    <path d="M 25 60 A 35 35 0 0 1 60 25" stroke="rgba(255, 255, 255, 0.4)" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M 25 60 A 35 35 0 0 0 60 95" stroke="rgba(255, 255, 255, 0.4)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- Animated elements for digital feel -->
+  <g opacity="0.6">
+    <circle cx="20" cy="30" r="1" fill="#8B5CF6">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="100" cy="90" r="1" fill="#06B6D4">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="90" cy="20" r="1" fill="#3B82F6">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>

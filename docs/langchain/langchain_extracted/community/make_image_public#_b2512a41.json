@@ -1,0 +1,62 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.steamship_image_generation.utils.make_image_public.html",
+  "title": "make_image_public#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "make_image_public"
+    },
+    {
+      "type": "p",
+      "content": "Upload a block to a signed URL and return the public URL."
+    },
+    {
+      "type": "li",
+      "content": "client(Steamship)"
+    },
+    {
+      "type": "p",
+      "content": "client(Steamship)"
+    },
+    {
+      "type": "li",
+      "content": "block(Block)"
+    },
+    {
+      "type": "p",
+      "content": "block(Block)"
+    },
+    {
+      "type": "li",
+      "content": "make_image_public()"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "make_image_public()"
+  ],
+  "api_signatures": [
+    "langchain_community.tools.steamship_image_generation.utils.make_image_public(client:Steamship,block:Block)→str[source]#",
+    "langchain_community.tools.steamship_image_generation.utils.",
+    "make_image_public",
+    "(",
+    "client:Steamship",
+    "block:Block",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "client:Steamship",
+    "block:Block"
+  ]
+}

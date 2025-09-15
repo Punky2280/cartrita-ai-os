@@ -1,0 +1,48 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chains/langchain_community.chains.graph_qa.neptune_cypher.use_simple_prompt.html#main-content",
+  "title": "use_simple_prompt#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "use_simple_prompt"
+    },
+    {
+      "type": "p",
+      "content": "Decides whether to use the simple prompt"
+    },
+    {
+      "type": "p",
+      "content": "llm(BaseLanguageModel)"
+    },
+    {
+      "type": "li",
+      "content": "use_simple_prompt()"
+    }
+  ],
+  "code_examples": [
+    "chains",
+    "use_simple_prompt()"
+  ],
+  "api_signatures": [
+    "langchain_community.chains.graph_qa.neptune_cypher.use_simple_prompt(llm:BaseLanguageModel,)→bool[source]#",
+    "langchain_community.chains.graph_qa.neptune_cypher.",
+    "use_simple_prompt",
+    "(",
+    "llm:BaseLanguageModel",
+    ")",
+    "→bool",
+    "→",
+    "bool"
+  ],
+  "parameters": [
+    "llm:BaseLanguageModel"
+  ]
+}

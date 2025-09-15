@@ -1,10 +1,9 @@
 // Cartrita AI OS - Search Interface Component
 // Advanced global search with filtering, highlighting, and real-time results
 
-
-import { useState, useEffect, useCallback, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { toast } from 'sonner'
+import { useState, useEffect, useCallback, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 import {
   Search,
   X,
@@ -19,12 +18,30 @@ import {
   ExternalLink,
   Copy,
   Bookmark,
-  BookmarkCheck
-} from 'lucide-react'
-import { cn, formatMessageTime, highlightText } from '@/utils'
-import { Input, Badge, Card, CardContent, CardHeader, CardTitle, Tabs, TabsList, TabsTrigger, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Checkbox, Separator, ScrollArea } from '@/components/ui'
-import { useSearch } from '@/hooks'
-import type { SearchResult, SearchFilters, SearchResultType } from '@/types'
+  BookmarkCheck,
+} from "lucide-react";
+import { cn, formatMessageTime, highlightText } from "@/utils";
+import {
+  Input,
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Checkbox,
+  Separator,
+  ScrollArea,
+} from "@/components/ui";
+import { useSearch } from "@/hooks";
+import type { SearchResult, SearchFilters, SearchResultType } from "@/types";
 
 // Search result item component
 function SearchResultItem({
@@ -32,45 +49,45 @@ function SearchResultItem({
   query,
   onClick,
   onBookmark,
-  isBookmarked = false
+  isBookmarked = false,
 }: {
-  result: SearchResult
-  query: string
-  onClick: () => void
-  onBookmark?: () => void
-  isBookmarked?: boolean
+  result: SearchResult;
+  query: string;
+  onClick: () => void;
+  onBookmark?: () => void;
+  isBookmarked?: boolean;
 }) {
   const getResultIcon = () => {
     switch (result.type) {
-      case 'conversation':
-        return MessageSquare
-      case 'message':
-        return MessageSquare
-      case 'agent':
-        return Bot
-      case 'file':
-        return FileText
+      case "conversation":
+        return MessageSquare;
+      case "message":
+        return MessageSquare;
+      case "agent":
+        return Bot;
+      case "file":
+        return FileText;
       default:
-        return Hash
+        return Hash;
     }
-  }
+  };
 
   const getResultTypeLabel = () => {
     switch (result.type) {
-      case 'conversation':
-        return 'Conversation'
-      case 'message':
-        return 'Message'
-      case 'agent':
-        return 'Agent'
-      case 'file':
-        return 'File'
+      case "conversation":
+        return "Conversation";
+      case "message":
+        return "Message";
+      case "agent":
+        return "Agent";
+      case "file":
+        return "File";
       default:
-        return 'Other'
+        return "Other";
     }
-  }
+  };
 
-  const IconComponent = getResultIcon()
+  const IconComponent = getResultIcon();
 
   return (
     <motion.div
@@ -79,7 +96,10 @@ function SearchResultItem({
       exit={{ opacity: 0, y: -10 }}
       className="group"
     >
-      <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={onClick}>
+      <Card
+        className="cursor-pointer hover:shadow-md transition-shadow"
+        onClick={onClick}
+      >
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
             {/* Icon */}
@@ -97,7 +117,8 @@ function SearchResultItem({
                     {highlightText(result.title, query)}
                   </h4>
                   <p className="text-xs text-muted-foreground mt-1">
-                    {getResultTypeLabel()} • {formatMessageTime(result.timestamp)}
+                    {getResultTypeLabel()} •{" "}
+                    {formatMessageTime(result.timestamp)}
                   </p>
                 </div>
 
@@ -106,8 +127,8 @@ function SearchResultItem({
                   {onBookmark && (
                     <button
                       onClick={(e) => {
-                        e.stopPropagation()
-                        onBookmark()
+                        e.stopPropagation();
+                        onBookmark();
                       }}
                       className="h-8 w-8 p-0 bg-transparent hover:bg-accent hover:text-accent-foreground rounded"
                     >
@@ -121,9 +142,11 @@ function SearchResultItem({
 
                   <button
                     onClick={(e) => {
-                      e.stopPropagation()
-                      void void navigator.clipboard.writeText(result.url || result.title)
-                      toast.success('Copied to clipboard')
+                      e.stopPropagation();
+                      void void navigator.clipboard.writeText(
+                        result.url || result.title,
+                      );
+                      toast.success("Copied to clipboard");
                     }}
                     className="h-8 w-8 p-0 bg-transparent hover:bg-accent hover:text-accent-foreground rounded"
                   >
@@ -133,8 +156,8 @@ function SearchResultItem({
                   {result.url && (
                     <button
                       onClick={(e) => {
-                        e.stopPropagation()
-                        window.open(result.url, '_blank')
+                        e.stopPropagation();
+                        window.open(result.url, "_blank");
                       }}
                       className="h-8 w-8 p-0 bg-transparent hover:bg-accent hover:text-accent-foreground rounded"
                     >
@@ -169,9 +192,7 @@ function SearchResultItem({
                 )}
 
                 {result.metadata?.agentName && (
-                  <Badge className="text-xs">
-                    {result.metadata.agentName}
-                  </Badge>
+                  <Badge className="text-xs">{result.metadata.agentName}</Badge>
                 )}
               </div>
             </div>
@@ -179,45 +200,54 @@ function SearchResultItem({
         </CardContent>
       </Card>
     </motion.div>
-  )
+  );
 }
 
 // Search filters component
 function SearchFilters({
   filters,
   onFiltersChange,
-  resultCounts
+  resultCounts,
 }: {
-  filters: SearchFilters
-  onFiltersChange: (filters: SearchFilters) => void
-  resultCounts: Record<SearchResultType, number>
+  filters: SearchFilters;
+  onFiltersChange: (filters: SearchFilters) => void;
+  resultCounts: Record<SearchResultType, number>;
 }) {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  const handleTypeToggle = useCallback((type: SearchResultType) => {
-    const newTypes = filters.types.includes(type)
-      ? filters.types.filter(t => t !== type)
-      : [...filters.types, type]
+  const handleTypeToggle = useCallback(
+    (type: SearchResultType) => {
+      const newTypes = filters.types.includes(type)
+        ? filters.types.filter((t) => t !== type)
+        : [...filters.types, type];
 
-    onFiltersChange({
-      ...filters,
-      types: newTypes
-    })
-  }, [filters, onFiltersChange])
+      onFiltersChange({
+        ...filters,
+        types: newTypes,
+      });
+    },
+    [filters, onFiltersChange],
+  );
 
-  const handleDateRangeChange = useCallback((dateRange: string) => {
-    onFiltersChange({
-      ...filters,
-      dateRange: dateRange as any
-    })
-  }, [filters, onFiltersChange])
+  const handleDateRangeChange = useCallback(
+    (dateRange: string) => {
+      onFiltersChange({
+        ...filters,
+        dateRange: dateRange as any,
+      });
+    },
+    [filters, onFiltersChange],
+  );
 
-  const handleSortChange = useCallback((sortBy: string) => {
-    onFiltersChange({
-      ...filters,
-      sortBy: sortBy as any
-    })
-  }, [filters, onFiltersChange])
+  const handleSortChange = useCallback(
+    (sortBy: string) => {
+      onFiltersChange({
+        ...filters,
+        sortBy: sortBy as any,
+      });
+    },
+    [filters, onFiltersChange],
+  );
 
   return (
     <Card>
@@ -228,7 +258,11 @@ function SearchFilters({
             Filters
           </CardTitle>
           <button
-            onClick={() => { { setIsExpanded(!isExpanded);; }}}
+            onClick={() => {
+              {
+                setIsExpanded(!isExpanded);
+              }
+            }}
             className="h-8 w-8 p-0 bg-transparent hover:bg-accent hover:text-accent-foreground rounded"
           >
             {isExpanded ? (
@@ -244,7 +278,7 @@ function SearchFilters({
         {isExpanded && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
+            animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
@@ -254,10 +288,18 @@ function SearchFilters({
                 <h4 className="text-sm font-medium mb-2">Content Types</h4>
                 <div className="grid grid-cols-2 gap-2">
                   {[
-                    { type: 'conversation' as const, label: 'Conversations', icon: MessageSquare },
-                    { type: 'message' as const, label: 'Messages', icon: MessageSquare },
-                    { type: 'agent' as const, label: 'Agents', icon: Bot },
-                    { type: 'file' as const, label: 'Files', icon: FileText }
+                    {
+                      type: "conversation" as const,
+                      label: "Conversations",
+                      icon: MessageSquare,
+                    },
+                    {
+                      type: "message" as const,
+                      label: "Messages",
+                      icon: MessageSquare,
+                    },
+                    { type: "agent" as const, label: "Agents", icon: Bot },
+                    { type: "file" as const, label: "Files", icon: FileText },
                   ].map(({ type, label, icon: Icon }) => (
                     <div key={type} className="flex items-center space-x-2">
                       <Checkbox
@@ -285,7 +327,10 @@ function SearchFilters({
               {/* Date Range */}
               <div>
                 <h4 className="text-sm font-medium mb-2">Date Range</h4>
-                <Select value={filters.dateRange} onValueChange={handleDateRangeChange}>
+                <Select
+                  value={filters.dateRange}
+                  onValueChange={handleDateRangeChange}
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
@@ -318,142 +363,145 @@ function SearchFilters({
         )}
       </AnimatePresence>
     </Card>
-  )
+  );
 }
 
 // Main Search Interface Component
 interface SearchInterfaceProps {
-  isOpen: boolean
-  onClose: () => void
-  initialQuery?: string
-  className?: string
+  isOpen: boolean;
+  onClose: () => void;
+  initialQuery?: string;
+  className?: string;
 }
 
 export function SearchInterface({
   isOpen,
   onClose,
-  initialQuery = '',
-  className
+  initialQuery = "",
+  className,
 }: SearchInterfaceProps) {
-  const [query, setQuery] = useState(initialQuery)
-  const [activeTab, setActiveTab] = useState<SearchResultType>('all')
-  const [bookmarkedResults, setBookmarkedResults] = useState<Set<string>>(new Set())
+  const [query, setQuery] = useState(initialQuery);
+  const [activeTab, setActiveTab] = useState<SearchResultType>("all");
+  const [bookmarkedResults, setBookmarkedResults] = useState<Set<string>>(
+    new Set(),
+  );
 
-  const {
-    data: searchResults,
-    isLoading,
-    error,
-    refetch
-  } = useSearch(query)
+  const { data: searchResults, isLoading, error, refetch } = useSearch(query);
 
   // Type guard for search results
-  const typedSearchResults: SearchResult[] = Array.isArray((searchResults as any)?.data?.results) 
-    ? (searchResults as any).data.results 
-    : []
+  const typedSearchResults: SearchResult[] = useMemo(() => {
+    const results = (
+      searchResults as unknown as { data?: { results?: unknown } }
+    )?.data?.results;
+    if (Array.isArray(results)) {
+      return results.filter(
+        (r): r is SearchResult =>
+          r != null &&
+          typeof r === "object" &&
+          "id" in r &&
+          "type" in r &&
+          "title" in r,
+      );
+    }
+    return [];
+  }, [searchResults]);
 
   const [filters, setFilters] = useState<SearchFilters>({
-    types: ['all'],
-    dateRange: 'all',
-    sortBy: 'relevance'
-  })
+    types: ["all"],
+    dateRange: "all",
+    sortBy: "relevance",
+  });
 
   const updateFilters = useCallback((newFilters: SearchFilters) => {
-    setFilters(newFilters)
-  }, [])
+    setFilters(newFilters);
+  }, []);
 
   // Reset query when modal opens
   useEffect(() => {
     if (isOpen) {
-      setQuery(initialQuery)
+      setQuery(initialQuery);
     }
-  }, [isOpen, initialQuery])
+  }, [isOpen, initialQuery]);
 
   // Handle search
   const handleSearch = useCallback((searchQuery: string) => {
-    setQuery(searchQuery)
-  }, [])
+    setQuery(searchQuery);
+  }, []);
 
   // Handle result click
   const handleResultClick = useCallback((result: SearchResult) => {
     // Navigate to the result
     if (result.url) {
-      window.open(result.url, '_blank')
+      window.open(result.url, "_blank");
     } else {
       // Handle internal navigation
-      console.log('Navigate to:', result)
+      console.log("Navigate to:", result);
     }
-  }, [])
+  }, []);
 
   // Handle bookmark toggle
   const handleBookmarkToggle = useCallback((resultId: string) => {
-    setBookmarkedResults(prev => {
-      const newSet = new Set(prev)
+    setBookmarkedResults((prev) => {
+      const newSet = new Set(prev);
       if (newSet.has(resultId)) {
-        newSet.delete(resultId)
+        newSet.delete(resultId);
       } else {
-        newSet.add(resultId)
+        newSet.add(resultId);
       }
-      return newSet
-    })
-  }, [])
+      return newSet;
+    });
+  }, []);
 
   // Filter results by type
-  const filteredResults = useMemo(() => {
-    if (!typedSearchResults || typedSearchResults.length === 0) return []
-
-    if (activeTab === 'all') {
-      return typedSearchResults.filter((result: SearchResult) =>
-        filters.types.length === 0 || filters.types.includes(result.type)
-      )
+  const filteredResults = useMemo<SearchResult[]>(() => {
+    if (typedSearchResults.length === 0) return [];
+    if (activeTab === "all") {
+      return typedSearchResults.filter(
+        (result) =>
+          filters.types.length === 0 || filters.types.includes(result.type),
+      );
     }
-
-    return typedSearchResults.filter((result: SearchResult) => result.type === activeTab)
-  }, [typedSearchResults, activeTab, filters.types])
+    return typedSearchResults.filter((result) => result.type === activeTab);
+  }, [typedSearchResults, activeTab, filters.types]);
 
   // Get result counts by type
-  const resultCounts = useMemo(() => {
+  const resultCounts = useMemo<Record<SearchResultType, number>>(() => {
     const counts: Record<SearchResultType, number> = {
       all: 0,
       conversation: 0,
       message: 0,
       agent: 0,
-      file: 0
-    }
-
-    // Count results by type
-    if (typedSearchResults) {
-      typedSearchResults.forEach((result: SearchResult) => {
-        const type = result.type
-        if (type in counts) {
-          counts[type]++
-        }
-        counts.all++
-      })
-    }
-
-    return counts
-  }, [])
+      file: 0,
+    };
+    typedSearchResults.forEach((result) => {
+      counts.all++;
+      if (result.type !== "all") counts[result.type]++;
+    });
+    return counts;
+  }, [typedSearchResults]);
 
   // Handle keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!isOpen) return
+      if (!isOpen) return;
 
-      if (e.key === 'Escape') {
-        onClose()
-      } else if (e.key === '/' && e.ctrlKey) {
-        e.preventDefault()
+      if (e.key === "Escape") {
+        onClose();
+      } else if (e.key === "/" && e.ctrlKey) {
+        e.preventDefault();
         // Focus search input
-        const searchInput = document.querySelector('input[type="text"]') as HTMLInputElement
-        searchInput?.focus()
+        const searchInput = document.querySelector(
+          'input[type="text"]',
+        ) as HTMLInputElement;
+        searchInput?.focus();
       }
-    }
+    };
 
-    document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, onClose])
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <motion.div
@@ -468,8 +516,8 @@ export function SearchInterface({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         className={cn(
-          'fixed top-4 left-4 right-4 bottom-4 bg-background rounded-lg shadow-2xl overflow-hidden',
-          className
+          "fixed top-4 left-4 right-4 bottom-4 bg-background rounded-lg shadow-2xl overflow-hidden",
+          className,
         )}
         onClick={(e) => e.stopPropagation()}
       >
@@ -481,13 +529,13 @@ export function SearchInterface({
               type="text"
               placeholder="Search conversations, messages, agents, files..."
               value={query}
-              onChange={(e) => { { { handleSearch(e.target.value); ; ; }}}}
+              onChange={(e) => handleSearch(e.target.value)}
               className="pl-10 pr-10"
               autoFocus
             />
             {query && (
               <button
-                onClick={() => { { setQuery('');; }}}
+                onClick={() => setQuery("")}
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 bg-transparent hover:bg-accent hover:text-accent-foreground rounded"
               >
                 <X className="h-4 w-4" />
@@ -495,7 +543,10 @@ export function SearchInterface({
             )}
           </div>
 
-          <button onClick={onClose} className="h-9 px-3 bg-transparent hover:bg-accent hover:text-accent-foreground rounded">
+          <button
+            onClick={onClose}
+            className="h-9 px-3 bg-transparent hover:bg-accent hover:text-accent-foreground rounded"
+          >
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -514,7 +565,12 @@ export function SearchInterface({
           <div className="flex-1 flex flex-col">
             {/* Tabs */}
             <div className="border-b px-4 py-2">
-              <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as SearchResultType)}>
+              <Tabs
+                value={activeTab}
+                onValueChange={(value) =>
+                  setActiveTab(value as SearchResultType)
+                }
+              >
                 <TabsList className="grid w-full grid-cols-5">
                   <TabsTrigger value="all" className="text-xs">
                     All ({resultCounts.all})
@@ -548,9 +604,11 @@ export function SearchInterface({
                 <div className="flex items-center justify-center h-full">
                   <div className="text-center">
                     <p className="text-destructive mb-2">Search failed</p>
-                    <p className="text-sm text-muted-foreground">{error.message}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {error.message}
+                    </p>
                     <button
-                      onClick={() => { { refetch();; }}}
+                      onClick={() => refetch()}
                       className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
                     >
                       Try Again
@@ -562,7 +620,7 @@ export function SearchInterface({
                   <div className="text-center">
                     <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                     <p className="text-muted-foreground">
-                      {query ? 'No results found' : 'Start typing to search...'}
+                      {query ? "No results found" : "Start typing to search..."}
                     </p>
                     {query && (
                       <p className="text-sm text-muted-foreground mt-2">
@@ -579,7 +637,7 @@ export function SearchInterface({
                         key={result.id}
                         result={result}
                         query={query}
-                        onClick={() => { { handleResultClick(result);; }}}
+                        onClick={() => handleResultClick(result)}
                         onBookmark={() => handleBookmarkToggle(result.id)}
                         isBookmarked={bookmarkedResults.has(result.id)}
                       />
@@ -592,21 +650,24 @@ export function SearchInterface({
         </div>
       </motion.div>
     </motion.div>
-  )
+  );
 }
 
 // Compact search button
 export function SearchButton({
   onClick,
-  className
+  className,
 }: {
-  onClick: () => void
-  className?: string
+  onClick: () => void;
+  className?: string;
 }) {
   return (
     <button
       onClick={onClick}
-      className={cn('inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-2', className)}
+      className={cn(
+        "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-2",
+        className,
+      )}
     >
       <Search className="h-4 w-4" />
       <span className="hidden sm:inline">Search</span>
@@ -615,5 +676,5 @@ export function SearchButton({
         <span>/</span>
       </kbd>
     </button>
-  )
+  );
 }

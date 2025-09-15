@@ -1,0 +1,240 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.telegram.TelegramChatFileLoader.html",
+  "title": "TelegramChatFileLoader#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "TelegramChatFileLoader"
+    },
+    {
+      "type": "p",
+      "content": "Load fromTelegram chatdump."
+    },
+    {
+      "type": "p",
+      "content": "Initialize with a path."
+    },
+    {
+      "type": "p",
+      "content": "__init__(path)"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with a path."
+    },
+    {
+      "type": "p",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load documents."
+    },
+    {
+      "type": "p",
+      "content": "load_and_split([text_splitter])"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks."
+    },
+    {
+      "type": "p",
+      "content": "path(Union[str,Path])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with a path."
+    },
+    {
+      "type": "p",
+      "content": "path(str|Path)"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load documents."
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks. Chunks are returned as Documents."
+    },
+    {
+      "type": "p",
+      "content": "Do not override this method. It should be considered to be deprecated!"
+    },
+    {
+      "type": "p",
+      "content": "text_splitter(Optional[TextSplitter]) – TextSplitter instance to use for splitting documents.\nDefaults to RecursiveCharacterTextSplitter."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If langchain-text-splitters is not installed\n    and no text_splitter is provided."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using TelegramChatFileLoader"
+    },
+    {
+      "type": "li",
+      "content": "TelegramChatFileLoader__init__()alazy_load()aload()lazy_load()load()load_and_split()"
+    },
+    {
+      "type": "li",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "load_and_split()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "__init__",
+    "alazy_load",
+    "aload",
+    "lazy_load",
+    "load",
+    "load_and_split",
+    "TelegramChatFileLoader",
+    "__init__()",
+    "alazy_load()",
+    "aload()",
+    "lazy_load()",
+    "load()",
+    "load_and_split()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.telegram.TelegramChatFileLoader(path:str|Path)[source]#",
+    "langchain_community.document_loaders.telegram.",
+    "TelegramChatFileLoader",
+    "(",
+    "path:str|Path",
+    ")",
+    "__init__(path:str|Path)[source]#",
+    "__init__",
+    "(",
+    "path:str|Path",
+    ")",
+    "asyncalazy_load()→AsyncIterator[Document]#",
+    "alazy_load",
+    "(",
+    ")",
+    "→AsyncIterator[Document]",
+    "→",
+    "AsyncIterator[Document]",
+    "asyncaload()→list[Document]#",
+    "aload",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "lazy_load()→Iterator[Document]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "load()→List[Document][source]#",
+    "load",
+    "(",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]",
+    "load_and_split(text_splitter:TextSplitter|None=None,)→list[Document]#",
+    "load_and_split",
+    "(",
+    "text_splitter:TextSplitter|None=None",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "path:str|Path",
+    "path:str|Path",
+    "text_splitter:TextSplitter|None=None"
+  ]
+}

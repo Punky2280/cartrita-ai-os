@@ -2,6 +2,7 @@
 # Complete Monorepo with Advanced AI Orchestration
 
 
+name: cartrita-ai-os
 
 services:
   # ============================================
@@ -55,6 +56,28 @@ services:
     networks:
       - cartrita-network
 
+  redis-exporter:
+    image: oliver006/redis_exporter:v1.63.0
+    container_name: cartrita-redis-exporter
+    restart: unless-stopped
+    environment:
+      - REDIS_ADDR=redis:6379
+    ports:
+      - "9121:9121"
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:9121/metrics" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    networks:
+      - cartrita-network
+    labels:
+      - "monitoring=redis"
+
   # ============================================
   # AI ORCHESTRATOR (Python/FastAPI)
   # ============================================
@@ -87,9 +110,10 @@ services:
       - POSTGRES_USER=${POSTGRES_USER:-cartrita}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB:-cartrita_db}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-cartrita}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-cartrita_db}
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_PASSWORD=
       - COMPUTER_USE_ENABLED=${COMPUTER_USE_ENABLED:-true}
       - COMPUTER_USE_SAFETY_MODE=${COMPUTER_USE_SAFETY_MODE:-strict}
       - SECURITY_SECRET_KEY=${SECRET_KEY}

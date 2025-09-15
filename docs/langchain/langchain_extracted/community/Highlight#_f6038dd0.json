@@ -1,0 +1,81 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/retrievers/langchain_community.retrievers.kendra.Highlight.html#langchain_community.retrievers.kendra.Highlight",
+  "title": "Highlight#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Information that highlights the keywords in the excerpt."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "The zero-based location in the excerpt where the highlight starts."
+    },
+    {
+      "type": "p",
+      "content": "The zero-based location in the excerpt where the highlight ends."
+    },
+    {
+      "type": "p",
+      "content": "Indicates whether the result is the best one."
+    },
+    {
+      "type": "p",
+      "content": "The highlight type: STANDARD or THESAURUS_SYNONYM."
+    },
+    {
+      "type": "li",
+      "content": "HighlightBeginOffsetEndOffsetTopAnswerType"
+    },
+    {
+      "type": "li",
+      "content": "BeginOffset"
+    }
+  ],
+  "code_examples": [
+    "retrievers",
+    "BaseModel",
+    "Highlight",
+    "BeginOffset",
+    "EndOffset",
+    "TopAnswer",
+    "Type"
+  ],
+  "api_signatures": [
+    "classlangchain_community.retrievers.kendra.Highlight[source]#",
+    "langchain_community.retrievers.kendra.",
+    "Highlight",
+    "paramBeginOffset:int[Required]#",
+    "BeginOffset",
+    "paramEndOffset:int[Required]#",
+    "EndOffset",
+    "paramTopAnswer:bool|None[Required]#",
+    "TopAnswer",
+    "paramType:str|None[Required]#",
+    "Type"
+  ],
+  "parameters": []
+}

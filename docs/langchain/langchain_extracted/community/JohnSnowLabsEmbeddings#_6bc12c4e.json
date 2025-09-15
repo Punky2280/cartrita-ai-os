@@ -1,0 +1,184 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/embeddings/langchain_community.embeddings.johnsnowlabs.JohnSnowLabsEmbeddings.html#langchain_community.embeddings.johnsnowlabs.JohnSnowLabsEmbeddings",
+  "title": "JohnSnowLabsEmbeddings#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "JohnSnowLabsEmbeddings"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel,Embeddings"
+    },
+    {
+      "type": "p",
+      "content": "JohnSnowLabs embedding models"
+    },
+    {
+      "type": "p",
+      "content": "To use, you should have thejohnsnowlabspython package installed.\n.. rubric:: Example"
+    },
+    {
+      "type": "p",
+      "content": "Initialize the johnsnowlabs model."
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed search docs."
+    },
+    {
+      "type": "p",
+      "content": "texts(list[str]) – List of text to embed."
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings."
+    },
+    {
+      "type": "p",
+      "content": "list[list[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed query text."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – Text to embed."
+    },
+    {
+      "type": "p",
+      "content": "list[float]"
+    },
+    {
+      "type": "p",
+      "content": "Compute doc embeddings using a JohnSnowLabs transformer model."
+    },
+    {
+      "type": "p",
+      "content": "texts(List[str]) – The list of texts to embed."
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings, one for each text."
+    },
+    {
+      "type": "p",
+      "content": "List[List[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Compute query embeddings using a JohnSnowLabs transformer model."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – The text to embed."
+    },
+    {
+      "type": "p",
+      "content": "Embeddings for the text."
+    },
+    {
+      "type": "p",
+      "content": "List[float]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using JohnSnowLabsEmbeddings"
+    },
+    {
+      "type": "li",
+      "content": "John Snow Labs"
+    },
+    {
+      "type": "p",
+      "content": "John Snow Labs"
+    },
+    {
+      "type": "li",
+      "content": "JohnSnowLabsEmbeddingsmodelaembed_documents()aembed_query()embed_documents()embed_query()"
+    },
+    {
+      "type": "li",
+      "content": "aembed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "aembed_query()"
+    },
+    {
+      "type": "li",
+      "content": "embed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "embed_query()"
+    }
+  ],
+  "code_examples": [
+    "embeddings",
+    "BaseModel",
+    "Embeddings",
+    "johnsnowlabs",
+    "fromlangchain_community.embeddings.johnsnowlabsimportJohnSnowLabsEmbeddingsembedding=JohnSnowLabsEmbeddings(model='embed_sentence.bert')output=embedding.embed_query(\"foo bar\")",
+    "JohnSnowLabsEmbeddings",
+    "model",
+    "aembed_documents()",
+    "aembed_query()",
+    "embed_documents()",
+    "embed_query()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.embeddings.johnsnowlabs.JohnSnowLabsEmbeddings[source]#",
+    "langchain_community.embeddings.johnsnowlabs.",
+    "JohnSnowLabsEmbeddings",
+    "parammodel:Any='embed_sentence.bert'#",
+    "model",
+    "asyncaembed_documents(texts:list[str],)→list[list[float]]#",
+    "aembed_documents",
+    "(",
+    "texts:list[str]",
+    ")",
+    "→list[list[float]]",
+    "→",
+    "list[list[float]]",
+    "asyncaembed_query(text:str,)→list[float]#",
+    "aembed_query",
+    "(",
+    "text:str",
+    ")",
+    "→list[float]",
+    "→",
+    "list[float]",
+    "embed_documents(texts:List[str],)→List[List[float]][source]#",
+    "embed_documents",
+    "(",
+    "texts:List[str]",
+    ")",
+    "→List[List[float]]",
+    "→",
+    "List[List[float]]",
+    "embed_query(text:str,)→List[float][source]#",
+    "embed_query",
+    "(",
+    "text:str",
+    ")",
+    "→List[float]",
+    "→",
+    "List[float]"
+  ],
+  "parameters": [
+    "texts:list[str]",
+    "text:str",
+    "texts:List[str]",
+    "text:str"
+  ]
+}

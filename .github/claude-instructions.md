@@ -15,7 +15,7 @@ Cartrita AI OS is a **hierarchical multi-agent AI system** with the following ar
 
 ### System Philosophy
 - **Reliability First**: Multiple fallback layers ensure service never fails
-- **Agent Specialization**: Each agent optimized for specific task domains  
+- **Agent Specialization**: Each agent optimized for specific task domains
 - **Modern Architecture**: SSE streaming, async patterns, containerized deployment
 - **Observability**: Comprehensive monitoring with OpenTelemetry, Prometheus, Grafana
 
@@ -120,7 +120,7 @@ curl http://localhost:3000/health  # Frontend/API Gateway
 - Resource limits and health checks
 - TLS-ready configuration
 
-### API Security  
+### API Security
 - API key authentication (`X-API-Key` header)
 - Rate limiting and input validation
 - Structured error responses
@@ -174,7 +174,7 @@ messages = self._safe_get_messages(state)
 
 ### Loop Prevention
 - `max_total_iterations`: Global iteration limit
-- `max_attempts_per_agent`: Per-agent attempt limit  
+- `max_attempts_per_agent`: Per-agent attempt limit
 - `agent_attempts`: Counter tracking attempts
 - Enforced in supervisor to prevent infinite loops
 
@@ -254,7 +254,7 @@ npm run type-check
 - **Async/Await**: All I/O operations must be properly awaited
 - **Agent Loop Limits**: Respect iteration limits to prevent infinite loops
 
-### Frontend  
+### Frontend
 - **SSE Streaming**: Handle connection failures gracefully
 - **API Proxy**: Frontend calls Next.js API routes, not backend directly
 - **Type Safety**: Maintain strict TypeScript compliance

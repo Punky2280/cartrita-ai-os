@@ -1,0 +1,67 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chains/langchain_community.chains.graph_qa.cypher.get_function_response.html#langchain_community.chains.graph_qa.cypher.get_function_response",
+  "title": "get_function_response#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "get_function_response"
+    },
+    {
+      "type": "p",
+      "content": "Deprecated since version 0.3.8:Use:meth:`~langchain_neo4j.chains.graph_qa.cypher.get_function_response`instead. It will not be removed until langchain-community==1.0."
+    },
+    {
+      "type": "li",
+      "content": "question(str)"
+    },
+    {
+      "type": "p",
+      "content": "question(str)"
+    },
+    {
+      "type": "li",
+      "content": "context(List[Dict[str,Any]])"
+    },
+    {
+      "type": "p",
+      "content": "context(List[Dict[str,Any]])"
+    },
+    {
+      "type": "p",
+      "content": "List[BaseMessage]"
+    },
+    {
+      "type": "li",
+      "content": "get_function_response()"
+    }
+  ],
+  "code_examples": [
+    "chains",
+    ":meth:`~langchain_neo4j.chains.graph_qa.cypher.get_function_response`",
+    "get_function_response()"
+  ],
+  "api_signatures": [
+    "langchain_community.chains.graph_qa.cypher.get_function_response(question:str,context:List[Dict[str,Any]],)→List[BaseMessage][source]#",
+    "langchain_community.chains.graph_qa.cypher.",
+    "get_function_response",
+    "(",
+    "question:str",
+    "context:List[Dict[str,Any]]",
+    ")",
+    "→List[BaseMessage]",
+    "→",
+    "List[BaseMessage]"
+  ],
+  "parameters": [
+    "question:str",
+    "context:List[Dict[str,Any]]"
+  ]
+}

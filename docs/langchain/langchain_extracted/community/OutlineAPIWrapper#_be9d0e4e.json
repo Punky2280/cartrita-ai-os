@@ -1,0 +1,122 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.outline.OutlineAPIWrapper.html",
+  "title": "OutlineAPIWrapper#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "OutlineAPIWrapper"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Wrapper around OutlineAPI."
+    },
+    {
+      "type": "p",
+      "content": "This wrapper will use the Outline API to query the documents of your instance.\nBy default it will return the document content of the top-k results.\nIt limits the document content by doc_content_chars_max."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Run Outline search and get the document content plus the meta information."
+    },
+    {
+      "type": "p",
+      "content": "Returns: a list of documents."
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "li",
+      "content": "OutlineAPIWrapperdoc_content_chars_maxload_all_available_metaoutline_api_keyoutline_instance_urloutline_search_endpointtop_k_resultsrun()"
+    },
+    {
+      "type": "li",
+      "content": "doc_content_chars_max"
+    },
+    {
+      "type": "li",
+      "content": "load_all_available_meta"
+    },
+    {
+      "type": "li",
+      "content": "outline_api_key"
+    },
+    {
+      "type": "li",
+      "content": "outline_instance_url"
+    },
+    {
+      "type": "li",
+      "content": "outline_search_endpoint"
+    },
+    {
+      "type": "li",
+      "content": "top_k_results"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "BaseModel",
+    "OutlineAPIWrapper",
+    "doc_content_chars_max",
+    "load_all_available_meta",
+    "outline_api_key",
+    "outline_instance_url",
+    "outline_search_endpoint",
+    "top_k_results",
+    "run()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.utilities.outline.OutlineAPIWrapper[source]#",
+    "langchain_community.utilities.outline.",
+    "OutlineAPIWrapper",
+    "paramdoc_content_chars_max:int=4000#",
+    "doc_content_chars_max",
+    "paramload_all_available_meta:bool=False#",
+    "load_all_available_meta",
+    "paramoutline_api_key:str|None=None#",
+    "outline_api_key",
+    "paramoutline_instance_url:str|None=None#",
+    "outline_instance_url",
+    "paramoutline_search_endpoint:str='/api/documents.search'#",
+    "outline_search_endpoint",
+    "paramtop_k_results:int=3#",
+    "top_k_results",
+    "run(query:str,)→List[Document][source]#",
+    "run",
+    "(",
+    "query:str",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]"
+  ],
+  "parameters": [
+    "query:str"
+  ]
+}

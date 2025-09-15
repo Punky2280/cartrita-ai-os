@@ -1,0 +1,36 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/llms/langchain_community.llms.ollama.OllamaEndpointNotFoundError.html#langchain_community.llms.ollama.OllamaEndpointNotFoundError",
+  "title": "OllamaEndpointNotFoundError#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "OllamaEndpointNotFoundError"
+    },
+    {
+      "type": "p",
+      "content": "Raised when the Ollama endpoint is not found."
+    },
+    {
+      "type": "li",
+      "content": "OllamaEndpointNotFoundError"
+    }
+  ],
+  "code_examples": [
+    "llms",
+    "OllamaEndpointNotFoundError"
+  ],
+  "api_signatures": [
+    "classlangchain_community.llms.ollama.OllamaEndpointNotFoundError[source]#",
+    "langchain_community.llms.ollama.",
+    "OllamaEndpointNotFoundError"
+  ],
+  "parameters": []
+}

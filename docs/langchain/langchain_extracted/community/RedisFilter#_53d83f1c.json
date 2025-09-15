@@ -1,0 +1,82 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.redis.filters.RedisFilter.html#langchain_community.vectorstores.redis.filters.RedisFilter",
+  "title": "RedisFilter#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "vectorstores"
+    },
+    {
+      "type": "li",
+      "content": "RedisFilter"
+    },
+    {
+      "type": "p",
+      "content": "Collection of RedisFilterFields."
+    },
+    {
+      "type": "p",
+      "content": "text(field)"
+    },
+    {
+      "type": "p",
+      "content": "Examples using RedisFilter"
+    },
+    {
+      "type": "li",
+      "content": "RedisFilternum()tag()text()"
+    }
+  ],
+  "code_examples": [
+    "vectorstores",
+    "num",
+    "tag",
+    "text",
+    "RedisFilter",
+    "num()",
+    "tag()",
+    "text()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.vectorstores.redis.filters.RedisFilter[source]#",
+    "langchain_community.vectorstores.redis.filters.",
+    "RedisFilter",
+    "staticnum(field:str,)→RedisNum[source]#",
+    "num",
+    "(",
+    "field:str",
+    ")",
+    "→RedisNum",
+    "→",
+    "RedisNum",
+    "statictag(field:str,)→RedisTag[source]#",
+    "tag",
+    "(",
+    "field:str",
+    ")",
+    "→RedisTag",
+    "→",
+    "RedisTag",
+    "statictext(field:str,)→RedisText[source]#",
+    "text",
+    "(",
+    "field:str",
+    ")",
+    "→RedisText",
+    "→",
+    "RedisText"
+  ],
+  "parameters": [
+    "field:str",
+    "field:str",
+    "field:str"
+  ]
+}

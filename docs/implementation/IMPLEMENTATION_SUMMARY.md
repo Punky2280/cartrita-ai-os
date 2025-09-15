@@ -130,7 +130,7 @@ await sendMessage({
 
 - **Unit Tests**: API client methods and utilities
 - **Integration Tests**: Full request/response cycles
-- **Hook Tests**: React hook behavior and state management  
+- **Hook Tests**: React hook behavior and state management
 - **Schema Tests**: JSON schema validation with real data
 - **Mock Tests**: EventSource and WebSocket behavior
 

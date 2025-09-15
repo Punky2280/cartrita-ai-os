@@ -1,0 +1,52 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chat_models/langchain_community.chat_models.fireworks.convert_dict_to_message.html",
+  "title": "convert_dict_to_message#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "chat_models"
+    },
+    {
+      "type": "li",
+      "content": "convert_dict_to_message"
+    },
+    {
+      "type": "p",
+      "content": "Convert a dict response to a message."
+    },
+    {
+      "type": "p",
+      "content": "BaseMessage"
+    },
+    {
+      "type": "li",
+      "content": "convert_dict_to_message()"
+    }
+  ],
+  "code_examples": [
+    "chat_models",
+    "convert_dict_to_message()"
+  ],
+  "api_signatures": [
+    "langchain_community.chat_models.fireworks.convert_dict_to_message(_dict:Any,)→BaseMessage[source]#",
+    "langchain_community.chat_models.fireworks.",
+    "convert_dict_to_message",
+    "(",
+    "_dict:Any",
+    ")",
+    "→BaseMessage",
+    "→",
+    "BaseMessage"
+  ],
+  "parameters": [
+    "_dict:Any"
+  ]
+}

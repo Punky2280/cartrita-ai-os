@@ -84,14 +84,14 @@ from sse_starlette import EventSourceResponse
 @app.get("/api/chat/stream")
 async def stream_chat(request: ChatRequest):
     """Stream AI responses using Server-Sent Events."""
-    
+
     async def generate_stream():
         response = await supervisor.process_chat_request_stream(
             message=request.message,
             context=request.context,
             stream=True
         )
-        
+
         async for chunk in response:
             # Send SSE formatted data
             yield {
@@ -102,13 +102,13 @@ async def stream_chat(request: ChatRequest):
                     "timestamp": time.time()
                 })
             }
-        
+
         # Send completion event
         yield {
             "event": "done",
             "data": json.dumps({"status": "completed"})
         }
-    
+
     return EventSourceResponse(generate_stream())
 ```
 
@@ -120,16 +120,16 @@ async def stream_chat(request: ChatRequest):
 async def websocket_chat(websocket: WebSocket, conversation_id: str):
     """WebSocket endpoint for real-time multi-agent interaction."""
     await websocket.accept()
-    
+
     try:
         # Authenticate connection
         auth_data = await websocket.receive_json()
         api_key = auth_data.get("api_key")
-        
+
         if not await verify_api_key(api_key):
             await websocket.send_json({"error": "Invalid API key"})
             return
-        
+
         # Handle real-time messages
         async for message in websocket.iter_json():
             # Process through multi-agent supervisor
@@ -138,7 +138,7 @@ async def websocket_chat(websocket: WebSocket, conversation_id: str):
                 conversation_id=conversation_id,
                 websocket=websocket
             )
-            
+
             # Send real-time response
             await websocket.send_json({
                 "type": "response",
@@ -146,7 +146,7 @@ async def websocket_chat(websocket: WebSocket, conversation_id: str):
                 "agent": response.agent_type,
                 "timestamp": time.time()
             })
-            
+
     except WebSocketDisconnect:
         logger.info(f"WebSocket disconnected: {conversation_id}")
     except Exception as e:
@@ -236,14 +236,14 @@ async def stream_chat(
 ):
     # Validate request and apply rate limiting
     await rate_limiter.acquire(api_key)
-    
+
     # Stream with security headers
     headers = {
         "Cache-Control": "no-cache",
         "Connection": "keep-alive",
         "X-Content-Type-Options": "nosniff"
     }
-    
+
     return EventSourceResponse(
         generate_stream(request),
         headers=headers
@@ -261,13 +261,13 @@ async def websocket_chat(websocket: WebSocket, conversation_id: str):
     if origin not in ALLOWED_ORIGINS:
         await websocket.close(code=1008, reason="Forbidden origin")
         return
-    
+
     # Rate limiting per IP
     client_ip = websocket.client.host
     if not await check_rate_limit(client_ip):
         await websocket.close(code=1008, reason="Rate limit exceeded")
         return
-    
+
     # Continue with authenticated connection
     await websocket.accept()
 ```
@@ -297,12 +297,12 @@ async def add_metrics_middleware(request: Request, call_next):
     start_time = time.time()
     response = await call_next(request)
     process_time = time.time() - start_time
-    
+
     # Record metrics
     if "stream" in request.url.path:
         metrics.sse_request_duration.observe(process_time)
         metrics.sse_requests_total.inc()
-    
+
     return response
 
 # WebSocket connection metrics
@@ -311,11 +311,11 @@ class WebSocketMetrics:
         self.active_connections = 0
         self.total_messages = 0
         self.connection_duration = []
-    
+
     async def on_connect(self):
         self.active_connections += 1
         metrics.websocket_connections_active.set(self.active_connections)
-    
+
     async def on_disconnect(self, duration: float):
         self.active_connections -= 1
         self.connection_duration.append(duration)

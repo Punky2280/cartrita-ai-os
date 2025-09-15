@@ -1,0 +1,605 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.parsers.docai.DocAIParser.html#langchain_community.document_loaders.parsers.docai.DocAIParser",
+  "title": "DocAIParser#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "DocAIParser"
+    },
+    {
+      "type": "p",
+      "content": "Deprecated since version 0.0.32:Use:class:`~langchain_google_community.DocAIParser`instead. It will not be removed until langchain-community==1.0."
+    },
+    {
+      "type": "p",
+      "content": "Google Cloud Document AIparser."
+    },
+    {
+      "type": "p",
+      "content": "For a detailed explanation of Document AI, refer to the product documentation.https://cloud.google.com/document-ai/docs/overview"
+    },
+    {
+      "type": "p",
+      "content": "Initializes the parser."
+    },
+    {
+      "type": "li",
+      "content": "client(DocumentProcessorServiceClient|None) – a DocumentProcessorServiceClient to use"
+    },
+    {
+      "type": "p",
+      "content": "client(DocumentProcessorServiceClient|None) – a DocumentProcessorServiceClient to use"
+    },
+    {
+      "type": "li",
+      "content": "location(str|None) – a Google Cloud location where a Document AI processor is located"
+    },
+    {
+      "type": "p",
+      "content": "location(str|None) – a Google Cloud location where a Document AI processor is located"
+    },
+    {
+      "type": "li",
+      "content": "gcs_output_path(str|None) – a path on Google Cloud Storage to store parsing results"
+    },
+    {
+      "type": "p",
+      "content": "gcs_output_path(str|None) – a path on Google Cloud Storage to store parsing results"
+    },
+    {
+      "type": "li",
+      "content": "processor_name(str|None) – full resource name of a Document AI processor or processor\nversion"
+    },
+    {
+      "type": "p",
+      "content": "processor_name(str|None) – full resource name of a Document AI processor or processor\nversion"
+    },
+    {
+      "type": "p",
+      "content": "would be instantiated)."
+    },
+    {
+      "type": "p",
+      "content": "__init__(*[, client, location, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Initializes the parser."
+    },
+    {
+      "type": "p",
+      "content": "batch_parse(blobs[, gcs_output_path, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Parses a list of blobs lazily."
+    },
+    {
+      "type": "p",
+      "content": "docai_parse(blobs, *[, gcs_output_path, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Runs Google Document AI PDF Batch Processing on a list of blobs."
+    },
+    {
+      "type": "p",
+      "content": "get_results(operations)"
+    },
+    {
+      "type": "p",
+      "content": "is_running(operations)"
+    },
+    {
+      "type": "p",
+      "content": "lazy_parse(blob)"
+    },
+    {
+      "type": "p",
+      "content": "Parses a blob lazily."
+    },
+    {
+      "type": "p",
+      "content": "online_process(blob[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Parses a blob lazily using online processing."
+    },
+    {
+      "type": "p",
+      "content": "operations_from_names(operation_names)"
+    },
+    {
+      "type": "p",
+      "content": "Initializes Long-Running Operations from their names."
+    },
+    {
+      "type": "p",
+      "content": "parse(blob)"
+    },
+    {
+      "type": "p",
+      "content": "Eagerly parse the blob into a document or documents."
+    },
+    {
+      "type": "p",
+      "content": "parse_from_results(results)"
+    },
+    {
+      "type": "p",
+      "content": "Initializes the parser."
+    },
+    {
+      "type": "li",
+      "content": "client(DocumentProcessorServiceClient|None) – a DocumentProcessorServiceClient to use"
+    },
+    {
+      "type": "p",
+      "content": "client(DocumentProcessorServiceClient|None) – a DocumentProcessorServiceClient to use"
+    },
+    {
+      "type": "li",
+      "content": "location(str|None) – a Google Cloud location where a Document AI processor is located"
+    },
+    {
+      "type": "p",
+      "content": "location(str|None) – a Google Cloud location where a Document AI processor is located"
+    },
+    {
+      "type": "li",
+      "content": "gcs_output_path(str|None) – a path on Google Cloud Storage to store parsing results"
+    },
+    {
+      "type": "p",
+      "content": "gcs_output_path(str|None) – a path on Google Cloud Storage to store parsing results"
+    },
+    {
+      "type": "li",
+      "content": "processor_name(str|None) – full resource name of a Document AI processor or processor\nversion"
+    },
+    {
+      "type": "p",
+      "content": "processor_name(str|None) – full resource name of a Document AI processor or processor\nversion"
+    },
+    {
+      "type": "p",
+      "content": "would be instantiated)."
+    },
+    {
+      "type": "p",
+      "content": "Parses a list of blobs lazily."
+    },
+    {
+      "type": "li",
+      "content": "blobs(Sequence[Blob]) – a list of blobs to parse."
+    },
+    {
+      "type": "p",
+      "content": "blobs(Sequence[Blob]) – a list of blobs to parse."
+    },
+    {
+      "type": "li",
+      "content": "gcs_output_path(str|None) – a path on Google Cloud Storage to store parsing results."
+    },
+    {
+      "type": "p",
+      "content": "gcs_output_path(str|None) – a path on Google Cloud Storage to store parsing results."
+    },
+    {
+      "type": "li",
+      "content": "timeout_sec(int) – a timeout to wait for Document AI to complete, in seconds."
+    },
+    {
+      "type": "p",
+      "content": "timeout_sec(int) – a timeout to wait for Document AI to complete, in seconds."
+    },
+    {
+      "type": "li",
+      "content": "check_in_interval_sec(int) – an interval to wait until next check\nwhether parsing operations have been completed, in seconds"
+    },
+    {
+      "type": "p",
+      "content": "check_in_interval_sec(int) – an interval to wait until next check\nwhether parsing operations have been completed, in seconds"
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "parsing from creating LangChain Documents:\n>>> operations = parser.docai_parse(blobs, gcs_path)\n>>> parser.is_running(operations)\nYou can get operations names and save them:\n>>> names = [op.operation.name for op in operations]\nAnd when all operations are finished, you can use their results:\n>>> operations = parser.operations_from_names(operation_names)\n>>> results = parser.get_results(operations)\n>>> docs = parser.parse_from_results(results)"
+    },
+    {
+      "type": "p",
+      "content": "Runs Google Document AI PDF Batch Processing on a list of blobs."
+    },
+    {
+      "type": "li",
+      "content": "blobs(Sequence[Blob]) – a list of blobs to be parsed"
+    },
+    {
+      "type": "p",
+      "content": "blobs(Sequence[Blob]) – a list of blobs to be parsed"
+    },
+    {
+      "type": "li",
+      "content": "gcs_output_path(str|None) – a path (folder) on GCS to store results"
+    },
+    {
+      "type": "p",
+      "content": "gcs_output_path(str|None) – a path (folder) on GCS to store results"
+    },
+    {
+      "type": "li",
+      "content": "processor_name(str|None) – name of a Document AI processor."
+    },
+    {
+      "type": "p",
+      "content": "processor_name(str|None) – name of a Document AI processor."
+    },
+    {
+      "type": "li",
+      "content": "batch_size(int) – amount of documents per batch"
+    },
+    {
+      "type": "p",
+      "content": "batch_size(int) – amount of documents per batch"
+    },
+    {
+      "type": "li",
+      "content": "enable_native_pdf_parsing(bool) – a config option for the parser"
+    },
+    {
+      "type": "p",
+      "content": "enable_native_pdf_parsing(bool) – a config option for the parser"
+    },
+    {
+      "type": "li",
+      "content": "field_mask(str|None) – a comma-separated list of which fields to include in the\nDocument AI response.\nsuggested: “text,pages.pageNumber,pages.layout”"
+    },
+    {
+      "type": "p",
+      "content": "field_mask(str|None) – a comma-separated list of which fields to include in the\nDocument AI response.\nsuggested: “text,pages.pageNumber,pages.layout”"
+    },
+    {
+      "type": "p",
+      "content": "List[Operation]"
+    },
+    {
+      "type": "p",
+      "content": "Document AI has a 1000 file limit per batch, so batches larger than that need\nto be split into multiple requests.\nBatch processing is an async long-running operation\nand results are stored in a output GCS bucket."
+    },
+    {
+      "type": "p",
+      "content": "operations(List[Operation])"
+    },
+    {
+      "type": "p",
+      "content": "List[DocAIParsingResults]"
+    },
+    {
+      "type": "p",
+      "content": "operations(List[Operation])"
+    },
+    {
+      "type": "p",
+      "content": "Parses a blob lazily."
+    },
+    {
+      "type": "li",
+      "content": "blobs– a Blob to parse"
+    },
+    {
+      "type": "p",
+      "content": "blobs– a Blob to parse"
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "documents together and use thebatch_parse()method."
+    },
+    {
+      "type": "p",
+      "content": "Parses a blob lazily using online processing."
+    },
+    {
+      "type": "li",
+      "content": "blob(Blob) – a blob to parse."
+    },
+    {
+      "type": "p",
+      "content": "blob(Blob) – a blob to parse."
+    },
+    {
+      "type": "li",
+      "content": "enable_native_pdf_parsing(bool) – enable pdf embedded text extraction"
+    },
+    {
+      "type": "p",
+      "content": "enable_native_pdf_parsing(bool) – enable pdf embedded text extraction"
+    },
+    {
+      "type": "li",
+      "content": "field_mask(str|None) – a comma-separated list of which fields to include in the\nDocument AI response.\nsuggested: “text,pages.pageNumber,pages.layout”"
+    },
+    {
+      "type": "p",
+      "content": "field_mask(str|None) – a comma-separated list of which fields to include in the\nDocument AI response.\nsuggested: “text,pages.pageNumber,pages.layout”"
+    },
+    {
+      "type": "li",
+      "content": "page_range(List[int]|None) – list of page numbers to parse. IfNone,\nentire document will be parsed."
+    },
+    {
+      "type": "p",
+      "content": "page_range(List[int]|None) – list of page numbers to parse. IfNone,\nentire document will be parsed."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Initializes Long-Running Operations from their names."
+    },
+    {
+      "type": "p",
+      "content": "operation_names(List[str])"
+    },
+    {
+      "type": "p",
+      "content": "List[Operation]"
+    },
+    {
+      "type": "p",
+      "content": "Eagerly parse the blob into a document or documents."
+    },
+    {
+      "type": "p",
+      "content": "This is a convenience method for interactive development environment."
+    },
+    {
+      "type": "p",
+      "content": "Production applications should favor the lazy_parse method instead."
+    },
+    {
+      "type": "p",
+      "content": "Subclasses should generally not over-ride this parse method."
+    },
+    {
+      "type": "p",
+      "content": "blob(Blob) – Blob instance"
+    },
+    {
+      "type": "p",
+      "content": "List of documents"
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "results(List[DocAIParsingResults])"
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "li",
+      "content": "DocAIParser__init__()batch_parse()docai_parse()get_results()is_running()lazy_parse()online_process()operations_from_names()parse()parse_from_results()"
+    },
+    {
+      "type": "li",
+      "content": "batch_parse()"
+    },
+    {
+      "type": "li",
+      "content": "docai_parse()"
+    },
+    {
+      "type": "li",
+      "content": "get_results()"
+    },
+    {
+      "type": "li",
+      "content": "is_running()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_parse()"
+    },
+    {
+      "type": "li",
+      "content": "online_process()"
+    },
+    {
+      "type": "li",
+      "content": "operations_from_names()"
+    },
+    {
+      "type": "li",
+      "content": "parse_from_results()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    ":class:`~langchain_google_community.DocAIParser`",
+    "__init__",
+    "batch_parse",
+    "docai_parse",
+    "get_results",
+    "is_running",
+    "lazy_parse",
+    "online_process",
+    "operations_from_names",
+    "parse",
+    "parse_from_results",
+    "DocAIParser",
+    "__init__()",
+    "batch_parse()",
+    "docai_parse()",
+    "get_results()",
+    "is_running()",
+    "lazy_parse()",
+    "online_process()",
+    "operations_from_names()",
+    "parse()",
+    "parse_from_results()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.parsers.docai.DocAIParser(*,client:DocumentProcessorServiceClient|None=None,location:str|None=None,gcs_output_path:str|None=None,processor_name:str|None=None,)[source]#",
+    "langchain_community.document_loaders.parsers.docai.",
+    "DocAIParser",
+    "(",
+    "*",
+    "client:DocumentProcessorServiceClient|None=None",
+    "location:str|None=None",
+    "gcs_output_path:str|None=None",
+    "processor_name:str|None=None",
+    ")",
+    "__init__(*,client:DocumentProcessorServiceClient|None=None,location:str|None=None,gcs_output_path:str|None=None,processor_name:str|None=None,)[source]#",
+    "__init__",
+    "(",
+    "*",
+    "client:DocumentProcessorServiceClient|None=None",
+    "location:str|None=None",
+    "gcs_output_path:str|None=None",
+    "processor_name:str|None=None",
+    ")",
+    "batch_parse(blobs:Sequence[Blob],gcs_output_path:str|None=None,timeout_sec:int=3600,check_in_interval_sec:int=60,)→Iterator[Document][source]#",
+    "batch_parse",
+    "(",
+    "blobs:Sequence[Blob]",
+    "gcs_output_path:str|None=None",
+    "timeout_sec:int=3600",
+    "check_in_interval_sec:int=60",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "docai_parse(blobs:Sequence[Blob],*,gcs_output_path:str|None=None,processor_name:str|None=None,batch_size:int=1000,enable_native_pdf_parsing:bool=True,field_mask:str|None=None,)→List[Operation][source]#",
+    "docai_parse",
+    "(",
+    "blobs:Sequence[Blob]",
+    "*",
+    "gcs_output_path:str|None=None",
+    "processor_name:str|None=None",
+    "batch_size:int=1000",
+    "enable_native_pdf_parsing:bool=True",
+    "field_mask:str|None=None",
+    ")",
+    "→List[Operation]",
+    "→",
+    "List[Operation]",
+    "get_results(operations:List[Operation],)→List[DocAIParsingResults][source]#",
+    "get_results",
+    "(",
+    "operations:List[Operation]",
+    ")",
+    "→List[DocAIParsingResults]",
+    "→",
+    "List[DocAIParsingResults]",
+    "is_running(operations:List[Operation],)→bool[source]#",
+    "is_running",
+    "(",
+    "operations:List[Operation]",
+    ")",
+    "→bool",
+    "→",
+    "bool",
+    "lazy_parse(blob:Blob,)→Iterator[Document][source]#",
+    "lazy_parse",
+    "(",
+    "blob:Blob",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "online_process(blob:Blob,enable_native_pdf_parsing:bool=True,field_mask:str|None=None,page_range:List[int]|None=None,)→Iterator[Document][source]#",
+    "online_process",
+    "(",
+    "blob:Blob",
+    "enable_native_pdf_parsing:bool=True",
+    "field_mask:str|None=None",
+    "page_range:List[int]|None=None",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "operations_from_names(operation_names:List[str],)→List[Operation][source]#",
+    "operations_from_names",
+    "(",
+    "operation_names:List[str]",
+    ")",
+    "→List[Operation]",
+    "→",
+    "List[Operation]",
+    "parse(blob:Blob)→list[Document]#",
+    "parse",
+    "(",
+    "blob:Blob",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "parse_from_results(results:List[DocAIParsingResults],)→Iterator[Document][source]#",
+    "parse_from_results",
+    "(",
+    "results:List[DocAIParsingResults]",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]"
+  ],
+  "parameters": [
+    "*",
+    "client:DocumentProcessorServiceClient|None=None",
+    "location:str|None=None",
+    "gcs_output_path:str|None=None",
+    "processor_name:str|None=None",
+    "*",
+    "client:DocumentProcessorServiceClient|None=None",
+    "location:str|None=None",
+    "gcs_output_path:str|None=None",
+    "processor_name:str|None=None",
+    "blobs:Sequence[Blob]",
+    "gcs_output_path:str|None=None",
+    "timeout_sec:int=3600",
+    "check_in_interval_sec:int=60",
+    "blobs:Sequence[Blob]",
+    "*",
+    "gcs_output_path:str|None=None",
+    "processor_name:str|None=None",
+    "batch_size:int=1000",
+    "enable_native_pdf_parsing:bool=True",
+    "field_mask:str|None=None",
+    "operations:List[Operation]",
+    "operations:List[Operation]",
+    "blob:Blob",
+    "blob:Blob",
+    "enable_native_pdf_parsing:bool=True",
+    "field_mask:str|None=None",
+    "page_range:List[int]|None=None",
+    "operation_names:List[str]",
+    "blob:Blob",
+    "results:List[DocAIParsingResults]"
+  ]
+}

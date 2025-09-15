@@ -1,0 +1,471 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.zapier.ZapierNLAWrapper.html#langchain_community.utilities.zapier.ZapierNLAWrapper",
+  "title": "ZapierNLAWrapper#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "ZapierNLAWrapper"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Wrapper for Zapier NLA."
+    },
+    {
+      "type": "p",
+      "content": "Full docs here:https://nla.zapier.com/start/"
+    },
+    {
+      "type": "p",
+      "content": "This wrapper supports both API Key and OAuth Credential auth methods. API Key\nis the fastest way to get started using this wrapper."
+    },
+    {
+      "type": "p",
+      "content": "Call this wrapper with eitherzapier_nla_api_keyorzapier_nla_oauth_access_tokenarguments, or set theZAPIER_NLA_API_KEYenvironment variable. If both arguments are set, the Access Token will take\nprecedence."
+    },
+    {
+      "type": "p",
+      "content": "For use-cases where LangChain + Zapier NLA is powering a user-facing application,\nand LangChain needs access to the end-user’s connected accounts on Zapier.com,\nyou’ll need to use OAuth. Review the full docs above to learn how to create\nyour own provider and generate credentials."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Returns a list of all exposed (enabled) actions associated with\ncurrent user (associated with the set api_key). Change your exposed\nactions here:https://nla.zapier.com/demo/start/"
+    },
+    {
+      "type": "p",
+      "content": "The return list can be empty if no actions exposed. Else will contain\na list of action objects:"
+    },
+    {
+      "type": "p",
+      "content": "“id”: str,\n“description”: str,\n“params”: Dict[str, str]"
+    },
+    {
+      "type": "p",
+      "content": "paramswill always contain aninstructionskey, the only required\nparam. All others optional and if provided will override any AI guesses\n(see “understanding the AI guessing flow” here:https://nla.zapier.com/api/v1/docs)"
+    },
+    {
+      "type": "p",
+      "content": "Same as list, but returns a stringified version of the JSON for\ninsertting back into an LLM."
+    },
+    {
+      "type": "p",
+      "content": "Same as run, but instead of actually executing the action, will\ninstead return a preview of params that have been guessed by the AI in\ncase you need to explicitly review before executing."
+    },
+    {
+      "type": "li",
+      "content": "action_id(str)"
+    },
+    {
+      "type": "p",
+      "content": "action_id(str)"
+    },
+    {
+      "type": "li",
+      "content": "instructions(str)"
+    },
+    {
+      "type": "p",
+      "content": "instructions(str)"
+    },
+    {
+      "type": "li",
+      "content": "params(Dict|None)"
+    },
+    {
+      "type": "p",
+      "content": "params(Dict|None)"
+    },
+    {
+      "type": "p",
+      "content": "Same as preview, but returns a stringified version of the JSON for\ninsertting back into an LLM."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Executes an action that is identified by action_id, must be exposed\n(enabled) by the current user (associated with the set api_key). Change\nyour exposed actions here:https://nla.zapier.com/demo/start/"
+    },
+    {
+      "type": "p",
+      "content": "The return JSON is guaranteed to be less than ~500 words (350\ntokens) making it safe to inject into the prompt of another LLM\ncall."
+    },
+    {
+      "type": "li",
+      "content": "action_id(str)"
+    },
+    {
+      "type": "p",
+      "content": "action_id(str)"
+    },
+    {
+      "type": "li",
+      "content": "instructions(str)"
+    },
+    {
+      "type": "p",
+      "content": "instructions(str)"
+    },
+    {
+      "type": "li",
+      "content": "params(Dict|None)"
+    },
+    {
+      "type": "p",
+      "content": "params(Dict|None)"
+    },
+    {
+      "type": "p",
+      "content": "Same as run, but returns a stringified version of the JSON for\ninsertting back into an LLM."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Returns a list of all exposed (enabled) actions associated with\ncurrent user (associated with the set api_key). Change your exposed\nactions here:https://nla.zapier.com/demo/start/"
+    },
+    {
+      "type": "p",
+      "content": "The return list can be empty if no actions exposed. Else will contain\na list of action objects:"
+    },
+    {
+      "type": "p",
+      "content": "“id”: str,\n“description”: str,\n“params”: Dict[str, str]"
+    },
+    {
+      "type": "p",
+      "content": "paramswill always contain aninstructionskey, the only required\nparam. All others optional and if provided will override any AI guesses\n(see “understanding the AI guessing flow” here:https://nla.zapier.com/docs/using-the-api#ai-guessing)"
+    },
+    {
+      "type": "p",
+      "content": "Same as list, but returns a stringified version of the JSON for\ninsertting back into an LLM."
+    },
+    {
+      "type": "p",
+      "content": "Same as run, but instead of actually executing the action, will\ninstead return a preview of params that have been guessed by the AI in\ncase you need to explicitly review before executing."
+    },
+    {
+      "type": "li",
+      "content": "action_id(str)"
+    },
+    {
+      "type": "p",
+      "content": "action_id(str)"
+    },
+    {
+      "type": "li",
+      "content": "instructions(str)"
+    },
+    {
+      "type": "p",
+      "content": "instructions(str)"
+    },
+    {
+      "type": "li",
+      "content": "params(Dict|None)"
+    },
+    {
+      "type": "p",
+      "content": "params(Dict|None)"
+    },
+    {
+      "type": "p",
+      "content": "Same as preview, but returns a stringified version of the JSON for\ninsertting back into an LLM."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Executes an action that is identified by action_id, must be exposed\n(enabled) by the current user (associated with the set api_key). Change\nyour exposed actions here:https://nla.zapier.com/demo/start/"
+    },
+    {
+      "type": "p",
+      "content": "The return JSON is guaranteed to be less than ~500 words (350\ntokens) making it safe to inject into the prompt of another LLM\ncall."
+    },
+    {
+      "type": "li",
+      "content": "action_id(str)"
+    },
+    {
+      "type": "p",
+      "content": "action_id(str)"
+    },
+    {
+      "type": "li",
+      "content": "instructions(str)"
+    },
+    {
+      "type": "p",
+      "content": "instructions(str)"
+    },
+    {
+      "type": "li",
+      "content": "params(Dict|None)"
+    },
+    {
+      "type": "p",
+      "content": "params(Dict|None)"
+    },
+    {
+      "type": "p",
+      "content": "Same as run, but returns a stringified version of the JSON for\ninsertting back into an LLM."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Examples using ZapierNLAWrapper"
+    },
+    {
+      "type": "li",
+      "content": "Zapier Natural Language Actions"
+    },
+    {
+      "type": "p",
+      "content": "Zapier Natural Language Actions"
+    },
+    {
+      "type": "li",
+      "content": "ZapierNLAWrapperzapier_nla_api_basezapier_nla_api_keyzapier_nla_oauth_access_tokenalist()alist_as_str()apreview()apreview_as_str()arun()arun_as_str()list()list_as_str()preview()preview_as_str()run()run_as_str()"
+    },
+    {
+      "type": "li",
+      "content": "zapier_nla_api_base"
+    },
+    {
+      "type": "li",
+      "content": "zapier_nla_api_key"
+    },
+    {
+      "type": "li",
+      "content": "zapier_nla_oauth_access_token"
+    },
+    {
+      "type": "li",
+      "content": "alist_as_str()"
+    },
+    {
+      "type": "li",
+      "content": "apreview_as_str()"
+    },
+    {
+      "type": "li",
+      "content": "arun_as_str()"
+    },
+    {
+      "type": "li",
+      "content": "list_as_str()"
+    },
+    {
+      "type": "li",
+      "content": "preview_as_str()"
+    },
+    {
+      "type": "li",
+      "content": "run_as_str()"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "BaseModel",
+    "ZapierNLAWrapper",
+    "zapier_nla_api_base",
+    "zapier_nla_api_key",
+    "zapier_nla_oauth_access_token",
+    "alist()",
+    "alist_as_str()",
+    "apreview()",
+    "apreview_as_str()",
+    "arun()",
+    "arun_as_str()",
+    "list()",
+    "list_as_str()",
+    "preview()",
+    "preview_as_str()",
+    "run()",
+    "run_as_str()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.utilities.zapier.ZapierNLAWrapper[source]#",
+    "langchain_community.utilities.zapier.",
+    "ZapierNLAWrapper",
+    "paramzapier_nla_api_base:str='https://nla.zapier.com/api/v1/'#",
+    "zapier_nla_api_base",
+    "paramzapier_nla_api_key:str[Required]#",
+    "zapier_nla_api_key",
+    "paramzapier_nla_oauth_access_token:str[Required]#",
+    "zapier_nla_oauth_access_token",
+    "asyncalist()→List[Dict][source]#",
+    "alist",
+    "(",
+    ")",
+    "→List[Dict]",
+    "→",
+    "List[Dict]",
+    "asyncalist_as_str()→str[source]#",
+    "alist_as_str",
+    "(",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "asyncapreview(action_id:str,instructions:str,params:Dict|None=None,)→Dict[source]#",
+    "apreview",
+    "(",
+    "action_id:str",
+    "instructions:str",
+    "params:Dict|None=None",
+    ")",
+    "→Dict",
+    "→",
+    "Dict",
+    "asyncapreview_as_str(*args:Any,**kwargs:Any,)→str[source]#",
+    "apreview_as_str",
+    "(",
+    "*args:Any",
+    "**kwargs:Any",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "asyncarun(action_id:str,instructions:str,params:Dict|None=None,)→Dict[source]#",
+    "arun",
+    "(",
+    "action_id:str",
+    "instructions:str",
+    "params:Dict|None=None",
+    ")",
+    "→Dict",
+    "→",
+    "Dict",
+    "asyncarun_as_str(*args:Any,**kwargs:Any,)→str[source]#",
+    "arun_as_str",
+    "(",
+    "*args:Any",
+    "**kwargs:Any",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "list()→List[Dict][source]#",
+    "list",
+    "(",
+    ")",
+    "→List[Dict]",
+    "→",
+    "List[Dict]",
+    "list_as_str()→str[source]#",
+    "list_as_str",
+    "(",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "preview(action_id:str,instructions:str,params:Dict|None=None,)→Dict[source]#",
+    "preview",
+    "(",
+    "action_id:str",
+    "instructions:str",
+    "params:Dict|None=None",
+    ")",
+    "→Dict",
+    "→",
+    "Dict",
+    "preview_as_str(*args:Any,**kwargs:Any,)→str[source]#",
+    "preview_as_str",
+    "(",
+    "*args:Any",
+    "**kwargs:Any",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "run(action_id:str,instructions:str,params:Dict|None=None,)→Dict[source]#",
+    "run",
+    "(",
+    "action_id:str",
+    "instructions:str",
+    "params:Dict|None=None",
+    ")",
+    "→Dict",
+    "→",
+    "Dict",
+    "run_as_str(*args:Any,**kwargs:Any,)→str[source]#",
+    "run_as_str",
+    "(",
+    "*args:Any",
+    "**kwargs:Any",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "action_id:str",
+    "instructions:str",
+    "params:Dict|None=None",
+    "*args:Any",
+    "**kwargs:Any",
+    "action_id:str",
+    "instructions:str",
+    "params:Dict|None=None",
+    "*args:Any",
+    "**kwargs:Any",
+    "action_id:str",
+    "instructions:str",
+    "params:Dict|None=None",
+    "*args:Any",
+    "**kwargs:Any",
+    "action_id:str",
+    "instructions:str",
+    "params:Dict|None=None",
+    "*args:Any",
+    "**kwargs:Any"
+  ]
+}

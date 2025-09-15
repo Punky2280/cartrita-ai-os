@@ -24,7 +24,7 @@ class DatabaseSettings(BaseSettings):
     """Database configuration settings."""
 
     host: str = Field(default="localhost", description="Database host")
-    port: int = Field(default=5433, ge=1, le=65535, description="Database port")
+    port: int = Field(default=5432, ge=1, le=65535, description="Database port")
     user: str = Field(default="robbie", description="Database user")
     password: SecretStr = Field(
         default="punky1", description="Database password"
@@ -102,13 +102,13 @@ class AISettings(BaseSettings):
     embedding_model: str = Field(
         default="text-embedding-3-small", description="Cost-effective embedding model"
     )
-    
+
     # Specialized model configurations
     research_model: str = Field(
         default="gpt-4o", description="GPT-4o for research tasks requiring web search"
     )
     code_model: str = Field(
-        default="gpt-4o", description="GPT-4o for complex code generation"  
+        default="gpt-4o", description="GPT-4o for complex code generation"
     )
     knowledge_model: str = Field(
         default="gpt-4.1-mini", description="GPT-4.1-mini for knowledge retrieval"
@@ -119,7 +119,7 @@ class AISettings(BaseSettings):
     computer_use_model: str = Field(
         default="gpt-4o", description="GPT-4o for computer use requiring vision"
     )
-    
+
     # Audio and multimodal models
     audio_model: str = Field(
         default="gpt-audio", description="GPT-Audio for real-time audio processing"
@@ -130,7 +130,7 @@ class AISettings(BaseSettings):
     tts_model: str = Field(
         default="tts-1-hd", description="High-quality text-to-speech model"
     )
-    
+
     # Advanced reasoning models
     reasoning_model: str = Field(
         default="o3-mini", description="O3-mini for complex reasoning tasks"

@@ -1,0 +1,66 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/callbacks/langchain_community.callbacks.infino_callback.get_num_tokens.html",
+  "title": "get_num_tokens#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "get_num_tokens"
+    },
+    {
+      "type": "p",
+      "content": "Calculate num tokens for OpenAI with tiktoken package."
+    },
+    {
+      "type": "p",
+      "content": "/examples/How_to_count_tokens_with_tiktoken.ipynb"
+    },
+    {
+      "type": "li",
+      "content": "string(str)"
+    },
+    {
+      "type": "p",
+      "content": "string(str)"
+    },
+    {
+      "type": "li",
+      "content": "openai_model_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "openai_model_name(str)"
+    },
+    {
+      "type": "li",
+      "content": "get_num_tokens()"
+    }
+  ],
+  "code_examples": [
+    "callbacks",
+    "get_num_tokens()"
+  ],
+  "api_signatures": [
+    "langchain_community.callbacks.infino_callback.get_num_tokens(string:str,openai_model_name:str)→int[source]#",
+    "langchain_community.callbacks.infino_callback.",
+    "get_num_tokens",
+    "(",
+    "string:str",
+    "openai_model_name:str",
+    ")",
+    "→int",
+    "→",
+    "int"
+  ],
+  "parameters": [
+    "string:str",
+    "openai_model_name:str"
+  ]
+}

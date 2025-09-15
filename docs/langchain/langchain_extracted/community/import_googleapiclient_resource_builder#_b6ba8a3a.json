@@ -1,0 +1,49 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.gmail.utils.import_googleapiclient_resource_builder.html#langchain_community.tools.gmail.utils.import_googleapiclient_resource_builder",
+  "title": "import_googleapiclient_resource_builder#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "import_googleapiclient_resource_builder"
+    },
+    {
+      "type": "p",
+      "content": "Import googleapiclient.discovery.build function."
+    },
+    {
+      "type": "p",
+      "content": "googleapiclient.discovery.build function."
+    },
+    {
+      "type": "p",
+      "content": "build_resource"
+    },
+    {
+      "type": "li",
+      "content": "import_googleapiclient_resource_builder()"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "import_googleapiclient_resource_builder()"
+  ],
+  "api_signatures": [
+    "langchain_community.tools.gmail.utils.import_googleapiclient_resource_builder()→build_resource[source]#",
+    "langchain_community.tools.gmail.utils.",
+    "import_googleapiclient_resource_builder",
+    "(",
+    ")",
+    "→build_resource",
+    "→",
+    "build_resource"
+  ],
+  "parameters": []
+}

@@ -1,0 +1,47 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.steamship_image_generation.tool.ModelName.html",
+  "title": "ModelName#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Supported Image Models for generation."
+    },
+    {
+      "type": "li",
+      "content": "ModelNameDALL_ESTABLE_DIFFUSION"
+    },
+    {
+      "type": "li",
+      "content": "STABLE_DIFFUSION"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "ModelName",
+    "DALL_E",
+    "STABLE_DIFFUSION"
+  ],
+  "api_signatures": [
+    "classlangchain_community.tools.steamship_image_generation.tool.ModelName(value)[source]#",
+    "langchain_community.tools.steamship_image_generation.tool.",
+    "ModelName",
+    "(",
+    "value",
+    ")",
+    "DALL_E='dall-e'#",
+    "DALL_E",
+    "STABLE_DIFFUSION='stable-diffusion'#",
+    "STABLE_DIFFUSION"
+  ],
+  "parameters": [
+    "value"
+  ]
+}

@@ -1,7 +1,7 @@
 # Cartrita AI OS - AI Orchestrator Service
-# Python 3.1 + FastAPI with Advanced Multi-Agent Orchestration
+# Deterministic dependency build (pip-tools constraints) - Python 3.13
 
-FROM python:3.12
+FROM python:3.13-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
@@ -30,13 +30,16 @@ RUN groupadd -r cartrita && useradd -r -g cartrita cartrita
 # Set work directory
 WORKDIR /app
 
-# Copy dependency files
+# Copy dependency specification (top-level + initial constraints seed)
 COPY pyproject.toml ./
-COPY services/ai-orchestrator/requirements-core.txt ./requirements.txt
+COPY services/ai-orchestrator/requirements.in ./
+COPY services/ai-orchestrator/constraints.txt ./
 
-# Install Python dependencies
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+# Install & lock Python dependencies deterministically
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel pip-tools --root-user-action=ignore && \
+    pip-compile --quiet --no-emit-options --no-annotate --generate-hashes --output-file requirements.txt requirements.in && \
+    pip install --no-cache-dir -r requirements.txt --root-user-action=ignore && \
+    pip check
 
 # Copy source code
 COPY . .

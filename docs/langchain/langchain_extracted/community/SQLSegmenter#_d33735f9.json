@@ -1,0 +1,210 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.parsers.language.sql.SQLSegmenter.html",
+  "title": "SQLSegmenter#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "SQLSegmenter"
+    },
+    {
+      "type": "p",
+      "content": "Code segmenter for SQL.\nThis class uses Tree-sitter to segment SQL code into its\nconstituent statements (e.g., SELECT, CREATE TABLE).\nIt also provides functionality to extract these\nstatements and simplify the code into commented descriptions."
+    },
+    {
+      "type": "p",
+      "content": "__init__(code)"
+    },
+    {
+      "type": "p",
+      "content": "extract_functions_classes()"
+    },
+    {
+      "type": "p",
+      "content": "Extract SQL statements from the code."
+    },
+    {
+      "type": "p",
+      "content": "get_chunk_query()"
+    },
+    {
+      "type": "p",
+      "content": "Return the Tree-sitter query for SQL segmentation."
+    },
+    {
+      "type": "p",
+      "content": "get_language()"
+    },
+    {
+      "type": "p",
+      "content": "Return the SQL language grammar for Tree-sitter."
+    },
+    {
+      "type": "p",
+      "content": "get_parser()"
+    },
+    {
+      "type": "p",
+      "content": "make_line_comment(text)"
+    },
+    {
+      "type": "p",
+      "content": "Create a line comment in SQL style."
+    },
+    {
+      "type": "p",
+      "content": "simplify_code()"
+    },
+    {
+      "type": "p",
+      "content": "Simplify the extracted SQL code into comments."
+    },
+    {
+      "type": "p",
+      "content": "Extract SQL statements from the code.\nEnsures that all SQL statements end with a semicolon\nfor consistency."
+    },
+    {
+      "type": "p",
+      "content": "Return the Tree-sitter query for SQL segmentation."
+    },
+    {
+      "type": "p",
+      "content": "Return the SQL language grammar for Tree-sitter."
+    },
+    {
+      "type": "p",
+      "content": "Create a line comment in SQL style."
+    },
+    {
+      "type": "p",
+      "content": "Simplify the extracted SQL code into comments.\nConverts SQL statements into commented descriptions\nfor easy readability."
+    },
+    {
+      "type": "li",
+      "content": "SQLSegmenter__init__()extract_functions_classes()get_chunk_query()get_language()get_parser()is_valid()make_line_comment()simplify_code()"
+    },
+    {
+      "type": "li",
+      "content": "extract_functions_classes()"
+    },
+    {
+      "type": "li",
+      "content": "get_chunk_query()"
+    },
+    {
+      "type": "li",
+      "content": "get_language()"
+    },
+    {
+      "type": "li",
+      "content": "get_parser()"
+    },
+    {
+      "type": "li",
+      "content": "make_line_comment()"
+    },
+    {
+      "type": "li",
+      "content": "simplify_code()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "__init__",
+    "extract_functions_classes",
+    "get_chunk_query",
+    "get_language",
+    "get_parser",
+    "is_valid",
+    "make_line_comment",
+    "simplify_code",
+    "SQLSegmenter",
+    "__init__()",
+    "extract_functions_classes()",
+    "get_chunk_query()",
+    "get_language()",
+    "get_parser()",
+    "is_valid()",
+    "make_line_comment()",
+    "simplify_code()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.parsers.language.sql.SQLSegmenter(code:str)[source]#",
+    "langchain_community.document_loaders.parsers.language.sql.",
+    "SQLSegmenter",
+    "(",
+    "code:str",
+    ")",
+    "__init__(code:str)#",
+    "__init__",
+    "(",
+    "code:str",
+    ")",
+    "extract_functions_classes()→list[str][source]#",
+    "extract_functions_classes",
+    "(",
+    ")",
+    "→list[str]",
+    "→",
+    "list[str]",
+    "get_chunk_query()→str[source]#",
+    "get_chunk_query",
+    "(",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "get_language()→Language[source]#",
+    "get_language",
+    "(",
+    ")",
+    "→Language",
+    "→",
+    "Language",
+    "get_parser()→Parser#",
+    "get_parser",
+    "(",
+    ")",
+    "→Parser",
+    "→",
+    "Parser",
+    "is_valid()→bool#",
+    "is_valid",
+    "(",
+    ")",
+    "→bool",
+    "→",
+    "bool",
+    "make_line_comment(text:str)→str[source]#",
+    "make_line_comment",
+    "(",
+    "text:str",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "simplify_code()→str[source]#",
+    "simplify_code",
+    "(",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "code:str",
+    "code:str",
+    "text:str"
+  ]
+}

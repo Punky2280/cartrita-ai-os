@@ -19,13 +19,13 @@ class DeepgramStreamer:
         self.model = model
         self.websocket: Optional[websockets.WebSocketServerProtocol] = None
         self.keep_alive_task: Optional[asyncio.Task] = None
-        
-    async def connect(self, 
+
+    async def connect(self,
                      language: str = "en-US",
                      punctuate: bool = True,
                      interim_results: bool = True):
         """Establish WebSocket connection to Deepgram"""
-        
+
         url = "wss://api.deepgram.com/v1/listen"
         params = {
             "model": self.model,
@@ -36,29 +36,29 @@ class DeepgramStreamer:
             "sample_rate": 16000,
             "channels": 1
         }
-        
+
         query_string = "&".join([f"{k}={v}" for k, v in params.items()])
         full_url = f"{url}?{query_string}"
-        
+
         headers = {"Authorization": f"Token {self.api_key}"}
-        
+
         try:
             self.websocket = await websockets.connect(
-                full_url, 
+                full_url,
                 extra_headers=headers,
                 ping_interval=20,
                 ping_timeout=10
             )
-            
+
             # Start keep-alive mechanism
             self.keep_alive_task = asyncio.create_task(self._keep_alive())
-            
+
             return True
-            
+
         except Exception as e:
             print(f"Connection failed: {e}")
             return False
-    
+
     async def _keep_alive(self):
         """Send keep-alive messages to maintain connection"""
         while self.websocket and not self.websocket.closed:
@@ -69,17 +69,17 @@ class DeepgramStreamer:
             except Exception as e:
                 print(f"Keep-alive failed: {e}")
                 break
-    
+
     async def send_audio(self, audio_data: bytes):
         """Send audio data to Deepgram"""
         if self.websocket and not self.websocket.closed:
             await self.websocket.send(audio_data)
-    
+
     async def receive_transcription(self, callback: Callable[[dict], None]):
         """Receive and process transcription results"""
         if not self.websocket:
             return
-            
+
         try:
             async for message in self.websocket:
                 try:
@@ -87,19 +87,19 @@ class DeepgramStreamer:
                     await callback(result)
                 except json.JSONDecodeError:
                     print(f"Invalid JSON received: {message}")
-                    
+
         except websockets.exceptions.ConnectionClosed:
             print("WebSocket connection closed")
         except Exception as e:
             print(f"Receive error: {e}")
-    
+
     async def close(self):
         """Gracefully close the connection"""
         if self.websocket:
             # Send close stream message
             await self.websocket.send(json.dumps({"type": "CloseStream"}))
             await self.websocket.close()
-            
+
         if self.keep_alive_task:
             self.keep_alive_task.cancel()
 ```
@@ -122,7 +122,7 @@ class ConnectionManager:
     async def connect(self, websocket: WebSocket, deepgram_api_key: str):
         await websocket.accept()
         self.active_connections.append(websocket)
-        
+
         # Create Deepgram connection
         deepgram = DeepgramStreamer(deepgram_api_key)
         if await deepgram.connect():
@@ -133,7 +133,7 @@ class ConnectionManager:
     def disconnect(self, websocket: WebSocket):
         if websocket in self.active_connections:
             self.active_connections.remove(websocket)
-            
+
         if websocket in self.deepgram_connections:
             deepgram = self.deepgram_connections.pop(websocket)
             asyncio.create_task(deepgram.close())
@@ -154,12 +154,12 @@ async def websocket_transcribe(websocket: WebSocket):
     if not api_key:
         await websocket.close(code=1008, reason="API key required")
         return
-    
+
     deepgram = await manager.connect(websocket, api_key)
     if not deepgram:
         await websocket.close(code=1011, reason="Failed to connect to Deepgram")
         return
-    
+
     async def transcription_handler(result: dict):
         """Handle transcription results from Deepgram"""
         if "channel" in result:
@@ -172,23 +172,23 @@ async def websocket_transcribe(websocket: WebSocket):
                 "words": result["channel"]["alternatives"][0].get("words", [])
             }
             await manager.send_personal_message(
-                json.dumps(transcript_data), 
+                json.dumps(transcript_data),
                 websocket
             )
-    
+
     # Start receiving transcriptions
     transcription_task = asyncio.create_task(
         deepgram.receive_transcription(transcription_handler)
     )
-    
+
     try:
         while True:
             # Receive audio data from client
             data = await websocket.receive_bytes()
-            
+
             # Send to Deepgram for transcription
             await deepgram.send_audio(data)
-            
+
     except WebSocketDisconnect:
         manager.disconnect(websocket)
         transcription_task.cancel()
@@ -230,7 +230,7 @@ export const useDeepgramStreaming = (options: UseDeepgramStreamingOptions) => {
   const [isConnected, setIsConnected] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [connectionState, setConnectionState] = useState<'connecting' | 'connected' | 'disconnected'>('disconnected');
-  
+
   const websocketRef = useRef<WebSocket | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioStreamRef = useRef<MediaStream | null>(null);
@@ -340,7 +340,7 @@ export const useDeepgramStreaming = (options: UseDeepgramStreamingOptions) => {
 
   const disconnect = useCallback(() => {
     stopRecording();
-    
+
     if (websocketRef.current) {
       websocketRef.current.close();
       websocketRef.current = null;
@@ -401,7 +401,7 @@ export const VoiceTranscriptionComponent: React.FC = () => {
       <div className="mb-4">
         <div className="flex gap-2 mb-4">
           {!isConnected && (
-            <button 
+            <button
               onClick={connect}
               disabled={connectionState === 'connecting'}
               className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
@@ -409,27 +409,27 @@ export const VoiceTranscriptionComponent: React.FC = () => {
               {connectionState === 'connecting' ? 'Connecting...' : 'Connect'}
             </button>
           )}
-          
+
           {isConnected && !isRecording && (
-            <button 
+            <button
               onClick={startRecording}
               className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
             >
               Start Recording
             </button>
           )}
-          
+
           {isRecording && (
-            <button 
+            <button
               onClick={stopRecording}
               className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
             >
               Stop Recording
             </button>
           )}
-          
+
           {isConnected && (
-            <button 
+            <button
               onClick={disconnect}
               className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
             >
@@ -437,14 +437,14 @@ export const VoiceTranscriptionComponent: React.FC = () => {
             </button>
           )}
         </div>
-        
+
         <div className="flex items-center gap-2">
           <div className={`w-3 h-3 rounded-full ${
-            connectionState === 'connected' ? 'bg-green-500' : 
+            connectionState === 'connected' ? 'bg-green-500' :
             connectionState === 'connecting' ? 'bg-yellow-500' : 'bg-red-500'
           }`} />
           <span className="text-sm text-gray-600">
-            {connectionState === 'connected' ? 'Connected' : 
+            {connectionState === 'connected' ? 'Connected' :
              connectionState === 'connecting' ? 'Connecting...' : 'Disconnected'}
           </span>
           {isRecording && (
@@ -458,7 +458,7 @@ export const VoiceTranscriptionComponent: React.FC = () => {
           <h3 className="font-medium mb-2">Final Transcript:</h3>
           <p className="text-gray-800">{transcript}</p>
         </div>
-        
+
         {interimTranscript && (
           <div className="p-4 bg-blue-50 rounded-lg">
             <h3 className="font-medium mb-2">Interim (Live):</h3>
@@ -481,7 +481,7 @@ from scipy import signal
 import asyncio
 
 class VoiceActivityDetector:
-    def __init__(self, 
+    def __init__(self,
                  sample_rate: int = 16000,
                  frame_duration: float = 0.02,  # 20ms
                  energy_threshold: float = 0.01,
@@ -492,16 +492,16 @@ class VoiceActivityDetector:
         self.silence_frames_threshold = int(silence_duration / frame_duration)
         self.silence_frame_count = 0
         self.is_speaking = False
-        
+
     def detect_voice_activity(self, audio_frame: np.ndarray) -> dict:
         """Detect voice activity in audio frame"""
-        
+
         # Calculate energy
         energy = np.sum(audio_frame ** 2) / len(audio_frame)
-        
+
         # Determine if voice is active
         voice_active = energy > self.energy_threshold
-        
+
         if voice_active:
             self.silence_frame_count = 0
             if not self.is_speaking:
@@ -512,7 +512,7 @@ class VoiceActivityDetector:
             if self.is_speaking and self.silence_frame_count >= self.silence_frames_threshold:
                 self.is_speaking = False
                 return {"event": "speech_end", "energy": energy}
-                
+
         return {"event": "continue", "energy": energy, "voice_active": voice_active}
 
 class EnhancedDeepgramStreamer(DeepgramStreamer):
@@ -521,26 +521,26 @@ class EnhancedDeepgramStreamer(DeepgramStreamer):
         self.vad = VoiceActivityDetector()
         self.audio_buffer = []
         self.is_speech_active = False
-        
-    async def process_audio_with_vad(self, audio_data: bytes, 
+
+    async def process_audio_with_vad(self, audio_data: bytes,
                                    vad_callback: Optional[Callable] = None):
         """Process audio with voice activity detection"""
-        
+
         # Convert bytes to numpy array
         audio_array = np.frombuffer(audio_data, dtype=np.int16).astype(np.float32) / 32768.0
-        
+
         # Process in frames
         for i in range(0, len(audio_array), self.vad.frame_size):
             frame = audio_array[i:i + self.vad.frame_size]
             if len(frame) < self.vad.frame_size:
                 # Pad last frame
                 frame = np.pad(frame, (0, self.vad.frame_size - len(frame)))
-            
+
             vad_result = self.vad.detect_voice_activity(frame)
-            
+
             if vad_callback:
                 await vad_callback(vad_result)
-            
+
             # Handle speech events
             if vad_result["event"] == "speech_start":
                 self.is_speech_active = True
@@ -549,12 +549,12 @@ class EnhancedDeepgramStreamer(DeepgramStreamer):
                     buffered_audio = b''.join(self.audio_buffer)
                     await self.send_audio(buffered_audio)
                     self.audio_buffer = []
-                    
+
             elif vad_result["event"] == "speech_end":
                 self.is_speech_active = False
                 # Send any remaining audio
                 await self.send_audio(audio_data[i-self.vad.frame_size:])
-                
+
             # Buffer audio when not speaking (for context)
             if not self.is_speech_active:
                 self.audio_buffer.append(frame.tobytes())
@@ -575,30 +575,30 @@ class SpeakerDiarizationHandler:
         self.speakers = {}
         self.current_speaker = None
         self.speaker_change_threshold = 0.5
-        
+
     def process_diarization_result(self, result: dict) -> dict:
         """Process Deepgram result with speaker information"""
-        
+
         if "channel" not in result:
             return result
-            
+
         alternatives = result["channel"]["alternatives"][0]
         words = alternatives.get("words", [])
-        
+
         if not words:
             return result
-            
+
         # Process speaker changes
         speaker_segments = []
         current_segment = None
-        
+
         for word in words:
             speaker_id = word.get("speaker", 0)
-            
+
             if current_segment is None or current_segment["speaker"] != speaker_id:
                 if current_segment:
                     speaker_segments.append(current_segment)
-                    
+
                 current_segment = {
                     "speaker": speaker_id,
                     "start": word["start"],
@@ -610,10 +610,10 @@ class SpeakerDiarizationHandler:
                 current_segment["end"] = word["end"]
                 current_segment["words"].append(word)
                 current_segment["text"] += " " + word["word"]
-                
+
         if current_segment:
             speaker_segments.append(current_segment)
-            
+
         # Add speaker information to result
         result["speaker_segments"] = speaker_segments
         return result
@@ -625,10 +625,10 @@ async def websocket_transcribe_multi_speaker(websocket: WebSocket):
     if not api_key:
         await websocket.close(code=1008, reason="API key required")
         return
-    
+
     deepgram = EnhancedDeepgramStreamer(api_key)
     diarization_handler = SpeakerDiarizationHandler()
-    
+
     # Connect with diarization enabled
     if not await deepgram.connect(
         language="en-US",
@@ -638,11 +638,11 @@ async def websocket_transcribe_multi_speaker(websocket: WebSocket):
     ):
         await websocket.close(code=1011, reason="Failed to connect to Deepgram")
         return
-    
+
     async def transcription_handler(result: dict):
         """Enhanced handler with speaker diarization"""
         processed_result = diarization_handler.process_diarization_result(result)
-        
+
         if "channel" in processed_result:
             transcript_data = {
                 "type": "transcription",
@@ -654,7 +654,7 @@ async def websocket_transcribe_multi_speaker(websocket: WebSocket):
                 "words": processed_result["channel"]["alternatives"][0].get("words", [])
             }
             await websocket.send_text(json.dumps(transcript_data))
-    
+
     await manager.connect(websocket, deepgram, transcription_handler)
 ```
 
@@ -677,13 +677,13 @@ services:
       - redis
       - postgres
     restart: unless-stopped
-    
+
   redis:
     image: redis:7-alpine
     ports:
       - "6379:6379"
     restart: unless-stopped
-    
+
   postgres:
     image: postgres:15
     environment:
@@ -693,7 +693,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
-    
+
   nginx:
     image: nginx:alpine
     ports:
@@ -720,26 +720,26 @@ http {
     upstream transcription_api {
         server transcription-api:8000;
     }
-    
+
     # WebSocket upgrade configuration
     map $http_upgrade $connection_upgrade {
         default upgrade;
         '' close;
     }
-    
+
     server {
         listen 80;
         server_name your-domain.com;
         return 301 https://$server_name$request_uri;
     }
-    
+
     server {
         listen 443 ssl http2;
         server_name your-domain.com;
-        
+
         ssl_certificate /etc/nginx/ssl/cert.pem;
         ssl_certificate_key /etc/nginx/ssl/key.pem;
-        
+
         # WebSocket support
         location /ws/ {
             proxy_pass http://transcription_api;
@@ -750,12 +750,12 @@ http {
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto $scheme;
-            
+
             # WebSocket timeout settings
             proxy_read_timeout 86400;
             proxy_send_timeout 86400;
         }
-        
+
         # Regular HTTP endpoints
         location / {
             proxy_pass http://transcription_api;

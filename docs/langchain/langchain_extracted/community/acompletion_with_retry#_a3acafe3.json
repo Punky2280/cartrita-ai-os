@@ -1,0 +1,76 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chat_models/langchain_community.chat_models.litellm.acompletion_with_retry.html",
+  "title": "acompletion_with_retry#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "chat_models"
+    },
+    {
+      "type": "li",
+      "content": "acompletion_with_retry"
+    },
+    {
+      "type": "p",
+      "content": "Use tenacity to retry the async completion call."
+    },
+    {
+      "type": "li",
+      "content": "llm(ChatLiteLLM)"
+    },
+    {
+      "type": "p",
+      "content": "llm(ChatLiteLLM)"
+    },
+    {
+      "type": "li",
+      "content": "run_manager(AsyncCallbackManagerForLLMRun|None)"
+    },
+    {
+      "type": "p",
+      "content": "run_manager(AsyncCallbackManagerForLLMRun|None)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "li",
+      "content": "acompletion_with_retry()"
+    }
+  ],
+  "code_examples": [
+    "chat_models",
+    "acompletion_with_retry()"
+  ],
+  "api_signatures": [
+    "asynclangchain_community.chat_models.litellm.acompletion_with_retry(llm:ChatLiteLLM,run_manager:AsyncCallbackManagerForLLMRun|None=None,**kwargs:Any,)→Any[source]#",
+    "langchain_community.chat_models.litellm.",
+    "acompletion_with_retry",
+    "(",
+    "llm:ChatLiteLLM",
+    "run_manager:AsyncCallbackManagerForLLMRun|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any"
+  ],
+  "parameters": [
+    "llm:ChatLiteLLM",
+    "run_manager:AsyncCallbackManagerForLLMRun|None=None",
+    "**kwargs:Any"
+  ]
+}

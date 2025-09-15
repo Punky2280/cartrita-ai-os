@@ -1,0 +1,468 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.openapi.OpenAPISpec.html#langchain_community.utilities.openapi.OpenAPISpec",
+  "title": "OpenAPISpec#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "OpenAPISpec"
+    },
+    {
+      "type": "p",
+      "content": "OpenAPI Model that removes mis-formatted parts of the spec."
+    },
+    {
+      "type": "p",
+      "content": "Get the base url."
+    },
+    {
+      "type": "p",
+      "content": "from_file(path)"
+    },
+    {
+      "type": "p",
+      "content": "Get an OpenAPI spec from a file path."
+    },
+    {
+      "type": "p",
+      "content": "from_spec_dict(spec_dict)"
+    },
+    {
+      "type": "p",
+      "content": "Get an OpenAPI spec from a dict."
+    },
+    {
+      "type": "p",
+      "content": "from_text(text)"
+    },
+    {
+      "type": "p",
+      "content": "Get an OpenAPI spec from a text."
+    },
+    {
+      "type": "p",
+      "content": "from_url(url)"
+    },
+    {
+      "type": "p",
+      "content": "Get an OpenAPI spec from a URL."
+    },
+    {
+      "type": "p",
+      "content": "get_cleaned_operation_id(operation, path, method)"
+    },
+    {
+      "type": "p",
+      "content": "Get a cleaned operation id from an operation id."
+    },
+    {
+      "type": "p",
+      "content": "get_methods_for_path(path)"
+    },
+    {
+      "type": "p",
+      "content": "Return a list of valid methods for the specified path."
+    },
+    {
+      "type": "p",
+      "content": "get_operation(path, method)"
+    },
+    {
+      "type": "p",
+      "content": "Get the operation object for a given path and HTTP method."
+    },
+    {
+      "type": "p",
+      "content": "get_parameters_for_operation(operation)"
+    },
+    {
+      "type": "p",
+      "content": "Get the components for a given operation."
+    },
+    {
+      "type": "p",
+      "content": "get_parameters_for_path(path)"
+    },
+    {
+      "type": "p",
+      "content": "get_referenced_schema(ref)"
+    },
+    {
+      "type": "p",
+      "content": "Get a schema (or nested reference) or err."
+    },
+    {
+      "type": "p",
+      "content": "get_request_body_for_operation(operation)"
+    },
+    {
+      "type": "p",
+      "content": "Get the request body for a given operation."
+    },
+    {
+      "type": "p",
+      "content": "get_schema(schema[, depth, max_depth])"
+    },
+    {
+      "type": "p",
+      "content": "parse_obj(obj)"
+    },
+    {
+      "type": "p",
+      "content": "Get an OpenAPI spec from a file path."
+    },
+    {
+      "type": "p",
+      "content": "path(str|Path)"
+    },
+    {
+      "type": "p",
+      "content": "OpenAPISpec"
+    },
+    {
+      "type": "p",
+      "content": "Get an OpenAPI spec from a dict."
+    },
+    {
+      "type": "p",
+      "content": "spec_dict(dict)"
+    },
+    {
+      "type": "p",
+      "content": "OpenAPISpec"
+    },
+    {
+      "type": "p",
+      "content": "Get an OpenAPI spec from a text."
+    },
+    {
+      "type": "p",
+      "content": "OpenAPISpec"
+    },
+    {
+      "type": "p",
+      "content": "Get an OpenAPI spec from a URL."
+    },
+    {
+      "type": "p",
+      "content": "OpenAPISpec"
+    },
+    {
+      "type": "p",
+      "content": "Get a cleaned operation id from an operation id."
+    },
+    {
+      "type": "li",
+      "content": "operation(Operation)"
+    },
+    {
+      "type": "p",
+      "content": "operation(Operation)"
+    },
+    {
+      "type": "li",
+      "content": "method(str)"
+    },
+    {
+      "type": "p",
+      "content": "method(str)"
+    },
+    {
+      "type": "p",
+      "content": "Return a list of valid methods for the specified path."
+    },
+    {
+      "type": "p",
+      "content": "Get the operation object for a given path and HTTP method."
+    },
+    {
+      "type": "li",
+      "content": "method(str)"
+    },
+    {
+      "type": "p",
+      "content": "method(str)"
+    },
+    {
+      "type": "p",
+      "content": "Get the components for a given operation."
+    },
+    {
+      "type": "p",
+      "content": "operation(Operation)"
+    },
+    {
+      "type": "p",
+      "content": "List[Parameter]"
+    },
+    {
+      "type": "p",
+      "content": "List[Parameter]"
+    },
+    {
+      "type": "p",
+      "content": "Get a schema (or nested reference) or err."
+    },
+    {
+      "type": "p",
+      "content": "ref(Reference)"
+    },
+    {
+      "type": "p",
+      "content": "Get the request body for a given operation."
+    },
+    {
+      "type": "p",
+      "content": "operation(Operation)"
+    },
+    {
+      "type": "p",
+      "content": "Optional[RequestBody]"
+    },
+    {
+      "type": "li",
+      "content": "schema(Union[Reference,Schema])"
+    },
+    {
+      "type": "p",
+      "content": "schema(Union[Reference,Schema])"
+    },
+    {
+      "type": "li",
+      "content": "max_depth(Optional[int])"
+    },
+    {
+      "type": "p",
+      "content": "max_depth(Optional[int])"
+    },
+    {
+      "type": "p",
+      "content": "OpenAPISpec"
+    },
+    {
+      "type": "li",
+      "content": "OpenAPISpecfrom_file()from_spec_dict()from_text()from_url()get_cleaned_operation_id()get_methods_for_path()get_operation()get_parameters_for_operation()get_parameters_for_path()get_referenced_schema()get_request_body_for_operation()get_schema()parse_obj()"
+    },
+    {
+      "type": "li",
+      "content": "from_file()"
+    },
+    {
+      "type": "li",
+      "content": "from_spec_dict()"
+    },
+    {
+      "type": "li",
+      "content": "from_text()"
+    },
+    {
+      "type": "li",
+      "content": "get_cleaned_operation_id()"
+    },
+    {
+      "type": "li",
+      "content": "get_methods_for_path()"
+    },
+    {
+      "type": "li",
+      "content": "get_operation()"
+    },
+    {
+      "type": "li",
+      "content": "get_parameters_for_operation()"
+    },
+    {
+      "type": "li",
+      "content": "get_parameters_for_path()"
+    },
+    {
+      "type": "li",
+      "content": "get_referenced_schema()"
+    },
+    {
+      "type": "li",
+      "content": "get_request_body_for_operation()"
+    },
+    {
+      "type": "li",
+      "content": "get_schema()"
+    },
+    {
+      "type": "li",
+      "content": "parse_obj()"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "base_url",
+    "openapi",
+    "from_file",
+    "from_spec_dict",
+    "from_text",
+    "from_url",
+    "get_cleaned_operation_id",
+    "get_methods_for_path",
+    "get_operation",
+    "get_parameters_for_operation",
+    "get_parameters_for_path",
+    "get_referenced_schema",
+    "get_request_body_for_operation",
+    "get_schema",
+    "parse_obj",
+    "OpenAPISpec",
+    "from_file()",
+    "from_spec_dict()",
+    "from_text()",
+    "from_url()",
+    "get_cleaned_operation_id()",
+    "get_methods_for_path()",
+    "get_operation()",
+    "get_parameters_for_operation()",
+    "get_parameters_for_path()",
+    "get_referenced_schema()",
+    "get_request_body_for_operation()",
+    "get_schema()",
+    "parse_obj()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.utilities.openapi.OpenAPISpec[source]#",
+    "langchain_community.utilities.openapi.",
+    "OpenAPISpec",
+    "classmethodfrom_file(path:str|Path,)→OpenAPISpec[source]#",
+    "from_file",
+    "(",
+    "path:str|Path",
+    ")",
+    "→OpenAPISpec",
+    "→",
+    "OpenAPISpec",
+    "classmethodfrom_spec_dict(spec_dict:dict,)→OpenAPISpec[source]#",
+    "from_spec_dict",
+    "(",
+    "spec_dict:dict",
+    ")",
+    "→OpenAPISpec",
+    "→",
+    "OpenAPISpec",
+    "classmethodfrom_text(text:str,)→OpenAPISpec[source]#",
+    "from_text",
+    "(",
+    "text:str",
+    ")",
+    "→OpenAPISpec",
+    "→",
+    "OpenAPISpec",
+    "classmethodfrom_url(url:str,)→OpenAPISpec[source]#",
+    "from_url",
+    "(",
+    "url:str",
+    ")",
+    "→OpenAPISpec",
+    "→",
+    "OpenAPISpec",
+    "staticget_cleaned_operation_id(operation:Operation,path:str,method:str,)→str[source]#",
+    "get_cleaned_operation_id",
+    "(",
+    "operation:Operation",
+    "path:str",
+    "method:str",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "get_methods_for_path(path:str,)→List[str][source]#",
+    "get_methods_for_path",
+    "(",
+    "path:str",
+    ")",
+    "→List[str]",
+    "→",
+    "List[str]",
+    "get_operation(path:str,method:str,)→Operation[source]#",
+    "get_operation",
+    "(",
+    "path:str",
+    "method:str",
+    ")",
+    "→Operation",
+    "→",
+    "Operation",
+    "get_parameters_for_operation(operation:Operation,)→List[Parameter][source]#",
+    "get_parameters_for_operation",
+    "(",
+    "operation:Operation",
+    ")",
+    "→List[Parameter]",
+    "→",
+    "List[Parameter]",
+    "get_parameters_for_path(path:str,)→List[Parameter][source]#",
+    "get_parameters_for_path",
+    "(",
+    "path:str",
+    ")",
+    "→List[Parameter]",
+    "→",
+    "List[Parameter]",
+    "get_referenced_schema(ref:Reference)→Schema[source]#",
+    "get_referenced_schema",
+    "(",
+    "ref:Reference",
+    ")",
+    "→Schema",
+    "→",
+    "Schema",
+    "get_request_body_for_operation(operation:Operation,)→RequestBody|None[source]#",
+    "get_request_body_for_operation",
+    "(",
+    "operation:Operation",
+    ")",
+    "→RequestBody|None",
+    "→",
+    "RequestBody|None",
+    "get_schema(schema:Reference|Schema,depth:int=0,max_depth:int|None=None,)→Schema[source]#",
+    "get_schema",
+    "(",
+    "schema:Reference|Schema",
+    "depth:int=0",
+    "max_depth:int|None=None",
+    ")",
+    "→Schema",
+    "→",
+    "Schema",
+    "classmethodparse_obj(obj:dict,)→OpenAPISpec[source]#",
+    "parse_obj",
+    "(",
+    "obj:dict",
+    ")",
+    "→OpenAPISpec",
+    "→",
+    "OpenAPISpec"
+  ],
+  "parameters": [
+    "path:str|Path",
+    "spec_dict:dict",
+    "text:str",
+    "url:str",
+    "operation:Operation",
+    "path:str",
+    "method:str",
+    "path:str",
+    "path:str",
+    "method:str",
+    "operation:Operation",
+    "path:str",
+    "ref:Reference",
+    "operation:Operation",
+    "schema:Reference|Schema",
+    "depth:int=0",
+    "max_depth:int|None=None",
+    "obj:dict"
+  ]
+}

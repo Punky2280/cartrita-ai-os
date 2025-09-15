@@ -1,10 +1,15 @@
 // Cartrita AI OS - React Query Hooks
 // Comprehensive data fetching and mutation hooks
 
-import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query'
-import { useSetAtom, useAtomValue } from 'jotai'
-import { toast } from 'sonner'
-import { apiClient } from '@/services/api'
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
+import { useSetAtom, useAtomValue } from "jotai";
+import { toast } from "sonner";
+import { apiClient } from "@/services/api";
 import {
   userAtom,
   conversationsAtom,
@@ -17,164 +22,176 @@ import {
   isLoadingAuthAtom,
   agentsLoadingAtom,
   messagesLoadingAtom,
-  settingsAtom
-} from '@/stores'
+  settingsAtom,
+} from "@/stores";
 import type {
   User,
   Conversation,
   SearchFilters,
   VoiceSettings,
   ThemeConfig,
-  ApiResponse
-} from '@/types'
+  ApiResponse,
+} from "@/types";
 
 // Query Keys
 export const queryKeys = {
-  user: ['user'] as const,
-  conversations: ['conversations'] as const,
-  conversation: (id: string) => ['conversations', id] as const,
-  messages: (conversationId: string) => ['conversations', conversationId, 'messages'] as const,
-  agents: ['agents'] as const,
-  agent: (id: string) => ['agents', id] as const,
-  workspaces: ['workspaces'] as const,
-  workspace: (id: string) => ['workspaces', id] as const,
-  plugins: ['plugins'] as const,
-  plugin: (id: string) => ['plugins', id] as const,
-  notifications: ['notifications'] as const,
-  search: (query: string, filters?: SearchFilters) => ['search', query, filters] as const,
-  health: ['health'] as const,
-  metrics: ['metrics'] as const
-}
+  user: ["user"] as const,
+  conversations: ["conversations"] as const,
+  conversation: (id: string) => ["conversations", id] as const,
+  messages: (conversationId: string) =>
+    ["conversations", conversationId, "messages"] as const,
+  agents: ["agents"] as const,
+  agent: (id: string) => ["agents", id] as const,
+  workspaces: ["workspaces"] as const,
+  workspace: (id: string) => ["workspaces", id] as const,
+  plugins: ["plugins"] as const,
+  plugin: (id: string) => ["plugins", id] as const,
+  notifications: ["notifications"] as const,
+  search: (query: string, filters?: SearchFilters) =>
+    ["search", query, filters] as const,
+  health: ["health"] as const,
+  metrics: ["metrics"] as const,
+};
 
 // Authentication Hooks
 export function useAuth() {
-  const setUser = useSetAtom(userAtom)
-  const setAuthToken = useSetAtom(authTokenAtom)
-  const setIsLoading = useSetAtom(isLoadingAuthAtom)
+  const setUser = useSetAtom(userAtom);
+  const setAuthToken = useSetAtom(authTokenAtom);
+  const setIsLoading = useSetAtom(isLoadingAuthAtom);
 
   const loginMutation = useMutation({
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       apiClient.login(email, password),
     onMutate: () => {
-      setIsLoading(true)
+      setIsLoading(true);
     },
     onSuccess: (response: ApiResponse<{ user: User; token: string }>) => {
       if (response.success && response.data) {
-        setUser(response.data.user)
-        setAuthToken(response.data.token)
-        apiClient.setAuthToken(response.data.token)
-        toast.success('Login successful')
+        setUser(response.data.user);
+        setAuthToken(response.data.token);
+        apiClient.setAuthToken(response.data.token);
+        toast.success("Login successful");
       }
     },
     onError: (error: unknown) => {
-      const message = (error as Error)?.message || 'Login failed'
-      toast.error(message)
+      const message = (error as Error)?.message || "Login failed";
+      toast.error(message);
     },
     onSettled: () => {
-      setIsLoading(false)
-    }
-  })
+      setIsLoading(false);
+    },
+  });
 
   const registerMutation = useMutation({
-    mutationFn: ({ email, password, name }: { email: string; password: string; name: string }) =>
-      apiClient.register({ email, password, name }),
+    mutationFn: ({
+      email,
+      password,
+      name,
+    }: {
+      email: string;
+      password: string;
+      name: string;
+    }) => apiClient.register({ email, password, name }),
     onMutate: () => {
-      setIsLoading(true)
+      setIsLoading(true);
     },
     onSuccess: (response: ApiResponse<{ user: User; token: string }>) => {
       if (response.success && response.data) {
-        setUser(response.data.user)
-        setAuthToken(response.data.token)
-        apiClient.setAuthToken(response.data.token)
-        toast.success('Registration successful')
+        setUser(response.data.user);
+        setAuthToken(response.data.token);
+        apiClient.setAuthToken(response.data.token);
+        toast.success("Registration successful");
       }
     },
     onError: (error: unknown) => {
-      const message = (error as Error)?.message || 'Registration failed'
-      toast.error(message)
+      const message = (error as Error)?.message || "Registration failed";
+      toast.error(message);
     },
     onSettled: () => {
-      setIsLoading(false)
-    }
-  })
+      setIsLoading(false);
+    },
+  });
 
   const logoutMutation = useMutation({
     mutationFn: () => apiClient.logout(),
     onSuccess: () => {
-      setUser(null)
-      setAuthToken(null)
-      apiClient.removeAuthToken()
-      toast.success('Logged out successfully')
+      setUser(null);
+      setAuthToken(null);
+      apiClient.removeAuthToken();
+      toast.success("Logged out successfully");
     },
     onError: (error: unknown) => {
-      toast.error('Logout failed')
-    }
-  })
+      toast.error("Logout failed");
+    },
+  });
 
   return {
     login: loginMutation.mutate,
     register: registerMutation.mutate,
     logout: logoutMutation.mutate,
-    isLoading: loginMutation.isPending || registerMutation.isPending || logoutMutation.isPending
-  }
+    isLoading:
+      loginMutation.isPending ||
+      registerMutation.isPending ||
+      logoutMutation.isPending,
+  };
 }
 
 export function useUser() {
-  const queryClient = useQueryClient()
-  const setUser = useSetAtom(userAtom)
+  const queryClient = useQueryClient();
+  const setUser = useSetAtom(userAtom);
 
   const { data: user, ...query } = useQuery({
     queryKey: queryKeys.user,
     queryFn: () => apiClient.getCurrentUser(),
     enabled: false, // Only fetch when explicitly called
     staleTime: 5 * 60 * 1000, // 5 minutes
-    retry: 1
-  })
+    retry: 1,
+  });
 
   const updatePreferencesMutation = useMutation({
-    mutationFn: (preferences: Partial<User['preferences']>) =>
+    mutationFn: (preferences: Partial<User["preferences"]>) =>
       apiClient.updateUserPreferences(preferences),
     onSuccess: (response: ApiResponse<User>) => {
       if (response.success && response.data) {
-        setUser(response.data)
-        void queryClient.invalidateQueries({ queryKey: queryKeys.user })
-        toast.success('Preferences updated')
+        setUser(response.data);
+        void queryClient.invalidateQueries({ queryKey: queryKeys.user });
+        toast.success("Preferences updated");
       }
     },
     onError: (error: unknown) => {
-      toast.error('Failed to update preferences')
-    }
-  })
+      toast.error("Failed to update preferences");
+    },
+  });
 
   const updateThemeMutation = useMutation({
     mutationFn: (themeConfig: ThemeConfig) =>
       apiClient.updateThemeConfig(themeConfig),
     onSuccess: (response: ApiResponse<User>) => {
       if (response.success && response.data) {
-        setUser(response.data)
-        void queryClient.invalidateQueries({ queryKey: queryKeys.user })
-        toast.success('Theme updated')
+        setUser(response.data);
+        void queryClient.invalidateQueries({ queryKey: queryKeys.user });
+        toast.success("Theme updated");
       }
     },
     onError: (error: unknown) => {
-      toast.error('Failed to update theme')
-    }
-  })
+      toast.error("Failed to update theme");
+    },
+  });
 
   const updateVoiceSettingsMutation = useMutation({
     mutationFn: (voiceSettings: VoiceSettings) =>
       apiClient.updateVoiceSettings(voiceSettings),
     onSuccess: (response: ApiResponse<User>) => {
       if (response.success && response.data) {
-        setUser(response.data)
-        void queryClient.invalidateQueries({ queryKey: queryKeys.user })
-        toast.success('Voice settings updated')
+        setUser(response.data);
+        void queryClient.invalidateQueries({ queryKey: queryKeys.user });
+        toast.success("Voice settings updated");
       }
     },
     onError: (error: unknown) => {
-      toast.error('Failed to update voice settings')
-    }
-  })
+      toast.error("Failed to update voice settings");
+    },
+  });
 
   return {
     user: user?.data || null,
@@ -182,10 +199,11 @@ export function useUser() {
     updatePreferences: updatePreferencesMutation.mutate,
     updateTheme: updateThemeMutation.mutate,
     updateVoiceSettings: updateVoiceSettingsMutation.mutate,
-    isUpdating: updatePreferencesMutation.isPending ||
-                updateThemeMutation.isPending ||
-                updateVoiceSettingsMutation.isPending
-  }
+    isUpdating:
+      updatePreferencesMutation.isPending ||
+      updateThemeMutation.isPending ||
+      updateVoiceSettingsMutation.isPending,
+  };
 }
 
 // Conversations Hooks
@@ -194,145 +212,158 @@ export function useConversations(filters?: SearchFilters) {
     queryKey: [...queryKeys.conversations, filters],
     queryFn: () => apiClient.getConversations(filters),
     staleTime: 30 * 1000, // 30 seconds
-    refetchOnWindowFocus: true
-  })
+    refetchOnWindowFocus: true,
+  });
 }
 
 export function useConversation(id: string) {
-  const queryClient = useQueryClient()
-  const setCurrentConversationId = useSetAtom(currentConversationIdAtom)
+  const queryClient = useQueryClient();
+  const setCurrentConversationId = useSetAtom(currentConversationIdAtom);
 
   return useQuery({
     queryKey: queryKeys.conversation(id),
     queryFn: () => apiClient.getConversation(id),
     enabled: !!id,
     staleTime: 60 * 1000, // 1 minute
-    retry: 2
-  })
+    retry: 2,
+  });
 }
 
 export function useCreateConversation() {
-  const queryClient = useQueryClient()
-  const setConversations = useSetAtom(conversationsAtom)
-  const setCurrentConversationId = useSetAtom(currentConversationIdAtom)
+  const queryClient = useQueryClient();
+  const setConversations = useSetAtom(conversationsAtom);
+  const setCurrentConversationId = useSetAtom(currentConversationIdAtom);
 
   return useMutation({
     mutationFn: (data: {
-      title?: string
-      agentId?: string
-      workspaceId?: string
-      initialMessage?: string
+      title?: string;
+      agentId?: string;
+      workspaceId?: string;
+      initialMessage?: string;
     }) => apiClient.createConversation(data),
     onSuccess: (response: ApiResponse<Conversation>) => {
       if (response.success && response.data) {
-        setConversations(prev => [response.data, ...prev])
-        setCurrentConversationId(response.data.id)
+        setConversations((prev) => [response.data, ...prev]);
+        setCurrentConversationId(response.data.id);
 
         // Invalidate related queries
-        void queryClient.invalidateQueries({ queryKey: queryKeys.conversations })
+        void queryClient.invalidateQueries({
+          queryKey: queryKeys.conversations,
+        });
 
-        toast.success('Conversation created')
+        toast.success("Conversation created");
       }
     },
     onError: (error: unknown) => {
-      toast.error('Failed to create conversation')
-    }
-  })
+      toast.error("Failed to create conversation");
+    },
+  });
 }
 
 export function useUpdateConversation() {
-  const queryClient = useQueryClient()
-  const setConversations = useSetAtom(conversationsAtom)
+  const queryClient = useQueryClient();
+  const setConversations = useSetAtom(conversationsAtom);
 
   return useMutation({
     mutationFn: ({
       id,
-      updates
+      updates,
     }: {
-      id: string
-      updates: Partial<Pick<Conversation, 'title' | 'isArchived' | 'tags'>>
+      id: string;
+      updates: Partial<Pick<Conversation, "title" | "isArchived" | "tags">>;
     }) => apiClient.updateConversation(id, updates),
     onSuccess: (response: ApiResponse<Conversation>, { id }) => {
       if (response.success && response.data) {
-        setConversations(prev => prev.map(conv => conv.id === id ? response.data as Conversation : conv))
-        queryClient.setQueryData(queryKeys.conversation(id), { data: response.data })
-        toast.success('Conversation updated')
+        setConversations((prev) =>
+          prev.map((conv) =>
+            conv.id === id ? (response.data as Conversation) : conv,
+          ),
+        );
+        queryClient.setQueryData(queryKeys.conversation(id), {
+          data: response.data,
+        });
+        toast.success("Conversation updated");
       }
     },
     onError: (error: unknown) => {
-      toast.error('Failed to update conversation')
-    }
-  })
+      toast.error("Failed to update conversation");
+    },
+  });
 }
 
 export function useDeleteConversation() {
-  const queryClient = useQueryClient()
-  const setConversations = useSetAtom(conversationsAtom)
-  const setCurrentConversationId = useSetAtom(currentConversationIdAtom)
+  const queryClient = useQueryClient();
+  const setConversations = useSetAtom(conversationsAtom);
+  const setCurrentConversationId = useSetAtom(currentConversationIdAtom);
 
   return useMutation({
     mutationFn: (id: string) => apiClient.deleteConversation(id),
     onSuccess: (_, id) => {
       // Remove from conversations list
-      setConversations(prev => prev.filter(conv => conv.id !== id))
+      setConversations((prev) => prev.filter((conv) => conv.id !== id));
 
       // Clear current conversation if it was deleted
-      setCurrentConversationId(prev => prev === id ? null : prev)
+      setCurrentConversationId((prev) => (prev === id ? null : prev));
 
       // Remove from cache
-      queryClient.removeQueries({ queryKey: queryKeys.conversation(id) })
-      queryClient.removeQueries({ queryKey: queryKeys.messages(id) })
+      queryClient.removeQueries({ queryKey: queryKeys.conversation(id) });
+      queryClient.removeQueries({ queryKey: queryKeys.messages(id) });
 
-      toast.success('Conversation deleted')
+      toast.success("Conversation deleted");
     },
     onError: (error: unknown) => {
-      toast.error('Failed to delete conversation')
-    }
-  })
+      toast.error("Failed to delete conversation");
+    },
+  });
 }
 
 // Messages Hooks
-export function useMessages(conversationId: string, options?: {
-  limit?: number
-  offset?: number
-  before?: string
-  after?: string
-}) {
-  const setMessages = useSetAtom(messagesAtom(conversationId))
-  const setLoading = useSetAtom(messagesLoadingAtom(conversationId))
+export function useMessages(
+  conversationId: string,
+  options?: {
+    limit?: number;
+    offset?: number;
+    before?: string;
+    after?: string;
+  },
+) {
+  const setMessages = useSetAtom(messagesAtom(conversationId));
+  const setLoading = useSetAtom(messagesLoadingAtom(conversationId));
 
   return useQuery({
     queryKey: [...queryKeys.messages(conversationId), options],
     queryFn: () => apiClient.getMessages(conversationId, options),
     enabled: !!conversationId,
     staleTime: 10 * 1000, // 10 seconds
-    refetchOnWindowFocus: false
-  })
+    refetchOnWindowFocus: false,
+  });
 }
 
 export function useInfiniteMessages(conversationId: string, limit = 50) {
-  const setMessages = useSetAtom(messagesAtom(conversationId))
+  const setMessages = useSetAtom(messagesAtom(conversationId));
 
   return useInfiniteQuery({
-    queryKey: [...queryKeys.messages(conversationId), 'infinite'],
+    queryKey: [...queryKeys.messages(conversationId), "infinite"],
     queryFn: ({ pageParam = 0 }) =>
       apiClient.getMessages(conversationId, { limit, offset: pageParam }),
     initialPageParam: 0,
     enabled: !!conversationId,
     getNextPageParam: (lastPage: unknown, allPages) => {
       if ((lastPage as any)?.data && (lastPage as any).data.length === limit) {
-        return allPages.length * limit
+        return allPages.length * limit;
       }
-      return undefined
+      return undefined;
     },
     select: (data) => {
       // Combine all pages into a single array
-      const allMessages = data.pages.flatMap(page => (page as any)?.data || [])
-      setMessages(allMessages)
-      return data
+      const allMessages = data.pages.flatMap(
+        (page) => (page as any)?.data || [],
+      );
+      setMessages(allMessages);
+      return data;
     },
-    staleTime: 10 * 1000
-  })
+    staleTime: 10 * 1000,
+  });
 }
 
 // Temporarily disabled due to Jotai atom type issues
@@ -430,15 +461,15 @@ export function useInfiniteMessages(conversationId: string, limit = 50) {
 
 // Agents Hooks
 export function useAgents() {
-  const setAgents = useSetAtom(agentsAtom)
-  const setLoading = useSetAtom(agentsLoadingAtom)
+  const setAgents = useSetAtom(agentsAtom);
+  const setLoading = useSetAtom(agentsLoadingAtom);
 
   return useQuery({
     queryKey: queryKeys.agents,
     queryFn: () => apiClient.getAgents(),
     staleTime: 5 * 60 * 1000, // 5 minutes
-    refetchOnWindowFocus: true
-  })
+    refetchOnWindowFocus: true,
+  });
 }
 
 export function useAgent(id: string) {
@@ -447,8 +478,8 @@ export function useAgent(id: string) {
     queryFn: () => apiClient.getAgent(id),
     enabled: !!id,
     staleTime: 10 * 60 * 1000, // 10 minutes
-    retry: 2
-  })
+    retry: 2,
+  });
 }
 
 // Workspaces Hooks
@@ -457,7 +488,7 @@ export function useWorkspaces() {
     queryKey: queryKeys.workspaces,
     queryFn: () => apiClient.getWorkspaces(),
     staleTime: 5 * 60 * 1000, // 5 minutes
-  })
+  });
 }
 
 // Plugins Hooks
@@ -466,7 +497,7 @@ export function usePlugins() {
     queryKey: queryKeys.plugins,
     queryFn: () => apiClient.getPlugins(),
     staleTime: 10 * 60 * 1000, // 10 minutes
-  })
+  });
 }
 
 // Notifications Hooks
@@ -475,22 +506,22 @@ export function useNotifications() {
     queryKey: queryKeys.notifications,
     queryFn: () => apiClient.getNotifications(),
     staleTime: 30 * 1000, // 30 seconds
-    refetchInterval: 60 * 1000 // Refetch every minute
-  })
+    refetchInterval: 60 * 1000, // Refetch every minute
+  });
 }
 
 // Search Hooks
 export function useSearch(query: string, filters?: SearchFilters) {
-  const setResults = useSetAtom(searchResultsAtom)
-  const setLoading = useSetAtom(searchLoadingAtom)
+  const setResults = useSetAtom(searchResultsAtom);
+  const setLoading = useSetAtom(searchLoadingAtom);
 
   return useQuery({
     queryKey: queryKeys.search(query, filters),
     queryFn: () => apiClient.searchGlobal(query),
     enabled: !!query && query.length > 2,
     staleTime: 60 * 1000, // 1 minute
-    retry: 1
-  })
+    retry: 1,
+  });
 }
 
 // Health and Metrics Hooks
@@ -500,8 +531,8 @@ export function useHealth() {
     queryFn: () => apiClient.getHealthStatus(),
     staleTime: 30 * 1000, // 30 seconds
     refetchInterval: 60 * 1000, // Refetch every minute
-    retry: 3
-  })
+    retry: 3,
+  });
 }
 
 export function useMetrics() {
@@ -510,45 +541,49 @@ export function useMetrics() {
     queryFn: () => apiClient.getMetrics(),
     staleTime: 60 * 1000, // 1 minute
     refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
-    retry: 2
-  })
+    retry: 2,
+  });
 }
 
 // File Upload Hooks
 export function useFileUpload() {
   return useMutation({
     mutationFn: async ({ file }: { file: File }) => {
-      const formData = new FormData()
-      formData.append('file', file)
+      const formData = new FormData();
+      formData.append("file", file);
 
-      const response = await apiClient.post('/api/files/upload', formData, {
+      const response = await apiClient.post("/api/files/upload", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
-      })
+      });
 
-      return (response as any)?.data
+      return (response as any)?.data;
     },
-  })
+  });
 }
 
 export function useMultipleFileUpload() {
   return useMutation({
     mutationFn: async ({ files }: { files: File[] }) => {
-      const formData = new FormData()
+      const formData = new FormData();
       files.forEach((file, index) => {
-        formData.append(`files[${index}]`, file)
-      })
+        formData.append(`files[${index}]`, file);
+      });
 
-      const response = await apiClient.post('/api/files/upload-multiple', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+      const response = await apiClient.post(
+        "/api/files/upload-multiple",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         },
-      })
+      );
 
-      return (response as any)?.data
+      return (response as any)?.data;
     },
-  })
+  });
 }
 
 // Voice Hooks
@@ -556,78 +591,78 @@ export function useTranscribeAudio() {
   return useMutation({
     mutationFn: (audioFile: File) => apiClient.transcribeAudio(audioFile),
     onSuccess: () => {
-      toast.success('Audio transcribed successfully')
+      toast.success("Audio transcribed successfully");
     },
     onError: (error: unknown) => {
-      toast.error('Audio transcription failed')
-    }
-  })
+      toast.error("Audio transcription failed");
+    },
+  });
 }
 
 export function useGenerateSpeech() {
   return useMutation({
     mutationFn: ({
       text,
-      voiceSettings
+      voiceSettings,
     }: {
-      text: string
-      voiceSettings?: VoiceSettings
+      text: string;
+      voiceSettings?: VoiceSettings;
     }) => apiClient.generateSpeech(text, voiceSettings),
     onSuccess: () => {
-      toast.success('Speech generated successfully')
+      toast.success("Speech generated successfully");
     },
     onError: (error: unknown) => {
-      toast.error('Speech generation failed')
-    }
-  })
+      toast.error("Speech generation failed");
+    },
+  });
 }
 
 // Settings Hooks
 export function useSettings() {
-  const { user, isLoading } = useUser()
-  const settings = useAtomValue(settingsAtom)
+  const { user, isLoading } = useUser();
+  const settings = useAtomValue(settingsAtom);
 
   // Combine user preferences with general settings
   const combinedSettings = {
     ...settings,
     ...user?.preferences,
-    name: user?.name || '',
-    email: user?.email || '',
-    avatar: user?.avatar || '',
-    bio: user?.bio || '',
-    apiKeys: user?.apiKeys || {}
-  }
+    name: user?.name || "",
+    email: user?.email || "",
+    avatar: user?.avatar || "",
+    bio: user?.bio || "",
+    apiKeys: user?.apiKeys || {},
+  };
 
   return {
     data: combinedSettings,
     isLoading,
-    error: null
-  }
+    error: null,
+  };
 }
 
 export function useUpdateSettings() {
-  const queryClient = useQueryClient()
-  const updatePreferences = useUser().updatePreferences
-  const setSettings = useSetAtom(settingsAtom)
+  const queryClient = useQueryClient();
+  const updatePreferences = useUser().updatePreferences;
+  const setSettings = useSetAtom(settingsAtom);
 
   return useMutation({
-    mutationFn: async (updates: Partial<User['preferences']>) => {
+    mutationFn: async (updates: Partial<User["preferences"]>) => {
       // Handle different types of updates
       if (updates.theme || updates.notifications || updates.privacy) {
         // User preferences update
-        await updatePreferences(updates)
+        await updatePreferences(updates);
       } else {
         // General settings update
-        setSettings(prev => ({ ...prev, ...updates }))
+        setSettings((prev) => ({ ...prev, ...updates }));
       }
     },
     onSuccess: () => {
-      void void queryClient.invalidateQueries({ queryKey: queryKeys.user })
+      void void queryClient.invalidateQueries({ queryKey: queryKeys.user });
     },
     onError: (error: unknown) => {
-      toast.error('Failed to update settings')
-    }
-  })
+      toast.error("Failed to update settings");
+    },
+  });
 }
 
 // Export all hooks
@@ -656,9 +691,9 @@ export const hooks = {
   useTranscribeAudio,
   useGenerateSpeech,
   useSettings,
-  useUpdateSettings
-}
+  useUpdateSettings,
+};
 
 // Voice hooks (separate from React Query)
-export { useVoice } from './useVoice'
-export { useVoiceOutput } from './useVoiceOutput'
+export { useVoice } from "./useVoice";
+export { useVoiceOutput } from "./useVoiceOutput";

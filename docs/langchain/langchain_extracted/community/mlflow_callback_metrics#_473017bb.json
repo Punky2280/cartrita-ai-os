@@ -1,0 +1,41 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/callbacks/langchain_community.callbacks.mlflow_callback.mlflow_callback_metrics.html",
+  "title": "mlflow_callback_metrics#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "mlflow_callback_metrics"
+    },
+    {
+      "type": "p",
+      "content": "Get the metrics to log to MLFlow."
+    },
+    {
+      "type": "li",
+      "content": "mlflow_callback_metrics()"
+    }
+  ],
+  "code_examples": [
+    "callbacks",
+    "mlflow_callback_metrics()"
+  ],
+  "api_signatures": [
+    "langchain_community.callbacks.mlflow_callback.mlflow_callback_metrics()→List[str][source]#",
+    "langchain_community.callbacks.mlflow_callback.",
+    "mlflow_callback_metrics",
+    "(",
+    ")",
+    "→List[str]",
+    "→",
+    "List[str]"
+  ],
+  "parameters": []
+}

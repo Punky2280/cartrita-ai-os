@@ -1,0 +1,163 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.lakefs.LakeFSClient.html#langchain_community.document_loaders.lakefs.LakeFSClient",
+  "title": "LakeFSClient#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "LakeFSClient"
+    },
+    {
+      "type": "p",
+      "content": "Client for lakeFS."
+    },
+    {
+      "type": "p",
+      "content": "__init__(lakefs_access_key, ...)"
+    },
+    {
+      "type": "p",
+      "content": "is_presign_supported()"
+    },
+    {
+      "type": "p",
+      "content": "ls_objects(repo, ref, path, presign)"
+    },
+    {
+      "type": "li",
+      "content": "lakefs_access_key(str)"
+    },
+    {
+      "type": "p",
+      "content": "lakefs_access_key(str)"
+    },
+    {
+      "type": "li",
+      "content": "lakefs_secret_key(str)"
+    },
+    {
+      "type": "p",
+      "content": "lakefs_secret_key(str)"
+    },
+    {
+      "type": "li",
+      "content": "lakefs_endpoint(str)"
+    },
+    {
+      "type": "p",
+      "content": "lakefs_endpoint(str)"
+    },
+    {
+      "type": "li",
+      "content": "lakefs_access_key(str)"
+    },
+    {
+      "type": "p",
+      "content": "lakefs_access_key(str)"
+    },
+    {
+      "type": "li",
+      "content": "lakefs_secret_key(str)"
+    },
+    {
+      "type": "p",
+      "content": "lakefs_secret_key(str)"
+    },
+    {
+      "type": "li",
+      "content": "lakefs_endpoint(str)"
+    },
+    {
+      "type": "p",
+      "content": "lakefs_endpoint(str)"
+    },
+    {
+      "type": "li",
+      "content": "presign(bool|None)"
+    },
+    {
+      "type": "p",
+      "content": "presign(bool|None)"
+    },
+    {
+      "type": "li",
+      "content": "LakeFSClient__init__()is_presign_supported()ls_objects()"
+    },
+    {
+      "type": "li",
+      "content": "is_presign_supported()"
+    },
+    {
+      "type": "li",
+      "content": "ls_objects()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "__init__",
+    "is_presign_supported",
+    "ls_objects",
+    "LakeFSClient",
+    "__init__()",
+    "is_presign_supported()",
+    "ls_objects()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.lakefs.LakeFSClient(lakefs_access_key:str,lakefs_secret_key:str,lakefs_endpoint:str,)[source]#",
+    "langchain_community.document_loaders.lakefs.",
+    "LakeFSClient",
+    "(",
+    "lakefs_access_key:str",
+    "lakefs_secret_key:str",
+    "lakefs_endpoint:str",
+    ")",
+    "__init__(lakefs_access_key:str,lakefs_secret_key:str,lakefs_endpoint:str,)[source]#",
+    "__init__",
+    "(",
+    "lakefs_access_key:str",
+    "lakefs_secret_key:str",
+    "lakefs_endpoint:str",
+    ")",
+    "is_presign_supported()→bool[source]#",
+    "is_presign_supported",
+    "(",
+    ")",
+    "→bool",
+    "→",
+    "bool",
+    "ls_objects(repo:str,ref:str,path:str,presign:bool|None,)→List[source]#",
+    "ls_objects",
+    "(",
+    "repo:str",
+    "ref:str",
+    "path:str",
+    "presign:bool|None",
+    ")",
+    "→List",
+    "→",
+    "List"
+  ],
+  "parameters": [
+    "lakefs_access_key:str",
+    "lakefs_secret_key:str",
+    "lakefs_endpoint:str",
+    "lakefs_access_key:str",
+    "lakefs_secret_key:str",
+    "lakefs_endpoint:str",
+    "repo:str",
+    "ref:str",
+    "path:str",
+    "presign:bool|None"
+  ]
+}

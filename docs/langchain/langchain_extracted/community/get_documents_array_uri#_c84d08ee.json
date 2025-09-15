@@ -1,0 +1,48 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.tiledb.get_documents_array_uri.html",
+  "title": "get_documents_array_uri#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "vectorstores"
+    },
+    {
+      "type": "li",
+      "content": "get_documents_array_uri"
+    },
+    {
+      "type": "p",
+      "content": "Get the URI of the documents array."
+    },
+    {
+      "type": "li",
+      "content": "get_documents_array_uri()"
+    }
+  ],
+  "code_examples": [
+    "vectorstores",
+    "get_documents_array_uri()"
+  ],
+  "api_signatures": [
+    "langchain_community.vectorstores.tiledb.get_documents_array_uri(uri:str)→str[source]#",
+    "langchain_community.vectorstores.tiledb.",
+    "get_documents_array_uri",
+    "(",
+    "uri:str",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "uri:str"
+  ]
+}

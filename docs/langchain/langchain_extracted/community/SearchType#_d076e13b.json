@@ -1,0 +1,75 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chat_message_histories/langchain_community.chat_message_histories.zep.SearchType.html#langchain_community.chat_message_histories.zep.SearchType",
+  "title": "SearchType#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "chat_message_histories"
+    },
+    {
+      "type": "p",
+      "content": "Enumerator of the types of search to perform."
+    },
+    {
+      "type": "p",
+      "content": "Similarity search."
+    },
+    {
+      "type": "p",
+      "content": "Maximal Marginal Relevance reranking of similarity search."
+    },
+    {
+      "type": "p",
+      "content": "Examples using SearchType"
+    },
+    {
+      "type": "li",
+      "content": "How to retrieve using multiple vectors per document"
+    },
+    {
+      "type": "p",
+      "content": "How to retrieve using multiple vectors per document"
+    },
+    {
+      "type": "li",
+      "content": "Zep Open Source"
+    },
+    {
+      "type": "p",
+      "content": "Zep Open Source"
+    },
+    {
+      "type": "li",
+      "content": "SearchTypesimilaritymmr"
+    }
+  ],
+  "code_examples": [
+    "chat_message_histories",
+    "SearchType",
+    "similarity",
+    "mmr"
+  ],
+  "api_signatures": [
+    "classlangchain_community.chat_message_histories.zep.SearchType(value)[source]#",
+    "langchain_community.chat_message_histories.zep.",
+    "SearchType",
+    "(",
+    "value",
+    ")",
+    "similarity='similarity'#",
+    "similarity",
+    "mmr='mmr'#",
+    "mmr"
+  ],
+  "parameters": [
+    "value"
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "url": "https://python.langchain.com/docs/integrations/tools/google_imagen/",
+  "title": "Google Imagen",
+  "sections": [
+    {
+      "type": "li",
+      "content": "Tools/Toolkits"
+    },
+    {
+      "type": "li",
+      "content": "Google Imagen"
+    },
+    {
+      "type": "p",
+      "content": "Imagen on Vertex AIbrings Google's state of the art image generative AI capabilities to application developers. With Imagen on Vertex AI, application developers can build next-generation AI products that transform their user's imagination into high quality visual assets using AI generation, in seconds."
+    },
+    {
+      "type": "p",
+      "content": "With Imagen on Langchain , You can do the following tasks"
+    },
+    {
+      "type": "li",
+      "content": "VertexAIImageGeneratorChat: Generate novel images using only a text prompt (text-to-image AI generation)."
+    },
+    {
+      "type": "li",
+      "content": "VertexAIImageEditorChat: Edit an entire uploaded or generated image with a text prompt."
+    },
+    {
+      "type": "li",
+      "content": "VertexAIImageCaptioning: Get text descriptions of images with visual captioning."
+    },
+    {
+      "type": "li",
+      "content": "VertexAIVisualQnAChat: Get answers to a question about an image with Visual Question Answering (VQA).NOTE : Currently we support only single-turn chat for Visual QnA (VQA)"
+    },
+    {
+      "type": "li",
+      "content": "NOTE : Currently we support only single-turn chat for Visual QnA (VQA)"
+    },
+    {
+      "type": "h2",
+      "content": "Image Generation​"
+    },
+    {
+      "type": "p",
+      "content": "Generate novel images using only a text prompt (text-to-image AI generation)"
+    },
+    {
+      "type": "h2",
+      "content": "Image Editing​"
+    },
+    {
+      "type": "p",
+      "content": "Edit an entire uploaded or generated image with a text prompt."
+    },
+    {
+      "type": "h3",
+      "content": "Edit Generated Image​"
+    },
+    {
+      "type": "h2",
+      "content": "Image Captioning​"
+    },
+    {
+      "type": "p",
+      "content": "NOTE :  we're using generated image inImage Generation Section"
+    },
+    {
+      "type": "h2",
+      "content": "Visual Question Answering (VQA)​"
+    },
+    {
+      "type": "p",
+      "content": "NOTE :  we're using generated image inImage Generation Section"
+    },
+    {
+      "type": "li",
+      "content": "Toolconceptual guide"
+    },
+    {
+      "type": "li",
+      "content": "Toolhow-to guides"
+    },
+    {
+      "type": "li",
+      "content": "Image Generation"
+    },
+    {
+      "type": "li",
+      "content": "Image EditingEdit Generated Image"
+    },
+    {
+      "type": "li",
+      "content": "Edit Generated Image"
+    },
+    {
+      "type": "li",
+      "content": "Image Captioning"
+    },
+    {
+      "type": "li",
+      "content": "Visual Question Answering (VQA)"
+    }
+  ],
+  "code_examples": [
+    "fromlangchain_core.messagesimportAIMessage,HumanMessagefromlangchain_google_vertexai.vision_modelsimportVertexAIImageGeneratorChat",
+    "fromlangchain_core.messagesimportAIMessage,HumanMessagefromlangchain_google_vertexai.vision_modelsimportVertexAIImageGeneratorChat",
+    "# Create Image Generation model Objectgenerator=VertexAIImageGeneratorChat()",
+    "# Create Image Generation model Objectgenerator=VertexAIImageGeneratorChat()",
+    "messages=[HumanMessage(content=[\"a cat at the beach\"])]response=generator.invoke(messages)",
+    "messages=[HumanMessage(content=[\"a cat at the beach\"])]response=generator.invoke(messages)",
+    "# To view the generated Imagegenerated_image=response.content[0]",
+    "# To view the generated Imagegenerated_image=response.content[0]",
+    "importbase64importiofromPILimportImage# Parse response object to get base64 string for imageimg_base64=generated_image[\"image_url\"][\"url\"].split(\",\")[-1]# Convert base64 string to Imageimg=Image.open(io.BytesIO(base64.decodebytes(bytes(img_base64,\"utf-8\"))))# view Imageimg",
+    "importbase64importiofromPILimportImage# Parse response object to get base64 string for imageimg_base64=generated_image[\"image_url\"][\"url\"].split(\",\")[-1]# Convert base64 string to Imageimg=Image.open(io.BytesIO(base64.decodebytes(bytes(img_base64,\"utf-8\"))))# view Imageimg",
+    "fromlangchain_core.messagesimportAIMessage,HumanMessagefromlangchain_google_vertexai.vision_modelsimport(VertexAIImageEditorChat,VertexAIImageGeneratorChat,)",
+    "fromlangchain_core.messagesimportAIMessage,HumanMessagefromlangchain_google_vertexai.vision_modelsimport(VertexAIImageEditorChat,VertexAIImageGeneratorChat,)",
+    "# Create Image Generation model Objectgenerator=VertexAIImageGeneratorChat()# Provide a text input for imagemessages=[HumanMessage(content=[\"a cat at the beach\"])]# call the model to generate an imageresponse=generator.invoke(messages)# read the image object from the responsegenerated_image=response.content[0]",
+    "# Create Image Generation model Objectgenerator=VertexAIImageGeneratorChat()# Provide a text input for imagemessages=[HumanMessage(content=[\"a cat at the beach\"])]# call the model to generate an imageresponse=generator.invoke(messages)# read the image object from the responsegenerated_image=response.content[0]",
+    "# Create Image Editor model Objecteditor=VertexAIImageEditorChat()",
+    "# Create Image Editor model Objecteditor=VertexAIImageEditorChat()",
+    "# Write prompt for editing and pass the \"generated_image\"messages=[HumanMessage(content=[generated_image,\"a dog at the beach \"])]# Call the model for editing Imageeditor_response=editor.invoke(messages)",
+    "# Write prompt for editing and pass the \"generated_image\"messages=[HumanMessage(content=[generated_image,\"a dog at the beach \"])]# Call the model for editing Imageeditor_response=editor.invoke(messages)",
+    "importbase64importiofromPILimportImage# Parse response object to get base64 string for imageedited_img_base64=editor_response.content[0][\"image_url\"][\"url\"].split(\",\")[-1]# Convert base64 string to Imageedited_img=Image.open(io.BytesIO(base64.decodebytes(bytes(edited_img_base64,\"utf-8\"))))# view Imageedited_img",
+    "importbase64importiofromPILimportImage# Parse response object to get base64 string for imageedited_img_base64=editor_response.content[0][\"image_url\"][\"url\"].split(\",\")[-1]# Convert base64 string to Imageedited_img=Image.open(io.BytesIO(base64.decodebytes(bytes(edited_img_base64,\"utf-8\"))))# view Imageedited_img",
+    "fromlangchain_google_vertexaiimportVertexAIImageCaptioning# Initialize the Image Captioning Objectmodel=VertexAIImageCaptioning()",
+    "fromlangchain_google_vertexaiimportVertexAIImageCaptioning# Initialize the Image Captioning Objectmodel=VertexAIImageCaptioning()",
+    "# use image generated in Image Generation Sectionimg_base64=generated_image[\"image_url\"][\"url\"]response=model.invoke(img_base64)print(f\"Generated Caption :{response}\")# Convert base64 string to Imageimg=Image.open(io.BytesIO(base64.decodebytes(bytes(img_base64.split(\",\")[-1],\"utf-8\"))))# display Imageimg",
+    "# use image generated in Image Generation Sectionimg_base64=generated_image[\"image_url\"][\"url\"]response=model.invoke(img_base64)print(f\"Generated Caption :{response}\")# Convert base64 string to Imageimg=Image.open(io.BytesIO(base64.decodebytes(bytes(img_base64.split(\",\")[-1],\"utf-8\"))))# display Imageimg",
+    "Generated Cpation : a cat sitting on the beach looking at the camera",
+    "Generated Cpation : a cat sitting on the beach looking at the camera",
+    "fromlangchain_google_vertexaiimportVertexAIVisualQnAChatmodel=VertexAIVisualQnAChat()",
+    "fromlangchain_google_vertexaiimportVertexAIVisualQnAChatmodel=VertexAIVisualQnAChat()",
+    "question=\"What animal is shown in the image?\"response=model.invoke(input=[HumanMessage(content=[{\"type\":\"image_url\",\"image_url\":{\"url\":img_base64}},question,])])print(f\"question :{question}\\nanswer :{response.content}\")# Convert base64 string to Imageimg=Image.open(io.BytesIO(base64.decodebytes(bytes(img_base64.split(\",\")[-1],\"utf-8\"))))# display Imageimg",
+    "question=\"What animal is shown in the image?\"response=model.invoke(input=[HumanMessage(content=[{\"type\":\"image_url\",\"image_url\":{\"url\":img_base64}},question,])])print(f\"question :{question}\\nanswer :{response.content}\")# Convert base64 string to Imageimg=Image.open(io.BytesIO(base64.decodebytes(bytes(img_base64.split(\",\")[-1],\"utf-8\"))))# display Imageimg",
+    "question : What animal is shown in the image?answer : cat",
+    "question : What animal is shown in the image?answer : cat"
+  ],
+  "api_signatures": [],
+  "parameters": []
+}

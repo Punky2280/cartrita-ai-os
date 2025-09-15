@@ -1,0 +1,56 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.riza.command.ExecJavaScriptInput.html#langchain_community.tools.riza.command.ExecJavaScriptInput",
+  "title": "ExecJavaScriptInput#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "ExecJavaScriptInput"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "the JavaScript code to execute"
+    },
+    {
+      "type": "li",
+      "content": "ExecJavaScriptInputcode"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "BaseModel",
+    "ExecJavaScriptInput",
+    "code"
+  ],
+  "api_signatures": [
+    "classlangchain_community.tools.riza.command.ExecJavaScriptInput[source]#",
+    "langchain_community.tools.riza.command.",
+    "ExecJavaScriptInput",
+    "paramcode:str[Required]#",
+    "code"
+  ],
+  "parameters": []
+}

@@ -1,0 +1,114 @@
+{
+  "url": "https://python.langchain.com/docs/integrations/providers/llamacpp/#chat-models",
+  "title": "Llama.cpp",
+  "sections": [
+    {
+      "type": "p",
+      "content": "llama.cpp pythonlibrary is a simple Python bindings for@ggerganovllama.cpp."
+    },
+    {
+      "type": "p",
+      "content": "This package provides:"
+    },
+    {
+      "type": "li",
+      "content": "Low-level access to C API via ctypes interface."
+    },
+    {
+      "type": "li",
+      "content": "High-level Python API for text completionOpenAI-like APILangChaincompatibilityLlamaIndexcompatibility"
+    },
+    {
+      "type": "li",
+      "content": "OpenAI-like API"
+    },
+    {
+      "type": "li",
+      "content": "LangChaincompatibility"
+    },
+    {
+      "type": "li",
+      "content": "LlamaIndexcompatibility"
+    },
+    {
+      "type": "li",
+      "content": "OpenAI compatible web serverLocal Copilot replacementFunction Calling supportVision API supportMultiple Models"
+    },
+    {
+      "type": "li",
+      "content": "Local Copilot replacement"
+    },
+    {
+      "type": "li",
+      "content": "Function Calling support"
+    },
+    {
+      "type": "li",
+      "content": "Vision API support"
+    },
+    {
+      "type": "li",
+      "content": "Multiple Models"
+    },
+    {
+      "type": "h2",
+      "content": "Installation and Setup​"
+    },
+    {
+      "type": "li",
+      "content": "Install the Python packagepip install llama-cpp-python"
+    },
+    {
+      "type": "li",
+      "content": "Download one of thesupported modelsand convert them to the llama.cpp format per theinstructions"
+    },
+    {
+      "type": "h2",
+      "content": "Chat models​"
+    },
+    {
+      "type": "p",
+      "content": "See ausage example."
+    },
+    {
+      "type": "p",
+      "content": "See ausage example."
+    },
+    {
+      "type": "h2",
+      "content": "Embedding models​"
+    },
+    {
+      "type": "p",
+      "content": "See ausage example."
+    },
+    {
+      "type": "li",
+      "content": "Installation and Setup"
+    },
+    {
+      "type": "li",
+      "content": "Chat models"
+    },
+    {
+      "type": "li",
+      "content": "Embedding models"
+    }
+  ],
+  "code_examples": [
+    "@ggerganov",
+    "OpenAI",
+    "LangChain",
+    "LlamaIndex",
+    "pip install llama-cpp-python",
+    "pip install llama-cpp-python",
+    "fromlangchain_community.chat_modelsimportChatLlamaCpp",
+    "fromlangchain_community.chat_modelsimportChatLlamaCpp",
+    "fromlangchain_community.llmsimportLlamaCpp",
+    "fromlangchain_community.llmsimportLlamaCpp",
+    "fromlangchain_community.embeddingsimportLlamaCppEmbeddings",
+    "fromlangchain_community.embeddingsimportLlamaCppEmbeddings"
+  ],
+  "api_signatures": [],
+  "parameters": []
+}

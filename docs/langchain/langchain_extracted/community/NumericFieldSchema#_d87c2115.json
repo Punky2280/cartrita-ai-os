@@ -1,0 +1,78 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.redis.schema.NumericFieldSchema.html#langchain_community.vectorstores.redis.schema.NumericFieldSchema",
+  "title": "NumericFieldSchema#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "vectorstores"
+    },
+    {
+      "type": "li",
+      "content": "NumericFieldSchema"
+    },
+    {
+      "type": "p",
+      "content": "Bases:RedisField"
+    },
+    {
+      "type": "p",
+      "content": "Schema for numeric fields in Redis."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "NumericField"
+    },
+    {
+      "type": "li",
+      "content": "NumericFieldSchemanameno_indexsortableas_field()"
+    }
+  ],
+  "code_examples": [
+    "vectorstores",
+    "RedisField",
+    "NumericFieldSchema",
+    "name",
+    "no_index",
+    "sortable",
+    "as_field()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.vectorstores.redis.schema.NumericFieldSchema[source]#",
+    "langchain_community.vectorstores.redis.schema.",
+    "NumericFieldSchema",
+    "paramname:str[Required]#",
+    "name",
+    "paramno_index:bool=False#",
+    "no_index",
+    "paramsortable:bool|None=False#",
+    "sortable",
+    "as_field()→NumericField[source]#",
+    "as_field",
+    "(",
+    ")",
+    "→NumericField",
+    "→",
+    "NumericField"
+  ],
+  "parameters": []
+}

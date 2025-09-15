@@ -1,0 +1,818 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/cache/langchain_community.cache.AstraDBSemanticCache.html#langchain_community.cache.AstraDBSemanticCache",
+  "title": "AstraDBSemanticCache#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "AstraDBSemanticCache"
+    },
+    {
+      "type": "p",
+      "content": "Deprecated since version 0.0.28:Use:class:`~langchain_astradb.AstraDBSemanticCache`instead. It will not be removed until langchain-community==1.0."
+    },
+    {
+      "type": "p",
+      "content": "Cache that uses Astra DB as a vector-store backend for semantic\n(i.e. similarity-based) lookup."
+    },
+    {
+      "type": "p",
+      "content": "It uses a single (vector) collection and can store\ncached values from several LLMs, so the LLM’s ‘llm_string’ is stored\nin the document metadata."
+    },
+    {
+      "type": "p",
+      "content": "You can choose the preferred similarity (or use the API default).\nThe default score threshold is tuned to the default metric.\nTune it carefully yourself if switching to another distance metric."
+    },
+    {
+      "type": "li",
+      "content": "collection_name(str) – name of the Astra DB collection to create/use."
+    },
+    {
+      "type": "p",
+      "content": "collection_name(str) – name of the Astra DB collection to create/use."
+    },
+    {
+      "type": "li",
+      "content": "token(Optional[str]) – API token for Astra DB usage."
+    },
+    {
+      "type": "p",
+      "content": "token(Optional[str]) – API token for Astra DB usage."
+    },
+    {
+      "type": "li",
+      "content": "api_endpoint(Optional[str]) – full URL to the API endpoint,\nsuch ashttps://<DB-ID>-us-east1.apps.astra.datastax.com."
+    },
+    {
+      "type": "p",
+      "content": "api_endpoint(Optional[str]) – full URL to the API endpoint,\nsuch ashttps://<DB-ID>-us-east1.apps.astra.datastax.com."
+    },
+    {
+      "type": "li",
+      "content": "astra_db_client(Optional[AstraDB]) –alternative to token+api_endpoint,\nyou can pass an already-created ‘astrapy.db.AstraDB’ instance."
+    },
+    {
+      "type": "p",
+      "content": "astra_db_client(Optional[AstraDB]) –alternative to token+api_endpoint,\nyou can pass an already-created ‘astrapy.db.AstraDB’ instance."
+    },
+    {
+      "type": "li",
+      "content": "async_astra_db_client(Optional[AsyncAstraDB]) –alternative to token+api_endpoint,\nyou can pass an already-created ‘astrapy.db.AsyncAstraDB’ instance."
+    },
+    {
+      "type": "p",
+      "content": "async_astra_db_client(Optional[AsyncAstraDB]) –alternative to token+api_endpoint,\nyou can pass an already-created ‘astrapy.db.AsyncAstraDB’ instance."
+    },
+    {
+      "type": "li",
+      "content": "namespace(Optional[str]) – namespace (aka keyspace) where the\ncollection is created. Defaults to the database’s “default namespace”."
+    },
+    {
+      "type": "p",
+      "content": "namespace(Optional[str]) – namespace (aka keyspace) where the\ncollection is created. Defaults to the database’s “default namespace”."
+    },
+    {
+      "type": "li",
+      "content": "setup_mode(AstraSetupMode) – mode used to create the Astra DB collection (SYNC, ASYNC or\nOFF)."
+    },
+    {
+      "type": "p",
+      "content": "setup_mode(AstraSetupMode) – mode used to create the Astra DB collection (SYNC, ASYNC or\nOFF)."
+    },
+    {
+      "type": "li",
+      "content": "pre_delete_collection(bool) – whether to delete the collection\nbefore creating it. If False and the collection already exists,\nthe collection will be used as is."
+    },
+    {
+      "type": "p",
+      "content": "pre_delete_collection(bool) – whether to delete the collection\nbefore creating it. If False and the collection already exists,\nthe collection will be used as is."
+    },
+    {
+      "type": "li",
+      "content": "embedding(Embeddings) – Embedding provider for semantic encoding and search."
+    },
+    {
+      "type": "p",
+      "content": "embedding(Embeddings) – Embedding provider for semantic encoding and search."
+    },
+    {
+      "type": "li",
+      "content": "metric(Optional[str]) – the function to use for evaluating similarity of text embeddings.\nDefaults to ‘cosine’ (alternatives: ‘euclidean’, ‘dot_product’)"
+    },
+    {
+      "type": "p",
+      "content": "metric(Optional[str]) – the function to use for evaluating similarity of text embeddings.\nDefaults to ‘cosine’ (alternatives: ‘euclidean’, ‘dot_product’)"
+    },
+    {
+      "type": "li",
+      "content": "similarity_threshold(float) – the minimum similarity for accepting a\n(semantic-search) match."
+    },
+    {
+      "type": "p",
+      "content": "similarity_threshold(float) – the minimum similarity for accepting a\n(semantic-search) match."
+    },
+    {
+      "type": "p",
+      "content": "__init__(*[, collection_name, token, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Cache that uses Astra DB as a vector-store backend for semantic (i.e. similarity-based) lookup."
+    },
+    {
+      "type": "p",
+      "content": "aclear(**kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Async clear cache that can take additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "adelete_by_document_id(document_id)"
+    },
+    {
+      "type": "p",
+      "content": "Given this is a \"similarity search\" cache, an invalidation pattern that makes sense is first a lookup to get an ID, and then deleting with that ID."
+    },
+    {
+      "type": "p",
+      "content": "alookup(prompt, llm_string)"
+    },
+    {
+      "type": "p",
+      "content": "Async look up based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "alookup_with_id(prompt, llm_string)"
+    },
+    {
+      "type": "p",
+      "content": "Look up based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "alookup_with_id_through_llm(prompt, llm[, stop])"
+    },
+    {
+      "type": "p",
+      "content": "aupdate(prompt, llm_string, return_val)"
+    },
+    {
+      "type": "p",
+      "content": "Async update cache based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "clear(**kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Clear cache that can take additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "delete_by_document_id(document_id)"
+    },
+    {
+      "type": "p",
+      "content": "Given this is a \"similarity search\" cache, an invalidation pattern that makes sense is first a lookup to get an ID, and then deleting with that ID."
+    },
+    {
+      "type": "p",
+      "content": "lookup(prompt, llm_string)"
+    },
+    {
+      "type": "p",
+      "content": "Look up based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "lookup_with_id(prompt, llm_string)"
+    },
+    {
+      "type": "p",
+      "content": "Look up based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "lookup_with_id_through_llm(prompt, llm[, stop])"
+    },
+    {
+      "type": "p",
+      "content": "update(prompt, llm_string, return_val)"
+    },
+    {
+      "type": "p",
+      "content": "Update cache based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "Cache that uses Astra DB as a vector-store backend for semantic\n(i.e. similarity-based) lookup."
+    },
+    {
+      "type": "p",
+      "content": "It uses a single (vector) collection and can store\ncached values from several LLMs, so the LLM’s ‘llm_string’ is stored\nin the document metadata."
+    },
+    {
+      "type": "p",
+      "content": "You can choose the preferred similarity (or use the API default).\nThe default score threshold is tuned to the default metric.\nTune it carefully yourself if switching to another distance metric."
+    },
+    {
+      "type": "li",
+      "content": "collection_name(str) – name of the Astra DB collection to create/use."
+    },
+    {
+      "type": "p",
+      "content": "collection_name(str) – name of the Astra DB collection to create/use."
+    },
+    {
+      "type": "li",
+      "content": "token(Optional[str]) – API token for Astra DB usage."
+    },
+    {
+      "type": "p",
+      "content": "token(Optional[str]) – API token for Astra DB usage."
+    },
+    {
+      "type": "li",
+      "content": "api_endpoint(Optional[str]) – full URL to the API endpoint,\nsuch ashttps://<DB-ID>-us-east1.apps.astra.datastax.com."
+    },
+    {
+      "type": "p",
+      "content": "api_endpoint(Optional[str]) – full URL to the API endpoint,\nsuch ashttps://<DB-ID>-us-east1.apps.astra.datastax.com."
+    },
+    {
+      "type": "li",
+      "content": "astra_db_client(Optional[AstraDB]) –alternative to token+api_endpoint,\nyou can pass an already-created ‘astrapy.db.AstraDB’ instance."
+    },
+    {
+      "type": "p",
+      "content": "astra_db_client(Optional[AstraDB]) –alternative to token+api_endpoint,\nyou can pass an already-created ‘astrapy.db.AstraDB’ instance."
+    },
+    {
+      "type": "li",
+      "content": "async_astra_db_client(Optional[AsyncAstraDB]) –alternative to token+api_endpoint,\nyou can pass an already-created ‘astrapy.db.AsyncAstraDB’ instance."
+    },
+    {
+      "type": "p",
+      "content": "async_astra_db_client(Optional[AsyncAstraDB]) –alternative to token+api_endpoint,\nyou can pass an already-created ‘astrapy.db.AsyncAstraDB’ instance."
+    },
+    {
+      "type": "li",
+      "content": "namespace(Optional[str]) – namespace (aka keyspace) where the\ncollection is created. Defaults to the database’s “default namespace”."
+    },
+    {
+      "type": "p",
+      "content": "namespace(Optional[str]) – namespace (aka keyspace) where the\ncollection is created. Defaults to the database’s “default namespace”."
+    },
+    {
+      "type": "li",
+      "content": "setup_mode(AstraSetupMode) – mode used to create the Astra DB collection (SYNC, ASYNC or\nOFF)."
+    },
+    {
+      "type": "p",
+      "content": "setup_mode(AstraSetupMode) – mode used to create the Astra DB collection (SYNC, ASYNC or\nOFF)."
+    },
+    {
+      "type": "li",
+      "content": "pre_delete_collection(bool) – whether to delete the collection\nbefore creating it. If False and the collection already exists,\nthe collection will be used as is."
+    },
+    {
+      "type": "p",
+      "content": "pre_delete_collection(bool) – whether to delete the collection\nbefore creating it. If False and the collection already exists,\nthe collection will be used as is."
+    },
+    {
+      "type": "li",
+      "content": "embedding(Embeddings) – Embedding provider for semantic encoding and search."
+    },
+    {
+      "type": "p",
+      "content": "embedding(Embeddings) – Embedding provider for semantic encoding and search."
+    },
+    {
+      "type": "li",
+      "content": "metric(Optional[str]) – the function to use for evaluating similarity of text embeddings.\nDefaults to ‘cosine’ (alternatives: ‘euclidean’, ‘dot_product’)"
+    },
+    {
+      "type": "p",
+      "content": "metric(Optional[str]) – the function to use for evaluating similarity of text embeddings.\nDefaults to ‘cosine’ (alternatives: ‘euclidean’, ‘dot_product’)"
+    },
+    {
+      "type": "li",
+      "content": "similarity_threshold(float) – the minimum similarity for accepting a\n(semantic-search) match."
+    },
+    {
+      "type": "p",
+      "content": "similarity_threshold(float) – the minimum similarity for accepting a\n(semantic-search) match."
+    },
+    {
+      "type": "p",
+      "content": "Async clear cache that can take additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Given this is a “similarity search” cache, an invalidation pattern\nthat makes sense is first a lookup to get an ID, and then deleting\nwith that ID. This is for the second step."
+    },
+    {
+      "type": "p",
+      "content": "document_id(str)"
+    },
+    {
+      "type": "p",
+      "content": "Async look up based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "A cache implementation is expected to generate a key from the 2-tuple\nof prompt and llm_string (e.g., by concatenating them with a delimiter)."
+    },
+    {
+      "type": "li",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "p",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "li",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "p",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "p",
+      "content": "On a cache miss, return None. On a cache hit, return the cached value.\nThe cached value is a list of Generations (or subclasses)."
+    },
+    {
+      "type": "p",
+      "content": "Sequence[Generation] | None"
+    },
+    {
+      "type": "p",
+      "content": "Look up based on prompt and llm_string.\nIf there are hits, return (document_id, cached_entry) for the top hit"
+    },
+    {
+      "type": "li",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "p",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "li",
+      "content": "llm_string(str)"
+    },
+    {
+      "type": "p",
+      "content": "llm_string(str)"
+    },
+    {
+      "type": "p",
+      "content": "Tuple[str,Sequence[Generation]] | None"
+    },
+    {
+      "type": "li",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "p",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "li",
+      "content": "stop(List[str]|None)"
+    },
+    {
+      "type": "p",
+      "content": "stop(List[str]|None)"
+    },
+    {
+      "type": "p",
+      "content": "Tuple[str,Sequence[Generation]] | None"
+    },
+    {
+      "type": "p",
+      "content": "Async update cache based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "The prompt and llm_string are used to generate a key for the cache.\nThe key should match that of the look up method."
+    },
+    {
+      "type": "li",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "p",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "li",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "p",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "li",
+      "content": "return_val(Sequence[Generation]) – The value to be cached. The value is a list of Generations\n(or subclasses)."
+    },
+    {
+      "type": "p",
+      "content": "return_val(Sequence[Generation]) – The value to be cached. The value is a list of Generations\n(or subclasses)."
+    },
+    {
+      "type": "p",
+      "content": "Clear cache that can take additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Given this is a “similarity search” cache, an invalidation pattern\nthat makes sense is first a lookup to get an ID, and then deleting\nwith that ID. This is for the second step."
+    },
+    {
+      "type": "p",
+      "content": "document_id(str)"
+    },
+    {
+      "type": "p",
+      "content": "Look up based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "A cache implementation is expected to generate a key from the 2-tuple\nof prompt and llm_string (e.g., by concatenating them with a delimiter)."
+    },
+    {
+      "type": "li",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "p",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "li",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "p",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "p",
+      "content": "On a cache miss, return None. On a cache hit, return the cached value.\nThe cached value is a list of Generations (or subclasses)."
+    },
+    {
+      "type": "p",
+      "content": "Sequence[Generation] | None"
+    },
+    {
+      "type": "p",
+      "content": "Look up based on prompt and llm_string.\nIf there are hits, return (document_id, cached_entry) for the top hit"
+    },
+    {
+      "type": "li",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "p",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "li",
+      "content": "llm_string(str)"
+    },
+    {
+      "type": "p",
+      "content": "llm_string(str)"
+    },
+    {
+      "type": "p",
+      "content": "Tuple[str,Sequence[Generation]] | None"
+    },
+    {
+      "type": "li",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "p",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "li",
+      "content": "stop(List[str]|None)"
+    },
+    {
+      "type": "p",
+      "content": "stop(List[str]|None)"
+    },
+    {
+      "type": "p",
+      "content": "Tuple[str,Sequence[Generation]] | None"
+    },
+    {
+      "type": "p",
+      "content": "Update cache based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "The prompt and llm_string are used to generate a key for the cache.\nThe key should match that of the lookup method."
+    },
+    {
+      "type": "li",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "p",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "li",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "p",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "li",
+      "content": "return_val(Sequence[Generation]) – The value to be cached. The value is a list of Generations\n(or subclasses)."
+    },
+    {
+      "type": "p",
+      "content": "return_val(Sequence[Generation]) – The value to be cached. The value is a list of Generations\n(or subclasses)."
+    },
+    {
+      "type": "li",
+      "content": "AstraDBSemanticCache__init__()aclear()adelete_by_document_id()alookup()alookup_with_id()alookup_with_id_through_llm()aupdate()clear()delete_by_document_id()lookup()lookup_with_id()lookup_with_id_through_llm()update()"
+    },
+    {
+      "type": "li",
+      "content": "adelete_by_document_id()"
+    },
+    {
+      "type": "li",
+      "content": "alookup_with_id()"
+    },
+    {
+      "type": "li",
+      "content": "alookup_with_id_through_llm()"
+    },
+    {
+      "type": "li",
+      "content": "delete_by_document_id()"
+    },
+    {
+      "type": "li",
+      "content": "lookup_with_id()"
+    },
+    {
+      "type": "li",
+      "content": "lookup_with_id_through_llm()"
+    }
+  ],
+  "code_examples": [
+    "cache",
+    ":class:`~langchain_astradb.AstraDBSemanticCache`",
+    "__init__",
+    "aclear",
+    "adelete_by_document_id",
+    "alookup",
+    "alookup_with_id",
+    "alookup_with_id_through_llm",
+    "aupdate",
+    "clear",
+    "delete_by_document_id",
+    "lookup",
+    "lookup_with_id",
+    "lookup_with_id_through_llm",
+    "update",
+    "AstraDBSemanticCache",
+    "__init__()",
+    "aclear()",
+    "adelete_by_document_id()",
+    "alookup()",
+    "alookup_with_id()",
+    "alookup_with_id_through_llm()",
+    "aupdate()",
+    "clear()",
+    "delete_by_document_id()",
+    "lookup()",
+    "lookup_with_id()",
+    "lookup_with_id_through_llm()",
+    "update()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.cache.AstraDBSemanticCache(*,collection_name:str='langchain_astradb_semantic_cache',token:str|None=None,api_endpoint:str|None=None,astra_db_client:AstraDB|None=None,async_astra_db_client:AsyncAstraDB|None=None,namespace:str|None=None,setup_mode:AstraSetupMode=SetupMode.SYNC,pre_delete_collection:bool=False,embedding:Embeddings,metric:str|None=None,similarity_threshold:float=0.85,)[source]#",
+    "langchain_community.cache.",
+    "AstraDBSemanticCache",
+    "(",
+    "*",
+    "collection_name:str='langchain_astradb_semantic_cache'",
+    "token:str|None=None",
+    "api_endpoint:str|None=None",
+    "astra_db_client:AstraDB|None=None",
+    "async_astra_db_client:AsyncAstraDB|None=None",
+    "namespace:str|None=None",
+    "setup_mode:AstraSetupMode=SetupMode.SYNC",
+    "pre_delete_collection:bool=False",
+    "embedding:Embeddings",
+    "metric:str|None=None",
+    "similarity_threshold:float=0.85",
+    ")",
+    "__init__(*,collection_name:str='langchain_astradb_semantic_cache',token:str|None=None,api_endpoint:str|None=None,astra_db_client:AstraDB|None=None,async_astra_db_client:AsyncAstraDB|None=None,namespace:str|None=None,setup_mode:AstraSetupMode=SetupMode.SYNC,pre_delete_collection:bool=False,embedding:Embeddings,metric:str|None=None,similarity_threshold:float=0.85,)[source]#",
+    "__init__",
+    "(",
+    "*",
+    "collection_name:str='langchain_astradb_semantic_cache'",
+    "token:str|None=None",
+    "api_endpoint:str|None=None",
+    "astra_db_client:AstraDB|None=None",
+    "async_astra_db_client:AsyncAstraDB|None=None",
+    "namespace:str|None=None",
+    "setup_mode:AstraSetupMode=SetupMode.SYNC",
+    "pre_delete_collection:bool=False",
+    "embedding:Embeddings",
+    "metric:str|None=None",
+    "similarity_threshold:float=0.85",
+    ")",
+    "asyncaclear(**kwargs:Any)→None[source]#",
+    "aclear",
+    "(",
+    "**kwargs:Any",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "asyncadelete_by_document_id(document_id:str,)→None[source]#",
+    "adelete_by_document_id",
+    "(",
+    "document_id:str",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "asyncalookup(prompt:str,llm_string:str,)→Sequence[Generation]|None[source]#",
+    "alookup",
+    "(",
+    "prompt:str",
+    "llm_string:str",
+    ")",
+    "→Sequence[Generation]|None",
+    "→",
+    "Sequence[Generation]|None",
+    "asyncalookup_with_id(prompt:str,llm_string:str,)→Tuple[str,Sequence[Generation]]|None[source]#",
+    "alookup_with_id",
+    "(",
+    "prompt:str",
+    "llm_string:str",
+    ")",
+    "→Tuple[str,Sequence[Generation]]|None",
+    "→",
+    "Tuple[str,Sequence[Generation]]|None",
+    "asyncalookup_with_id_through_llm(prompt:str,llm:LLM,stop:List[str]|None=None,)→Tuple[str,Sequence[Generation]]|None[source]#",
+    "alookup_with_id_through_llm",
+    "(",
+    "prompt:str",
+    "llm:LLM",
+    "stop:List[str]|None=None",
+    ")",
+    "→Tuple[str,Sequence[Generation]]|None",
+    "→",
+    "Tuple[str,Sequence[Generation]]|None",
+    "asyncaupdate(prompt:str,llm_string:str,return_val:Sequence[Generation],)→None[source]#",
+    "aupdate",
+    "(",
+    "prompt:str",
+    "llm_string:str",
+    "return_val:Sequence[Generation]",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "clear(**kwargs:Any)→None[source]#",
+    "clear",
+    "(",
+    "**kwargs:Any",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "delete_by_document_id(document_id:str,)→None[source]#",
+    "delete_by_document_id",
+    "(",
+    "document_id:str",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "lookup(prompt:str,llm_string:str,)→Sequence[Generation]|None[source]#",
+    "lookup",
+    "(",
+    "prompt:str",
+    "llm_string:str",
+    ")",
+    "→Sequence[Generation]|None",
+    "→",
+    "Sequence[Generation]|None",
+    "lookup_with_id(prompt:str,llm_string:str,)→Tuple[str,Sequence[Generation]]|None[source]#",
+    "lookup_with_id",
+    "(",
+    "prompt:str",
+    "llm_string:str",
+    ")",
+    "→Tuple[str,Sequence[Generation]]|None",
+    "→",
+    "Tuple[str,Sequence[Generation]]|None",
+    "lookup_with_id_through_llm(prompt:str,llm:LLM,stop:List[str]|None=None,)→Tuple[str,Sequence[Generation]]|None[source]#",
+    "lookup_with_id_through_llm",
+    "(",
+    "prompt:str",
+    "llm:LLM",
+    "stop:List[str]|None=None",
+    ")",
+    "→Tuple[str,Sequence[Generation]]|None",
+    "→",
+    "Tuple[str,Sequence[Generation]]|None",
+    "update(prompt:str,llm_string:str,return_val:Sequence[Generation],)→None[source]#",
+    "update",
+    "(",
+    "prompt:str",
+    "llm_string:str",
+    "return_val:Sequence[Generation]",
+    ")",
+    "→None",
+    "→",
+    "None"
+  ],
+  "parameters": [
+    "*",
+    "collection_name:str='langchain_astradb_semantic_cache'",
+    "token:str|None=None",
+    "api_endpoint:str|None=None",
+    "astra_db_client:AstraDB|None=None",
+    "async_astra_db_client:AsyncAstraDB|None=None",
+    "namespace:str|None=None",
+    "setup_mode:AstraSetupMode=SetupMode.SYNC",
+    "pre_delete_collection:bool=False",
+    "embedding:Embeddings",
+    "metric:str|None=None",
+    "similarity_threshold:float=0.85",
+    "*",
+    "collection_name:str='langchain_astradb_semantic_cache'",
+    "token:str|None=None",
+    "api_endpoint:str|None=None",
+    "astra_db_client:AstraDB|None=None",
+    "async_astra_db_client:AsyncAstraDB|None=None",
+    "namespace:str|None=None",
+    "setup_mode:AstraSetupMode=SetupMode.SYNC",
+    "pre_delete_collection:bool=False",
+    "embedding:Embeddings",
+    "metric:str|None=None",
+    "similarity_threshold:float=0.85",
+    "**kwargs:Any",
+    "document_id:str",
+    "prompt:str",
+    "llm_string:str",
+    "prompt:str",
+    "llm_string:str",
+    "prompt:str",
+    "llm:LLM",
+    "stop:List[str]|None=None",
+    "prompt:str",
+    "llm_string:str",
+    "return_val:Sequence[Generation]",
+    "**kwargs:Any",
+    "document_id:str",
+    "prompt:str",
+    "llm_string:str",
+    "prompt:str",
+    "llm_string:str",
+    "prompt:str",
+    "llm:LLM",
+    "stop:List[str]|None=None",
+    "prompt:str",
+    "llm_string:str",
+    "return_val:Sequence[Generation]"
+  ]
+}

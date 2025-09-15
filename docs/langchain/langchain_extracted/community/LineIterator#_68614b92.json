@@ -1,0 +1,104 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/llms/langchain_community.llms.sagemaker_endpoint.LineIterator.html#main-content",
+  "title": "LineIterator#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "LineIterator"
+    },
+    {
+      "type": "p",
+      "content": "Parse the byte stream input."
+    },
+    {
+      "type": "p",
+      "content": "The output of the model will be in the following format:"
+    },
+    {
+      "type": "p",
+      "content": "b’{“outputs”: [” a”]}"
+    },
+    {
+      "type": "p",
+      "content": "b’{“outputs”: [” challenging”]}"
+    },
+    {
+      "type": "p",
+      "content": "b’{“outputs”: [” problem”]}"
+    },
+    {
+      "type": "p",
+      "content": "While usually each PayloadPart event from the event stream will\ncontain a byte array with a full json, this is not guaranteed\nand some of the json objects may be split acrossPayloadPart events."
+    },
+    {
+      "type": "p",
+      "content": "For example:"
+    },
+    {
+      "type": "p",
+      "content": "{‘PayloadPart’: {‘Bytes’: b’{“outputs”: ‘}}\n{‘PayloadPart’: {‘Bytes’: b’[” problem”]}"
+    },
+    {
+      "type": "p",
+      "content": "This class accounts for this by concatenating bytes written via the ‘write’ function\nand then exposing a method which will return lines (ending with a ‘"
+    },
+    {
+      "type": "p",
+      "content": "within the buffer via the ‘scan_lines’ function.\nIt maintains the position of the last read position to ensure\nthat previous bytes are not exposed again."
+    },
+    {
+      "type": "p",
+      "content": "For more details see:https://aws.amazon.com/blogs/machine-learning/elevating-the-generative-ai-experience-introducing-streaming-support-in-amazon-sagemaker-hosting/"
+    },
+    {
+      "type": "p",
+      "content": "__init__(stream)"
+    },
+    {
+      "type": "p",
+      "content": "stream(Any)"
+    },
+    {
+      "type": "p",
+      "content": "stream(Any)"
+    },
+    {
+      "type": "li",
+      "content": "LineIterator__init__()"
+    }
+  ],
+  "code_examples": [
+    "llms",
+    "__init__",
+    "LineIterator",
+    "__init__()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.llms.sagemaker_endpoint.LineIterator(stream:Any)[source]#",
+    "langchain_community.llms.sagemaker_endpoint.",
+    "LineIterator",
+    "(",
+    "stream:Any",
+    ")",
+    "__init__(stream:Any)→None[source]#",
+    "__init__",
+    "(",
+    "stream:Any",
+    ")",
+    "→None",
+    "→",
+    "None"
+  ],
+  "parameters": [
+    "stream:Any",
+    "stream:Any"
+  ]
+}

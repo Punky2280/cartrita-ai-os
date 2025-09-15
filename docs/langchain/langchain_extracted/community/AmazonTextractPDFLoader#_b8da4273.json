@@ -1,0 +1,412 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.pdf.AmazonTextractPDFLoader.html#langchain_community.document_loaders.pdf.AmazonTextractPDFLoader",
+  "title": "AmazonTextractPDFLoader#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "AmazonTextractPDFLoader"
+    },
+    {
+      "type": "p",
+      "content": "LoadPDFfiles from a local file system, HTTP or S3."
+    },
+    {
+      "type": "p",
+      "content": "To authenticate, the AWS client uses the following methods to\nautomatically load credentials:https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html"
+    },
+    {
+      "type": "p",
+      "content": "If a specific credential profile should be used, you must pass\nthe name of the profile from the ~/.aws/credentials file that is to be used."
+    },
+    {
+      "type": "p",
+      "content": "Make sure the credentials / roles used have the required policies to\naccess the Amazon Textract service."
+    },
+    {
+      "type": "p",
+      "content": "Initialize the loader."
+    },
+    {
+      "type": "li",
+      "content": "file_path(str|PurePath) – A file, url or s3 path for input file"
+    },
+    {
+      "type": "p",
+      "content": "file_path(str|PurePath) – A file, url or s3 path for input file"
+    },
+    {
+      "type": "li",
+      "content": "textract_features(Sequence[str]|None) – Features to be used for extraction, each feature\nshould be passed as a str that conforms to the enumTextract_Features, seeamazon-textract-callerpkg"
+    },
+    {
+      "type": "p",
+      "content": "textract_features(Sequence[str]|None) – Features to be used for extraction, each feature\nshould be passed as a str that conforms to the enumTextract_Features, seeamazon-textract-callerpkg"
+    },
+    {
+      "type": "li",
+      "content": "client(Any|None) – boto3 textract client (Optional)"
+    },
+    {
+      "type": "p",
+      "content": "client(Any|None) – boto3 textract client (Optional)"
+    },
+    {
+      "type": "li",
+      "content": "credentials_profile_name(str|None) – AWS profile name, if not default (Optional)"
+    },
+    {
+      "type": "p",
+      "content": "credentials_profile_name(str|None) – AWS profile name, if not default (Optional)"
+    },
+    {
+      "type": "li",
+      "content": "region_name(str|None) – AWS region, eg us-east-1 (Optional)"
+    },
+    {
+      "type": "p",
+      "content": "region_name(str|None) – AWS region, eg us-east-1 (Optional)"
+    },
+    {
+      "type": "li",
+      "content": "endpoint_url(str|None) – endpoint url for the textract service (Optional)"
+    },
+    {
+      "type": "p",
+      "content": "endpoint_url(str|None) – endpoint url for the textract service (Optional)"
+    },
+    {
+      "type": "li",
+      "content": "linearization_config(TextLinearizationConfig|None) – Config to be used for linearization of the output\nshould be an instance of TextLinearizationConfig from\nthetextractorpkg"
+    },
+    {
+      "type": "p",
+      "content": "linearization_config(TextLinearizationConfig|None) – Config to be used for linearization of the output\nshould be an instance of TextLinearizationConfig from\nthetextractorpkg"
+    },
+    {
+      "type": "li",
+      "content": "headers(dict|None)"
+    },
+    {
+      "type": "p",
+      "content": "headers(dict|None)"
+    },
+    {
+      "type": "p",
+      "content": "__init__(file_path[, textract_features, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize the loader."
+    },
+    {
+      "type": "p",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "Lazy load documents"
+    },
+    {
+      "type": "p",
+      "content": "Load given path as pages."
+    },
+    {
+      "type": "p",
+      "content": "load_and_split([text_splitter])"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks."
+    },
+    {
+      "type": "p",
+      "content": "Initialize the loader."
+    },
+    {
+      "type": "li",
+      "content": "file_path(str|PurePath) – A file, url or s3 path for input file"
+    },
+    {
+      "type": "p",
+      "content": "file_path(str|PurePath) – A file, url or s3 path for input file"
+    },
+    {
+      "type": "li",
+      "content": "textract_features(Sequence[str]|None) – Features to be used for extraction, each feature\nshould be passed as a str that conforms to the enumTextract_Features, seeamazon-textract-callerpkg"
+    },
+    {
+      "type": "p",
+      "content": "textract_features(Sequence[str]|None) – Features to be used for extraction, each feature\nshould be passed as a str that conforms to the enumTextract_Features, seeamazon-textract-callerpkg"
+    },
+    {
+      "type": "li",
+      "content": "client(Any|None) – boto3 textract client (Optional)"
+    },
+    {
+      "type": "p",
+      "content": "client(Any|None) – boto3 textract client (Optional)"
+    },
+    {
+      "type": "li",
+      "content": "credentials_profile_name(str|None) – AWS profile name, if not default (Optional)"
+    },
+    {
+      "type": "p",
+      "content": "credentials_profile_name(str|None) – AWS profile name, if not default (Optional)"
+    },
+    {
+      "type": "li",
+      "content": "region_name(str|None) – AWS region, eg us-east-1 (Optional)"
+    },
+    {
+      "type": "p",
+      "content": "region_name(str|None) – AWS region, eg us-east-1 (Optional)"
+    },
+    {
+      "type": "li",
+      "content": "endpoint_url(str|None) – endpoint url for the textract service (Optional)"
+    },
+    {
+      "type": "p",
+      "content": "endpoint_url(str|None) – endpoint url for the textract service (Optional)"
+    },
+    {
+      "type": "li",
+      "content": "linearization_config(TextLinearizationConfig|None) – Config to be used for linearization of the output\nshould be an instance of TextLinearizationConfig from\nthetextractorpkg"
+    },
+    {
+      "type": "p",
+      "content": "linearization_config(TextLinearizationConfig|None) – Config to be used for linearization of the output\nshould be an instance of TextLinearizationConfig from\nthetextractorpkg"
+    },
+    {
+      "type": "li",
+      "content": "headers(dict|None)"
+    },
+    {
+      "type": "p",
+      "content": "headers(dict|None)"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Lazy load documents"
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load given path as pages."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks. Chunks are returned as Documents."
+    },
+    {
+      "type": "p",
+      "content": "Do not override this method. It should be considered to be deprecated!"
+    },
+    {
+      "type": "p",
+      "content": "text_splitter(Optional[TextSplitter]) – TextSplitter instance to use for splitting documents.\nDefaults to RecursiveCharacterTextSplitter."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If langchain-text-splitters is not installed\n    and no text_splitter is provided."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using AmazonTextractPDFLoader"
+    },
+    {
+      "type": "li",
+      "content": "Amazon Textract"
+    },
+    {
+      "type": "p",
+      "content": "Amazon Textract"
+    },
+    {
+      "type": "li",
+      "content": "AmazonTextractPDFLoader__init__()alazy_load()aload()lazy_load()load()load_and_split()"
+    },
+    {
+      "type": "li",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "load_and_split()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "source",
+    "__init__",
+    "alazy_load",
+    "aload",
+    "lazy_load",
+    "load",
+    "load_and_split",
+    "AmazonTextractPDFLoader",
+    "__init__()",
+    "alazy_load()",
+    "aload()",
+    "lazy_load()",
+    "load()",
+    "load_and_split()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.pdf.AmazonTextractPDFLoader(file_path:str|PurePath,textract_features:Sequence[str]|None=None,client:Any|None=None,credentials_profile_name:str|None=None,region_name:str|None=None,endpoint_url:str|None=None,headers:dict|None=None,*,linearization_config:TextLinearizationConfig|None=None,)[source]#",
+    "langchain_community.document_loaders.pdf.",
+    "AmazonTextractPDFLoader",
+    "(",
+    "file_path:str|PurePath",
+    "textract_features:Sequence[str]|None=None",
+    "client:Any|None=None",
+    "credentials_profile_name:str|None=None",
+    "region_name:str|None=None",
+    "endpoint_url:str|None=None",
+    "headers:dict|None=None",
+    "*",
+    "linearization_config:TextLinearizationConfig|None=None",
+    ")",
+    "__init__(file_path:str|PurePath,textract_features:Sequence[str]|None=None,client:Any|None=None,credentials_profile_name:str|None=None,region_name:str|None=None,endpoint_url:str|None=None,headers:dict|None=None,*,linearization_config:TextLinearizationConfig|None=None,)→None[source]#",
+    "__init__",
+    "(",
+    "file_path:str|PurePath",
+    "textract_features:Sequence[str]|None=None",
+    "client:Any|None=None",
+    "credentials_profile_name:str|None=None",
+    "region_name:str|None=None",
+    "endpoint_url:str|None=None",
+    "headers:dict|None=None",
+    "*",
+    "linearization_config:TextLinearizationConfig|None=None",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "asyncalazy_load()→AsyncIterator[Document]#",
+    "alazy_load",
+    "(",
+    ")",
+    "→AsyncIterator[Document]",
+    "→",
+    "AsyncIterator[Document]",
+    "asyncaload()→list[Document]#",
+    "aload",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "lazy_load()→Iterator[Document][source]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "load()→list[Document][source]#",
+    "load",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "load_and_split(text_splitter:TextSplitter|None=None,)→list[Document]#",
+    "load_and_split",
+    "(",
+    "text_splitter:TextSplitter|None=None",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "file_path:str|PurePath",
+    "textract_features:Sequence[str]|None=None",
+    "client:Any|None=None",
+    "credentials_profile_name:str|None=None",
+    "region_name:str|None=None",
+    "endpoint_url:str|None=None",
+    "headers:dict|None=None",
+    "*",
+    "linearization_config:TextLinearizationConfig|None=None",
+    "file_path:str|PurePath",
+    "textract_features:Sequence[str]|None=None",
+    "client:Any|None=None",
+    "credentials_profile_name:str|None=None",
+    "region_name:str|None=None",
+    "endpoint_url:str|None=None",
+    "headers:dict|None=None",
+    "*",
+    "linearization_config:TextLinearizationConfig|None=None",
+    "text_splitter:TextSplitter|None=None"
+  ]
+}

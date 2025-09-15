@@ -1,0 +1,324 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.airbyte.AirbyteGongLoader.html#langchain_community.document_loaders.airbyte.AirbyteGongLoader",
+  "title": "AirbyteGongLoader#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "AirbyteGongLoader"
+    },
+    {
+      "type": "p",
+      "content": "Load fromGongusing anAirbytesource connector."
+    },
+    {
+      "type": "p",
+      "content": "Initializes the loader."
+    },
+    {
+      "type": "li",
+      "content": "config(Mapping[str,Any]) – The config to pass to the source connector."
+    },
+    {
+      "type": "p",
+      "content": "config(Mapping[str,Any]) – The config to pass to the source connector."
+    },
+    {
+      "type": "li",
+      "content": "stream_name(str) – The name of the stream to load."
+    },
+    {
+      "type": "p",
+      "content": "stream_name(str) – The name of the stream to load."
+    },
+    {
+      "type": "li",
+      "content": "record_handler(Callable[[Any,str|None],Document]|None) – A function that takes in a record and an optional id and\nreturns a Document. If None, the record will be used as the document.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "record_handler(Callable[[Any,str|None],Document]|None) – A function that takes in a record and an optional id and\nreturns a Document. If None, the record will be used as the document.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "state(Any|None) – The state to pass to the source connector. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "state(Any|None) – The state to pass to the source connector. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "__init__(config, stream_name[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Initializes the loader."
+    },
+    {
+      "type": "p",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "load_and_split([text_splitter])"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks."
+    },
+    {
+      "type": "p",
+      "content": "Initializes the loader."
+    },
+    {
+      "type": "li",
+      "content": "config(Mapping[str,Any]) – The config to pass to the source connector."
+    },
+    {
+      "type": "p",
+      "content": "config(Mapping[str,Any]) – The config to pass to the source connector."
+    },
+    {
+      "type": "li",
+      "content": "stream_name(str) – The name of the stream to load."
+    },
+    {
+      "type": "p",
+      "content": "stream_name(str) – The name of the stream to load."
+    },
+    {
+      "type": "li",
+      "content": "record_handler(Callable[[Any,str|None],Document]|None) – A function that takes in a record and an optional id and\nreturns a Document. If None, the record will be used as the document.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "record_handler(Callable[[Any,str|None],Document]|None) – A function that takes in a record and an optional id and\nreturns a Document. If None, the record will be used as the document.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "state(Any|None) – The state to pass to the source connector. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "state(Any|None) – The state to pass to the source connector. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks. Chunks are returned as Documents."
+    },
+    {
+      "type": "p",
+      "content": "Do not override this method. It should be considered to be deprecated!"
+    },
+    {
+      "type": "p",
+      "content": "text_splitter(Optional[TextSplitter]) – TextSplitter instance to use for splitting documents.\nDefaults to RecursiveCharacterTextSplitter."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If langchain-text-splitters is not installed\n    and no text_splitter is provided."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using AirbyteGongLoader"
+    },
+    {
+      "type": "li",
+      "content": "Airbyte Gong (Deprecated)"
+    },
+    {
+      "type": "p",
+      "content": "Airbyte Gong (Deprecated)"
+    },
+    {
+      "type": "li",
+      "content": "AirbyteGongLoader__init__()alazy_load()aload()lazy_load()load()load_and_split()"
+    },
+    {
+      "type": "li",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "load_and_split()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "last_state",
+    "__init__",
+    "alazy_load",
+    "aload",
+    "lazy_load",
+    "load",
+    "load_and_split",
+    "AirbyteGongLoader",
+    "__init__()",
+    "alazy_load()",
+    "aload()",
+    "lazy_load()",
+    "load()",
+    "load_and_split()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.airbyte.AirbyteGongLoader(config:Mapping[str,Any],stream_name:str,record_handler:Callable[[Any,str|None],Document]|None=None,state:Any|None=None,)[source]#",
+    "langchain_community.document_loaders.airbyte.",
+    "AirbyteGongLoader",
+    "(",
+    "config:Mapping[str,Any]",
+    "stream_name:str",
+    "record_handler:Callable[[Any,str|None],Document]|None=None",
+    "state:Any|None=None",
+    ")",
+    "__init__(config:Mapping[str,Any],stream_name:str,record_handler:Callable[[Any,str|None],Document]|None=None,state:Any|None=None,)→None[source]#",
+    "__init__",
+    "(",
+    "config:Mapping[str,Any]",
+    "stream_name:str",
+    "record_handler:Callable[[Any,str|None],Document]|None=None",
+    "state:Any|None=None",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "asyncalazy_load()→AsyncIterator[Document]#",
+    "alazy_load",
+    "(",
+    ")",
+    "→AsyncIterator[Document]",
+    "→",
+    "AsyncIterator[Document]",
+    "asyncaload()→list[Document]#",
+    "aload",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "lazy_load()→Iterator[Document]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "load()→list[Document]#",
+    "load",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "load_and_split(text_splitter:TextSplitter|None=None,)→list[Document]#",
+    "load_and_split",
+    "(",
+    "text_splitter:TextSplitter|None=None",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "config:Mapping[str,Any]",
+    "stream_name:str",
+    "record_handler:Callable[[Any,str|None],Document]|None=None",
+    "state:Any|None=None",
+    "config:Mapping[str,Any]",
+    "stream_name:str",
+    "record_handler:Callable[[Any,str|None],Document]|None=None",
+    "state:Any|None=None",
+    "text_splitter:TextSplitter|None=None"
+  ]
+}

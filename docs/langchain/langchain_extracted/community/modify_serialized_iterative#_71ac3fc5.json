@@ -1,0 +1,80 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/callbacks/langchain_community.callbacks.tracers.wandb.modify_serialized_iterative.html#langchain_community.callbacks.tracers.wandb.modify_serialized_iterative",
+  "title": "modify_serialized_iterative#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "modify_serialized_iterative"
+    },
+    {
+      "type": "p",
+      "content": "Utility to modify the serialized field of a list of runs dictionaries.\nremoves any keys that match the exact_keys and any keys that contain any of the\npartial_keys.\nrecursively moves the dictionaries under the kwargs key to the top level.\nchanges the “id” field to a string “_kind” field that tells WBTraceTree how to\nvisualize the run. promotes the “serialized” field to the top level.\n:param runs: The list of runs to modify.\n:param exact_keys: A tuple of keys to remove from the serialized field.\n:param partial_keys: A tuple of partial keys to remove from the serialized"
+    },
+    {
+      "type": "p",
+      "content": "The modified list of runs."
+    },
+    {
+      "type": "li",
+      "content": "runs(List[Dict[str,Any]])"
+    },
+    {
+      "type": "p",
+      "content": "runs(List[Dict[str,Any]])"
+    },
+    {
+      "type": "li",
+      "content": "exact_keys(Tuple[str,...])"
+    },
+    {
+      "type": "p",
+      "content": "exact_keys(Tuple[str,...])"
+    },
+    {
+      "type": "li",
+      "content": "partial_keys(Tuple[str,...])"
+    },
+    {
+      "type": "p",
+      "content": "partial_keys(Tuple[str,...])"
+    },
+    {
+      "type": "p",
+      "content": "List[Dict[str,Any]]"
+    },
+    {
+      "type": "li",
+      "content": "modify_serialized_iterative()"
+    }
+  ],
+  "code_examples": [
+    "callbacks",
+    "modify_serialized_iterative()"
+  ],
+  "api_signatures": [
+    "langchain_community.callbacks.tracers.wandb.modify_serialized_iterative(runs:List[Dict[str,Any]],exact_keys:Tuple[str,...]=(),partial_keys:Tuple[str,...]=(),)→List[Dict[str,Any]][source]#",
+    "langchain_community.callbacks.tracers.wandb.",
+    "modify_serialized_iterative",
+    "(",
+    "runs:List[Dict[str,Any]]",
+    "exact_keys:Tuple[str,...]=()",
+    "partial_keys:Tuple[str,...]=()",
+    ")",
+    "→List[Dict[str,Any]]",
+    "→",
+    "List[Dict[str,Any]]"
+  ],
+  "parameters": [
+    "runs:List[Dict[str,Any]]",
+    "exact_keys:Tuple[str,...]=()",
+    "partial_keys:Tuple[str,...]=()"
+  ]
+}

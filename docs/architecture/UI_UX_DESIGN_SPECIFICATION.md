@@ -69,7 +69,7 @@ This document outlines the complete UI/UX redesign for Cartrita AI OS, combining
 ### Responsive Design Breakpoints
 
 - **Desktop**: 1200px+ (full layout)
-- **Tablet**: 768px-1199px (collapsible sidebar)  
+- **Tablet**: 768px-1199px (collapsible sidebar)
 - **Mobile**: <768px (drawer navigation)
 
 ## Component Specifications
@@ -85,7 +85,7 @@ This document outlines the complete UI/UX redesign for Cartrita AI OS, combining
 - **Alignment**: Right-aligned
 - **Shadow**: `0 2px 8px rgba(255, 107, 26, 0.2)`
 
-#### AI Messages  
+#### AI Messages
 - **Background**: Glassmorphism effect on `#202123`
 - **Text Color**: `#E5E7EB`
 - **Border**: `1px solid rgba(255, 255, 255, 0.1)`
@@ -235,7 +235,7 @@ This document outlines the complete UI/UX redesign for Cartrita AI OS, combining
 - **Speaking Indicator**: Subtle bounce animation
 
 ### Hover Effects
-- **Buttons**: 150ms ease-out scale and color transition  
+- **Buttons**: 150ms ease-out scale and color transition
 - **Message Actions**: 200ms fade-in with slide
 - **File Uploads**: 250ms scale with shadow
 

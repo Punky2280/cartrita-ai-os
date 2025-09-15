@@ -1,0 +1,276 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chat_models/langchain_community.chat_models.azureml_endpoint.CustomOpenAIChatContentFormatter.html#langchain_community.chat_models.azureml_endpoint.CustomOpenAIChatContentFormatter",
+  "title": "CustomOpenAIChatContentFormatter#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "chat_models"
+    },
+    {
+      "type": "li",
+      "content": "CustomOpenAIChatContentFormatter"
+    },
+    {
+      "type": "p",
+      "content": "Chat Content formatter for models with OpenAI like API scheme."
+    },
+    {
+      "type": "p",
+      "content": "SUPPORTED_ROLES"
+    },
+    {
+      "type": "p",
+      "content": "The MIME type of the response data returned from the endpoint"
+    },
+    {
+      "type": "p",
+      "content": "content_type"
+    },
+    {
+      "type": "p",
+      "content": "The MIME type of the input data passed to the endpoint"
+    },
+    {
+      "type": "p",
+      "content": "format_error_msg"
+    },
+    {
+      "type": "p",
+      "content": "supported_api_types"
+    },
+    {
+      "type": "p",
+      "content": "Supported APIs for the given formatter."
+    },
+    {
+      "type": "p",
+      "content": "escape_special_characters(prompt)"
+    },
+    {
+      "type": "p",
+      "content": "Escapes any special characters inprompt"
+    },
+    {
+      "type": "p",
+      "content": "format_messages_request_payload(messages, ...)"
+    },
+    {
+      "type": "p",
+      "content": "Formats the request according to the chosen api"
+    },
+    {
+      "type": "p",
+      "content": "format_request_payload(prompt, model_kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Formats the request body according to the input schema of the model."
+    },
+    {
+      "type": "p",
+      "content": "format_response_payload(output[, api_type])"
+    },
+    {
+      "type": "p",
+      "content": "Formats response"
+    },
+    {
+      "type": "p",
+      "content": "Escapes any special characters inprompt"
+    },
+    {
+      "type": "p",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "p",
+      "content": "Formats the request according to the chosen api"
+    },
+    {
+      "type": "li",
+      "content": "messages(List[BaseMessage])"
+    },
+    {
+      "type": "p",
+      "content": "messages(List[BaseMessage])"
+    },
+    {
+      "type": "li",
+      "content": "model_kwargs(Dict)"
+    },
+    {
+      "type": "p",
+      "content": "model_kwargs(Dict)"
+    },
+    {
+      "type": "li",
+      "content": "api_type(AzureMLEndpointApiType)"
+    },
+    {
+      "type": "p",
+      "content": "api_type(AzureMLEndpointApiType)"
+    },
+    {
+      "type": "p",
+      "content": "Formats the request body according to the input schema of\nthe model. Returns bytes or seekable file like object in the\nformat specified in the content_type request header."
+    },
+    {
+      "type": "li",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "p",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "li",
+      "content": "model_kwargs(Dict)"
+    },
+    {
+      "type": "p",
+      "content": "model_kwargs(Dict)"
+    },
+    {
+      "type": "li",
+      "content": "api_type(AzureMLEndpointApiType)"
+    },
+    {
+      "type": "p",
+      "content": "api_type(AzureMLEndpointApiType)"
+    },
+    {
+      "type": "p",
+      "content": "Formats response"
+    },
+    {
+      "type": "li",
+      "content": "output(bytes)"
+    },
+    {
+      "type": "p",
+      "content": "output(bytes)"
+    },
+    {
+      "type": "li",
+      "content": "api_type(AzureMLEndpointApiType)"
+    },
+    {
+      "type": "p",
+      "content": "api_type(AzureMLEndpointApiType)"
+    },
+    {
+      "type": "p",
+      "content": "ChatGeneration"
+    },
+    {
+      "type": "p",
+      "content": "Examples using CustomOpenAIChatContentFormatter"
+    },
+    {
+      "type": "li",
+      "content": "AzureMLChatOnlineEndpoint"
+    },
+    {
+      "type": "p",
+      "content": "AzureMLChatOnlineEndpoint"
+    },
+    {
+      "type": "li",
+      "content": "CustomOpenAIChatContentFormatterescape_special_characters()format_messages_request_payload()format_request_payload()format_response_payload()"
+    },
+    {
+      "type": "li",
+      "content": "escape_special_characters()"
+    },
+    {
+      "type": "li",
+      "content": "format_messages_request_payload()"
+    },
+    {
+      "type": "li",
+      "content": "format_request_payload()"
+    },
+    {
+      "type": "li",
+      "content": "format_response_payload()"
+    }
+  ],
+  "code_examples": [
+    "chat_models",
+    "SUPPORTED_ROLES",
+    "accepts",
+    "content_type",
+    "format_error_msg",
+    "supported_api_types",
+    "escape_special_characters",
+    "format_messages_request_payload",
+    "format_request_payload",
+    "format_response_payload",
+    "CustomOpenAIChatContentFormatter",
+    "escape_special_characters()",
+    "format_messages_request_payload()",
+    "format_request_payload()",
+    "format_response_payload()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.chat_models.azureml_endpoint.CustomOpenAIChatContentFormatter[source]#",
+    "langchain_community.chat_models.azureml_endpoint.",
+    "CustomOpenAIChatContentFormatter",
+    "staticescape_special_characters(prompt:str,)→str#",
+    "escape_special_characters",
+    "(",
+    "prompt:str",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "format_messages_request_payload(messages:List[BaseMessage],model_kwargs:Dict,api_type:AzureMLEndpointApiType,)→bytes[source]#",
+    "format_messages_request_payload",
+    "(",
+    "messages:List[BaseMessage]",
+    "model_kwargs:Dict",
+    "api_type:AzureMLEndpointApiType",
+    ")",
+    "→bytes",
+    "→",
+    "bytes",
+    "format_request_payload(prompt:str,model_kwargs:Dict,api_type:AzureMLEndpointApiType=AzureMLEndpointApiType.dedicated,)→Any#",
+    "format_request_payload",
+    "(",
+    "prompt:str",
+    "model_kwargs:Dict",
+    "api_type:AzureMLEndpointApiType=AzureMLEndpointApiType.dedicated",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "format_response_payload(output:bytes,api_type:AzureMLEndpointApiType=AzureMLEndpointApiType.dedicated,)→ChatGeneration[source]#",
+    "format_response_payload",
+    "(",
+    "output:bytes",
+    "api_type:AzureMLEndpointApiType=AzureMLEndpointApiType.dedicated",
+    ")",
+    "→ChatGeneration",
+    "→",
+    "ChatGeneration"
+  ],
+  "parameters": [
+    "prompt:str",
+    "messages:List[BaseMessage]",
+    "model_kwargs:Dict",
+    "api_type:AzureMLEndpointApiType",
+    "prompt:str",
+    "model_kwargs:Dict",
+    "api_type:AzureMLEndpointApiType=AzureMLEndpointApiType.dedicated",
+    "output:bytes",
+    "api_type:AzureMLEndpointApiType=AzureMLEndpointApiType.dedicated"
+  ]
+}

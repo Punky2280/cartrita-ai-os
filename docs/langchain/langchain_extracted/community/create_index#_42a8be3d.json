@@ -1,0 +1,72 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.oraclevs.create_index.html#langchain_community.vectorstores.oraclevs.create_index",
+  "title": "create_index#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "vectorstores"
+    },
+    {
+      "type": "li",
+      "content": "create_index"
+    },
+    {
+      "type": "li",
+      "content": "client(Any)"
+    },
+    {
+      "type": "p",
+      "content": "client(Any)"
+    },
+    {
+      "type": "li",
+      "content": "vector_store(OracleVS)"
+    },
+    {
+      "type": "p",
+      "content": "vector_store(OracleVS)"
+    },
+    {
+      "type": "li",
+      "content": "params(dict[str,Any]|None)"
+    },
+    {
+      "type": "p",
+      "content": "params(dict[str,Any]|None)"
+    },
+    {
+      "type": "li",
+      "content": "create_index()"
+    }
+  ],
+  "code_examples": [
+    "vectorstores",
+    "create_index()"
+  ],
+  "api_signatures": [
+    "langchain_community.vectorstores.oraclevs.create_index(client:Any,vector_store:OracleVS,params:dict[str,Any]|None=None,)→None[source]#",
+    "langchain_community.vectorstores.oraclevs.",
+    "create_index",
+    "(",
+    "client:Any",
+    "vector_store:OracleVS",
+    "params:dict[str,Any]|None=None",
+    ")",
+    "→None",
+    "→",
+    "None"
+  ],
+  "parameters": [
+    "client:Any",
+    "vector_store:OracleVS",
+    "params:dict[str,Any]|None=None"
+  ]
+}

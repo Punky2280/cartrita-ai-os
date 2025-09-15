@@ -1,0 +1,336 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.glue_catalog.GlueCatalogLoader.html",
+  "title": "GlueCatalogLoader#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "GlueCatalogLoader"
+    },
+    {
+      "type": "p",
+      "content": "Load table schemas from AWS Glue."
+    },
+    {
+      "type": "p",
+      "content": "This loader fetches the schema of each table within a specified AWS Glue database.\nThe schema details include column names and their data types, similar to pandas\ndtype representation."
+    },
+    {
+      "type": "p",
+      "content": "AWS credentials are automatically loaded using boto3, following the standard AWS\nmethod:https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html"
+    },
+    {
+      "type": "p",
+      "content": "If a specific AWS profile is required, it can be specified and will be used to\nestablish the session."
+    },
+    {
+      "type": "p",
+      "content": "Initialize Glue database loader."
+    },
+    {
+      "type": "li",
+      "content": "database(str) – The name of the Glue database from which to load table schemas."
+    },
+    {
+      "type": "p",
+      "content": "database(str) – The name of the Glue database from which to load table schemas."
+    },
+    {
+      "type": "li",
+      "content": "session(Optional[Session]) – Optional. A boto3 Session object. If not provided, a new\nsession will be created."
+    },
+    {
+      "type": "p",
+      "content": "session(Optional[Session]) – Optional. A boto3 Session object. If not provided, a new\nsession will be created."
+    },
+    {
+      "type": "li",
+      "content": "profile_name(Optional[str]) – Optional. The name of the AWS profile to use for credentials."
+    },
+    {
+      "type": "p",
+      "content": "profile_name(Optional[str]) – Optional. The name of the AWS profile to use for credentials."
+    },
+    {
+      "type": "li",
+      "content": "table_filter(Optional[List[str]]) – Optional. List of table names to fetch schemas for,\nfetching all if None."
+    },
+    {
+      "type": "p",
+      "content": "table_filter(Optional[List[str]]) – Optional. List of table names to fetch schemas for,\nfetching all if None."
+    },
+    {
+      "type": "p",
+      "content": "__init__(database, *[, session, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize Glue database loader."
+    },
+    {
+      "type": "p",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "Lazily load table schemas as Document objects."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "load_and_split([text_splitter])"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks."
+    },
+    {
+      "type": "p",
+      "content": "Initialize Glue database loader."
+    },
+    {
+      "type": "li",
+      "content": "database(str) – The name of the Glue database from which to load table schemas."
+    },
+    {
+      "type": "p",
+      "content": "database(str) – The name of the Glue database from which to load table schemas."
+    },
+    {
+      "type": "li",
+      "content": "session(Optional[Session]) – Optional. A boto3 Session object. If not provided, a new\nsession will be created."
+    },
+    {
+      "type": "p",
+      "content": "session(Optional[Session]) – Optional. A boto3 Session object. If not provided, a new\nsession will be created."
+    },
+    {
+      "type": "li",
+      "content": "profile_name(Optional[str]) – Optional. The name of the AWS profile to use for credentials."
+    },
+    {
+      "type": "p",
+      "content": "profile_name(Optional[str]) – Optional. The name of the AWS profile to use for credentials."
+    },
+    {
+      "type": "li",
+      "content": "table_filter(Optional[List[str]]) – Optional. List of table names to fetch schemas for,\nfetching all if None."
+    },
+    {
+      "type": "p",
+      "content": "table_filter(Optional[List[str]]) – Optional. List of table names to fetch schemas for,\nfetching all if None."
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Lazily load table schemas as Document objects."
+    },
+    {
+      "type": "p",
+      "content": "Document objects, each representing the schema of a table."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks. Chunks are returned as Documents."
+    },
+    {
+      "type": "p",
+      "content": "Do not override this method. It should be considered to be deprecated!"
+    },
+    {
+      "type": "p",
+      "content": "text_splitter(Optional[TextSplitter]) – TextSplitter instance to use for splitting documents.\nDefaults to RecursiveCharacterTextSplitter."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If langchain-text-splitters is not installed\n    and no text_splitter is provided."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using GlueCatalogLoader"
+    },
+    {
+      "type": "li",
+      "content": "Glue Catalog"
+    },
+    {
+      "type": "p",
+      "content": "Glue Catalog"
+    },
+    {
+      "type": "li",
+      "content": "GlueCatalogLoader__init__()alazy_load()aload()lazy_load()load()load_and_split()"
+    },
+    {
+      "type": "li",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "load_and_split()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "__init__",
+    "alazy_load",
+    "aload",
+    "lazy_load",
+    "load",
+    "load_and_split",
+    "GlueCatalogLoader",
+    "__init__()",
+    "alazy_load()",
+    "aload()",
+    "lazy_load()",
+    "load()",
+    "load_and_split()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.glue_catalog.GlueCatalogLoader(database:str,*,session:Session|None=None,profile_name:str|None=None,table_filter:List[str]|None=None,)[source]#",
+    "langchain_community.document_loaders.glue_catalog.",
+    "GlueCatalogLoader",
+    "(",
+    "database:str",
+    "*",
+    "session:Session|None=None",
+    "profile_name:str|None=None",
+    "table_filter:List[str]|None=None",
+    ")",
+    "__init__(database:str,*,session:Session|None=None,profile_name:str|None=None,table_filter:List[str]|None=None,)[source]#",
+    "__init__",
+    "(",
+    "database:str",
+    "*",
+    "session:Session|None=None",
+    "profile_name:str|None=None",
+    "table_filter:List[str]|None=None",
+    ")",
+    "asyncalazy_load()→AsyncIterator[Document]#",
+    "alazy_load",
+    "(",
+    ")",
+    "→AsyncIterator[Document]",
+    "→",
+    "AsyncIterator[Document]",
+    "asyncaload()→list[Document]#",
+    "aload",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "lazy_load()→Iterator[Document][source]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "load()→list[Document]#",
+    "load",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "load_and_split(text_splitter:TextSplitter|None=None,)→list[Document]#",
+    "load_and_split",
+    "(",
+    "text_splitter:TextSplitter|None=None",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "database:str",
+    "*",
+    "session:Session|None=None",
+    "profile_name:str|None=None",
+    "table_filter:List[str]|None=None",
+    "database:str",
+    "*",
+    "session:Session|None=None",
+    "profile_name:str|None=None",
+    "table_filter:List[str]|None=None",
+    "text_splitter:TextSplitter|None=None"
+  ]
+}

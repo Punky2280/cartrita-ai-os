@@ -1,0 +1,190 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/embeddings/langchain_community.embeddings.modelscope_hub.ModelScopeEmbeddings.html#langchain_community.embeddings.modelscope_hub.ModelScopeEmbeddings",
+  "title": "ModelScopeEmbeddings#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "ModelScopeEmbeddings"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel,Embeddings"
+    },
+    {
+      "type": "p",
+      "content": "ModelScopeHub embedding models."
+    },
+    {
+      "type": "p",
+      "content": "To use, you should have themodelscopepython package installed."
+    },
+    {
+      "type": "p",
+      "content": "Initialize the modelscope"
+    },
+    {
+      "type": "p",
+      "content": "Model name to use."
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed search docs."
+    },
+    {
+      "type": "p",
+      "content": "texts(list[str]) – List of text to embed."
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings."
+    },
+    {
+      "type": "p",
+      "content": "list[list[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed query text."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – Text to embed."
+    },
+    {
+      "type": "p",
+      "content": "list[float]"
+    },
+    {
+      "type": "p",
+      "content": "Compute doc embeddings using a modelscope embedding model."
+    },
+    {
+      "type": "p",
+      "content": "texts(List[str]) – The list of texts to embed."
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings, one for each text."
+    },
+    {
+      "type": "p",
+      "content": "List[List[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Compute query embeddings using a modelscope embedding model."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – The text to embed."
+    },
+    {
+      "type": "p",
+      "content": "Embeddings for the text."
+    },
+    {
+      "type": "p",
+      "content": "List[float]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using ModelScopeEmbeddings"
+    },
+    {
+      "type": "li",
+      "content": "ModelScopeEmbeddingsembedmodel_idmodel_revisionaembed_documents()aembed_query()embed_documents()embed_query()"
+    },
+    {
+      "type": "li",
+      "content": "model_revision"
+    },
+    {
+      "type": "li",
+      "content": "aembed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "aembed_query()"
+    },
+    {
+      "type": "li",
+      "content": "embed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "embed_query()"
+    }
+  ],
+  "code_examples": [
+    "embeddings",
+    "BaseModel",
+    "Embeddings",
+    "modelscope",
+    "fromlangchain_community.embeddingsimportModelScopeEmbeddingsmodel_id=\"damo/nlp_corom_sentence-embedding_english-base\"embed=ModelScopeEmbeddings(model_id=model_id,model_revision=\"v1.0.0\")",
+    "ModelScopeEmbeddings",
+    "embed",
+    "model_id",
+    "model_revision",
+    "aembed_documents()",
+    "aembed_query()",
+    "embed_documents()",
+    "embed_query()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.embeddings.modelscope_hub.ModelScopeEmbeddings[source]#",
+    "langchain_community.embeddings.modelscope_hub.",
+    "ModelScopeEmbeddings",
+    "paramembed:Any=None#",
+    "embed",
+    "parammodel_id:str='damo/nlp_corom_sentence-embedding_english-base'#",
+    "model_id",
+    "parammodel_revision:str|None=None#",
+    "model_revision",
+    "asyncaembed_documents(texts:list[str],)→list[list[float]]#",
+    "aembed_documents",
+    "(",
+    "texts:list[str]",
+    ")",
+    "→list[list[float]]",
+    "→",
+    "list[list[float]]",
+    "asyncaembed_query(text:str)→list[float]#",
+    "aembed_query",
+    "(",
+    "text:str",
+    ")",
+    "→list[float]",
+    "→",
+    "list[float]",
+    "embed_documents(texts:List[str],)→List[List[float]][source]#",
+    "embed_documents",
+    "(",
+    "texts:List[str]",
+    ")",
+    "→List[List[float]]",
+    "→",
+    "List[List[float]]",
+    "embed_query(text:str,)→List[float][source]#",
+    "embed_query",
+    "(",
+    "text:str",
+    ")",
+    "→List[float]",
+    "→",
+    "List[float]"
+  ],
+  "parameters": [
+    "texts:list[str]",
+    "text:str",
+    "texts:List[str]",
+    "text:str"
+  ]
+}

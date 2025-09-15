@@ -1,0 +1,94 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utils/langchain_community.utils.math.cosine_similarity_top_k.html#langchain_community.utils.math.cosine_similarity_top_k",
+  "title": "cosine_similarity_top_k#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "cosine_similarity_top_k"
+    },
+    {
+      "type": "p",
+      "content": "Row-wise cosine similarity with optional top-k and score threshold filtering."
+    },
+    {
+      "type": "li",
+      "content": "X(List[List[float]]|List[ndarray]|ndarray) – Matrix."
+    },
+    {
+      "type": "p",
+      "content": "X(List[List[float]]|List[ndarray]|ndarray) – Matrix."
+    },
+    {
+      "type": "li",
+      "content": "Y(List[List[float]]|List[ndarray]|ndarray) – Matrix, same width as X."
+    },
+    {
+      "type": "p",
+      "content": "Y(List[List[float]]|List[ndarray]|ndarray) – Matrix, same width as X."
+    },
+    {
+      "type": "li",
+      "content": "top_k(int|None) – Max number of results to return."
+    },
+    {
+      "type": "p",
+      "content": "top_k(int|None) – Max number of results to return."
+    },
+    {
+      "type": "li",
+      "content": "score_threshold(float|None) – Minimum cosine similarity of results."
+    },
+    {
+      "type": "p",
+      "content": "score_threshold(float|None) – Minimum cosine similarity of results."
+    },
+    {
+      "type": "p",
+      "content": "Tuple of two lists. First contains two-tuples of indices (X_idx, Y_idx),second contains corresponding cosine similarities."
+    },
+    {
+      "type": "p",
+      "content": "second contains corresponding cosine similarities."
+    },
+    {
+      "type": "p",
+      "content": "Tuple[List[Tuple[int, int]],List[float]]"
+    },
+    {
+      "type": "li",
+      "content": "cosine_similarity_top_k()"
+    }
+  ],
+  "code_examples": [
+    "utils",
+    "cosine_similarity_top_k()"
+  ],
+  "api_signatures": [
+    "langchain_community.utils.math.cosine_similarity_top_k(X:List[List[float]]|List[ndarray]|ndarray,Y:List[List[float]]|List[ndarray]|ndarray,top_k:int|None=5,score_threshold:float|None=None,)→Tuple[List[Tuple[int,int]],List[float]][source]#",
+    "langchain_community.utils.math.",
+    "cosine_similarity_top_k",
+    "(",
+    "X:List[List[float]]|List[ndarray]|ndarray",
+    "Y:List[List[float]]|List[ndarray]|ndarray",
+    "top_k:int|None=5",
+    "score_threshold:float|None=None",
+    ")",
+    "→Tuple[List[Tuple[int,int]],List[float]]",
+    "→",
+    "Tuple[List[Tuple[int,int]],List[float]]"
+  ],
+  "parameters": [
+    "X:List[List[float]]|List[ndarray]|ndarray",
+    "Y:List[List[float]]|List[ndarray]|ndarray",
+    "top_k:int|None=5",
+    "score_threshold:float|None=None"
+  ]
+}

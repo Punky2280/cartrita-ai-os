@@ -1,8 +1,8 @@
 # Codacy Issues Report - Cartrita AI OS
 
-**Repository:** Punky2280/cartrita-ai-os  
-**Analysis Date:** 2025-09-05  
-**Scope:** High-level issues  
+**Repository:** Punky2280/cartrita-ai-os
+**Analysis Date:** 2025-09-05
+**Scope:** High-level issues
 **Status:** Unable to access live Codacy dashboard - JavaScript/Authentication required
 
 ## Access Issue
@@ -26,7 +26,7 @@ Since direct access to the Codacy dashboard was not possible, this report includ
 ### 2. **Performance Issues**
 - **Issue**: Missing React key props in list iterations
 - **Fix**: Add unique `key` prop to each mapped element
-- **Example**: 
+- **Example**:
   ```tsx
   // Bad
   {items.map(item => <div>{item.name}</div>)}

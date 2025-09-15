@@ -41,7 +41,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Dict, Any, List, Tuple, Set
+from typing import Dict, Any, List, Tuple
 
 SEVERITY_ORDER = {"error": 3, "warning": 2, "note": 1, "none": 0}
 # Optional Codacy category -> SARIF level normalization. If SARIF already has

@@ -1,0 +1,271 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.nvidia_riva.AudioStream.html#langchain_community.utilities.nvidia_riva.AudioStream",
+  "title": "AudioStream#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "AudioStream"
+    },
+    {
+      "type": "p",
+      "content": "A message containing streaming audio."
+    },
+    {
+      "type": "p",
+      "content": "Initialize the queue."
+    },
+    {
+      "type": "p",
+      "content": "Indicate if the audio stream has hungup and been processed."
+    },
+    {
+      "type": "p",
+      "content": "Indicate in the input stream buffer is empty."
+    },
+    {
+      "type": "p",
+      "content": "Indicate if the audio stream has hungup."
+    },
+    {
+      "type": "p",
+      "content": "Indicate if the ASR stream is running."
+    },
+    {
+      "type": "p",
+      "content": "__init__([maxsize])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize the queue."
+    },
+    {
+      "type": "p",
+      "content": "aclose([timeout])"
+    },
+    {
+      "type": "p",
+      "content": "Async send the hangup signal."
+    },
+    {
+      "type": "p",
+      "content": "aput(item[, timeout])"
+    },
+    {
+      "type": "p",
+      "content": "Async put a new item into the queue."
+    },
+    {
+      "type": "p",
+      "content": "close([timeout])"
+    },
+    {
+      "type": "p",
+      "content": "Send the hangup signal."
+    },
+    {
+      "type": "p",
+      "content": "put(item[, timeout])"
+    },
+    {
+      "type": "p",
+      "content": "Put a new item into the queue."
+    },
+    {
+      "type": "p",
+      "content": "register(responses)"
+    },
+    {
+      "type": "p",
+      "content": "Drain the responses from the provided iterator and put them into a queue."
+    },
+    {
+      "type": "p",
+      "content": "maxsize(int)"
+    },
+    {
+      "type": "p",
+      "content": "Initialize the queue."
+    },
+    {
+      "type": "p",
+      "content": "maxsize(int)"
+    },
+    {
+      "type": "p",
+      "content": "Async send the hangup signal."
+    },
+    {
+      "type": "p",
+      "content": "timeout(int|None)"
+    },
+    {
+      "type": "p",
+      "content": "Async put a new item into the queue."
+    },
+    {
+      "type": "li",
+      "content": "item(bytes|SentinelT)"
+    },
+    {
+      "type": "p",
+      "content": "item(bytes|SentinelT)"
+    },
+    {
+      "type": "li",
+      "content": "timeout(int|None)"
+    },
+    {
+      "type": "p",
+      "content": "timeout(int|None)"
+    },
+    {
+      "type": "p",
+      "content": "Send the hangup signal."
+    },
+    {
+      "type": "p",
+      "content": "timeout(int|None)"
+    },
+    {
+      "type": "p",
+      "content": "Put a new item into the queue."
+    },
+    {
+      "type": "li",
+      "content": "item(bytes|SentinelT)"
+    },
+    {
+      "type": "p",
+      "content": "item(bytes|SentinelT)"
+    },
+    {
+      "type": "li",
+      "content": "timeout(int|None)"
+    },
+    {
+      "type": "p",
+      "content": "timeout(int|None)"
+    },
+    {
+      "type": "p",
+      "content": "Drain the responses from the provided iterator and put them into a queue."
+    },
+    {
+      "type": "p",
+      "content": "responses(Iterator[rasr.StreamingRecognizeResponse])"
+    },
+    {
+      "type": "p",
+      "content": "Examples using AudioStream"
+    },
+    {
+      "type": "li",
+      "content": "NVIDIA Riva: ASR and TTS"
+    },
+    {
+      "type": "p",
+      "content": "NVIDIA Riva: ASR and TTS"
+    },
+    {
+      "type": "li",
+      "content": "AudioStream__init__()aclose()aput()close()put()register()"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "complete",
+    "empty",
+    "hungup",
+    "running",
+    "__init__",
+    "aclose",
+    "aput",
+    "close",
+    "put",
+    "register",
+    "AudioStream",
+    "__init__()",
+    "aclose()",
+    "aput()",
+    "close()",
+    "put()",
+    "register()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.utilities.nvidia_riva.AudioStream(maxsize:int=0)[source]#",
+    "langchain_community.utilities.nvidia_riva.",
+    "AudioStream",
+    "(",
+    "maxsize:int=0",
+    ")",
+    "__init__(maxsize:int=0)→None[source]#",
+    "__init__",
+    "(",
+    "maxsize:int=0",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "asyncaclose(timeout:int|None=None)→None[source]#",
+    "aclose",
+    "(",
+    "timeout:int|None=None",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "asyncaput(item:bytes|SentinelT,timeout:int|None=None,)→None[source]#",
+    "aput",
+    "(",
+    "item:bytes|SentinelT",
+    "timeout:int|None=None",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "close(timeout:int|None=None)→None[source]#",
+    "close",
+    "(",
+    "timeout:int|None=None",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "put(item:bytes|SentinelT,timeout:int|None=None,)→None[source]#",
+    "put",
+    "(",
+    "item:bytes|SentinelT",
+    "timeout:int|None=None",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "register(responses:Iterator[rasr.StreamingRecognizeResponse],)→None[source]#",
+    "register",
+    "(",
+    "responses:Iterator[rasr.StreamingRecognizeResponse]",
+    ")",
+    "→None",
+    "→",
+    "None"
+  ],
+  "parameters": [
+    "maxsize:int=0",
+    "maxsize:int=0",
+    "timeout:int|None=None",
+    "item:bytes|SentinelT",
+    "timeout:int|None=None",
+    "timeout:int|None=None",
+    "item:bytes|SentinelT",
+    "timeout:int|None=None",
+    "responses:Iterator[rasr.StreamingRecognizeResponse]"
+  ]
+}

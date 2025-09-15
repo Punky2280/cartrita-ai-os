@@ -1,268 +1,404 @@
-// Cartrita AI OS - Enhanced Deepgram Voice Hook
-// Production-ready WebSocket integration with real-time transcription
+// Cartrita AI OS - Enhanced Deepgram Voice Hook (2025 Voice Agent API)
+// Production-ready WebSocket integration with real-time voice agent communication
 
-import { useState, useEffect, useRef, useCallback } from 'react'
-import DeepgramVoiceService, { VoiceState, VoiceTranscription, VoiceAnalytics, DeepgramConfig } from '../services/deepgram'
-import { useAudioAnalysis, AudioAnalysisData } from './useAudioAnalysis'
+import { useState, useEffect, useRef, useCallback } from "react";
+import DeepgramVoiceService, {
+  VoiceState,
+  VoiceTranscription,
+  VoiceAnalytics,
+  DeepgramConfig,
+  VoiceAgentConfig,
+  AgentUtterance,
+  ConversationContext,
+} from "../services/deepgram";
+import { useAudioAnalysis, AudioAnalysisData } from "./useAudioAnalysis";
 
 export interface WebSocketMessage {
-  type: 'transcript' | 'analytics' | 'error' | 'state' | 'metrics'
-  data: unknown
-  timestamp: number
+  type: "transcript" | "analytics" | "error" | "state" | "metrics";
+  data: unknown;
+  timestamp: number;
 }
 
 export interface UseDeepgramVoiceOptions {
-  config?: Partial<DeepgramConfig>
-  autoReconnect?: boolean
-  reconnectAttempts?: number
-  reconnectDelay?: number
+  config?: Partial<DeepgramConfig>;
+  voiceAgentConfig?: Partial<VoiceAgentConfig>;
+  autoReconnect?: boolean;
+  reconnectAttempts?: number;
+  reconnectDelay?: number;
+  conversationContext?: ConversationContext;
 }
 
 export interface UseDeepgramVoiceReturn {
   // State
-  isRecording: boolean
-  isConnected: boolean
-  voiceState: VoiceState
-  transcript: string
-  interimTranscript: string
-  finalTranscript: string
-  analytics: VoiceAnalytics | null
-  error: string | null
-  audioAnalysisData: AudioAnalysisData | null
+  isRecording: boolean;
+  isConnected: boolean;
+  voiceState: VoiceState;
+  transcript: string;
+  interimTranscript: string;
+  finalTranscript: string;
+  analytics: VoiceAnalytics | null;
+  error: string | null;
+  audioAnalysisData: AudioAnalysisData | null;
+
+  // 2025 Voice Agent State
+  isAgentActive: boolean;
+  agentUtterances: AgentUtterance[];
+  isThinking: boolean;
+  sessionId: string | null;
 
   // Actions
-  startRecording: () => Promise<void>
-  stopRecording: () => Promise<void>
-  clearTranscript: () => void
-  reconnect: () => Promise<void>
+  startRecording: () => Promise<void>;
+  stopRecording: () => Promise<void>;
+  clearTranscript: () => void;
+  reconnect: () => Promise<void>;
+
+  // 2025 Voice Agent Actions
+  startVoiceAgent: (config?: VoiceAgentConfig) => Promise<void>;
+  stopVoiceAgent: () => Promise<void>;
+  interruptAgent: () => void;
 
   // Connection management
-  connectionState: 'connecting' | 'connected' | 'disconnected' | 'error'
-  lastActivity: number | null
+  connectionState: "connecting" | "connected" | "disconnected" | "error";
+  lastActivity: number | null;
 }
 
-export const useDeepgramVoice = (options: UseDeepgramVoiceOptions = {}): UseDeepgramVoiceReturn => {
+export const useDeepgramVoice = (
+  options: UseDeepgramVoiceOptions = {},
+): UseDeepgramVoiceReturn => {
   const {
     config = {},
+    voiceAgentConfig = {},
     autoReconnect = true,
     reconnectAttempts = 3,
-    reconnectDelay = 1000
-  } = options
+    reconnectDelay = 1000,
+    conversationContext,
+  } = options;
 
   // State management
-  const [isRecording, setIsRecording] = useState(false)
-  const [isConnected, setIsConnected] = useState(false)
-  const [voiceState, setVoiceState] = useState<VoiceState>('idle')
-  const [transcript, setTranscript] = useState('')
-  const [interimTranscript, setInterimTranscript] = useState('')
-  const [finalTranscript, setFinalTranscript] = useState('')
-  const [analytics, setAnalytics] = useState<VoiceAnalytics | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [connectionState, setConnectionState] = useState<'connecting' | 'connected' | 'disconnected' | 'error'>('disconnected')
-  const [lastActivity, setLastActivity] = useState<number | null>(null)
+  const [isRecording, setIsRecording] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
+  const [voiceState, setVoiceState] = useState<VoiceState>("idle");
+  const [transcript, setTranscript] = useState("");
+  const [interimTranscript, setInterimTranscript] = useState("");
+  const [finalTranscript, setFinalTranscript] = useState("");
+  const [analytics, setAnalytics] = useState<VoiceAnalytics | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [connectionState, setConnectionState] = useState<
+    "connecting" | "connected" | "disconnected" | "error"
+  >("disconnected");
+  const [lastActivity, setLastActivity] = useState<number | null>(null);
+
+  // 2025 Voice Agent state
+  const [isAgentActive, setIsAgentActive] = useState(false);
+  const [agentUtterances, setAgentUtterances] = useState<AgentUtterance[]>([]);
+  const [isThinking, setIsThinking] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
   // Refs
-  const serviceRef = useRef<DeepgramVoiceService | null>(null)
-  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const reconnectCountRef = useRef(0)
-  const streamRef = useRef<MediaStream | null>(null)
+  const serviceRef = useRef<DeepgramVoiceService | null>(null);
+  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const reconnectCountRef = useRef(0);
+  const streamRef = useRef<MediaStream | null>(null);
 
   // Audio analysis for waveform visualization
-  const { analysisData: audioAnalysisData, startAnalysis, stopAnalysis } = useAudioAnalysis({
+  const {
+    analysisData: audioAnalysisData,
+    startAnalysis,
+    stopAnalysis,
+  } = useAudioAnalysis({
     enabled: true,
     config: {
       fftSize: 2048,
-      smoothingTimeConstant: 0.8
-    }
-  })
+      smoothingTimeConstant: 0.8,
+    },
+  });
 
   // Default configuration
   const defaultConfig: DeepgramConfig = {
-    apiKey: process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY || '',
-    model: 'nova-2',
-    language: 'en-US',
+    apiKey: process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY || "",
+    model: "nova-2",
+    language: "en-US",
     smartFormat: true,
     punctuate: true,
     interim_results: true,
     endpointing: 300,
-    ...config
-  }
+    ...config,
+  };
 
   // Initialize service
   const initializeService = useCallback(async () => {
     try {
       if (!defaultConfig.apiKey) {
-        throw new Error('Deepgram API key is required')
+        throw new Error("Deepgram API key is required");
       }
 
-      serviceRef.current = new DeepgramVoiceService(defaultConfig)
+      serviceRef.current = new DeepgramVoiceService(defaultConfig);
 
       // Set up event listeners
-      serviceRef.current.on('stateChange', (data: { state: VoiceState; timestamp: number }) => {
-        setVoiceState(data.state)
-        setIsRecording(data.state === 'recording')
-        setLastActivity(data.timestamp)
-      })
+      serviceRef.current.on(
+        "stateChange",
+        (data: { state: VoiceState; timestamp: number }) => {
+          setVoiceState(data.state);
+          setIsRecording(data.state === "recording");
+          setLastActivity(data.timestamp);
+        },
+      );
 
-      serviceRef.current.on('transcription', (transcription: VoiceTranscription) => {
-        if (transcription.is_final) {
-          const newFinal = transcription.text
-          setFinalTranscript(prev => prev + ' ' + newFinal)
-          setTranscript(prev => prev + ' ' + newFinal)
-          setInterimTranscript('')
-        } else {
-          setInterimTranscript(transcription.text)
-          setTranscript(prev => {
-            // Remove previous interim and add new one
-            const withoutInterim = prev.replace(interimTranscript, '').trim()
-            return withoutInterim + ' ' + transcription.text
-          })
+      serviceRef.current.on(
+        "transcription",
+        (transcription: VoiceTranscription) => {
+          if (transcription.is_final) {
+            const newFinal = transcription.text;
+            setFinalTranscript((prev) => prev + " " + newFinal);
+            setTranscript((prev) => prev + " " + newFinal);
+            setInterimTranscript("");
+          } else {
+            setInterimTranscript(transcription.text);
+            setTranscript((prev) => {
+              // Remove previous interim and add new one
+              const withoutInterim = prev.replace(interimTranscript, "").trim();
+              return withoutInterim + " " + transcription.text;
+            });
+          }
+          setLastActivity(Date.now());
+        },
+      );
+
+      serviceRef.current.on("analytics", (analyticsData: VoiceAnalytics) => {
+        setAnalytics(analyticsData);
+        setLastActivity(Date.now());
+      });
+
+      // 2025 Voice Agent event listeners
+      serviceRef.current.on("utterance", (utterance: AgentUtterance) => {
+        setAgentUtterances((prev) => [...prev, utterance]);
+        setLastActivity(Date.now());
+      });
+
+      serviceRef.current.on("thinking", (thinkingData: any) => {
+        setIsThinking(thinkingData.status === "started");
+        setLastActivity(Date.now());
+      });
+
+      serviceRef.current.on("session", (sessionData: any) => {
+        setSessionId(sessionData.session_id);
+        setLastActivity(Date.now());
+      });
+
+      serviceRef.current.on("connection", (status: string) => {
+        if (status === "connected") {
+          setIsAgentActive(true);
+          setConnectionState("connected");
+        } else if (status === "disconnected") {
+          setIsAgentActive(false);
+          setConnectionState("disconnected");
         }
-        setLastActivity(Date.now())
-      })
+      });
 
-      serviceRef.current.on('analytics', (analyticsData: VoiceAnalytics) => {
-        setAnalytics(analyticsData)
-        setLastActivity(Date.now())
-      })
+      serviceRef.current.on("error", (errorData: unknown) => {
+        const errorMessage =
+          (errorData as any)?.message || "Unknown error occurred";
+        setError(errorMessage);
+        setConnectionState("error");
+        console.error("Deepgram voice error:", errorData);
+      });
 
-      serviceRef.current.on('error', (errorData: unknown) => {
-        const errorMessage = (errorData as any)?.message || 'Unknown error occurred'
-        setError(errorMessage)
-        setConnectionState('error')
-        console.error('Deepgram voice error:', errorData)
-      })
-
-      setConnectionState('connected')
-      setIsConnected(true)
-      setError(null)
-      reconnectCountRef.current = 0
-
+      setConnectionState("connected");
+      setIsConnected(true);
+      setError(null);
+      reconnectCountRef.current = 0;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to initialize voice service'
-      setError(errorMessage)
-      setConnectionState('error')
-      setIsConnected(false)
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : "Failed to initialize voice service";
+      setError(errorMessage);
+      setConnectionState("error");
+      setIsConnected(false);
     }
-  }, [defaultConfig, finalTranscript])
+  }, [defaultConfig, finalTranscript]);
 
   // Cleanup function
   const cleanup = useCallback(() => {
     if (serviceRef.current) {
-      serviceRef.current = null
+      serviceRef.current = null;
     }
     if (reconnectTimeoutRef.current) {
-      clearTimeout(reconnectTimeoutRef.current)
-      reconnectTimeoutRef.current = null
+      clearTimeout(reconnectTimeoutRef.current);
+      reconnectTimeoutRef.current = null;
     }
-  }, [])
+  }, []);
 
   // Reconnection logic
   const reconnect = useCallback(async () => {
     if (reconnectCountRef.current >= reconnectAttempts) {
-      setError('Maximum reconnection attempts reached')
-      return
+      setError("Maximum reconnection attempts reached");
+      return;
     }
 
-    setConnectionState('connecting')
-    reconnectCountRef.current += 1
+    setConnectionState("connecting");
+    reconnectCountRef.current += 1;
 
     reconnectTimeoutRef.current = setTimeout(async () => {
       try {
-        await initializeService()
+        await initializeService();
       } catch (err) {
         if (autoReconnect && reconnectCountRef.current < reconnectAttempts) {
-          reconnect()
+          reconnect();
         }
       }
-    }, reconnectDelay * reconnectCountRef.current)
-  }, [initializeService, autoReconnect, reconnectAttempts, reconnectDelay])
+    }, reconnectDelay * reconnectCountRef.current);
+  }, [initializeService, autoReconnect, reconnectAttempts, reconnectDelay]);
 
   // Start recording
   const startRecording = useCallback(async () => {
     try {
       if (!serviceRef.current) {
-        await initializeService()
+        await initializeService();
       }
 
       if (serviceRef.current) {
-        await serviceRef.current.startVoiceRecording()
-        setVoiceState('recording')
-        setIsRecording(true)
-        setError(null)
+        await serviceRef.current.startVoiceRecording();
+        setVoiceState("recording");
+        setIsRecording(true);
+        setError(null);
 
         // Start audio analysis for waveform visualization
         // Access the stream from the service (we'll need to add a getter)
-        const stream = (serviceRef.current as any).audioStream
+        const stream = (serviceRef.current as any).audioStream;
         if (stream) {
-          streamRef.current = stream
-          await startAnalysis(stream)
+          streamRef.current = stream;
+          await startAnalysis(stream);
         }
       }
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to start recording'
-      setError(errorMessage)
-      throw err
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to start recording";
+      setError(errorMessage);
+      throw err;
     }
-  }, [initializeService, startAnalysis])
+  }, [initializeService, startAnalysis]);
 
   // Stop recording
   const stopRecording = useCallback(async () => {
     try {
       if (serviceRef.current) {
-        await serviceRef.current.stopVoiceRecording()
-        setVoiceState('idle')
-        setIsRecording(false)
+        await serviceRef.current.stopVoiceRecording();
+        setVoiceState("idle");
+        setIsRecording(false);
       }
 
       // Stop audio analysis
-      stopAnalysis()
-      streamRef.current = null
+      stopAnalysis();
+      streamRef.current = null;
 
-      setError(null)
+      setError(null);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to stop recording'
-      setError(errorMessage)
-      throw err
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to stop recording";
+      setError(errorMessage);
+      throw err;
     }
-  }, [stopAnalysis])
+  }, [stopAnalysis]);
 
   // Clear transcript
   const clearTranscript = useCallback(() => {
-    setTranscript('')
-    setInterimTranscript('')
-    setFinalTranscript('')
-    setAnalytics(null)
-  }, [])
+    setTranscript("");
+    setInterimTranscript("");
+    setFinalTranscript("");
+    setAnalytics(null);
+    setAgentUtterances([]);
+  }, []);
+
+  // 2025 Voice Agent Actions
+  const startVoiceAgent = useCallback(
+    async (config?: VoiceAgentConfig) => {
+      try {
+        if (!serviceRef.current) {
+          await initializeService();
+        }
+
+        const agentConfig: VoiceAgentConfig = {
+          instructions:
+            "You are a helpful AI assistant. Be conversational and engaging.",
+          voice: "aura-asteria-en",
+          thinkModel: "gpt-4o-mini",
+          listenModel: "nova-2",
+          temperature: 0.7,
+          maxTokens: 2000,
+          contextRetention: true,
+          ...voiceAgentConfig,
+          ...config,
+        };
+
+        if (serviceRef.current) {
+          await serviceRef.current.startVoiceAgent(agentConfig);
+          setIsAgentActive(true);
+          setError(null);
+        }
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Failed to start voice agent";
+        setError(errorMessage);
+        throw err;
+      }
+    },
+    [initializeService, voiceAgentConfig],
+  );
+
+  const stopVoiceAgent = useCallback(async () => {
+    try {
+      if (serviceRef.current) {
+        await serviceRef.current.stopVoiceRecording();
+        setIsAgentActive(false);
+        setIsThinking(false);
+        setVoiceState("idle");
+      }
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to stop voice agent";
+      setError(errorMessage);
+      throw err;
+    }
+  }, []);
+
+  const interruptAgent = useCallback(() => {
+    if (serviceRef.current && isAgentActive && voiceState === "speaking") {
+      // Send interrupt signal to agent
+      setIsThinking(false);
+      // When agent finishes speaking, transition to listening state
+      setVoiceState("listening");
+    }
+  }, [isAgentActive, voiceState]);
 
   // Initialize on mount
   useEffect(() => {
     // Only initialize if we have an API key
     if (defaultConfig.apiKey) {
-      initializeService()
+      initializeService();
     } else {
-      setError('Deepgram API key is required')
-      setConnectionState('error')
+      setError("Deepgram API key is required");
+      setConnectionState("error");
     }
 
     return () => {
-      cleanup()
-    }
-  }, [initializeService, cleanup, defaultConfig.apiKey])
+      cleanup();
+    };
+  }, [initializeService, cleanup, defaultConfig.apiKey]);
 
   // Handle connection state changes
   useEffect(() => {
-    if (!isConnected && autoReconnect && connectionState === 'disconnected') {
-      reconnect()
+    if (!isConnected && autoReconnect && connectionState === "disconnected") {
+      reconnect();
     }
-  }, [isConnected, autoReconnect, connectionState, reconnect])
+  }, [isConnected, autoReconnect, connectionState, reconnect]);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      cleanup()
-    }
-  }, [cleanup])
+      cleanup();
+    };
+  }, [cleanup]);
 
   return {
     // State
@@ -276,14 +412,25 @@ export const useDeepgramVoice = (options: UseDeepgramVoiceOptions = {}): UseDeep
     error,
     audioAnalysisData,
 
+    // 2025 Voice Agent State
+    isAgentActive,
+    agentUtterances,
+    isThinking,
+    sessionId,
+
     // Actions
     startRecording,
     stopRecording,
     clearTranscript,
     reconnect,
 
+    // 2025 Voice Agent Actions
+    startVoiceAgent,
+    stopVoiceAgent,
+    interruptAgent,
+
     // Connection management
     connectionState,
-    lastActivity
-  }
-}
+    lastActivity,
+  };
+};

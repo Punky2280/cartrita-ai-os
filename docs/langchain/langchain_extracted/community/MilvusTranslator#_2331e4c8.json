@@ -1,0 +1,156 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/query_constructors/langchain_community.query_constructors.milvus.MilvusTranslator.html",
+  "title": "MilvusTranslator#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "query_constructors"
+    },
+    {
+      "type": "li",
+      "content": "MilvusTranslator"
+    },
+    {
+      "type": "p",
+      "content": "Translate Milvus internal query language elements to valid filters."
+    },
+    {
+      "type": "p",
+      "content": "allowed_comparators"
+    },
+    {
+      "type": "p",
+      "content": "Allowed comparators for the visitor."
+    },
+    {
+      "type": "p",
+      "content": "allowed_operators"
+    },
+    {
+      "type": "p",
+      "content": "Subset of allowed logical comparators."
+    },
+    {
+      "type": "p",
+      "content": "visit_comparison(comparison)"
+    },
+    {
+      "type": "p",
+      "content": "Translate a Comparison."
+    },
+    {
+      "type": "p",
+      "content": "visit_operation(operation)"
+    },
+    {
+      "type": "p",
+      "content": "Translate an Operation."
+    },
+    {
+      "type": "p",
+      "content": "visit_structured_query(structured_query)"
+    },
+    {
+      "type": "p",
+      "content": "Translate a StructuredQuery."
+    },
+    {
+      "type": "p",
+      "content": "Translate a Comparison."
+    },
+    {
+      "type": "p",
+      "content": "comparison(Comparison) – Comparison to translate."
+    },
+    {
+      "type": "p",
+      "content": "Translate an Operation."
+    },
+    {
+      "type": "p",
+      "content": "operation(Operation) – Operation to translate."
+    },
+    {
+      "type": "p",
+      "content": "Translate a StructuredQuery."
+    },
+    {
+      "type": "p",
+      "content": "structured_query(StructuredQuery) – StructuredQuery to translate."
+    },
+    {
+      "type": "p",
+      "content": "Tuple[str, dict]"
+    },
+    {
+      "type": "li",
+      "content": "MilvusTranslatorvisit_comparison()visit_operation()visit_structured_query()"
+    },
+    {
+      "type": "li",
+      "content": "visit_comparison()"
+    },
+    {
+      "type": "li",
+      "content": "visit_operation()"
+    },
+    {
+      "type": "li",
+      "content": "visit_structured_query()"
+    }
+  ],
+  "code_examples": [
+    "query_constructors",
+    "allowed_comparators",
+    "allowed_operators",
+    "visit_comparison",
+    "visit_operation",
+    "visit_structured_query",
+    "MilvusTranslator",
+    "visit_comparison()",
+    "visit_operation()",
+    "visit_structured_query()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.query_constructors.milvus.MilvusTranslator[source]#",
+    "langchain_community.query_constructors.milvus.",
+    "MilvusTranslator",
+    "visit_comparison(comparison:Comparison,)→str[source]#",
+    "visit_comparison",
+    "(",
+    "comparison:Comparison",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "visit_operation(operation:Operation,)→str[source]#",
+    "visit_operation",
+    "(",
+    "operation:Operation",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "visit_structured_query(structured_query:StructuredQuery,)→Tuple[str,dict][source]#",
+    "visit_structured_query",
+    "(",
+    "structured_query:StructuredQuery",
+    ")",
+    "→Tuple[str,dict]",
+    "→",
+    "Tuple[str,dict]"
+  ],
+  "parameters": [
+    "comparison:Comparison",
+    "operation:Operation",
+    "structured_query:StructuredQuery"
+  ]
+}

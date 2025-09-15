@@ -1,0 +1,96 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.office365.send_event.SendEventSchema.html#langchain_community.tools.office365.send_event.SendEventSchema",
+  "title": "SendEventSchema#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "SendEventSchema"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Input for CreateEvent Tool."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "The list of attendees for the event."
+    },
+    {
+      "type": "p",
+      "content": "The message body to include in the event."
+    },
+    {
+      "type": "p",
+      "content": "The end datetime for the event in the following format:  YYYY-MM-DDTHH:MM:SS±hh:mm, where “T” separates the date and time  components, and the time zone offset is specified as ±hh:mm.  For example: “2023-06-09T10:30:00+03:00” represents June 9th,  2023, at 10:30 AM in a time zone with a positive offset of 3  hours from Coordinated Universal Time (UTC)."
+    },
+    {
+      "type": "p",
+      "content": "The start datetime for the event in the following format:  YYYY-MM-DDTHH:MM:SS±hh:mm, where “T” separates the date and time  components, and the time zone offset is specified as ±hh:mm.  For example: “2023-06-09T10:30:00+03:00” represents June 9th,  2023, at 10:30 AM in a time zone with a positive offset of 3  hours from Coordinated Universal Time (UTC)."
+    },
+    {
+      "type": "p",
+      "content": "The subject of the event."
+    },
+    {
+      "type": "li",
+      "content": "SendEventSchemaattendeesbodyend_datetimestart_datetimesubject"
+    },
+    {
+      "type": "li",
+      "content": "end_datetime"
+    },
+    {
+      "type": "li",
+      "content": "start_datetime"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "BaseModel",
+    "SendEventSchema",
+    "attendees",
+    "body",
+    "end_datetime",
+    "start_datetime",
+    "subject"
+  ],
+  "api_signatures": [
+    "classlangchain_community.tools.office365.send_event.SendEventSchema[source]#",
+    "langchain_community.tools.office365.send_event.",
+    "SendEventSchema",
+    "paramattendees:List[str][Required]#",
+    "attendees",
+    "parambody:str[Required]#",
+    "body",
+    "paramend_datetime:str[Required]#",
+    "end_datetime",
+    "paramstart_datetime:str[Required]#",
+    "start_datetime",
+    "paramsubject:str[Required]#",
+    "subject"
+  ],
+  "parameters": []
+}

@@ -1,0 +1,58 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chat_message_histories/langchain_community.chat_message_histories.kafka.ConsumeStartPosition.html#langchain_community.chat_message_histories.kafka.ConsumeStartPosition",
+  "title": "ConsumeStartPosition#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "chat_message_histories"
+    },
+    {
+      "type": "li",
+      "content": "ConsumeStartPosition"
+    },
+    {
+      "type": "p",
+      "content": "Consume start position for Kafka consumer to get chat history messages.\nLAST_CONSUMED: Continue from the last consumed offset.\nEARLIEST: Start consuming from the beginning.\nLATEST: Start consuming from the latest offset."
+    },
+    {
+      "type": "li",
+      "content": "ConsumeStartPositionLAST_CONSUMEDEARLIESTLATEST"
+    },
+    {
+      "type": "li",
+      "content": "LAST_CONSUMED"
+    }
+  ],
+  "code_examples": [
+    "chat_message_histories",
+    "ConsumeStartPosition",
+    "LAST_CONSUMED",
+    "EARLIEST",
+    "LATEST"
+  ],
+  "api_signatures": [
+    "classlangchain_community.chat_message_histories.kafka.ConsumeStartPosition(value)[source]#",
+    "langchain_community.chat_message_histories.kafka.",
+    "ConsumeStartPosition",
+    "(",
+    "value",
+    ")",
+    "LAST_CONSUMED=1#",
+    "LAST_CONSUMED",
+    "EARLIEST=2#",
+    "EARLIEST",
+    "LATEST=3#",
+    "LATEST"
+  ],
+  "parameters": [
+    "value"
+  ]
+}

@@ -78,9 +78,21 @@ The Cartrita AI OS implements a hierarchical multi-agent architecture with:
 ### Code Quality Standards
 
 1. **Linting**: pylint with 10/10 target score
-2. **Type Checking**: mypy with strict mode
-3. **Testing**: pytest with >95% coverage
-4. **Documentation**: Comprehensive docstrings and README files
+2. **Type Checking**: mypy (planned strict adoption) using Python 3.13 typing features
+3. **Testing**: pytest with incremental coverage ratchet (25% → 30% → 35% → higher) toward long-term >90%
+4. **Documentation**: Comprehensive docstrings and README files kept in sync with architectural changes
+
+### Runtime & Coverage Enforcement
+
+| Aspect | Policy |
+|--------|--------|
+| Python Runtime | `>=3.13,<3.14` pinned across Docker, CI, local `.python-version` |
+| Determinism | Single-version CI to eliminate cross-version drift |
+| Coverage Exclusions | Legacy / backup agent modules (marked for deprecation) via `.coveragerc` |
+| Ratchet Strategy | Raise threshold only after focused tests + ≥4% safety buffer |
+| Transparency | All exclusions documented here + root README |
+
+Rationale: enforcing a single modern runtime reduces matrix flakiness, ensures consistent async/typing behavior, and accelerates adoption of Python 3.13 performance and language improvements.
 
 ## Getting Started
 

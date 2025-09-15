@@ -1,0 +1,181 @@
+{
+  "timestamp": "2025-09-15T00:01:05.286045",
+  "total_files_analyzed": 37376,
+  "summary": {
+    "sentry_integration": {
+      "files_with_sentry": 341,
+      "files_with_imports": 260,
+      "has_config": true,
+      "sentry_files": [
+        "focused_code_analysis.py",
+        "sentry_project_analyzer.py",
+        ".venv-lock/lib/python3.12/site-packages/onnxruntime/tools/ort_format_model/ort_flatbuffers_py/fbs/KernelTypeStrArgsEntry.py",
+        ".venv-lock/lib/python3.12/site-packages/onnxruntime/tools/ort_format_model/ort_flatbuffers_py/fbs/OpIdKernelTypeStrArgsEntry.py",
+        ".venv-lock/lib/python3.12/site-packages/onnxruntime/tools/ort_format_model/ort_flatbuffers_py/fbs/KernelTypeStrResolver.py"
+      ]
+    },
+    "total_issues": 16,
+    "severity_breakdown": {
+      "critical": 0,
+      "high": 0,
+      "medium": 15,
+      "low": 1
+    },
+    "type_breakdown": {
+      "security": 0,
+      "performance": 15,
+      "code_quality": 1
+    },
+    "files_analyzed": {
+      "python": 37252,
+      "typescript": 86,
+      "javascript": 38
+    }
+  },
+  "issues": [
+    {
+      "file_path": ".venv-lock/lib/python3.12/site-packages/six.py",
+      "line_number": 228,
+      "issue_type": "code_quality",
+      "severity": "low",
+      "description": "Useless return at end of function or method",
+      "suggested_fix": "Address refactor: useless-return",
+      "rule": "R1711"
+    },
+    {
+      "file_path": "focused_code_analysis.py",
+      "line_number": 85,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    },
+    {
+      "file_path": "focused_code_analysis.py",
+      "line_number": 198,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    },
+    {
+      "file_path": "sentry_project_analyzer.py",
+      "line_number": 244,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    },
+    {
+      "file_path": "sentry_project_analyzer.py",
+      "line_number": 220,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    },
+    {
+      "file_path": ".venv-lock/lib/python3.12/site-packages/xmltodict.py",
+      "line_number": 497,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    },
+    {
+      "file_path": ".venv-lock/lib/python3.12/site-packages/xmltodict.py",
+      "line_number": 512,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    },
+    {
+      "file_path": ".venv-lock/lib/python3.12/site-packages/typing_extensions.py",
+      "line_number": 605,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    },
+    {
+      "file_path": ".venv-lock/lib/python3.12/site-packages/typing_extensions.py",
+      "line_number": 768,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    },
+    {
+      "file_path": ".venv-lock/lib/python3.12/site-packages/typing_extensions.py",
+      "line_number": 1531,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    },
+    {
+      "file_path": ".venv-lock/lib/python3.12/site-packages/typing_extensions.py",
+      "line_number": 3196,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    },
+    {
+      "file_path": ".venv-lock/lib/python3.12/site-packages/typing_extensions.py",
+      "line_number": 3246,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    },
+    {
+      "file_path": ".venv-lock/lib/python3.12/site-packages/typing_extensions.py",
+      "line_number": 3220,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    },
+    {
+      "file_path": ".venv-lock/lib/python3.12/site-packages/typing_extensions.py",
+      "line_number": 3253,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    },
+    {
+      "file_path": ".venv-lock/lib/python3.12/site-packages/typing_inspect.py",
+      "line_number": 771,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    },
+    {
+      "file_path": ".venv-lock/lib/python3.12/site-packages/typing_inspect.py",
+      "line_number": 410,
+      "issue_type": "performance",
+      "severity": "medium",
+      "description": "Nested loops detected - consider optimization",
+      "suggested_fix": "Consider using list comprehensions or vectorization",
+      "rule": null
+    }
+  ]
+}

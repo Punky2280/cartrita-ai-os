@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "node",
+      "args": ["node_modules/@automatalabs/mcp-server-playwright/dist/index.js"],
+      "env": {
+        "HEADLESS": "false",
+        "BROWSER": "chromium",
+        "VIEWPORT_WIDTH": "1280",
+        "VIEWPORT_HEIGHT": "720"
+      }
+    }
+  }
+}

@@ -77,7 +77,7 @@ The Cartrita AI OS project has been comprehensively analyzed, researched, and op
 ### 🏗️ Architecture Decisions
 
 1. **SSE for AI Streaming** - Unidirectional AI response streaming
-2. **WebSocket for Interaction** - Real-time collaboration features  
+2. **WebSocket for Interaction** - Real-time collaboration features
 3. **MCP Protocol Integration** - Standardized AI tool connections
 4. **Hierarchical Multi-Agent** - GPT-4.1 supervisor with GPT-5 specialists
 

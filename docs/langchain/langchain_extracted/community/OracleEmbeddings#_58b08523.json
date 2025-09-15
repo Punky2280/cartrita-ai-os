@@ -1,0 +1,248 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/embeddings/langchain_community.embeddings.oracleai.OracleEmbeddings.html#langchain_community.embeddings.oracleai.OracleEmbeddings",
+  "title": "OracleEmbeddings#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "OracleEmbeddings"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel,Embeddings"
+    },
+    {
+      "type": "p",
+      "content": "Get Embeddings"
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Embedding Parameters"
+    },
+    {
+      "type": "p",
+      "content": "Load an ONNX model to Oracle Database.\n:param conn: Oracle Connection,\n:param dir: Oracle Directory,\n:param onnx_file: ONNX file name,\n:param model_name: Name of the model."
+    },
+    {
+      "type": "li",
+      "content": "conn(Connection)"
+    },
+    {
+      "type": "p",
+      "content": "conn(Connection)"
+    },
+    {
+      "type": "li",
+      "content": "onnx_file(str)"
+    },
+    {
+      "type": "p",
+      "content": "onnx_file(str)"
+    },
+    {
+      "type": "li",
+      "content": "model_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "model_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed search docs."
+    },
+    {
+      "type": "p",
+      "content": "texts(list[str]) – List of text to embed."
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings."
+    },
+    {
+      "type": "p",
+      "content": "list[list[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed query text."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – Text to embed."
+    },
+    {
+      "type": "p",
+      "content": "list[float]"
+    },
+    {
+      "type": "p",
+      "content": "Compute doc embeddings using an OracleEmbeddings.\n:param texts: The list of texts to embed."
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings, one for each input text."
+    },
+    {
+      "type": "p",
+      "content": "texts(List[str])"
+    },
+    {
+      "type": "p",
+      "content": "List[List[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Compute query embedding using an OracleEmbeddings.\n:param text: The text to embed."
+    },
+    {
+      "type": "p",
+      "content": "Embedding for the text."
+    },
+    {
+      "type": "p",
+      "content": "List[float]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using OracleEmbeddings"
+    },
+    {
+      "type": "li",
+      "content": "Oracle AI Vector Search: Generate Embeddings"
+    },
+    {
+      "type": "p",
+      "content": "Oracle AI Vector Search: Generate Embeddings"
+    },
+    {
+      "type": "li",
+      "content": "OracleAI Vector Search"
+    },
+    {
+      "type": "p",
+      "content": "OracleAI Vector Search"
+    },
+    {
+      "type": "li",
+      "content": "OracleEmbeddingsconnparamsproxyload_onnx_model()aembed_documents()aembed_query()embed_documents()embed_query()"
+    },
+    {
+      "type": "li",
+      "content": "load_onnx_model()"
+    },
+    {
+      "type": "li",
+      "content": "aembed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "aembed_query()"
+    },
+    {
+      "type": "li",
+      "content": "embed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "embed_query()"
+    }
+  ],
+  "code_examples": [
+    "embeddings",
+    "BaseModel",
+    "Embeddings",
+    "OracleEmbeddings",
+    "conn",
+    "params",
+    "proxy",
+    "load_onnx_model()",
+    "aembed_documents()",
+    "aembed_query()",
+    "embed_documents()",
+    "embed_query()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.embeddings.oracleai.OracleEmbeddings[source]#",
+    "langchain_community.embeddings.oracleai.",
+    "OracleEmbeddings",
+    "paramconn:Any=None#",
+    "conn",
+    "paramparams:Dict[str,Any][Required]#",
+    "params",
+    "paramproxy:str|None=None#",
+    "proxy",
+    "staticload_onnx_model(conn:Connection,dir:str,onnx_file:str,model_name:str,)→None[source]#",
+    "load_onnx_model",
+    "(",
+    "conn:Connection",
+    "dir:str",
+    "onnx_file:str",
+    "model_name:str",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "asyncaembed_documents(texts:list[str],)→list[list[float]]#",
+    "aembed_documents",
+    "(",
+    "texts:list[str]",
+    ")",
+    "→list[list[float]]",
+    "→",
+    "list[list[float]]",
+    "asyncaembed_query(text:str)→list[float]#",
+    "aembed_query",
+    "(",
+    "text:str",
+    ")",
+    "→list[float]",
+    "→",
+    "list[float]",
+    "embed_documents(texts:List[str],)→List[List[float]][source]#",
+    "embed_documents",
+    "(",
+    "texts:List[str]",
+    ")",
+    "→List[List[float]]",
+    "→",
+    "List[List[float]]",
+    "embed_query(text:str,)→List[float][source]#",
+    "embed_query",
+    "(",
+    "text:str",
+    ")",
+    "→List[float]",
+    "→",
+    "List[float]"
+  ],
+  "parameters": [
+    "conn:Connection",
+    "dir:str",
+    "onnx_file:str",
+    "model_name:str",
+    "texts:list[str]",
+    "text:str",
+    "texts:List[str]",
+    "text:str"
+  ]
+}

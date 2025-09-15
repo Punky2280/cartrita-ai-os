@@ -1,0 +1,88 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/graph_vectorstores/langchain_community.graph_vectorstores.cassandra.AdjacentNode.html",
+  "title": "AdjacentNode#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "graph_vectorstores"
+    },
+    {
+      "type": "li",
+      "content": "AdjacentNode"
+    },
+    {
+      "type": "p",
+      "content": "Create an Adjacent Node."
+    },
+    {
+      "type": "p",
+      "content": "__init__(node, embedding)"
+    },
+    {
+      "type": "p",
+      "content": "Create an Adjacent Node."
+    },
+    {
+      "type": "li",
+      "content": "embedding(list[float])"
+    },
+    {
+      "type": "p",
+      "content": "embedding(list[float])"
+    },
+    {
+      "type": "p",
+      "content": "Create an Adjacent Node."
+    },
+    {
+      "type": "li",
+      "content": "embedding(list[float])"
+    },
+    {
+      "type": "p",
+      "content": "embedding(list[float])"
+    },
+    {
+      "type": "li",
+      "content": "AdjacentNode__init__()"
+    }
+  ],
+  "code_examples": [
+    "graph_vectorstores",
+    "__init__",
+    "AdjacentNode",
+    "__init__()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.graph_vectorstores.cassandra.AdjacentNode(node:Node,embedding:list[float],)[source]#",
+    "langchain_community.graph_vectorstores.cassandra.",
+    "AdjacentNode",
+    "(",
+    "node:Node",
+    "embedding:list[float]",
+    ")",
+    "__init__(node:Node,embedding:list[float],)→None[source]#",
+    "__init__",
+    "(",
+    "node:Node",
+    "embedding:list[float]",
+    ")",
+    "→None",
+    "→",
+    "None"
+  ],
+  "parameters": [
+    "node:Node",
+    "embedding:list[float]",
+    "node:Node",
+    "embedding:list[float]"
+  ]
+}

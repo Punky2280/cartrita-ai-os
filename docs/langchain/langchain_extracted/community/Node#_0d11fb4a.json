@@ -1,0 +1,83 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/graphs/langchain_community.graphs.graph_document.Node.html#id1",
+  "title": "Node#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Bases:Serializable"
+    },
+    {
+      "type": "p",
+      "content": "Represents a node in a graph with associated properties."
+    },
+    {
+      "type": "p",
+      "content": "A unique identifier for the node."
+    },
+    {
+      "type": "p",
+      "content": "Union[str, int]"
+    },
+    {
+      "type": "p",
+      "content": "The type or label of the node, default is “Node”."
+    },
+    {
+      "type": "p",
+      "content": "Additional properties and metadata associated with the node."
+    },
+    {
+      "type": "p",
+      "content": "Examples using Node"
+    },
+    {
+      "type": "li",
+      "content": "Azure Cosmos DB for Apache Gremlin"
+    },
+    {
+      "type": "p",
+      "content": "Azure Cosmos DB for Apache Gremlin"
+    },
+    {
+      "type": "li",
+      "content": "Nodeidtypepropertiesidpropertiestype"
+    }
+  ],
+  "code_examples": [
+    "graphs",
+    "Serializable",
+    "Node",
+    "id",
+    "type",
+    "properties",
+    "id",
+    "properties",
+    "type"
+  ],
+  "api_signatures": [
+    "classlangchain_community.graphs.graph_document.Node[source]#",
+    "langchain_community.graphs.graph_document.",
+    "Node",
+    "id#",
+    "id",
+    "type#",
+    "type",
+    "properties#",
+    "properties",
+    "paramid:str|int[Required]#",
+    "id",
+    "paramproperties:dict[Optional]#",
+    "properties",
+    "paramtype:str='Node'#",
+    "type"
+  ],
+  "parameters": []
+}

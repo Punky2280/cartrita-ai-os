@@ -1,0 +1,86 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chat_loaders/langchain_community.chat_loaders.utils.map_ai_messages.html#langchain_community.chat_loaders.utils.map_ai_messages",
+  "title": "map_ai_messages#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "chat_loaders"
+    },
+    {
+      "type": "li",
+      "content": "map_ai_messages"
+    },
+    {
+      "type": "p",
+      "content": "Convert messages from the specified ‘sender’ to AI messages."
+    },
+    {
+      "type": "p",
+      "content": "This is useful for fine-tuning the AI to adapt to your voice."
+    },
+    {
+      "type": "li",
+      "content": "chat_sessions(Iterable[ChatSession])"
+    },
+    {
+      "type": "p",
+      "content": "chat_sessions(Iterable[ChatSession])"
+    },
+    {
+      "type": "li",
+      "content": "sender(str)"
+    },
+    {
+      "type": "p",
+      "content": "sender(str)"
+    },
+    {
+      "type": "p",
+      "content": "Iterator[ChatSession]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using map_ai_messages"
+    },
+    {
+      "type": "li",
+      "content": "Facebook Messenger"
+    },
+    {
+      "type": "p",
+      "content": "Facebook Messenger"
+    },
+    {
+      "type": "li",
+      "content": "map_ai_messages()"
+    }
+  ],
+  "code_examples": [
+    "chat_loaders",
+    "map_ai_messages()"
+  ],
+  "api_signatures": [
+    "langchain_community.chat_loaders.utils.map_ai_messages(chat_sessions:Iterable[ChatSession],sender:str,)→Iterator[ChatSession][source]#",
+    "langchain_community.chat_loaders.utils.",
+    "map_ai_messages",
+    "(",
+    "chat_sessions:Iterable[ChatSession]",
+    "sender:str",
+    ")",
+    "→Iterator[ChatSession]",
+    "→",
+    "Iterator[ChatSession]"
+  ],
+  "parameters": [
+    "chat_sessions:Iterable[ChatSession]",
+    "sender:str"
+  ]
+}

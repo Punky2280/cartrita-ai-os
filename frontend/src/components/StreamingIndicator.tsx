@@ -1,12 +1,11 @@
 // Cartrita AI OS - Streaming Indicator Component
 // Animated indicator for real-time message streaming
 
-
-import { motion } from 'framer-motion'
-import { Bot, Zap, Loader2 } from 'lucide-react'
-import { cn } from '@/utils'
-import { useAtomValue } from 'jotai'
-import { selectedAgentAtom } from '@/stores'
+import { motion } from "framer-motion";
+import { Bot, Zap, Loader2 } from "lucide-react";
+import { cn } from "@/utils";
+import { useAtomValue } from "jotai";
+import { selectedAgentAtom } from "@/stores";
 
 // Typing animation dots
 function TypingDots() {
@@ -18,31 +17,41 @@ function TypingDots() {
           className="w-2 h-2 bg-current rounded-full"
           animate={{
             scale: [1, 1.2, 1],
-            opacity: [0.5, 1, 0.5]
+            opacity: [0.5, 1, 0.5],
           }}
           transition={{
             duration: 1.5,
             repeat: Infinity,
-            delay: i * 0.2
+            delay: i * 0.2,
           }}
         />
       ))}
     </div>
-  )
+  );
 }
 
 // Pulsing avatar
-function PulsingAvatar({ children, isActive }: { children: React.ReactNode; isActive: boolean }) {
+function PulsingAvatar({
+  children,
+  isActive,
+}: {
+  children: React.ReactNode;
+  isActive: boolean;
+}) {
   return (
     <motion.div
-      animate={isActive ? {
-        scale: [1, 1.1, 1],
-        opacity: [0.8, 1, 0.8]
-      } : {}}
+      animate={
+        isActive
+          ? {
+              scale: [1, 1.1, 1],
+              opacity: [0.8, 1, 0.8],
+            }
+          : {}
+      }
       transition={{
         duration: 2,
         repeat: Infinity,
-        ease: 'easeInOut'
+        ease: "easeInOut",
       }}
       className="relative"
     >
@@ -52,17 +61,17 @@ function PulsingAvatar({ children, isActive }: { children: React.ReactNode; isAc
           className="absolute inset-0 rounded-full border-2 border-primary"
           animate={{
             scale: [1, 1.2, 1],
-            opacity: [0.5, 0, 0.5]
+            opacity: [0.5, 0, 0.5],
           }}
           transition={{
             duration: 2,
             repeat: Infinity,
-            ease: 'easeInOut'
+            ease: "easeInOut",
           }}
         />
       )}
     </motion.div>
-  )
+  );
 }
 
 // Waveform animation for audio-like streaming
@@ -75,64 +84,67 @@ function StreamingWaveform() {
           className="w-1 bg-primary rounded-full"
           animate={{
             height: [4, 16, 4],
-            opacity: [0.3, 1, 0.3]
+            opacity: [0.3, 1, 0.3],
           }}
           transition={{
             duration: 1,
             repeat: Infinity,
             delay: i * 0.1,
-            ease: 'easeInOut'
+            ease: "easeInOut",
           }}
         />
       ))}
     </div>
-  )
+  );
 }
 
 // Main Streaming Indicator Component
 interface StreamingIndicatorProps {
-  variant?: 'default' | 'compact' | 'minimal'
-  showAgent?: boolean
-  showStats?: boolean
-  className?: string
+  variant?: "default" | "compact" | "minimal";
+  showAgent?: boolean;
+  showStats?: boolean;
+  className?: string;
 }
 
 export function StreamingIndicator({
-  variant = 'default',
+  variant = "default",
   showAgent = true,
   showStats = false,
-  className
+  className,
 }: StreamingIndicatorProps) {
-  const selectedAgent = useAtomValue(selectedAgentAtom)
+  const selectedAgent = useAtomValue(selectedAgentAtom);
 
-  if (variant === 'minimal') {
+  if (variant === "minimal") {
     return (
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className={cn('flex items-center gap-2 text-muted-foreground', className)}
+        className={cn(
+          "flex items-center gap-2 text-muted-foreground",
+          className,
+        )}
       >
         <Loader2 className="h-4 w-4 animate-spin" />
         <span className="text-sm">Thinking...</span>
       </motion.div>
-    )
+    );
   }
 
-  if (variant === 'compact') {
+  if (variant === "compact") {
     return (
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.8 }}
-        className={cn('flex items-center gap-2', className)}
+        className={cn("flex items-center gap-2", className)}
       >
         <PulsingAvatar isActive={true}>
           <Bot className="h-5 w-5 text-primary" />
         </PulsingAvatar>
         <TypingDots />
       </motion.div>
-    )
+    );
   }
 
   // Default variant
@@ -142,8 +154,8 @@ export function StreamingIndicator({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       className={cn(
-        'flex items-center justify-between p-3 bg-muted/50 rounded-lg border',
-        className
+        "flex items-center justify-between p-3 bg-muted/50 rounded-lg border",
+        className,
       )}
     >
       <div className="flex items-center gap-3">
@@ -156,7 +168,7 @@ export function StreamingIndicator({
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium">
-              {selectedAgent?.name || 'AI Agent'} is thinking
+              {selectedAgent?.name || "AI Agent"} is thinking
             </span>
             <TypingDots />
           </div>
@@ -184,7 +196,7 @@ export function StreamingIndicator({
         </div>
       )}
     </motion.div>
-  )
+  );
 }
 
 // Inline streaming indicator for message bubbles
@@ -197,24 +209,24 @@ export function InlineStreamingIndicator() {
     >
       <motion.div
         animate={{ rotate: 360 }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
       >
         <Loader2 className="h-3 w-3" />
       </motion.div>
       <span className="text-xs">Generating response...</span>
     </motion.div>
-  )
+  );
 }
 
 // Full-screen streaming overlay
 export function StreamingOverlay({
-  message = 'Processing your request...',
+  message = "Processing your request...",
   showProgress = false,
-  progress = 0
+  progress = 0,
 }: {
-  message?: string
-  showProgress?: boolean
-  progress?: number
+  message?: string;
+  showProgress?: boolean;
+  progress?: number;
 }) {
   return (
     <motion.div
@@ -250,7 +262,9 @@ export function StreamingOverlay({
                   transition={{ duration: 0.5 }}
                 />
               </div>
-              <p className="text-xs text-muted-foreground">{progress}% complete</p>
+              <p className="text-xs text-muted-foreground">
+                {progress}% complete
+              </p>
             </div>
           )}
 
@@ -258,18 +272,18 @@ export function StreamingOverlay({
         </div>
       </motion.div>
     </motion.div>
-  )
+  );
 }
 
 // Streaming stats component
 export function StreamingStats({
   tokensPerSecond = 0,
   totalTokens = 0,
-  elapsedTime = 0
+  elapsedTime = 0,
 }: {
-  tokensPerSecond?: number
-  totalTokens?: number
-  elapsedTime?: number
+  tokensPerSecond?: number;
+  totalTokens?: number;
+  elapsedTime?: number;
 }) {
   return (
     <motion.div
@@ -290,5 +304,5 @@ export function StreamingStats({
         <span>{elapsedTime.toFixed(1)}s</span>
       </div>
     </motion.div>
-  )
+  );
 }

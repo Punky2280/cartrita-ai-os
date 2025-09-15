@@ -49,6 +49,6 @@ b1f7d26e3ebc: Pull complete
 73ecb62a9eb1: Pull complete
 Digest: sha256:1dde7739c282cc06df025b5ced3d16793cfc80b444ca16e7559d003d22d3d685
 Status: Downloaded newer image for codacy/codacy-analysis-cli:latest
-09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/3251787460569316766, make sure it is readable by everybody. 
-09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/4592972644480343246, make sure it is readable by everybody. 
-09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/8861565124924762992, make sure it is readable by everybody. 
+09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/3251787460569316766, make sure it is readable by everybody.
+09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/4592972644480343246, make sure it is readable by everybody.
+09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/8861565124924762992, make sure it is readable by everybody.

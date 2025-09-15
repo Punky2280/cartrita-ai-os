@@ -1,0 +1,61 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chains/langchain_community.chains.pebblo_retrieval.models.VectorDB.html#langchain_community.chains.pebblo_retrieval.models.VectorDB",
+  "title": "VectorDB#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "li",
+      "content": "VectorDBembedding_modellocationnameversion"
+    },
+    {
+      "type": "li",
+      "content": "embedding_model"
+    }
+  ],
+  "code_examples": [
+    "chains",
+    "BaseModel",
+    "VectorDB",
+    "embedding_model",
+    "location",
+    "name",
+    "version"
+  ],
+  "api_signatures": [
+    "classlangchain_community.chains.pebblo_retrieval.models.VectorDB[source]#",
+    "langchain_community.chains.pebblo_retrieval.models.",
+    "VectorDB",
+    "paramembedding_model:str|None=None#",
+    "embedding_model",
+    "paramlocation:str|None=None#",
+    "location",
+    "paramname:str|None=None#",
+    "name",
+    "paramversion:str|None=None#",
+    "version"
+  ],
+  "parameters": []
+}

@@ -1,22 +1,22 @@
 // Cartrita AI OS - Test Setup
 // Global test configuration and utilities
 
-import { expect, afterEach, vi } from 'vitest'
-import { cleanup } from '@testing-library/react'
-import * as matchers from '@testing-library/jest-dom/matchers'
+import { expect, afterEach, vi } from "vitest";
+import { cleanup } from "@testing-library/react";
+import * as matchers from "@testing-library/jest-dom/matchers";
 
 // Extend expect with jest-dom matchers
-expect.extend(matchers)
+expect.extend(matchers);
 
 // Cleanup after each test
 afterEach(() => {
-  cleanup()
-})
+  cleanup();
+});
 
 // Mock environment variables
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -26,21 +26,21 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
-})
+});
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn(),
-}))
+}));
 
 // Mock IntersectionObserver
 global.IntersectionObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn(),
-}))
+}));
 
 // Mock WebSocket
 const MockWebSocket = vi.fn().mockImplementation(() => ({
@@ -49,28 +49,28 @@ const MockWebSocket = vi.fn().mockImplementation(() => ({
   dispatchEvent: vi.fn(),
   send: vi.fn(),
   close: vi.fn(),
-  readyState: 1
-}))
+  readyState: 1,
+}));
 
 // Add static properties to mock WebSocket constructor
-Object.defineProperty(MockWebSocket, 'CONNECTING', { value: 0 })
-Object.defineProperty(MockWebSocket, 'OPEN', { value: 1 })
-Object.defineProperty(MockWebSocket, 'CLOSING', { value: 2 })
-Object.defineProperty(MockWebSocket, 'CLOSED', { value: 3 })
+Object.defineProperty(MockWebSocket, "CONNECTING", { value: 0 });
+Object.defineProperty(MockWebSocket, "OPEN", { value: 1 });
+Object.defineProperty(MockWebSocket, "CLOSING", { value: 2 });
+Object.defineProperty(MockWebSocket, "CLOSED", { value: 3 });
 
-global.WebSocket = MockWebSocket as any
+global.WebSocket = MockWebSocket as any;
 
 // Mock MediaDevices
-Object.defineProperty(navigator, 'mediaDevices', {
+Object.defineProperty(navigator, "mediaDevices", {
   value: {
     getUserMedia: vi.fn().mockResolvedValue({
       getTracks: () => [{ stop: vi.fn() }],
       getAudioTracks: () => [{ stop: vi.fn() }],
-      getVideoTracks: () => []
-    })
+      getVideoTracks: () => [],
+    }),
   },
-  writable: true
-})
+  writable: true,
+});
 
 // Mock AudioContext
 global.AudioContext = vi.fn().mockImplementation(() => ({
@@ -79,8 +79,8 @@ global.AudioContext = vi.fn().mockImplementation(() => ({
   createGain: vi.fn(),
   decodeAudioData: vi.fn().mockResolvedValue({}),
   suspend: vi.fn(),
-  resume: vi.fn()
-}))
+  resume: vi.fn(),
+}));
 
 // Mock MediaRecorder
 const MockMediaRecorder = vi.fn().mockImplementation(() => ({
@@ -91,19 +91,19 @@ const MockMediaRecorder = vi.fn().mockImplementation(() => ({
   addEventListener: vi.fn(),
   removeEventListener: vi.fn(),
   dispatchEvent: vi.fn(),
-  state: 'inactive',
-  mimeType: 'audio/webm',
+  state: "inactive",
+  mimeType: "audio/webm",
   ondataavailable: null,
   onstop: null,
-  onerror: null
-}))
+  onerror: null,
+}));
 
 // Add static method to mock MediaRecorder constructor
-Object.defineProperty(MockMediaRecorder, 'isTypeSupported', { 
-  value: vi.fn().mockReturnValue(true) 
-})
+Object.defineProperty(MockMediaRecorder, "isTypeSupported", {
+  value: vi.fn().mockReturnValue(true),
+});
 
-global.MediaRecorder = MockMediaRecorder as any
+global.MediaRecorder = MockMediaRecorder as any;
 
 // Global test utilities
 global.testUtils = {
@@ -113,32 +113,36 @@ global.testUtils = {
     is_final: isFinal,
     speaker: 1,
     timestamp: Date.now(),
-    words: text.split(' ').map((word, index) => ({
+    words: text.split(" ").map((word, index) => ({
       word,
       start: index * 0.5,
       end: (index + 1) * 0.5,
-      confidence: 0.95
-    }))
+      confidence: 0.95,
+    })),
   }),
 
   createMockAnalytics: () => ({
     sentiment: {
       score: 0.8,
-      label: 'positive' as const,
-      confidence: 0.9
+      label: "positive" as const,
+      confidence: 0.9,
     },
-    topics: [{
-      name: 'technology',
-      confidence: 0.85,
-      keywords: ['ai', 'machine learning']
-    }],
-    emotions: [{
-      emotion: 'joy',
-      confidence: 0.7
-    }],
-    speaker_id: 'speaker_1',
-    language_detected: 'en-US'
+    topics: [
+      {
+        name: "technology",
+        confidence: 0.85,
+        keywords: ["ai", "machine learning"],
+      },
+    ],
+    emotions: [
+      {
+        emotion: "joy",
+        confidence: 0.7,
+      },
+    ],
+    speaker_id: "speaker_1",
+    language_detected: "en-US",
   }),
 
-  waitForNextTick: () => new Promise(resolve => setTimeout(resolve, 0))
-}
+  waitForNextTick: () => new Promise((resolve) => setTimeout(resolve, 0)),
+};

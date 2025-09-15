@@ -1,0 +1,1104 @@
+
+/home/robbie/cartrita-ai-os/.venv-lock/lib/python3.12/site-packages/coverage/htmlfiles/coverage_html.js
+    6:44  error  '$' is defined but never used      no-unused-vars
+   14:9   error  'clearTimeout' is not defined      no-undef
+   15:21  error  'setTimeout' is not defined        no-undef
+   43:30  error  'HTMLDataElement' is not defined   no-undef
+   87:29  error  'localStorage' is not defined      no-undef
+   91:9   error  'localStorage' is not defined      no-undef
+   97:13  error  'localStorage' is not defined      no-undef
+  105:9   error  'localStorage' is not defined      no-undef
+  129:32  error  'localStorage' is not defined      no-undef
+  133:33  error  'localStorage' is not defined      no-undef
+  144:29  error  'event' is defined but never used  no-unused-vars
+  152:9   error  'localStorage' is not defined      no-undef
+  156:9   error  'localStorage' is not defined      no-undef
+  163:17  error  'cell' is not defined              no-undef
+  164:21  error  'cell' is not defined              no-undef
+  165:36  error  'cell' is not defined              no-undef
+  193:17  error  'cell' is not defined              no-undef
+  194:21  error  'cell' is not defined              no-undef
+  199:44  error  'cell' is not defined              no-undef
+  204:48  error  'cell' is not defined              no-undef
+  254:57  error  'Event' is not defined             no-undef
+  255:58  error  'Event' is not defined             no-undef
+  268:25  error  'localStorage' is not defined      no-undef
+  273:30  error  'localStorage' is not defined      no-undef
+  319:16  error  'location' is not defined          no-undef
+  346:28  error  'localStorage' is not defined      no-undef
+  347:18  error  Empty block statement              no-empty
+  356:10  error  'cls' is not defined               no-undef
+  357:37  error  'cls' is not defined               no-undef
+  357:59  error  'cls' is not defined               no-undef
+  380:9   error  'localStorage' is not defined      no-undef
+  381:18  error  Empty block statement              no-empty
+  431:5   error  'location' is not defined          no-undef
+  459:12  error  Unexpected constant condition      no-constant-condition
+  718:13  error  'key' is not defined               no-undef
+  719:54  error  'contexts' is not defined          no-undef
+  719:63  error  'key' is not defined               no-undef
+
+/home/robbie/cartrita-ai-os/.venv-lock/lib/python3.12/site-packages/torch/utils/model_dump/code.js
+   57:17  error  'children' is defined but never used            no-unused-vars
+  524:21  error  'offset' is assigned a value but never used     no-unused-vars
+  524:29  error  'size' is assigned a value but never used       no-unused-vars
+  524:35  error  'stride' is assigned a value but never used     no-unused-vars
+  524:43  error  'grad' is assigned a value but never used       no-unused-vars
+  525:12  error  'dtype' is assigned a value but never used      no-unused-vars
+  525:24  error  'device' is assigned a value but never used     no-unused-vars
+  525:32  error  'numel' is assigned a value but never used      no-unused-vars
+  529:21  error  'offset' is assigned a value but never used     no-unused-vars
+  529:29  error  'size' is assigned a value but never used       no-unused-vars
+  529:35  error  'stride' is assigned a value but never used     no-unused-vars
+  529:43  error  'quantizer' is assigned a value but never used  no-unused-vars
+  529:54  error  'grad' is assigned a value but never used       no-unused-vars
+  530:12  error  'dtype' is assigned a value but never used      no-unused-vars
+  530:24  error  'device' is assigned a value but never used     no-unused-vars
+  530:32  error  'numel' is assigned a value but never used      no-unused-vars
+  538:15  error  'name' is assigned a value but never used       no-unused-vars
+  544:19  error  'key' is assigned a value but never used        no-unused-vars
+  635:7   error  'fetch' is not defined                          no-undef
+  643:9   error  'console' is not defined                        no-undef
+  669:33  error  'console' is not defined                        no-undef
+  689:16  error  'document' is not defined                       no-undef
+
+/home/robbie/cartrita-ai-os/.venv-lock/lib/python3.12/site-packages/torch/utils/model_dump/preact.mjs
+  2:1342  error  Expected a conditional expression and instead saw an assignment  no-cond-assign
+  2:4210  error  Empty block statement                                            no-empty
+  2:6732  error  'document' is not defined                                        no-undef
+  2:6763  error  'document' is not defined                                        no-undef
+  2:6820  error  'document' is not defined                                        no-undef
+  2:7957  error  Expected a conditional expression and instead saw an assignment  no-cond-assign
+  2:8114  error  Expected a conditional expression and instead saw an assignment  no-cond-assign
+  2:9126  error  Expected a conditional expression and instead saw an assignment  no-cond-assign
+  2:9841  error  'setTimeout' is not defined                                      no-undef
+
+/home/robbie/cartrita-ai-os/.venv-lock/lib/python3.12/site-packages/urllib3/contrib/emscripten/emscripten_fetch_worker.js
+   10:21  error  'TextEncoder' is not defined  no-undef
+   12:1   error  'self' is not defined         no-undef
+   40:9   error  'console' is not defined      no-undef
+   70:30  error  'fetch' is not defined        no-undef
+  100:7   error  'console' is not defined      no-undef
+  110:1   error  'self' is not defined         no-undef
+
+/home/robbie/cartrita-ai-os/.venv-repro/lib/python3.12/site-packages/coverage/htmlfiles/coverage_html.js
+    6:44  error  '$' is defined but never used      no-unused-vars
+   14:9   error  'clearTimeout' is not defined      no-undef
+   15:21  error  'setTimeout' is not defined        no-undef
+   43:30  error  'HTMLDataElement' is not defined   no-undef
+   87:29  error  'localStorage' is not defined      no-undef
+   91:9   error  'localStorage' is not defined      no-undef
+   97:13  error  'localStorage' is not defined      no-undef
+  105:9   error  'localStorage' is not defined      no-undef
+  129:32  error  'localStorage' is not defined      no-undef
+  133:33  error  'localStorage' is not defined      no-undef
+  144:29  error  'event' is defined but never used  no-unused-vars
+  152:9   error  'localStorage' is not defined      no-undef
+  156:9   error  'localStorage' is not defined      no-undef
+  163:17  error  'cell' is not defined              no-undef
+  164:21  error  'cell' is not defined              no-undef
+  165:36  error  'cell' is not defined              no-undef
+  193:17  error  'cell' is not defined              no-undef
+  194:21  error  'cell' is not defined              no-undef
+  199:44  error  'cell' is not defined              no-undef
+  204:48  error  'cell' is not defined              no-undef
+  254:57  error  'Event' is not defined             no-undef
+  255:58  error  'Event' is not defined             no-undef
+  268:25  error  'localStorage' is not defined      no-undef
+  273:30  error  'localStorage' is not defined      no-undef
+  319:16  error  'location' is not defined          no-undef
+  346:28  error  'localStorage' is not defined      no-undef
+  347:18  error  Empty block statement              no-empty
+  356:10  error  'cls' is not defined               no-undef
+  357:37  error  'cls' is not defined               no-undef
+  357:59  error  'cls' is not defined               no-undef
+  380:9   error  'localStorage' is not defined      no-undef
+  381:18  error  Empty block statement              no-empty
+  431:5   error  'location' is not defined          no-undef
+  459:12  error  Unexpected constant condition      no-constant-condition
+  718:13  error  'key' is not defined               no-undef
+  719:54  error  'contexts' is not defined          no-undef
+  719:63  error  'key' is not defined               no-undef
+
+/home/robbie/cartrita-ai-os/.venv-repro/lib/python3.12/site-packages/torch/utils/model_dump/code.js
+   57:17  error  'children' is defined but never used            no-unused-vars
+  524:21  error  'offset' is assigned a value but never used     no-unused-vars
+  524:29  error  'size' is assigned a value but never used       no-unused-vars
+  524:35  error  'stride' is assigned a value but never used     no-unused-vars
+  524:43  error  'grad' is assigned a value but never used       no-unused-vars
+  525:12  error  'dtype' is assigned a value but never used      no-unused-vars
+  525:24  error  'device' is assigned a value but never used     no-unused-vars
+  525:32  error  'numel' is assigned a value but never used      no-unused-vars
+  529:21  error  'offset' is assigned a value but never used     no-unused-vars
+  529:29  error  'size' is assigned a value but never used       no-unused-vars
+  529:35  error  'stride' is assigned a value but never used     no-unused-vars
+  529:43  error  'quantizer' is assigned a value but never used  no-unused-vars
+  529:54  error  'grad' is assigned a value but never used       no-unused-vars
+  530:12  error  'dtype' is assigned a value but never used      no-unused-vars
+  530:24  error  'device' is assigned a value but never used     no-unused-vars
+  530:32  error  'numel' is assigned a value but never used      no-unused-vars
+  538:15  error  'name' is assigned a value but never used       no-unused-vars
+  544:19  error  'key' is assigned a value but never used        no-unused-vars
+  635:7   error  'fetch' is not defined                          no-undef
+  643:9   error  'console' is not defined                        no-undef
+  669:33  error  'console' is not defined                        no-undef
+  689:16  error  'document' is not defined                       no-undef
+
+/home/robbie/cartrita-ai-os/.venv-repro/lib/python3.12/site-packages/torch/utils/model_dump/preact.mjs
+  2:1342  error  Expected a conditional expression and instead saw an assignment  no-cond-assign
+  2:4210  error  Empty block statement                                            no-empty
+  2:6732  error  'document' is not defined                                        no-undef
+  2:6763  error  'document' is not defined                                        no-undef
+  2:6820  error  'document' is not defined                                        no-undef
+  2:7957  error  Expected a conditional expression and instead saw an assignment  no-cond-assign
+  2:8114  error  Expected a conditional expression and instead saw an assignment  no-cond-assign
+  2:9126  error  Expected a conditional expression and instead saw an assignment  no-cond-assign
+  2:9841  error  'setTimeout' is not defined                                      no-undef
+
+/home/robbie/cartrita-ai-os/.venv-repro/lib/python3.12/site-packages/urllib3/contrib/emscripten/emscripten_fetch_worker.js
+   10:21  error  'TextEncoder' is not defined  no-undef
+   12:1   error  'self' is not defined         no-undef
+   40:9   error  'console' is not defined      no-undef
+   70:30  error  'fetch' is not defined        no-undef
+  100:7   error  'console' is not defined      no-undef
+  110:1   error  'self' is not defined         no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/server/_error.js
+   19:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+   19:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   19:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+   30:9   error  'module' is defined but never used                   no-unused-vars
+   30:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   30:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   41:9   error  'module' is defined but never used                   no-unused-vars
+   41:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   41:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   52:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+   52:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   52:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+   63:9   error  'module' is defined but never used                   no-unused-vars
+   63:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   63:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   74:9   error  'module' is defined but never used                   no-unused-vars
+   74:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   74:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   85:9   error  'module' is defined but never used                   no-unused-vars
+   85:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   85:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   96:9   error  'module' is defined but never used                   no-unused-vars
+   96:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   96:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+  120:18  error  'require' is not defined                             no-undef
+  131:18  error  'require' is not defined                             no-undef
+  142:18  error  'require' is not defined                             no-undef
+  153:18  error  'require' is not defined                             no-undef
+  164:18  error  'require' is not defined                             no-undef
+  175:18  error  'require' is not defined                             no-undef
+  293:27  error  'require' is not defined                             no-undef
+  297:1   error  'module' is not defined                              no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/server/interception-route-rewrite-manifest.js
+  1:1  error  'self' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/server/middleware-build-manifest.js
+   1:1   error  'self' is not defined                no-undef
+  30:1   error  'self' is not defined                no-undef
+  30:42  error  Unexpected comma in middle of array  no-sparse-arrays
+  31:14  error  'process' is not defined             no-undef
+  32:15  error  'process' is not defined             no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/server/middleware-react-loadable-manifest.js
+  1:1  error  'self' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/server/next-font-manifest.js
+  1:1  error  'self' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/server/pages/_app.js
+   19:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+   19:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   19:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+   30:9   error  'module' is defined but never used                   no-unused-vars
+   30:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   30:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   41:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+   41:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   41:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+   52:9   error  'module' is defined but never used                   no-unused-vars
+   52:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   52:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   63:9   error  'module' is defined but never used                   no-unused-vars
+   63:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   63:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   74:9   error  'module' is defined but never used                   no-unused-vars
+   74:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   74:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   85:9   error  'module' is defined but never used                   no-unused-vars
+   85:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   85:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+  109:18  error  'require' is not defined                             no-undef
+  120:18  error  'require' is not defined                             no-undef
+  131:18  error  'require' is not defined                             no-undef
+  249:27  error  'require' is not defined                             no-undef
+  253:1   error  'module' is not defined                              no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/server/pages/_document.js
+  22:18  error  'require' is not defined  no-undef
+  32:18  error  'require' is not defined  no-undef
+  42:18  error  'require' is not defined  no-undef
+  52:18  error  'require' is not defined  no-undef
+  60:27  error  'require' is not defined  no-undef
+  64:1   error  'module' is not defined   no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/server/pages/_error.js
+   19:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+   19:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   19:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+   30:9   error  'module' is defined but never used                   no-unused-vars
+   30:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   30:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   41:9   error  'module' is defined but never used                   no-unused-vars
+   41:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   41:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   52:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+   52:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   52:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+   63:9   error  'module' is defined but never used                   no-unused-vars
+   63:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   63:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   74:9   error  'module' is defined but never used                   no-unused-vars
+   74:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   74:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   85:9   error  'module' is defined but never used                   no-unused-vars
+   85:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   85:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   96:9   error  'module' is defined but never used                   no-unused-vars
+   96:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   96:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+  120:18  error  'require' is not defined                             no-undef
+  131:18  error  'require' is not defined                             no-undef
+  142:18  error  'require' is not defined                             no-undef
+  153:18  error  'require' is not defined                             no-undef
+  164:18  error  'require' is not defined                             no-undef
+  175:18  error  'require' is not defined                             no-undef
+  293:27  error  'require' is not defined                             no-undef
+  297:1   error  'module' is not defined                              no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/server/pages/index.js
+   19:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+   19:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   19:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+   30:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+   30:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   30:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+   41:9   error  'module' is defined but never used                   no-unused-vars
+   41:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   41:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   52:9   error  'module' is defined but never used                   no-unused-vars
+   52:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   52:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   63:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+   63:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   63:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+   74:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+   74:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   74:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+   85:9   error  'module' is defined but never used                   no-unused-vars
+   85:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   85:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+   96:9   error  'module' is defined but never used                   no-unused-vars
+   96:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+   96:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+  107:9   error  'module' is defined but never used                   no-unused-vars
+  107:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+  107:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+  118:9   error  'module' is defined but never used                   no-unused-vars
+  118:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+  118:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+  129:9   error  'module' is defined but never used                   no-unused-vars
+  129:17  error  '__webpack_exports__' is defined but never used      no-unused-vars
+  129:38  error  '__webpack_require__' is defined but never used      no-unused-vars
+  153:18  error  'require' is not defined                             no-undef
+  164:18  error  'require' is not defined                             no-undef
+  175:18  error  'require' is not defined                             no-undef
+  186:18  error  'require' is not defined                             no-undef
+  197:18  error  'require' is not defined                             no-undef
+  208:18  error  'require' is not defined                             no-undef
+  219:18  error  'require' is not defined                             no-undef
+  230:18  error  'require' is not defined                             no-undef
+  241:18  error  'require' is not defined                             no-undef
+  252:18  error  'require' is not defined                             no-undef
+  381:27  error  'require' is not defined                             no-undef
+  385:1   error  'module' is not defined                              no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/server/vendor-chunks/@swc.js
+  10:1   error  'exports' is not defined                             no-undef
+  11:1   error  'exports' is not defined                             no-undef
+  12:1   error  'exports' is not defined                             no-undef
+  18:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+  18:34  error  'exports' is defined but never used                  no-unused-vars
+  28:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+  28:34  error  'exports' is defined but never used                  no-unused-vars
+
+/home/robbie/cartrita-ai-os/frontend/.next/server/vendor-chunks/date-fns.js
+   10:1   error  'exports' is not defined                                         no-undef
+   11:1   error  'exports' is not defined                                         no-undef
+   12:1   error  'exports' is not defined                                         no-undef
+   18:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+   18:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+   18:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+   28:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+   28:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+   28:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+   38:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+   38:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+   38:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+   48:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+   48:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+   48:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+   58:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+   58:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+   58:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+   68:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+   68:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+   68:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+   78:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+   78:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+   78:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+   88:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+   88:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+   88:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+   98:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+   98:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+   98:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  108:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  108:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  108:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  118:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  118:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  118:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  128:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  128:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  128:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  138:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  138:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  138:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  148:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  148:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  148:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  158:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  158:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  158:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  168:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  168:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  168:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  178:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  178:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  178:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  188:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  188:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  188:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  198:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  198:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  198:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  208:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  208:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  208:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  218:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  218:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  218:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  228:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  228:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  228:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  238:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  238:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  238:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  248:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  248:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  248:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  258:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  258:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  258:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  268:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  268:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  268:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  278:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  278:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  278:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  288:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  288:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  288:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  298:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  298:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  298:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  308:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  308:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  308:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  318:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  318:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  318:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  328:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  328:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  328:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  338:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  338:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  338:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  348:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  348:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  348:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  358:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  358:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  358:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  368:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  368:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  368:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  378:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  378:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  378:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  388:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  388:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  388:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  398:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  398:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  398:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  408:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  408:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  408:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  418:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  418:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  418:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  428:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  428:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  428:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  438:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  438:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  438:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  448:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  448:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  448:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  458:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  458:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  458:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  468:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  468:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  468:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  478:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  478:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  478:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  488:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  488:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  488:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  498:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  498:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  498:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+  508:9   error  '__unused_webpack___webpack_module__' is defined but never used  no-unused-vars
+  508:46  error  '__webpack_exports__' is defined but never used                  no-unused-vars
+  508:67  error  '__webpack_require__' is defined but never used                  no-unused-vars
+
+/home/robbie/cartrita-ai-os/frontend/.next/server/vendor-chunks/lucide-react.js
+  10:1   error  'exports' is not defined                             no-undef
+  11:1   error  'exports' is not defined                             no-undef
+  12:1   error  'exports' is not defined                             no-undef
+  18:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+  18:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+  18:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+  28:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+  28:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+  28:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+  38:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+  38:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+  38:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+  48:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+  48:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+  48:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+  58:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+  58:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+  58:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+  68:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+  68:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+  68:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+  78:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+  78:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+  78:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+  88:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+  88:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+  88:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+  98:9   error  '__unused_webpack_module' is defined but never used  no-unused-vars
+  98:34  error  '__webpack_exports__' is defined but never used      no-unused-vars
+  98:55  error  '__webpack_require__' is defined but never used      no-unused-vars
+
+/home/robbie/cartrita-ai-os/frontend/.next/server/vendor-chunks/next.js
+     9:1   error  'exports' is not defined                              no-undef
+    10:1   error  'exports' is not defined                              no-undef
+    11:1   error  'exports' is not defined                              no-undef
+    17:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+    17:34  error  'exports' is defined but never used                   no-unused-vars
+    28:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+    28:34  error  'exports' is defined but never used                   no-unused-vars
+    39:9   error  'module' is defined but never used                    no-unused-vars
+    39:17  error  'exports' is defined but never used                   no-unused-vars
+    39:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+    50:9   error  'module' is defined but never used                    no-unused-vars
+    50:17  error  'exports' is defined but never used                   no-unused-vars
+    50:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+    61:9   error  'module' is defined but never used                    no-unused-vars
+    61:17  error  'exports' is defined but never used                   no-unused-vars
+    72:9   error  'module' is defined but never used                    no-unused-vars
+    72:17  error  'exports' is defined but never used                   no-unused-vars
+    83:9   error  'module' is defined but never used                    no-unused-vars
+    83:17  error  'exports' is defined but never used                   no-unused-vars
+    83:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+    94:9   error  'module' is defined but never used                    no-unused-vars
+    94:17  error  'exports' is defined but never used                   no-unused-vars
+   105:9   error  'module' is defined but never used                    no-unused-vars
+   105:17  error  'exports' is defined but never used                   no-unused-vars
+   105:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+   116:9   error  'module' is defined but never used                    no-unused-vars
+   116:17  error  'exports' is defined but never used                   no-unused-vars
+   116:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+   127:9   error  'module' is defined but never used                    no-unused-vars
+   127:17  error  'exports' is defined but never used                   no-unused-vars
+   127:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+   138:9   error  'module' is defined but never used                    no-unused-vars
+   138:17  error  'exports' is defined but never used                   no-unused-vars
+   149:9   error  'module' is defined but never used                    no-unused-vars
+   149:17  error  'exports' is defined but never used                   no-unused-vars
+   149:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+   160:9   error  'module' is defined but never used                    no-unused-vars
+   160:17  error  'exports' is defined but never used                   no-unused-vars
+   160:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+   171:9   error  'module' is defined but never used                    no-unused-vars
+   171:17  error  'exports' is defined but never used                   no-unused-vars
+   171:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+   182:9   error  'module' is defined but never used                    no-unused-vars
+   182:17  error  'exports' is defined but never used                   no-unused-vars
+   182:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+   193:9   error  'module' is defined but never used                    no-unused-vars
+   193:17  error  'exports' is defined but never used                   no-unused-vars
+   204:9   error  'module' is defined but never used                    no-unused-vars
+   204:17  error  'exports' is defined but never used                   no-unused-vars
+   204:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+   215:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   215:34  error  'exports' is defined but never used                   no-unused-vars
+   215:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   226:9   error  'module' is defined but never used                    no-unused-vars
+   226:17  error  'exports' is defined but never used                   no-unused-vars
+   226:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+   237:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   237:34  error  'exports' is defined but never used                   no-unused-vars
+   248:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   248:34  error  'exports' is defined but never used                   no-unused-vars
+   248:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   259:9   error  'module' is defined but never used                    no-unused-vars
+   259:17  error  'exports' is defined but never used                   no-unused-vars
+   259:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+   270:9   error  'module' is defined but never used                    no-unused-vars
+   270:17  error  'exports' is defined but never used                   no-unused-vars
+   270:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+   281:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   281:34  error  'exports' is defined but never used                   no-unused-vars
+   292:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   292:34  error  'exports' is defined but never used                   no-unused-vars
+   303:9   error  'module' is defined but never used                    no-unused-vars
+   303:17  error  'exports' is defined but never used                   no-unused-vars
+   303:26  error  '__webpack_require__' is defined but never used       no-unused-vars
+   314:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   314:34  error  'exports' is defined but never used                   no-unused-vars
+   325:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   325:34  error  'exports' is defined but never used                   no-unused-vars
+   336:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   336:34  error  'exports' is defined but never used                   no-unused-vars
+   347:9   error  'module' is defined but never used                    no-unused-vars
+   358:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   358:34  error  'exports' is defined but never used                   no-unused-vars
+   358:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   369:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   369:34  error  'exports' is defined but never used                   no-unused-vars
+   380:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   380:34  error  'exports' is defined but never used                   no-unused-vars
+   380:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   391:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   391:34  error  'exports' is defined but never used                   no-unused-vars
+   402:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   402:34  error  'exports' is defined but never used                   no-unused-vars
+   402:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   413:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   413:34  error  'exports' is defined but never used                   no-unused-vars
+   413:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   424:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   424:34  error  'exports' is defined but never used                   no-unused-vars
+   424:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   435:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   435:34  error  'exports' is defined but never used                   no-unused-vars
+   435:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   446:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   446:34  error  'exports' is defined but never used                   no-unused-vars
+   446:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   457:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   457:34  error  'exports' is defined but never used                   no-unused-vars
+   468:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   468:34  error  'exports' is defined but never used                   no-unused-vars
+   468:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   479:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   479:34  error  'exports' is defined but never used                   no-unused-vars
+   479:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   490:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   490:34  error  'exports' is defined but never used                   no-unused-vars
+   501:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   501:34  error  'exports' is defined but never used                   no-unused-vars
+   501:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   512:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   512:34  error  'exports' is defined but never used                   no-unused-vars
+   523:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   523:34  error  'exports' is defined but never used                   no-unused-vars
+   523:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   534:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   534:34  error  'exports' is defined but never used                   no-unused-vars
+   534:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   545:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   545:34  error  'exports' is defined but never used                   no-unused-vars
+   556:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   556:34  error  'exports' is defined but never used                   no-unused-vars
+   556:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   567:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   567:34  error  'exports' is defined but never used                   no-unused-vars
+   567:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   578:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   578:34  error  'exports' is defined but never used                   no-unused-vars
+   589:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   589:34  error  'exports' is defined but never used                   no-unused-vars
+   600:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   600:34  error  'exports' is defined but never used                   no-unused-vars
+   600:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   611:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   611:34  error  'exports' is defined but never used                   no-unused-vars
+   611:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   622:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   622:34  error  'exports' is defined but never used                   no-unused-vars
+   622:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   633:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   633:34  error  'exports' is defined but never used                   no-unused-vars
+   633:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   644:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   644:34  error  'exports' is defined but never used                   no-unused-vars
+   644:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   655:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   655:34  error  'exports' is defined but never used                   no-unused-vars
+   666:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   666:34  error  'exports' is defined but never used                   no-unused-vars
+   666:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   677:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   677:34  error  'exports' is defined but never used                   no-unused-vars
+   688:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   688:34  error  'exports' is defined but never used                   no-unused-vars
+   688:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   699:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   699:34  error  'exports' is defined but never used                   no-unused-vars
+   699:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   710:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   710:34  error  'exports' is defined but never used                   no-unused-vars
+   710:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   721:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   721:34  error  'exports' is defined but never used                   no-unused-vars
+   732:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   732:34  error  'exports' is defined but never used                   no-unused-vars
+   743:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   743:34  error  'exports' is defined but never used                   no-unused-vars
+   743:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   754:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   754:34  error  'exports' is defined but never used                   no-unused-vars
+   765:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   765:34  error  'exports' is defined but never used                   no-unused-vars
+   776:9   error  'module' is defined but never used                    no-unused-vars
+   786:9   error  'module' is defined but never used                    no-unused-vars
+   786:17  error  '__unused_webpack_exports' is defined but never used  no-unused-vars
+   786:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   796:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   796:34  error  'exports' is defined but never used                   no-unused-vars
+   807:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   807:34  error  'exports' is defined but never used                   no-unused-vars
+   818:9   error  'module' is defined but never used                    no-unused-vars
+   818:17  error  '__unused_webpack_exports' is defined but never used  no-unused-vars
+   818:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   829:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   829:34  error  'exports' is defined but never used                   no-unused-vars
+   840:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   840:34  error  'exports' is defined but never used                   no-unused-vars
+   851:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   851:34  error  'exports' is defined but never used                   no-unused-vars
+   851:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   862:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   862:34  error  'exports' is defined but never used                   no-unused-vars
+   873:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   873:34  error  'exports' is defined but never used                   no-unused-vars
+   873:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   884:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   884:34  error  'exports' is defined but never used                   no-unused-vars
+   884:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   895:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   895:34  error  'exports' is defined but never used                   no-unused-vars
+   906:9   error  'module' is defined but never used                    no-unused-vars
+   906:17  error  '__unused_webpack_exports' is defined but never used  no-unused-vars
+   906:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   917:9   error  'module' is defined but never used                    no-unused-vars
+   917:17  error  '__unused_webpack_exports' is defined but never used  no-unused-vars
+   917:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   928:9   error  'module' is defined but never used                    no-unused-vars
+   928:17  error  '__unused_webpack_exports' is defined but never used  no-unused-vars
+   928:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   939:9   error  'module' is defined but never used                    no-unused-vars
+   939:17  error  '__unused_webpack_exports' is defined but never used  no-unused-vars
+   939:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   950:9   error  'module' is defined but never used                    no-unused-vars
+   950:17  error  '__unused_webpack_exports' is defined but never used  no-unused-vars
+   950:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   961:9   error  'module' is defined but never used                    no-unused-vars
+   961:17  error  '__unused_webpack_exports' is defined but never used  no-unused-vars
+   961:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   972:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   972:34  error  'exports' is defined but never used                   no-unused-vars
+   972:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+   983:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   983:34  error  'exports' is defined but never used                   no-unused-vars
+   994:9   error  '__unused_webpack_module' is defined but never used   no-unused-vars
+   994:34  error  'exports' is defined but never used                   no-unused-vars
+   994:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+  1005:9   error  'module' is defined but never used                    no-unused-vars
+  1005:17  error  '__unused_webpack_exports' is defined but never used  no-unused-vars
+  1005:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+  1015:9   error  'module' is defined but never used                    no-unused-vars
+  1015:17  error  '__unused_webpack_exports' is defined but never used  no-unused-vars
+  1015:43  error  '__webpack_require__' is defined but never used       no-unused-vars
+
+/home/robbie/cartrita-ai-os/frontend/.next/server/webpack-runtime.js
+   78:34   error  'x' is defined but never used         no-unused-vars
+   95:107  error  'x' is defined but never used         no-unused-vars
+  216:54   error  'promises' is defined but never used  no-unused-vars
+  220:28   error  'require' is not defined              no-undef
+  225:12   error  'module' is not defined               no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/static/chunks/_error.js
+   9:2   error  'self' is not defined  no-undef
+   9:29  error  'self' is not defined  no-undef
+  26:10  error  '_N_E' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/static/chunks/main.js
+     9:2   error  'self' is not defined                                 no-undef
+     9:29  error  'self' is not defined                                 no-undef
+  1934:17  error  '__unused_webpack_module' is defined but never used   no-unused-vars
+  1934:42  error  '__unused_webpack_exports' is defined but never used  no-unused-vars
+  1934:68  error  '__webpack_require__' is defined but never used       no-unused-vars
+  1977:10  error  '_N_E' is not defined                                 no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/static/chunks/node_modules_tanstack_query-devtools_build_DevtoolsComponent_6ELMOJL2_js.js
+  10:2   error  'self' is not defined  no-undef
+  10:29  error  'self' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/static/chunks/node_modules_tanstack_query-devtools_build_DevtoolsPanelComponent_PULY4AJ7_js.js
+  10:2   error  'self' is not defined  no-undef
+  10:29  error  'self' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/static/chunks/pages/_app.js
+     9:2   error  'self' is not defined  no-undef
+     9:29  error  'self' is not defined  no-undef
+  2321:10  error  '_N_E' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/static/chunks/pages/_error.js
+   9:2   error  'self' is not defined  no-undef
+   9:29  error  'self' is not defined  no-undef
+  26:10  error  '_N_E' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/static/chunks/pages/index.js
+     9:2   error  'self' is not defined  no-undef
+     9:29  error  'self' is not defined  no-undef
+  4127:10  error  '_N_E' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/static/chunks/polyfills.js
+  1:88      error  'window' is not defined                                                          no-undef
+  1:122     error  'global' is not defined                                                          no-undef
+  1:154     error  'self' is not defined                                                            no-undef
+  1:350     error  'window' is not defined                                                          no-undef
+  1:384     error  'self' is not defined                                                            no-undef
+  1:705     error  Do not access Object.prototype method 'hasOwnProperty' from target object        no-prototype-builtins
+  1:1283    error  Do not access Object.prototype method 'propertyIsEnumerable' from target object  no-prototype-builtins
+  1:1531    error  'document' is not defined                                                        no-undef
+  1:4297    error  Empty block statement                                                            no-empty
+  1:5000    error  Empty block statement                                                            no-empty
+  1:5728    error  'te.get' is assigned to itself                                                   no-self-assign
+  1:5742    error  'te.has' is assigned to itself                                                   no-self-assign
+  1:5756    error  'te.set' is assigned to itself                                                   no-self-assign
+  1:6991    error  Empty block statement                                                            no-empty
+  1:7340    error  Empty block statement                                                            no-empty
+  1:8971    error  Expected a conditional expression and instead saw an assignment                  no-cond-assign
+  1:9659    error  'ActiveXObject' is not defined                                                   no-undef
+  1:9693    error  Empty block statement                                                            no-empty
+  1:9737    error  'document' is not defined                                                        no-undef
+  1:11658   error  Empty block statement                                                            no-empty
+  1:15487   error  Empty block statement                                                            no-empty
+  1:15783   error  Empty block statement                                                            no-empty
+  1:18259   error  Empty block statement                                                            no-empty
+  1:18420   error  Empty block statement                                                            no-empty
+  1:19229   error  Empty block statement                                                            no-empty
+  1:20202   error  'window' is not defined                                                          no-undef
+  1:20264   error  'window' is not defined                                                          no-undef
+  1:24633   error  Expected a conditional expression and instead saw an assignment                  no-cond-assign
+  1:29774   error  't' is defined but never used                                                    no-unused-vars
+  1:36702   error  Expected a conditional expression and instead saw an assignment                  no-cond-assign
+  1:37667   error  Expected a conditional expression and instead saw an assignment                  no-cond-assign
+  1:45572   error  Empty block statement                                                            no-empty
+  1:60316   error  't' is defined but never used                                                    no-unused-vars
+  1:60743   error  't' is defined but never used                                                    no-unused-vars
+  1:64892   error  't' is defined but never used                                                    no-unused-vars
+  1:64894   error  'e' is defined but never used                                                    no-unused-vars
+  1:64896   error  'r' is defined but never used                                                    no-unused-vars
+  1:67032   error  Empty block statement                                                            no-empty
+  1:67159   error  Empty block statement                                                            no-empty
+  1:67855   error  Empty block statement                                                            no-empty
+  1:68413   error  't' is defined but never used                                                    no-unused-vars
+  1:70689   error  'URL' is not defined                                                             no-undef
+  1:70745   error  'URLSearchParams' is not defined                                                 no-undef
+  1:70986   error  'URLSearchParams' is not defined                                                 no-undef
+  1:71030   error  'URL' is not defined                                                             no-undef
+  1:71069   error  'URLSearchParams' is not defined                                                 no-undef
+  1:71089   error  'URLSearchParams' is not defined                                                 no-undef
+  1:71142   error  'URL' is not defined                                                             no-undef
+  1:71184   error  'URL' is not defined                                                             no-undef
+  1:71231   error  'URL' is not defined                                                             no-undef
+  1:77022   error  'URLSearchParams' is not defined                                                 no-undef
+  1:77573   error  'URLSearchParams' is not defined                                                 no-undef
+  1:77919   error  'URLSearchParams' is not defined                                                 no-undef
+  1:78471   error  'e' is defined but never used                                                    no-unused-vars
+  1:80351   error  Unexpected control character(s) in regular expression: \x00                      no-control-regex
+  1:80374   error  Unexpected control character(s) in regular expression: \x00, \x00                no-control-regex
+  1:81562   error  Expected a conditional expression and instead saw an assignment                  no-cond-assign
+  1:84352   error  Expected a conditional expression and instead saw an assignment                  no-cond-assign
+  1:84471   error  Expected a conditional expression and instead saw an assignment                  no-cond-assign
+  1:85449   error  Expected a conditional expression and instead saw an assignment                  no-cond-assign
+  1:92787   error  'URL' is not defined                                                             no-undef
+  1:95466   error  'Bun' is not defined                                                             no-undef
+  1:95509   error  'Deno' is not defined                                                            no-undef
+  1:96607   error  'setTimeout' is not defined                                                      no-undef
+  1:97212   error  Expected a conditional expression and instead saw an assignment                  no-cond-assign
+  1:98938   error  Expected a conditional expression and instead saw an assignment                  no-cond-assign
+  1:99083   error  Expected a conditional expression and instead saw an assignment                  no-cond-assign
+  1:99358   error  'console' is not defined                                                         no-undef
+  1:99375   error  'console' is not defined                                                         no-undef
+  1:99402   error  Empty block statement                                                            no-empty
+  1:100325  error  't' is defined but never used                                                    no-unused-vars
+  1:100996  error  Empty block statement                                                            no-empty
+  1:103979  error  'self' is not defined                                                            no-undef
+  1:103998  error  'self' is not defined                                                            no-undef
+  1:104042  error  'self' is not defined                                                            no-undef
+  1:104057  error  'self' is not defined                                                            no-undef
+  1:104089  error  'Blob' is not defined                                                            no-undef
+  1:104135  error  'self' is not defined                                                            no-undef
+  1:104159  error  'self' is not defined                                                            no-undef
+  1:105334  error  'FileReader' is not defined                                                      no-undef
+  1:105635  error  'Blob' is not defined                                                            no-undef
+  1:105650  error  Do not access Object.prototype method 'isPrototypeOf' from target object         no-prototype-builtins
+  1:105688  error  'FormData' is not defined                                                        no-undef
+  1:105707  error  Do not access Object.prototype method 'isPrototypeOf' from target object         no-prototype-builtins
+  1:105749  error  'URLSearchParams' is not defined                                                 no-undef
+  1:105775  error  Do not access Object.prototype method 'isPrototypeOf' from target object         no-prototype-builtins
+  1:105854  error  Do not access Object.prototype method 'isPrototypeOf' from target object         no-prototype-builtins
+  1:105926  error  'Blob' is not defined                                                            no-undef
+  1:105984  error  Do not access Object.prototype method 'isPrototypeOf' from target object         no-prototype-builtins
+  1:106313  error  'URLSearchParams' is not defined                                                 no-undef
+  1:106339  error  Do not access Object.prototype method 'isPrototypeOf' from target object         no-prototype-builtins
+  1:106606  error  'Blob' is not defined                                                            no-undef
+  1:106742  error  'Blob' is not defined                                                            no-undef
+  1:106993  error  'FileReader' is not defined                                                      no-undef
+  1:107767  error  Do not access Object.prototype method 'hasOwnProperty' from target object        no-prototype-builtins
+  1:107910  error  Do not access Object.prototype method 'hasOwnProperty' from target object        no-prototype-builtins
+  1:109156  error  'FormData' is not defined                                                        no-undef
+  1:110149  error  'self' is not defined                                                            no-undef
+  1:110486  error  'XMLHttpRequest' is not defined                                                  no-undef
+  1:111541  error  'self' is not defined                                                            no-undef
+  1:111554  error  'self' is not defined                                                            no-undef
+  1:111568  error  'self' is not defined                                                            no-undef
+  1:111584  error  'self' is not defined                                                            no-undef
+  1:111600  error  'self' is not defined                                                            no-undef
+  1:112205  error  'e' is defined but never used                                                    no-unused-vars
+
+/home/robbie/cartrita-ai-os/frontend/.next/static/chunks/react-refresh.js
+  10:2   error  'self' is not defined  no-undef
+  10:29  error  'self' is not defined  no-undef
+  60:10  error  '_N_E' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/static/chunks/webpack.js
+    71:22  error  'i' is already defined                      no-redeclare
+    72:18  error  'chunkIds' is already defined               no-redeclare
+    73:18  error  'fn' is already defined                     no-redeclare
+    74:18  error  'priority' is already defined               no-redeclare
+   166:53  error  'window' is not defined                     no-undef
+   181:61  error  'chunkId' is defined but never used         no-unused-vars
+   185:28  error  'document' is not defined                   no-undef
+   193:23  error  'document' is not defined                   no-undef
+   208:14  error  'clearTimeout' is not defined               no-undef
+   215:27  error  'setTimeout' is not defined                 no-undef
+   218:27  error  'document' is not defined                   no-undef
+   252:57  error  'trustedTypes' is not defined               no-undef
+   253:24  error  'trustedTypes' is not defined               no-undef
+   324:15  error  'console' is not defined                    no-undef
+   493:14  error  Expected a 'break' statement before 'case'  no-fallthrough
+   673:64  error  'self' is not defined                       no-undef
+   674:41  error  'self' is not defined                       no-undef
+   690:12  error  'self' is not defined                       no-undef
+   691:12  error  'self' is not defined                       no-undef
+   778:12  error  'self' is not defined                       no-undef
+   883:14  error  'console' is not defined                    no-undef
+  1238:20  error  'fetch' is not defined                      no-undef
+  1274:37  error  'self' is not defined                       no-undef
+  1274:64  error  'self' is not defined                       no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/static/development/_buildManifest.js
+  1:1    error  'self' is not defined  no-undef
+  1:243  error  'self' is not defined  no-undef
+  1:271  error  'self' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/static/development/_ssgManifest.js
+  1:1   error  'self' is not defined  no-undef
+  1:29  error  'self' is not defined  no-undef
+  1:53  error  'self' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/.next/static/webpack/webpack.b6ef29a4d6c8299c.hot-update.js
+  10:1  error  'self' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/fix-linting.js
+   3:12  error  'require' is not defined                                no-undef
+   4:14  error  'require' is not defined                                no-undef
+  43:68  error  'action' is defined but never used                      no-unused-vars
+  66:9   error  'unusedVarPatterns' is assigned a value but never used  no-unused-vars
+  73:5   error  'console' is not defined                                no-undef
+  80:26  error  '__dirname' is not defined                              no-undef
+  83:1   error  'console' is not defined                                no-undef
+  92:1   error  'console' is not defined                                no-undef
+  93:1   error  'console' is not defined                                no-undef
+
+/home/robbie/cartrita-ai-os/frontend/next.config.js
+  21:26  error  'require' is not defined    no-undef
+  21:47  error  '__dirname' is not defined  no-undef
+  24:18  error  'process' is not defined    no-undef
+  29:26  error  'process' is not defined    no-undef
+  30:25  error  'process' is not defined    no-undef
+  31:35  error  'process' is not defined    no-undef
+  82:1   error  'module' is not defined     no-undef
+
+/home/robbie/cartrita-ai-os/frontend/postcss.config.js
+  1:1  error  'module' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/public/sw.js
+   8:1   error  'self' is not defined    no-undef
+  10:5   error  'caches' is not defined  no-undef
+  12:3   error  'self' is not defined    no-undef
+  15:1   error  'self' is not defined    no-undef
+  17:5   error  'caches' is not defined  no-undef
+  18:67  error  'caches' is not defined  no-undef
+  21:3   error  'self' is not defined    no-undef
+  24:1   error  'self' is not defined    no-undef
+  29:5   error  'caches' is not defined  no-undef
+  30:17  error  'fetch' is not defined   no-undef
+  32:9   error  'caches' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/frontend/tailwind.config.js
+   2:1   error  'module' is not defined   no-undef
+  82:13  error  'require' is not defined  no-undef
+
+/home/robbie/cartrita-ai-os/htmlcov/coverage_html_cb_6fb7b396.js
+    6:44  error  '$' is defined but never used      no-unused-vars
+   14:9   error  'clearTimeout' is not defined      no-undef
+   15:21  error  'setTimeout' is not defined        no-undef
+   43:30  error  'HTMLDataElement' is not defined   no-undef
+   87:29  error  'localStorage' is not defined      no-undef
+   91:9   error  'localStorage' is not defined      no-undef
+   97:13  error  'localStorage' is not defined      no-undef
+  105:9   error  'localStorage' is not defined      no-undef
+  129:32  error  'localStorage' is not defined      no-undef
+  133:33  error  'localStorage' is not defined      no-undef
+  144:29  error  'event' is defined but never used  no-unused-vars
+  152:9   error  'localStorage' is not defined      no-undef
+  156:9   error  'localStorage' is not defined      no-undef
+  163:17  error  'cell' is not defined              no-undef
+  164:21  error  'cell' is not defined              no-undef
+  165:36  error  'cell' is not defined              no-undef
+  193:17  error  'cell' is not defined              no-undef
+  194:21  error  'cell' is not defined              no-undef
+  199:44  error  'cell' is not defined              no-undef
+  204:48  error  'cell' is not defined              no-undef
+  254:57  error  'Event' is not defined             no-undef
+  255:58  error  'Event' is not defined             no-undef
+  268:25  error  'localStorage' is not defined      no-undef
+  273:30  error  'localStorage' is not defined      no-undef
+  319:16  error  'location' is not defined          no-undef
+  346:28  error  'localStorage' is not defined      no-undef
+  347:18  error  Empty block statement              no-empty
+  356:10  error  'cls' is not defined               no-undef
+  357:37  error  'cls' is not defined               no-undef
+  357:59  error  'cls' is not defined               no-undef
+  380:9   error  'localStorage' is not defined      no-undef
+  381:18  error  Empty block statement              no-empty
+  431:5   error  'location' is not defined          no-undef
+  459:12  error  Unexpected constant condition      no-constant-condition
+  718:13  error  'key' is not defined               no-undef
+  719:54  error  'contexts' is not defined          no-undef
+  719:63  error  'key' is not defined               no-undef
+
+/home/robbie/cartrita-ai-os/scripts/mcp/codacy_mcp_native.js
+  22:10  error  Unexpected constant condition  no-constant-condition
+  34:3   error  'console' is not defined       no-undef
+
+/home/robbie/cartrita-ai-os/services/ai-orchestrator/htmlcov/coverage_html_cb_6fb7b396.js
+    6:44  error  '$' is defined but never used      no-unused-vars
+   14:9   error  'clearTimeout' is not defined      no-undef
+   15:21  error  'setTimeout' is not defined        no-undef
+   43:30  error  'HTMLDataElement' is not defined   no-undef
+   87:29  error  'localStorage' is not defined      no-undef
+   91:9   error  'localStorage' is not defined      no-undef
+   97:13  error  'localStorage' is not defined      no-undef
+  105:9   error  'localStorage' is not defined      no-undef
+  129:32  error  'localStorage' is not defined      no-undef
+  133:33  error  'localStorage' is not defined      no-undef
+  144:29  error  'event' is defined but never used  no-unused-vars
+  152:9   error  'localStorage' is not defined      no-undef
+  156:9   error  'localStorage' is not defined      no-undef
+  163:17  error  'cell' is not defined              no-undef
+  164:21  error  'cell' is not defined              no-undef
+  165:36  error  'cell' is not defined              no-undef
+  193:17  error  'cell' is not defined              no-undef
+  194:21  error  'cell' is not defined              no-undef
+  199:44  error  'cell' is not defined              no-undef
+  204:48  error  'cell' is not defined              no-undef
+  254:57  error  'Event' is not defined             no-undef
+  255:58  error  'Event' is not defined             no-undef
+  268:25  error  'localStorage' is not defined      no-undef
+  273:30  error  'localStorage' is not defined      no-undef
+  319:16  error  'location' is not defined          no-undef
+  346:28  error  'localStorage' is not defined      no-undef
+  347:18  error  Empty block statement              no-empty
+  356:10  error  'cls' is not defined               no-undef
+  357:37  error  'cls' is not defined               no-undef
+  357:59  error  'cls' is not defined               no-undef
+  380:9   error  'localStorage' is not defined      no-undef
+  381:18  error  Empty block statement              no-empty
+  431:5   error  'location' is not defined          no-undef
+  459:12  error  Unexpected constant condition      no-constant-condition
+  718:13  error  'key' is not defined               no-undef
+  719:54  error  'contexts' is not defined          no-undef
+  719:63  error  'key' is not defined               no-undef
+
+/home/robbie/cartrita-ai-os/services/api-gateway/src/index.js
+    1:17  error  'require' is not defined                   no-undef
+    2:1   error  'require' is not defined                   no-undef
+    3:15  error  'require' is not defined                   no-undef
+    4:20  error  'require' is not defined                   no-undef
+    6:14  error  'process' is not defined                   no-undef
+   10:18  error  'require' is not defined                   no-undef
+   57:29  error  'process' is not defined                   no-undef
+   58:28  error  'process' is not defined                   no-undef
+   62:19  error  'require' is not defined                   no-undef
+  104:11  error  'skip' is assigned a value but never used  no-unused-vars
+  164:5   error  'process' is not defined                   no-undef
+
+/home/robbie/cartrita-ai-os/tests/voice-integration.test.js
+  15:49  error  Parsing error: Unexpected token as
+
+✖ 1012 problems (1012 errors, 0 warnings)

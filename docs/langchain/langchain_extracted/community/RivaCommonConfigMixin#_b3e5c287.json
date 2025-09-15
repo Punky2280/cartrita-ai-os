@@ -1,0 +1,82 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.nvidia_riva.RivaCommonConfigMixin.html#langchain_community.utilities.nvidia_riva.RivaCommonConfigMixin",
+  "title": "RivaCommonConfigMixin#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "RivaCommonConfigMixin"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "A collection of common Riva settings."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "The encoding on the audio stream."
+    },
+    {
+      "type": "p",
+      "content": "The [BCP-47 language code](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) for the target language."
+    },
+    {
+      "type": "p",
+      "content": "The sample rate frequency of audio stream."
+    },
+    {
+      "type": "li",
+      "content": "RivaCommonConfigMixinencodinglanguage_codesample_rate_hertz"
+    },
+    {
+      "type": "li",
+      "content": "language_code"
+    },
+    {
+      "type": "li",
+      "content": "sample_rate_hertz"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "BaseModel",
+    "RivaCommonConfigMixin",
+    "encoding",
+    "language_code",
+    "sample_rate_hertz"
+  ],
+  "api_signatures": [
+    "classlangchain_community.utilities.nvidia_riva.RivaCommonConfigMixin[source]#",
+    "langchain_community.utilities.nvidia_riva.",
+    "RivaCommonConfigMixin",
+    "paramencoding:RivaAudioEncoding=RivaAudioEncoding.LINEAR_PCM#",
+    "encoding",
+    "paramlanguage_code:str='en-US'#",
+    "language_code",
+    "paramsample_rate_hertz:int=8000#",
+    "sample_rate_hertz"
+  ],
+  "parameters": []
+}

@@ -29,17 +29,17 @@ describe('VoiceInput Integration', () => {
 
   it('renders voice input button', () => {
     render(<VoiceInput onTranscript={jest.fn()} />);
-    
+
     const voiceButton = screen.getByRole('button', { name: /voice input/i });
     expect(voiceButton).toBeInTheDocument();
   });
 
   it('starts recording on button click', async () => {
     render(<VoiceInput onTranscript={jest.fn()} />);
-    
+
     const voiceButton = screen.getByRole('button', { name: /voice input/i });
     fireEvent.click(voiceButton);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Listening...')).toBeInTheDocument();
     });
@@ -47,10 +47,10 @@ describe('VoiceInput Integration', () => {
 
   it('displays transcription in real-time', async () => {
     render(<VoiceInput onTranscript={jest.fn()} />);
-    
+
     const voiceButton = screen.getByRole('button', { name: /voice input/i });
     fireEvent.click(voiceButton);
-    
+
     // Simulate WebSocket message
     act(() => {
       if (mockWebSocket.onmessage) {
@@ -59,7 +59,7 @@ describe('VoiceInput Integration', () => {
         } as any);
       }
     });
-    
+
     await waitFor(() => {
       expect(screen.getByText('Hello')).toBeInTheDocument();
     });
@@ -67,10 +67,10 @@ describe('VoiceInput Integration', () => {
 
   it('handles voice processing state', async () => {
     render(<VoiceInput onTranscript={jest.fn()} />);
-    
+
     const voiceButton = screen.getByRole('button', { name: /voice input/i });
     fireEvent.click(voiceButton);
-    
+
     // Simulate processing state
     act(() => {
       if (mockWebSocket.onmessage) {
@@ -79,7 +79,7 @@ describe('VoiceInput Integration', () => {
         } as any);
       }
     });
-    
+
     await waitFor(() => {
       expect(screen.getByText('Processing...')).toBeInTheDocument();
     });

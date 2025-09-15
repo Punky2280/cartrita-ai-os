@@ -1,0 +1,104 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.reddit_search.tool.RedditSearchSchema.html#langchain_community.tools.reddit_search.tool.RedditSearchSchema",
+  "title": "RedditSearchSchema#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "RedditSearchSchema"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Input for Reddit search."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "a positive integer indicating the maximum number         of results to return"
+    },
+    {
+      "type": "p",
+      "content": "should be query string that post title should         contain, or ‘*’ if anything is allowed."
+    },
+    {
+      "type": "p",
+      "content": "should be sort method, which is one of: “relevance”         , “hot”, “top”, “new”, or “comments”."
+    },
+    {
+      "type": "p",
+      "content": "should be name of subreddit, like “all” for         r/all"
+    },
+    {
+      "type": "p",
+      "content": "should be time period to filter by, which is         one of “all”, “day”, “hour”, “month”, “week”, or “year”"
+    },
+    {
+      "type": "p",
+      "content": "Examples using RedditSearchSchema"
+    },
+    {
+      "type": "li",
+      "content": "Reddit Search"
+    },
+    {
+      "type": "p",
+      "content": "Reddit Search"
+    },
+    {
+      "type": "li",
+      "content": "RedditSearchSchemalimitquerysortsubreddittime_filter"
+    },
+    {
+      "type": "li",
+      "content": "time_filter"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "BaseModel",
+    "RedditSearchSchema",
+    "limit",
+    "query",
+    "sort",
+    "subreddit",
+    "time_filter"
+  ],
+  "api_signatures": [
+    "classlangchain_community.tools.reddit_search.tool.RedditSearchSchema[source]#",
+    "langchain_community.tools.reddit_search.tool.",
+    "RedditSearchSchema",
+    "paramlimit:str[Required]#",
+    "limit",
+    "paramquery:str[Required]#",
+    "query",
+    "paramsort:str[Required]#",
+    "sort",
+    "paramsubreddit:str[Required]#",
+    "subreddit",
+    "paramtime_filter:str[Required]#",
+    "time_filter"
+  ],
+  "parameters": []
+}

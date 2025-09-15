@@ -1,0 +1,52 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chains/langchain_community.chains.graph_qa.gremlin.extract_gremlin.html",
+  "title": "extract_gremlin#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "extract_gremlin"
+    },
+    {
+      "type": "p",
+      "content": "Extract Gremlin code from a text."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – Text to extract Gremlin code from."
+    },
+    {
+      "type": "p",
+      "content": "Gremlin code extracted from the text."
+    },
+    {
+      "type": "li",
+      "content": "extract_gremlin()"
+    }
+  ],
+  "code_examples": [
+    "chains",
+    "extract_gremlin()"
+  ],
+  "api_signatures": [
+    "langchain_community.chains.graph_qa.gremlin.extract_gremlin(text:str)→str[source]#",
+    "langchain_community.chains.graph_qa.gremlin.",
+    "extract_gremlin",
+    "(",
+    "text:str",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "text:str"
+  ]
+}

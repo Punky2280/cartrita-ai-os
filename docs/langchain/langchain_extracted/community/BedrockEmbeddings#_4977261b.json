@@ -1,0 +1,269 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/embeddings/langchain_community.embeddings.bedrock.BedrockEmbeddings.html",
+  "title": "BedrockEmbeddings#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "BedrockEmbeddings"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel,Embeddings"
+    },
+    {
+      "type": "p",
+      "content": "Deprecated since version 0.2.11:Use:class:`~langchain_aws.BedrockEmbeddings`instead. It will not be removed until langchain-community==1.0."
+    },
+    {
+      "type": "p",
+      "content": "Bedrock embedding models."
+    },
+    {
+      "type": "p",
+      "content": "To authenticate, the AWS client uses the following methods to\nautomatically load credentials:https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html"
+    },
+    {
+      "type": "p",
+      "content": "If a specific credential profile should be used, you must pass\nthe name of the profile from the ~/.aws/credentials file that is to be used."
+    },
+    {
+      "type": "p",
+      "content": "Make sure the credentials / roles used have the required policies to\naccess the Bedrock service."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Bedrock client."
+    },
+    {
+      "type": "p",
+      "content": "The name of the profile in the ~/.aws/credentials or ~/.aws/config files, which\nhas either access keys or role information specified.\nIf not specified, the default credential profile or, if on an EC2 instance,\ncredentials from IMDS will be used.\nSee:https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html"
+    },
+    {
+      "type": "p",
+      "content": "Needed if you don’t want to default to us-east-1 endpoint"
+    },
+    {
+      "type": "p",
+      "content": "Id of the model to call, e.g., amazon.titan-embed-text-v1, this is\nequivalent to the modelId property in the list-foundation-models api"
+    },
+    {
+      "type": "p",
+      "content": "Keyword arguments to pass to the model."
+    },
+    {
+      "type": "p",
+      "content": "Whether the embeddings should be normalized to unit vectors"
+    },
+    {
+      "type": "p",
+      "content": "The aws region e.g.,us-west-2. Fallsback to AWS_DEFAULT_REGION env variable\nor region specified in ~/.aws/config in case it is not provided here."
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous compute doc embeddings using a Bedrock model."
+    },
+    {
+      "type": "p",
+      "content": "texts(List[str]) – The list of texts to embed"
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings, one for each text."
+    },
+    {
+      "type": "p",
+      "content": "List[List[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous compute query embeddings using a Bedrock model."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – The text to embed."
+    },
+    {
+      "type": "p",
+      "content": "Embeddings for the text."
+    },
+    {
+      "type": "p",
+      "content": "List[float]"
+    },
+    {
+      "type": "p",
+      "content": "Compute doc embeddings using a Bedrock model."
+    },
+    {
+      "type": "p",
+      "content": "texts(List[str]) – The list of texts to embed"
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings, one for each text."
+    },
+    {
+      "type": "p",
+      "content": "List[List[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Compute query embeddings using a Bedrock model."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – The text to embed."
+    },
+    {
+      "type": "p",
+      "content": "Embeddings for the text."
+    },
+    {
+      "type": "p",
+      "content": "List[float]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using BedrockEmbeddings"
+    },
+    {
+      "type": "li",
+      "content": "Amazon MemoryDB"
+    },
+    {
+      "type": "p",
+      "content": "Amazon MemoryDB"
+    },
+    {
+      "type": "li",
+      "content": "BedrockEmbeddingsclientcredentials_profile_nameendpoint_urlmodel_idmodel_kwargsnormalizeregion_nameaembed_documents()aembed_query()embed_documents()embed_query()"
+    },
+    {
+      "type": "li",
+      "content": "credentials_profile_name"
+    },
+    {
+      "type": "li",
+      "content": "endpoint_url"
+    },
+    {
+      "type": "li",
+      "content": "model_kwargs"
+    },
+    {
+      "type": "li",
+      "content": "region_name"
+    },
+    {
+      "type": "li",
+      "content": "aembed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "aembed_query()"
+    },
+    {
+      "type": "li",
+      "content": "embed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "embed_query()"
+    }
+  ],
+  "code_examples": [
+    "embeddings",
+    "BaseModel",
+    "Embeddings",
+    ":class:`~langchain_aws.BedrockEmbeddings`",
+    "BedrockEmbeddings",
+    "client",
+    "credentials_profile_name",
+    "endpoint_url",
+    "model_id",
+    "model_kwargs",
+    "normalize",
+    "region_name",
+    "aembed_documents()",
+    "aembed_query()",
+    "embed_documents()",
+    "embed_query()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.embeddings.bedrock.BedrockEmbeddings[source]#",
+    "langchain_community.embeddings.bedrock.",
+    "BedrockEmbeddings",
+    "paramclient:Any=None#",
+    "client",
+    "paramcredentials_profile_name:str|None=None#",
+    "credentials_profile_name",
+    "paramendpoint_url:str|None=None#",
+    "endpoint_url",
+    "parammodel_id:str='amazon.titan-embed-text-v1'#",
+    "model_id",
+    "parammodel_kwargs:Dict|None=None#",
+    "model_kwargs",
+    "paramnormalize:bool=False#",
+    "normalize",
+    "paramregion_name:str|None=None#",
+    "region_name",
+    "asyncaembed_documents(texts:List[str],)→List[List[float]][source]#",
+    "aembed_documents",
+    "(",
+    "texts:List[str]",
+    ")",
+    "→List[List[float]]",
+    "→",
+    "List[List[float]]",
+    "asyncaembed_query(text:str,)→List[float][source]#",
+    "aembed_query",
+    "(",
+    "text:str",
+    ")",
+    "→List[float]",
+    "→",
+    "List[float]",
+    "embed_documents(texts:List[str],)→List[List[float]][source]#",
+    "embed_documents",
+    "(",
+    "texts:List[str]",
+    ")",
+    "→List[List[float]]",
+    "→",
+    "List[List[float]]",
+    "embed_query(text:str,)→List[float][source]#",
+    "embed_query",
+    "(",
+    "text:str",
+    ")",
+    "→List[float]",
+    "→",
+    "List[float]"
+  ],
+  "parameters": [
+    "texts:List[str]",
+    "text:str",
+    "texts:List[str]",
+    "text:str"
+  ]
+}

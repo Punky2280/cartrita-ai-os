@@ -1,0 +1,77 @@
+{
+  "url": "https://python.langchain.com/docs/integrations/providers/javelin_ai_gateway/",
+  "title": "Javelin AI Gateway",
+  "sections": [
+    {
+      "type": "li",
+      "content": "Javelin AI Gateway"
+    },
+    {
+      "type": "p",
+      "content": "The Javelin AI Gatewayservice is a high-performance, enterprise grade API Gateway for AI applications.\nIt is designed to streamline the usage and access of various large language model (LLM) providers,\nsuch as OpenAI, Cohere, Anthropic and custom large language models within an organization by incorporating\nrobust access security for all interactions with LLMs."
+    },
+    {
+      "type": "p",
+      "content": "Javelin offers a high-level interface that simplifies the interaction with LLMs by providing a unified endpoint\nto handle specific LLM related requests."
+    },
+    {
+      "type": "p",
+      "content": "See the Javelin AI Gatewaydocumentationfor more details.Javelin Python SDKis an easy to use client library meant to be embedded into AI Applications"
+    },
+    {
+      "type": "h2",
+      "content": "Installation and Setup​"
+    },
+    {
+      "type": "p",
+      "content": "Installjavelin_sdkto interact with Javelin AI Gateway:"
+    },
+    {
+      "type": "p",
+      "content": "Set the Javelin's API key as an environment variable:"
+    },
+    {
+      "type": "h2",
+      "content": "Completions Example​"
+    },
+    {
+      "type": "h2",
+      "content": "Embeddings Example​"
+    },
+    {
+      "type": "h2",
+      "content": "Chat Example​"
+    },
+    {
+      "type": "li",
+      "content": "Installation and Setup"
+    },
+    {
+      "type": "li",
+      "content": "Completions Example"
+    },
+    {
+      "type": "li",
+      "content": "Embeddings Example"
+    },
+    {
+      "type": "li",
+      "content": "Chat Example"
+    }
+  ],
+  "code_examples": [
+    "javelin_sdk",
+    "pip install 'javelin_sdk'",
+    "pip install 'javelin_sdk'",
+    "export JAVELIN_API_KEY=...",
+    "export JAVELIN_API_KEY=...",
+    "fromlangchain.chainsimportLLMChainfromlangchain_community.llmsimportJavelinAIGatewayfromlangchain_core.promptsimportPromptTemplateroute_completions=\"eng_dept03\"gateway=JavelinAIGateway(gateway_uri=\"http://localhost:8000\",route=route_completions,model_name=\"text-davinci-003\",)llmchain=LLMChain(llm=gateway,prompt=prompt)result=llmchain.run(\"podcast player\")print(result)",
+    "fromlangchain.chainsimportLLMChainfromlangchain_community.llmsimportJavelinAIGatewayfromlangchain_core.promptsimportPromptTemplateroute_completions=\"eng_dept03\"gateway=JavelinAIGateway(gateway_uri=\"http://localhost:8000\",route=route_completions,model_name=\"text-davinci-003\",)llmchain=LLMChain(llm=gateway,prompt=prompt)result=llmchain.run(\"podcast player\")print(result)",
+    "fromlangchain_community.embeddingsimportJavelinAIGatewayEmbeddingsfromlangchain_openaiimportOpenAIEmbeddingsembeddings=JavelinAIGatewayEmbeddings(gateway_uri=\"http://localhost:8000\",route=\"embeddings\",)print(embeddings.embed_query(\"hello\"))print(embeddings.embed_documents([\"hello\"]))",
+    "fromlangchain_community.embeddingsimportJavelinAIGatewayEmbeddingsfromlangchain_openaiimportOpenAIEmbeddingsembeddings=JavelinAIGatewayEmbeddings(gateway_uri=\"http://localhost:8000\",route=\"embeddings\",)print(embeddings.embed_query(\"hello\"))print(embeddings.embed_documents([\"hello\"]))",
+    "fromlangchain_community.chat_modelsimportChatJavelinAIGatewayfromlangchain_core.messagesimportHumanMessage,SystemMessagemessages=[SystemMessage(content=\"You are a helpful assistant that translates English to French.\"),HumanMessage(content=\"Artificial Intelligence has the power to transform humanity and make the world a better place\"),]chat=ChatJavelinAIGateway(gateway_uri=\"http://localhost:8000\",route=\"mychatbot_route\",model_name=\"gpt-3.5-turbo\"params={\"temperature\":0.1})print(chat(messages))",
+    "fromlangchain_community.chat_modelsimportChatJavelinAIGatewayfromlangchain_core.messagesimportHumanMessage,SystemMessagemessages=[SystemMessage(content=\"You are a helpful assistant that translates English to French.\"),HumanMessage(content=\"Artificial Intelligence has the power to transform humanity and make the world a better place\"),]chat=ChatJavelinAIGateway(gateway_uri=\"http://localhost:8000\",route=\"mychatbot_route\",model_name=\"gpt-3.5-turbo\"params={\"temperature\":0.1})print(chat(messages))"
+  ],
+  "api_signatures": [],
+  "parameters": []
+}

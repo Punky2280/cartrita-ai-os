@@ -1,0 +1,77 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chains/langchain_community.chains.graph_qa.cypher.construct_schema.html#langchain_community.chains.graph_qa.cypher.construct_schema",
+  "title": "construct_schema#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "construct_schema"
+    },
+    {
+      "type": "p",
+      "content": "Deprecated since version 0.3.8:Use:meth:`~langchain_neo4j.chains.graph_qa.cypher.construct_schema`instead. It will not be removed until langchain-community==1.0."
+    },
+    {
+      "type": "p",
+      "content": "Filter the schema based on included or excluded types"
+    },
+    {
+      "type": "li",
+      "content": "structured_schema(Dict[str,Any])"
+    },
+    {
+      "type": "p",
+      "content": "structured_schema(Dict[str,Any])"
+    },
+    {
+      "type": "li",
+      "content": "include_types(List[str])"
+    },
+    {
+      "type": "p",
+      "content": "include_types(List[str])"
+    },
+    {
+      "type": "li",
+      "content": "exclude_types(List[str])"
+    },
+    {
+      "type": "p",
+      "content": "exclude_types(List[str])"
+    },
+    {
+      "type": "li",
+      "content": "construct_schema()"
+    }
+  ],
+  "code_examples": [
+    "chains",
+    ":meth:`~langchain_neo4j.chains.graph_qa.cypher.construct_schema`",
+    "construct_schema()"
+  ],
+  "api_signatures": [
+    "langchain_community.chains.graph_qa.cypher.construct_schema(structured_schema:Dict[str,Any],include_types:List[str],exclude_types:List[str],)→str[source]#",
+    "langchain_community.chains.graph_qa.cypher.",
+    "construct_schema",
+    "(",
+    "structured_schema:Dict[str,Any]",
+    "include_types:List[str]",
+    "exclude_types:List[str]",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "structured_schema:Dict[str,Any]",
+    "include_types:List[str]",
+    "exclude_types:List[str]"
+  ]
+}

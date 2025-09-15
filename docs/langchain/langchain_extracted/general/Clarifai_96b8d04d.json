@@ -1,0 +1,96 @@
+{
+  "url": "https://python.langchain.com/docs/integrations/providers/clarifai/",
+  "title": "Clarifai",
+  "sections": [
+    {
+      "type": "p",
+      "content": "Clarifaiis one of first deep learning platforms having been founded in 2013. Clarifai provides an AI platform with the full AI lifecycle for data exploration, data labeling, model training, evaluation and inference around images, video, text and audio data. In the LangChain ecosystem, as far as we're aware, Clarifai is the only provider that supports LLMs, embeddings and a vector store in one production scale platform, making it an excellent choice to operationalize your LangChain implementations."
+    },
+    {
+      "type": "p",
+      "content": "Clarifaiprovides 1,000s of AI models for many different use cases. You canexplore them hereto find the one most suited for your use case. These models include those created by other providers such as OpenAI, Anthropic, Cohere, AI21, etc. as well as state of the art from open source such as Falcon, InstructorXL, etc. so that you build the best in AI into your products. You'll find these organized by the creator's user_id and into projects we call applications denoted by their app_id. Those IDs will be needed in additional to the model_id and optionally the version_id, so make note of all these IDs once you found the best model for your use case!"
+    },
+    {
+      "type": "p",
+      "content": "Also note that given there are many models for images, video, text and audio understanding, you can build some interested AI agents that utilize the variety of AI models as experts to understand those data types."
+    },
+    {
+      "type": "h2",
+      "content": "Installation and Setup​"
+    },
+    {
+      "type": "li",
+      "content": "Install the Python SDK:"
+    },
+    {
+      "type": "p",
+      "content": "Sign-upfor a Clarifai account, then get a personal access token to access the Clarifai API from yoursecurity settingsand set it as an environment variable (CLARIFAI_PAT)."
+    },
+    {
+      "type": "p",
+      "content": "To find the selection of LLMs in the Clarifai platform you can select the text to text model typehere."
+    },
+    {
+      "type": "p",
+      "content": "For more details, the docs on the Clarifai LLM wrapper provide adetailed walkthrough."
+    },
+    {
+      "type": "h2",
+      "content": "Embedding Models​"
+    },
+    {
+      "type": "p",
+      "content": "To find the selection of embeddings models in the Clarifai platform you can select the text to embedding model typehere."
+    },
+    {
+      "type": "p",
+      "content": "There is a Clarifai Embedding model in LangChain, which you can access with:"
+    },
+    {
+      "type": "p",
+      "content": "See ausage example."
+    },
+    {
+      "type": "h2",
+      "content": "Vectorstore​"
+    },
+    {
+      "type": "p",
+      "content": "Clarifai's vector DB was launched in 2016 and has been optimized to support live search queries. With workflows in the Clarifai platform, you data is automatically indexed by am embedding model and optionally other models as well to index that information in the DB for search. You can query the DB not only via the vectors but also filter by metadata matches, other AI predicted concepts, and even do geo-coordinate search. Simply create an application, select the appropriate base workflow for your type of data, and upload it (through the API asdocumented hereor the UIs at clarifai.com)."
+    },
+    {
+      "type": "p",
+      "content": "You can also add data directly from LangChain as well, and the auto-indexing will take place for you. You'll notice this is a little different than other vectorstores where you need to provide an embedding model in their constructor and have LangChain coordinate getting the embeddings from text and writing those to the index. Not only is it more convenient, but it's much more scalable to use Clarifai's distributed cloud to do all the index in the background."
+    },
+    {
+      "type": "p",
+      "content": "For more details, the docs on the Clarifai vector store provide adetailed walkthrough."
+    },
+    {
+      "type": "li",
+      "content": "Installation and Setup"
+    },
+    {
+      "type": "li",
+      "content": "Embedding Models"
+    },
+    {
+      "type": "li",
+      "content": "Vectorstore"
+    }
+  ],
+  "code_examples": [
+    "Clarifai",
+    "pip install clarifai",
+    "pip install clarifai",
+    "CLARIFAI_PAT",
+    "fromlangchain_community.llmsimportClarifaillm=Clarifai(pat=CLARIFAI_PAT,user_id=USER_ID,app_id=APP_ID,model_id=MODEL_ID)",
+    "fromlangchain_community.llmsimportClarifaillm=Clarifai(pat=CLARIFAI_PAT,user_id=USER_ID,app_id=APP_ID,model_id=MODEL_ID)",
+    "fromlangchain_community.embeddingsimportClarifaiEmbeddingsembeddings=ClarifaiEmbeddings(pat=CLARIFAI_PAT,user_id=USER_ID,app_id=APP_ID,model_id=MODEL_ID)",
+    "fromlangchain_community.embeddingsimportClarifaiEmbeddingsembeddings=ClarifaiEmbeddings(pat=CLARIFAI_PAT,user_id=USER_ID,app_id=APP_ID,model_id=MODEL_ID)",
+    "fromlangchain_community.vectorstoresimportClarifaiclarifai_vector_db=Clarifai.from_texts(user_id=USER_ID,app_id=APP_ID,texts=texts,pat=CLARIFAI_PAT,number_of_docs=NUMBER_OF_DOCS,metadatas=metadatas)",
+    "fromlangchain_community.vectorstoresimportClarifaiclarifai_vector_db=Clarifai.from_texts(user_id=USER_ID,app_id=APP_ID,texts=texts,pat=CLARIFAI_PAT,number_of_docs=NUMBER_OF_DOCS,metadatas=metadatas)"
+  ],
+  "api_signatures": [],
+  "parameters": []
+}

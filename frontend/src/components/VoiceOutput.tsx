@@ -1,10 +1,9 @@
 // Cartrita AI OS - Voice Output Component
 // Advanced TTS with voice selection and playback controls
 
-
-import { useState, useRef, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { toast } from 'sonner'
+import { useState, useRef, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 import {
   Volume2,
   VolumeX,
@@ -17,9 +16,9 @@ import {
   AlertCircle,
   Loader2,
   ChevronDown,
-  User
-} from 'lucide-react'
-import { cn } from '@/utils'
+  User,
+} from "lucide-react";
+import { cn } from "@/utils";
 import {
   Button,
   Card,
@@ -34,187 +33,228 @@ import {
   Slider,
   Badge,
   Alert,
-  AlertDescription
-} from '@/components/ui'
-import { useVoice } from '@/hooks'
-import type { VoiceSettings } from '@/types'
+  AlertDescription,
+} from "@/components/ui";
+import { useVoice } from "@/hooks";
+import type { VoiceSettings } from "@/types";
 
 // Voice options for Deepgram TTS
 const VOICE_OPTIONS = [
-  { id: 'aura-asteria-en', name: 'Asteria', gender: 'female', accent: 'American' },
-  { id: 'aura-luna-en', name: 'Luna', gender: 'female', accent: 'American' },
-  { id: 'aura-stella-en', name: 'Stella', gender: 'female', accent: 'American' },
-  { id: 'aura-athena-en', name: 'Athena', gender: 'female', accent: 'American' },
-  { id: 'aura-hera-en', name: 'Hera', gender: 'female', accent: 'American' },
-  { id: 'aura-orion-en', name: 'Orion', gender: 'male', accent: 'American' },
-  { id: 'aura-arcas-en', name: 'Arcas', gender: 'male', accent: 'American' },
-  { id: 'aura-perseus-en', name: 'Perseus', gender: 'male', accent: 'American' },
-  { id: 'aura-angus-en', name: 'Angus', gender: 'male', accent: 'British' },
-  { id: 'aura-orpheus-en', name: 'Orpheus', gender: 'male', accent: 'American' }
-]
+  {
+    id: "aura-asteria-en",
+    name: "Asteria",
+    gender: "female",
+    accent: "American",
+  },
+  { id: "aura-luna-en", name: "Luna", gender: "female", accent: "American" },
+  {
+    id: "aura-stella-en",
+    name: "Stella",
+    gender: "female",
+    accent: "American",
+  },
+  {
+    id: "aura-athena-en",
+    name: "Athena",
+    gender: "female",
+    accent: "American",
+  },
+  { id: "aura-hera-en", name: "Hera", gender: "female", accent: "American" },
+  { id: "aura-orion-en", name: "Orion", gender: "male", accent: "American" },
+  { id: "aura-arcas-en", name: "Arcas", gender: "male", accent: "American" },
+  {
+    id: "aura-perseus-en",
+    name: "Perseus",
+    gender: "male",
+    accent: "American",
+  },
+  { id: "aura-angus-en", name: "Angus", gender: "male", accent: "British" },
+  {
+    id: "aura-orpheus-en",
+    name: "Orpheus",
+    gender: "male",
+    accent: "American",
+  },
+];
 
 export interface VoiceOutputProps {
-  className?: string
-  onVoiceStart?: () => void
-  onVoiceEnd?: () => void
-  onError?: (error: Error) => void
+  className?: string;
+  onVoiceStart?: () => void;
+  onVoiceEnd?: () => void;
+  onError?: (error: Error) => void;
 }
 
 export function VoiceOutput({
   className,
   onVoiceStart,
   onVoiceEnd,
-  onError
+  onError,
 }: VoiceOutputProps) {
   // Voice state management
-  const { speak, isSpeaking, voiceState } = useVoice()
+  const { speak, isSpeaking, voiceState } = useVoice();
 
   // Component state
-  const [selectedVoice, setSelectedVoice] = useState('aura-asteria-en')
-  const [volume, setVolume] = useState(80)
-  const [speed, setSpeed] = useState(1.0)
-  const [isMuted, setIsMuted] = useState(false)
-  const [currentText, setCurrentText] = useState('')
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [playbackProgress, setPlaybackProgress] = useState(0)
+  const [selectedVoice, setSelectedVoice] = useState("aura-asteria-en");
+  const [volume, setVolume] = useState(80);
+  const [speed, setSpeed] = useState(1.0);
+  const [isMuted, setIsMuted] = useState(false);
+  const [currentText, setCurrentText] = useState("");
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [playbackProgress, setPlaybackProgress] = useState(0);
 
   // Refs
-  const audioContextRef = useRef<AudioContext | null>(null)
-  const gainNodeRef = useRef<GainNode | null>(null)
-  const playbackTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const gainNodeRef = useRef<GainNode | null>(null);
+  const playbackTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Initialize audio context
   useEffect(() => {
     try {
       // Check if AudioContext is available (not in test environment)
-      if (typeof AudioContext !== 'undefined' || typeof (window as any).webkitAudioContext !== 'undefined') {
-        audioContextRef.current = new (AudioContext || (window as any).webkitAudioContext)()
-        gainNodeRef.current = audioContextRef.current.createGain()
-        gainNodeRef.current.connect(audioContextRef.current.destination)
+      if (
+        typeof AudioContext !== "undefined" ||
+        typeof (window as any).webkitAudioContext !== "undefined"
+      ) {
+        audioContextRef.current = new (AudioContext ||
+          (window as any).webkitAudioContext)();
+        gainNodeRef.current = audioContextRef.current.createGain();
+        gainNodeRef.current.connect(audioContextRef.current.destination);
       }
     } catch (error) {
-      console.error('Failed to initialize audio context:', error)
-      onError?.(error as Error)
+      console.error("Failed to initialize audio context:", error);
+      onError?.(error as Error);
     }
 
     return () => {
-      if (audioContextRef.current && typeof audioContextRef.current.close === 'function') {
-        void void audioContextRef.current.close()
+      if (
+        audioContextRef.current &&
+        typeof audioContextRef.current.close === "function"
+      ) {
+        void void audioContextRef.current.close();
       }
       if (playbackTimeoutRef.current) {
-        clearTimeout(playbackTimeoutRef.current)
+        clearTimeout(playbackTimeoutRef.current);
       }
-    }
-  }, [onError])
+    };
+  }, [onError]);
 
   // Update volume
   useEffect(() => {
     if (gainNodeRef.current) {
-      const actualVolume = isMuted ? 0 : volume / 100
+      const actualVolume = isMuted ? 0 : volume / 100;
       gainNodeRef.current.gain.setValueAtTime(
         actualVolume,
-        audioContextRef.current?.currentTime || 0
-      )
+        audioContextRef.current?.currentTime || 0,
+      );
     }
-  }, [volume, isMuted])
+  }, [volume, isMuted]);
 
   // Handle voice playback
-  const handleSpeak = useCallback(async (text: string) => {
-    if (!text.trim()) {
-      toast.error('Please enter text to speak')
-      return
-    }
+  const handleSpeak = useCallback(
+    async (text: string) => {
+      if (!text.trim()) {
+        toast.error("Please enter text to speak");
+        return;
+      }
 
-    try {
-      setIsPlaying(true)
-      setCurrentText(text)
-      setPlaybackProgress(0)
-      onVoiceStart?.()
+      try {
+        setIsPlaying(true);
+        setCurrentText(text);
+        setPlaybackProgress(0);
+        onVoiceStart?.();
 
-      // Use the existing voice hook's speak function
-      await speak(text)
+        // Use the existing voice hook's speak function
+        await speak(text);
 
-      // Simulate progress for UI feedback
-      const duration = Math.max(text.length * 50, 1000) // Rough estimate
-      const interval = 100
-      const steps = duration / interval
-      let currentStep = 0
+        // Simulate progress for UI feedback
+        const duration = Math.max(text.length * 50, 1000); // Rough estimate
+        const interval = 100;
+        const steps = duration / interval;
+        let currentStep = 0;
 
-      const progressInterval = setInterval(() => {
-        currentStep++
-        setPlaybackProgress((currentStep / steps) * 100)
+        const progressInterval = setInterval(() => {
+          currentStep++;
+          setPlaybackProgress((currentStep / steps) * 100);
 
-        if (currentStep >= steps) {
-          clearInterval(progressInterval)
-          setIsPlaying(false)
-          setPlaybackProgress(100)
-          onVoiceEnd?.()
-        }
-      }, interval)
+          if (currentStep >= steps) {
+            clearInterval(progressInterval);
+            setIsPlaying(false);
+            setPlaybackProgress(100);
+            onVoiceEnd?.();
+          }
+        }, interval);
 
-      playbackTimeoutRef.current = setTimeout(() => {
-        clearInterval(progressInterval)
-        setIsPlaying(false)
-        setPlaybackProgress(100)
-        onVoiceEnd?.()
-      }, duration)
-
-    } catch (error) {
-      console.error('Voice playback error:', error)
-      setIsPlaying(false)
-      setPlaybackProgress(0)
-      onError?.(error as Error)
-      toast.error('Failed to play voice')
-    }
-  }, [speak, onVoiceStart, onVoiceEnd, onError])
+        playbackTimeoutRef.current = setTimeout(() => {
+          clearInterval(progressInterval);
+          setIsPlaying(false);
+          setPlaybackProgress(100);
+          onVoiceEnd?.();
+        }, duration);
+      } catch (error) {
+        console.error("Voice playback error:", error);
+        setIsPlaying(false);
+        setPlaybackProgress(0);
+        onError?.(error as Error);
+        toast.error("Failed to play voice");
+      }
+    },
+    [speak, onVoiceStart, onVoiceEnd, onError],
+  );
 
   // Stop playback
   const handleStop = useCallback(() => {
     if (playbackTimeoutRef.current) {
-      clearTimeout(playbackTimeoutRef.current)
+      clearTimeout(playbackTimeoutRef.current);
     }
-    setIsPlaying(false)
-    setPlaybackProgress(0)
-    onVoiceEnd?.()
-  }, [onVoiceEnd])
+    setIsPlaying(false);
+    setPlaybackProgress(0);
+    onVoiceEnd?.();
+  }, [onVoiceEnd]);
 
   // Toggle mute
   const handleToggleMute = useCallback(() => {
-    setIsMuted(!isMuted)
-  }, [isMuted])
+    setIsMuted(!isMuted);
+  }, [isMuted]);
 
   // Keyboard navigation
-  const handleKeyDown = useCallback((event: KeyboardEvent) => {
-    // Space or Enter to test voice
-    if ((event.key === ' ' || event.key === 'Enter') && !isPlaying && !isSpeaking) {
-      event.preventDefault()
-      handleSpeak('Hello! This is a test of the voice output system.')
-    }
-    
-    // Escape to stop playback
-    if (event.key === 'Escape' && isPlaying) {
-      event.preventDefault()
-      handleStop()
-    }
-    
-    // M key to toggle mute
-    if (event.key === 'm' || event.key === 'M') {
-      event.preventDefault()
-      handleToggleMute()
-    }
-  }, [isPlaying, isSpeaking, handleSpeak, handleStop, handleToggleMute])
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      // Space or Enter to test voice
+      if (
+        (event.key === " " || event.key === "Enter") &&
+        !isPlaying &&
+        !isSpeaking
+      ) {
+        event.preventDefault();
+        handleSpeak("Hello! This is a test of the voice output system.");
+      }
+
+      // Escape to stop playback
+      if (event.key === "Escape" && isPlaying) {
+        event.preventDefault();
+        handleStop();
+      }
+
+      // M key to toggle mute
+      if (event.key === "m" || event.key === "M") {
+        event.preventDefault();
+        handleToggleMute();
+      }
+    },
+    [isPlaying, isSpeaking, handleSpeak, handleStop, handleToggleMute],
+  );
 
   // Add keyboard event listener
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [handleKeyDown])
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
 
   // Get current voice info
-  const currentVoice = VOICE_OPTIONS.find(v => v.id === selectedVoice)
+  const currentVoice = VOICE_OPTIONS.find((v) => v.id === selectedVoice);
 
   return (
-    <Card className={cn('w-full max-w-md', className)}>
+    <Card className={cn("w-full max-w-md", className)}>
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Volume2 className="h-5 w-5" />
@@ -233,15 +273,15 @@ export function VoiceOutput({
       <CardContent className="space-y-4">
         {/* Voice Selection */}
         <div className="space-y-2">
-          <label 
-            htmlFor="voice-select" 
+          <label
+            htmlFor="voice-select"
             className="text-sm font-medium"
             id="voice-select-label"
           >
             Voice
           </label>
           <Select value={selectedVoice} onValueChange={setSelectedVoice}>
-            <SelectTrigger 
+            <SelectTrigger
               id="voice-select"
               aria-labelledby="voice-select-label"
               aria-describedby="voice-select-description"
@@ -249,9 +289,13 @@ export function VoiceOutput({
               <SelectValue>
                 <div className="flex items-center gap-2">
                   <User className="h-4 w-4" aria-hidden="true" />
-                  {currentVoice?.name || 'Select Voice'}
+                  {currentVoice?.name || "Select Voice"}
                   {currentVoice && (
-                    <Badge variant="secondary" className="text-xs" aria-label={`Gender: ${currentVoice.gender}, Accent: ${currentVoice.accent}`}>
+                    <Badge
+                      variant="secondary"
+                      className="text-xs"
+                      aria-label={`Gender: ${currentVoice.gender}, Accent: ${currentVoice.accent}`}
+                    >
                       {currentVoice.gender} • {currentVoice.accent}
                     </Badge>
                   )}
@@ -260,8 +304,8 @@ export function VoiceOutput({
             </SelectTrigger>
             <SelectContent>
               {VOICE_OPTIONS.map((voice) => (
-                <SelectItem 
-                  key={voice.id} 
+                <SelectItem
+                  key={voice.id}
                   value={voice.id}
                   aria-label={`${voice.name} - ${voice.gender} voice with ${voice.accent} accent`}
                 >
@@ -284,8 +328,8 @@ export function VoiceOutput({
         {/* Volume Control */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label 
-              htmlFor="volume-slider" 
+            <label
+              htmlFor="volume-slider"
               className="text-sm font-medium"
               id="volume-label"
             >
@@ -296,7 +340,7 @@ export function VoiceOutput({
               size="sm"
               onClick={handleToggleMute}
               className="h-8 w-8 p-0"
-              aria-label={isMuted ? 'Unmute volume' : 'Mute volume'}
+              aria-label={isMuted ? "Unmute volume" : "Mute volume"}
               aria-pressed={isMuted}
             >
               {isMuted ? (
@@ -319,19 +363,19 @@ export function VoiceOutput({
             aria-describedby="volume-value"
             aria-valuetext={`${volume}% volume`}
           />
-          <div 
-            id="volume-value" 
+          <div
+            id="volume-value"
             className="text-xs text-muted-foreground text-center"
             aria-live="polite"
           >
-            {isMuted ? 'Muted' : `${volume}%`}
+            {isMuted ? "Muted" : `${volume}%`}
           </div>
         </div>
 
         {/* Speed Control */}
         <div className="space-y-2">
-          <label 
-            htmlFor="speed-slider" 
+          <label
+            htmlFor="speed-slider"
             className="text-sm font-medium"
             id="speed-label"
           >
@@ -349,8 +393,8 @@ export function VoiceOutput({
             aria-describedby="speed-value"
             aria-valuetext={`${speed.toFixed(1)} times speed`}
           />
-          <div 
-            id="speed-value" 
+          <div
+            id="speed-value"
             className="text-xs text-muted-foreground text-center"
             aria-live="polite"
           >
@@ -363,7 +407,7 @@ export function VoiceOutput({
           {isPlaying && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               className="space-y-2"
             >
@@ -383,8 +427,7 @@ export function VoiceOutput({
                 <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
                   {currentText.length > 100
                     ? `${currentText.substring(0, 100)}...`
-                    : currentText
-                  }
+                    : currentText}
                 </div>
               )}
             </motion.div>
@@ -393,7 +436,7 @@ export function VoiceOutput({
 
         {/* Status Messages */}
         <AnimatePresence>
-          {voiceState === 'error' && (
+          {voiceState === "error" && (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -412,14 +455,23 @@ export function VoiceOutput({
         {/* Control Buttons */}
         <div className="flex items-center gap-2 pt-2">
           <Button
-            onClick={() => { { handleSpeak('Hello! This is a test of the voice output system.');; }}}
+            onClick={() => {
+              {
+                handleSpeak(
+                  "Hello! This is a test of the voice output system.",
+                );
+              }
+            }}
             disabled={isPlaying || isSpeaking}
             className="flex-1"
             aria-describedby="test-voice-description"
           >
             {isPlaying || isSpeaking ? (
               <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" aria-hidden="true" />
+                <Loader2
+                  className="h-4 w-4 mr-2 animate-spin"
+                  aria-hidden="true"
+                />
                 Speaking...
               </>
             ) : (
@@ -446,17 +498,24 @@ export function VoiceOutput({
         </div>
 
         {/* Status Indicator */}
-        <div className="flex items-center justify-center gap-2 pt-2 border-t" role="status" aria-live="polite">
-          <div 
+        <div
+          className="flex items-center justify-center gap-2 pt-2 border-t"
+          role="status"
+          aria-live="polite"
+        >
+          <div
             className={cn(
-              'h-2 w-2 rounded-full',
-              voiceState === 'idle' && 'bg-gray-400',
-              voiceState === 'speaking' && 'bg-green-500',
-              voiceState === 'error' && 'bg-red-500'
-            )} 
+              "h-2 w-2 rounded-full",
+              voiceState === "idle" && "bg-gray-400",
+              voiceState === "speaking" && "bg-green-500",
+              voiceState === "error" && "bg-red-500",
+            )}
             aria-hidden="true"
           />
-          <span className="text-xs text-muted-foreground capitalize" aria-label={`Voice status: ${voiceState}`}>
+          <span
+            className="text-xs text-muted-foreground capitalize"
+            aria-label={`Voice status: ${voiceState}`}
+          >
             {voiceState}
           </span>
         </div>
@@ -467,14 +526,25 @@ export function VoiceOutput({
             Keyboard Shortcuts
           </summary>
           <div className="mt-2 text-xs text-muted-foreground space-y-1">
-            <div><kbd className="px-1 py-0.5 bg-muted rounded text-xs">Space</kbd> or <kbd className="px-1 py-0.5 bg-muted rounded text-xs">Enter</kbd> - Test voice</div>
-            <div><kbd className="px-1 py-0.5 bg-muted rounded text-xs">Esc</kbd> - Stop playback</div>
-            <div><kbd className="px-1 py-0.5 bg-muted rounded text-xs">M</kbd> - Toggle mute</div>
+            <div>
+              <kbd className="px-1 py-0.5 bg-muted rounded text-xs">Space</kbd>{" "}
+              or{" "}
+              <kbd className="px-1 py-0.5 bg-muted rounded text-xs">Enter</kbd>{" "}
+              - Test voice
+            </div>
+            <div>
+              <kbd className="px-1 py-0.5 bg-muted rounded text-xs">Esc</kbd> -
+              Stop playback
+            </div>
+            <div>
+              <kbd className="px-1 py-0.5 bg-muted rounded text-xs">M</kbd> -
+              Toggle mute
+            </div>
           </div>
         </details>
       </CardContent>
     </Card>
-  )
+  );
 }
 
-export default VoiceOutput
+export default VoiceOutput;

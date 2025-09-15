@@ -1,0 +1,406 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.parsers.pdf.PyMuPDFParser.html#langchain_community.document_loaders.parsers.pdf.PyMuPDFParser",
+  "title": "PyMuPDFParser#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "PyMuPDFParser"
+    },
+    {
+      "type": "p",
+      "content": "Parse a blob from a PDF usingPyMuPDFlibrary."
+    },
+    {
+      "type": "p",
+      "content": "This class provides methods to parse a blob from a PDF document, supporting various\nconfigurations such as handling password-protected PDFs, extracting images, and\ndefining extraction mode.\nIt integrates the ‘PyMuPDF’ library for PDF processing and offers synchronous blob\nparsing."
+    },
+    {
+      "type": "p",
+      "content": "Load a blob from a PDF file:"
+    },
+    {
+      "type": "p",
+      "content": "Instantiate the parser:"
+    },
+    {
+      "type": "p",
+      "content": "# images_parser = TesseractBlobParser(),\n# extract_tables=”markdown”,\n# extract_tables_settings=None,\n# text_kwargs=None,"
+    },
+    {
+      "type": "p",
+      "content": "Lazily parse the blob:"
+    },
+    {
+      "type": "p",
+      "content": "Initialize a parser based on PyMuPDF."
+    },
+    {
+      "type": "li",
+      "content": "password(Optional[str]) – Optional password for opening encrypted PDFs."
+    },
+    {
+      "type": "p",
+      "content": "password(Optional[str]) – Optional password for opening encrypted PDFs."
+    },
+    {
+      "type": "li",
+      "content": "mode(Literal['single','page']) – The extraction mode, either “single” for the entire document or “page”\nfor page-wise extraction."
+    },
+    {
+      "type": "p",
+      "content": "mode(Literal['single','page']) – The extraction mode, either “single” for the entire document or “page”\nfor page-wise extraction."
+    },
+    {
+      "type": "li",
+      "content": "pages_delimiter(str) – A string delimiter to separate pages in single-mode\nextraction."
+    },
+    {
+      "type": "p",
+      "content": "pages_delimiter(str) – A string delimiter to separate pages in single-mode\nextraction."
+    },
+    {
+      "type": "li",
+      "content": "extract_images(bool) – Whether to extract images from the PDF."
+    },
+    {
+      "type": "p",
+      "content": "extract_images(bool) – Whether to extract images from the PDF."
+    },
+    {
+      "type": "li",
+      "content": "images_parser(Optional[BaseImageBlobParser]) – Optional image blob parser."
+    },
+    {
+      "type": "p",
+      "content": "images_parser(Optional[BaseImageBlobParser]) – Optional image blob parser."
+    },
+    {
+      "type": "li",
+      "content": "images_inner_format(Literal['text','markdown-img','html-img']) – The format for the parsed output.\n- “text” = return the content as is\n- “markdown-img” = wrap the content into an image markdown link, w/ link\npointing to (![body)(#)]\n- “html-img” = wrap the content as thealttext of an tag and link to\n(<img alt=”{body}” src=”#”/>)"
+    },
+    {
+      "type": "p",
+      "content": "images_inner_format(Literal['text','markdown-img','html-img']) – The format for the parsed output.\n- “text” = return the content as is\n- “markdown-img” = wrap the content into an image markdown link, w/ link\npointing to (![body)(#)]\n- “html-img” = wrap the content as thealttext of an tag and link to\n(<img alt=”{body}” src=”#”/>)"
+    },
+    {
+      "type": "li",
+      "content": "extract_tables(Union[Literal['csv','markdown','html'],None]) – Whether to extract tables in a specific format, such as\n“csv”, “markdown”, or “html”."
+    },
+    {
+      "type": "p",
+      "content": "extract_tables(Union[Literal['csv','markdown','html'],None]) – Whether to extract tables in a specific format, such as\n“csv”, “markdown”, or “html”."
+    },
+    {
+      "type": "li",
+      "content": "extract_tables_settings(Optional[dict[str,Any]]) – Optional dictionary of settings for customizing\ntable extraction."
+    },
+    {
+      "type": "p",
+      "content": "extract_tables_settings(Optional[dict[str,Any]]) – Optional dictionary of settings for customizing\ntable extraction."
+    },
+    {
+      "type": "li",
+      "content": "text_kwargs(Optional[dict[str,Any]])"
+    },
+    {
+      "type": "p",
+      "content": "text_kwargs(Optional[dict[str,Any]])"
+    },
+    {
+      "type": "p",
+      "content": "This method does not directly return data. Use theparseorlazy_parsemethods to retrieve parsed documents with content and metadata."
+    },
+    {
+      "type": "li",
+      "content": "ValueError– If the mode is not “single” or “page”."
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If the mode is not “single” or “page”."
+    },
+    {
+      "type": "li",
+      "content": "ValueError– If the extract_tables format is not “markdown”, “html”,"
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If the extract_tables format is not “markdown”, “html”,"
+    },
+    {
+      "type": "p",
+      "content": "__init__([text_kwargs, extract_images, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize a parser based on PyMuPDF."
+    },
+    {
+      "type": "p",
+      "content": "lazy_parse(blob)"
+    },
+    {
+      "type": "p",
+      "content": "Lazy parsing interface."
+    },
+    {
+      "type": "p",
+      "content": "parse(blob)"
+    },
+    {
+      "type": "p",
+      "content": "Eagerly parse the blob into a document or documents."
+    },
+    {
+      "type": "p",
+      "content": "Initialize a parser based on PyMuPDF."
+    },
+    {
+      "type": "li",
+      "content": "password(str|None) – Optional password for opening encrypted PDFs."
+    },
+    {
+      "type": "p",
+      "content": "password(str|None) – Optional password for opening encrypted PDFs."
+    },
+    {
+      "type": "li",
+      "content": "mode(Literal['single','page']) – The extraction mode, either “single” for the entire document or “page”\nfor page-wise extraction."
+    },
+    {
+      "type": "p",
+      "content": "mode(Literal['single','page']) – The extraction mode, either “single” for the entire document or “page”\nfor page-wise extraction."
+    },
+    {
+      "type": "li",
+      "content": "pages_delimiter(str) – A string delimiter to separate pages in single-mode\nextraction."
+    },
+    {
+      "type": "p",
+      "content": "pages_delimiter(str) – A string delimiter to separate pages in single-mode\nextraction."
+    },
+    {
+      "type": "li",
+      "content": "extract_images(bool) – Whether to extract images from the PDF."
+    },
+    {
+      "type": "p",
+      "content": "extract_images(bool) – Whether to extract images from the PDF."
+    },
+    {
+      "type": "li",
+      "content": "images_parser(BaseImageBlobParser|None) – Optional image blob parser."
+    },
+    {
+      "type": "p",
+      "content": "images_parser(BaseImageBlobParser|None) – Optional image blob parser."
+    },
+    {
+      "type": "li",
+      "content": "images_inner_format(Literal['text','markdown-img','html-img']) – The format for the parsed output.\n- “text” = return the content as is\n- “markdown-img” = wrap the content into an image markdown link, w/ link\npointing to (![body)(#)]\n- “html-img” = wrap the content as thealttext of an tag and link to\n(<img alt=”{body}” src=”#”/>)"
+    },
+    {
+      "type": "p",
+      "content": "images_inner_format(Literal['text','markdown-img','html-img']) – The format for the parsed output.\n- “text” = return the content as is\n- “markdown-img” = wrap the content into an image markdown link, w/ link\npointing to (![body)(#)]\n- “html-img” = wrap the content as thealttext of an tag and link to\n(<img alt=”{body}” src=”#”/>)"
+    },
+    {
+      "type": "li",
+      "content": "extract_tables(Literal['csv','markdown','html']|None) – Whether to extract tables in a specific format, such as\n“csv”, “markdown”, or “html”."
+    },
+    {
+      "type": "p",
+      "content": "extract_tables(Literal['csv','markdown','html']|None) – Whether to extract tables in a specific format, such as\n“csv”, “markdown”, or “html”."
+    },
+    {
+      "type": "li",
+      "content": "extract_tables_settings(dict[str,Any]|None) – Optional dictionary of settings for customizing\ntable extraction."
+    },
+    {
+      "type": "p",
+      "content": "extract_tables_settings(dict[str,Any]|None) – Optional dictionary of settings for customizing\ntable extraction."
+    },
+    {
+      "type": "li",
+      "content": "text_kwargs(dict[str,Any]|None)"
+    },
+    {
+      "type": "p",
+      "content": "text_kwargs(dict[str,Any]|None)"
+    },
+    {
+      "type": "p",
+      "content": "This method does not directly return data. Use theparseorlazy_parsemethods to retrieve parsed documents with content and metadata."
+    },
+    {
+      "type": "li",
+      "content": "ValueError– If the mode is not “single” or “page”."
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If the mode is not “single” or “page”."
+    },
+    {
+      "type": "li",
+      "content": "ValueError– If the extract_tables format is not “markdown”, “html”,"
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If the extract_tables format is not “markdown”, “html”,"
+    },
+    {
+      "type": "p",
+      "content": "Lazy parsing interface."
+    },
+    {
+      "type": "p",
+      "content": "Subclasses are required to implement this method."
+    },
+    {
+      "type": "p",
+      "content": "blob(Blob) – Blob instance"
+    },
+    {
+      "type": "p",
+      "content": "Generator of documents"
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Eagerly parse the blob into a document or documents."
+    },
+    {
+      "type": "p",
+      "content": "This is a convenience method for interactive development environment."
+    },
+    {
+      "type": "p",
+      "content": "Production applications should favor the lazy_parse method instead."
+    },
+    {
+      "type": "p",
+      "content": "Subclasses should generally not over-ride this parse method."
+    },
+    {
+      "type": "p",
+      "content": "blob(Blob) – Blob instance"
+    },
+    {
+      "type": "p",
+      "content": "List of documents"
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "li",
+      "content": "PyMuPDFParser__init__()lazy_parse()parse()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_parse()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "pipinstall-Ulangchain-communitypymupdf",
+    "fromlangchain_core.documents.baseimportBlobblob=Blob.from_path(\"./example_data/layout-parser-paper.pdf\")",
+    "fromlangchain_community.document_loaders.parsersimportPyMuPDFParserparser=PyMuPDFParser(# password = None,mode=\"single\",pages_delimiter=\"",
+    "docs=[]docs_lazy=parser.lazy_parse(blob)fordocindocs_lazy:docs.append(doc)print(docs[0].page_content[:100])print(docs[0].metadata)",
+    "__init__",
+    "lazy_parse",
+    "parse",
+    "PyMuPDFParser",
+    "__init__()",
+    "lazy_parse()",
+    "parse()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.parsers.pdf.PyMuPDFParser(text_kwargs:dict[str,Any]|None=None,extract_images:bool=False,*,password:str|None=None,mode:Literal['single','page']='page',pages_delimiter:str='\\n\\x0c',images_parser:BaseImageBlobParser|None=None,images_inner_format:Literal['text','markdown-img','html-img']='text',extract_tables:Literal['csv','markdown','html']|None=None,extract_tables_settings:dict[str,Any]|None=None,)[source]#",
+    "langchain_community.document_loaders.parsers.pdf.",
+    "PyMuPDFParser",
+    "(",
+    "text_kwargs:dict[str,Any]|None=None",
+    "extract_images:bool=False",
+    "*",
+    "password:str|None=None",
+    "mode:Literal['single','page']='page'",
+    "pages_delimiter:str='\\n\\x0c'",
+    "images_parser:BaseImageBlobParser|None=None",
+    "images_inner_format:Literal['text','markdown-img','html-img']='text'",
+    "extract_tables:Literal['csv','markdown','html']|None=None",
+    "extract_tables_settings:dict[str,Any]|None=None",
+    ")",
+    "__init__(text_kwargs:dict[str,Any]|None=None,extract_images:bool=False,*,password:str|None=None,mode:Literal['single','page']='page',pages_delimiter:str='\\n\\x0c',images_parser:BaseImageBlobParser|None=None,images_inner_format:Literal['text','markdown-img','html-img']='text',extract_tables:Literal['csv','markdown','html']|None=None,extract_tables_settings:dict[str,Any]|None=None,)→None[source]#",
+    "__init__",
+    "(",
+    "text_kwargs:dict[str,Any]|None=None",
+    "extract_images:bool=False",
+    "*",
+    "password:str|None=None",
+    "mode:Literal['single','page']='page'",
+    "pages_delimiter:str='\\n\\x0c'",
+    "images_parser:BaseImageBlobParser|None=None",
+    "images_inner_format:Literal['text','markdown-img','html-img']='text'",
+    "extract_tables:Literal['csv','markdown','html']|None=None",
+    "extract_tables_settings:dict[str,Any]|None=None",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "lazy_parse(blob:Blob,)→Iterator[Document][source]#",
+    "lazy_parse",
+    "(",
+    "blob:Blob",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "parse(blob:Blob)→list[Document]#",
+    "parse",
+    "(",
+    "blob:Blob",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "text_kwargs:dict[str,Any]|None=None",
+    "extract_images:bool=False",
+    "*",
+    "password:str|None=None",
+    "mode:Literal['single','page']='page'",
+    "pages_delimiter:str='\\n\\x0c'",
+    "images_parser:BaseImageBlobParser|None=None",
+    "images_inner_format:Literal['text','markdown-img','html-img']='text'",
+    "extract_tables:Literal['csv','markdown','html']|None=None",
+    "extract_tables_settings:dict[str,Any]|None=None",
+    "text_kwargs:dict[str,Any]|None=None",
+    "extract_images:bool=False",
+    "*",
+    "password:str|None=None",
+    "mode:Literal['single','page']='page'",
+    "pages_delimiter:str='\\n\\x0c'",
+    "images_parser:BaseImageBlobParser|None=None",
+    "images_inner_format:Literal['text','markdown-img','html-img']='text'",
+    "extract_tables:Literal['csv','markdown','html']|None=None",
+    "extract_tables_settings:dict[str,Any]|None=None",
+    "blob:Blob",
+    "blob:Blob"
+  ]
+}

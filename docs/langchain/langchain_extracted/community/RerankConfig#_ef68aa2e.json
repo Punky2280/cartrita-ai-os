@@ -1,0 +1,172 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.vectara.RerankConfig.html#langchain_community.vectorstores.vectara.RerankConfig",
+  "title": "RerankConfig#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "vectorstores"
+    },
+    {
+      "type": "li",
+      "content": "RerankConfig"
+    },
+    {
+      "type": "p",
+      "content": "Configuration for Reranker."
+    },
+    {
+      "type": "p",
+      "content": "reranker: “mmr”, “rerank_multilingual_v1”, “udf” or “none”\nrerank_k: number of results to fetch before reranking, defaults to 50\nmmr_diversity_bias: for MMR only - a number between 0 and 1 that determines"
+    },
+    {
+      "type": "p",
+      "content": "the degree of diversity among the results with 0 corresponding\nto minimum diversity and 1 to maximum diversity.\nDefaults to 0.3.\nNote: mmr_diversity_bias is equivalent 1-lambda_mult\nwhere lambda_mult is the value often used in max_marginal_relevance_search()\nWe chose to use that since we believe it’s more intuitive to the user."
+    },
+    {
+      "type": "p",
+      "content": "user_function: for UDF only - the user function to use for reranking."
+    },
+    {
+      "type": "p",
+      "content": "mmr_diversity_bias"
+    },
+    {
+      "type": "p",
+      "content": "user_function"
+    },
+    {
+      "type": "p",
+      "content": "__init__([reranker, rerank_k, ...])"
+    },
+    {
+      "type": "li",
+      "content": "reranker(str)"
+    },
+    {
+      "type": "p",
+      "content": "reranker(str)"
+    },
+    {
+      "type": "li",
+      "content": "rerank_k(int)"
+    },
+    {
+      "type": "p",
+      "content": "rerank_k(int)"
+    },
+    {
+      "type": "li",
+      "content": "mmr_diversity_bias(float)"
+    },
+    {
+      "type": "p",
+      "content": "mmr_diversity_bias(float)"
+    },
+    {
+      "type": "li",
+      "content": "user_function(str)"
+    },
+    {
+      "type": "p",
+      "content": "user_function(str)"
+    },
+    {
+      "type": "li",
+      "content": "reranker(str)"
+    },
+    {
+      "type": "p",
+      "content": "reranker(str)"
+    },
+    {
+      "type": "li",
+      "content": "rerank_k(int)"
+    },
+    {
+      "type": "p",
+      "content": "rerank_k(int)"
+    },
+    {
+      "type": "li",
+      "content": "mmr_diversity_bias(float)"
+    },
+    {
+      "type": "p",
+      "content": "mmr_diversity_bias(float)"
+    },
+    {
+      "type": "li",
+      "content": "user_function(str)"
+    },
+    {
+      "type": "p",
+      "content": "user_function(str)"
+    },
+    {
+      "type": "p",
+      "content": "Examples using RerankConfig"
+    },
+    {
+      "type": "li",
+      "content": "Vectara Chat"
+    },
+    {
+      "type": "p",
+      "content": "Vectara Chat"
+    },
+    {
+      "type": "li",
+      "content": "RerankConfig__init__()"
+    }
+  ],
+  "code_examples": [
+    "vectorstores",
+    "mmr_diversity_bias",
+    "rerank_k",
+    "reranker",
+    "user_function",
+    "__init__",
+    "RerankConfig",
+    "__init__()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.vectorstores.vectara.RerankConfig(reranker:str='none',rerank_k:int=50,mmr_diversity_bias:float=0.3,user_function:str='',)[source]#",
+    "langchain_community.vectorstores.vectara.",
+    "RerankConfig",
+    "(",
+    "reranker:str='none'",
+    "rerank_k:int=50",
+    "mmr_diversity_bias:float=0.3",
+    "user_function:str=''",
+    ")",
+    "__init__(reranker:str='none',rerank_k:int=50,mmr_diversity_bias:float=0.3,user_function:str='',)→None#",
+    "__init__",
+    "(",
+    "reranker:str='none'",
+    "rerank_k:int=50",
+    "mmr_diversity_bias:float=0.3",
+    "user_function:str=''",
+    ")",
+    "→None",
+    "→",
+    "None"
+  ],
+  "parameters": [
+    "reranker:str='none'",
+    "rerank_k:int=50",
+    "mmr_diversity_bias:float=0.3",
+    "user_function:str=''",
+    "reranker:str='none'",
+    "rerank_k:int=50",
+    "mmr_diversity_bias:float=0.3",
+    "user_function:str=''"
+  ]
+}

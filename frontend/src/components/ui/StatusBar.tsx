@@ -1,5 +1,5 @@
-import React from 'react';
-import { Bot, Zap, Mic, Clock } from 'lucide-react';
+import React from "react";
+import { Bot, Zap, Mic, Clock } from "lucide-react";
 
 interface StatusBarProps {
   currentModel: string;
@@ -12,7 +12,7 @@ const StatusBar: React.FC<StatusBarProps> = ({
   currentModel,
   tokenCount,
   voiceActivity,
-  currentTime
+  currentTime,
 }) => {
   return (
     <div className="h-12 bg-copilot-blue border-t border-gray-600 flex items-center justify-between px-6 text-white text-sm">
@@ -28,8 +28,10 @@ const StatusBar: React.FC<StatusBarProps> = ({
       </div>
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2">
-          <Mic className={`h-4 w-4 ${voiceActivity ? 'text-fuschia-pink animate-pulse' : 'text-gray-400'}`} />
-          <span>{voiceActivity ? 'Active' : 'Inactive'}</span>
+          <Mic
+            className={`h-4 w-4 ${voiceActivity ? "text-fuschia-pink animate-pulse" : "text-gray-400"}`}
+          />
+          <span>{voiceActivity ? "Active" : "Inactive"}</span>
         </div>
         <div className="flex items-center gap-2">
           <Clock className="h-4 w-4" />

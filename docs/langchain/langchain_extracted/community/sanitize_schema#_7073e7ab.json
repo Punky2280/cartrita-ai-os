@@ -1,0 +1,48 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.sql_database.sanitize_schema.html#langchain_community.utilities.sql_database.sanitize_schema",
+  "title": "sanitize_schema#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "sanitize_schema"
+    },
+    {
+      "type": "p",
+      "content": "Sanitize a schema name to only contain letters, digits, and underscores."
+    },
+    {
+      "type": "p",
+      "content": "schema(str)"
+    },
+    {
+      "type": "li",
+      "content": "sanitize_schema()"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "sanitize_schema()"
+  ],
+  "api_signatures": [
+    "langchain_community.utilities.sql_database.sanitize_schema(schema:str)→str[source]#",
+    "langchain_community.utilities.sql_database.",
+    "sanitize_schema",
+    "(",
+    "schema:str",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "schema:str"
+  ]
+}

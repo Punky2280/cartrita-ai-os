@@ -1,0 +1,591 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/agent_toolkits.html#langchain-community-agent-toolkits",
+  "title": "agent_toolkits#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "agent_toolkits"
+    },
+    {
+      "type": "p",
+      "content": "Toolkitsare sets of tools that can be used to interact with\nvarious services and APIs."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.ainetwork.toolkit.AINetworkToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for interacting with AINetwork Blockchain."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.amadeus.toolkit.AmadeusToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for interacting with Amadeus which offers APIs for travel."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.azure_ai_services.AzureAiServicesToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for Azure AI Services."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.azure_cognitive_services.AzureCognitiveServicesToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for Azure Cognitive Services."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.cassandra_database.toolkit.CassandraDatabaseToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for interacting with an Apache Cassandra database."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.clickup.toolkit.ClickupToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Clickup Toolkit."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.cogniswitch.toolkit.CogniswitchToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for CogniSwitch."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.connery.toolkit.ConneryToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit with a list of Connery Actions as tools."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.file_management.toolkit.FileManagementToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for interacting with local files."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.financial_datasets.toolkit.FinancialDatasetsToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for interacting with financialdatasets.ai."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.BranchName"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require a branch name as input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.CommentOnIssue"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require a comment as input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.CreateFile"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require a file path and content as input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.CreatePR"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require a PR title and body as input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.CreateReviewRequest"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require a username as input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.DeleteFile"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require a file path as input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.DirectoryPath"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require a directory path as input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.GetIssue"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require an issue number as input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.GetPR"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require a PR number as input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.GitHubToolkit"
+    },
+    {
+      "type": "p",
+      "content": "GitHub Toolkit."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.NoInput"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that do not require any input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.ReadFile"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require a file path as input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.SearchCode"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require a search query as input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.SearchIssuesAndPRs"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require a search query as input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.TagName"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require a tag name as input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.github.toolkit.UpdateFile"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require a file path and content as input."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.gitlab.toolkit.GitLabToolkit"
+    },
+    {
+      "type": "p",
+      "content": "GitLab Toolkit."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.gmail.toolkit.GmailToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for interacting with Gmail."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.jira.toolkit.JiraToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Jira Toolkit."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.json.toolkit.JsonToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for interacting with a JSON spec."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.multion.toolkit.MultionToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for interacting with the Browser Agent."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.nasa.toolkit.NasaToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Nasa Toolkit."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.nla.tool.NLATool"
+    },
+    {
+      "type": "p",
+      "content": "Natural Language API Tool."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.nla.toolkit.NLAToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Natural Language API Toolkit."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.office365.toolkit.O365Toolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for interacting with Office 365."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.openapi.planner.RequestsDeleteToolWithParsing"
+    },
+    {
+      "type": "p",
+      "content": "Tool that sends a DELETE request and parses the response."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.openapi.planner.RequestsGetToolWithParsing"
+    },
+    {
+      "type": "p",
+      "content": "Requests GET tool with LLM-instructed extraction of truncated responses."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.openapi.planner.RequestsPatchToolWithParsing"
+    },
+    {
+      "type": "p",
+      "content": "Requests PATCH tool with LLM-instructed extraction of truncated responses."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.openapi.planner.RequestsPostToolWithParsing"
+    },
+    {
+      "type": "p",
+      "content": "Requests POST tool with LLM-instructed extraction of truncated responses."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.openapi.planner.RequestsPutToolWithParsing"
+    },
+    {
+      "type": "p",
+      "content": "Requests PUT tool with LLM-instructed extraction of truncated responses."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.openapi.spec.ReducedOpenAPISpec(...)"
+    },
+    {
+      "type": "p",
+      "content": "A reduced OpenAPI spec."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.openapi.toolkit.OpenAPIToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for interacting with an OpenAPI API."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.openapi.toolkit.RequestsToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for making REST requests."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.playwright.toolkit.PlayWrightBrowserToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for PlayWright browser tools."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.polygon.toolkit.PolygonToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Polygon Toolkit."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.powerbi.toolkit.PowerBIToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for interacting with Power BI dataset."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.slack.toolkit.SlackToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for interacting with Slack."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.spark_sql.toolkit.SparkSQLToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Toolkit for interacting with Spark SQL."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.sql.toolkit.SQLDatabaseToolkit"
+    },
+    {
+      "type": "p",
+      "content": "SQLDatabaseToolkit for interacting with SQL databases."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.steam.toolkit.SteamToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Steam Toolkit."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.zapier.toolkit.ZapierToolkit"
+    },
+    {
+      "type": "p",
+      "content": "Zapier Toolkit."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.json.base.create_json_agent(...)"
+    },
+    {
+      "type": "p",
+      "content": "Construct a json agent from an LLM and tools."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.load_tools.get_all_tool_names()"
+    },
+    {
+      "type": "p",
+      "content": "Get a list of all possible tool names."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.load_tools.load_huggingface_tool(...)"
+    },
+    {
+      "type": "p",
+      "content": "Loads a tool from the HuggingFace Hub."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.load_tools.load_tools(tool_names)"
+    },
+    {
+      "type": "p",
+      "content": "Load tools based on their name."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.load_tools.raise_dangerous_tools_exception(name)"
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.openapi.base.create_openapi_agent(...)"
+    },
+    {
+      "type": "p",
+      "content": "Construct an OpenAPI agent from an LLM and tools."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.openapi.planner.create_openapi_agent(...)"
+    },
+    {
+      "type": "p",
+      "content": "Construct an OpenAI API planner and controller for a given spec."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.openapi.spec.reduce_openapi_spec(spec)"
+    },
+    {
+      "type": "p",
+      "content": "Simplify/distill/minify a spec somehow."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.powerbi.base.create_pbi_agent(llm)"
+    },
+    {
+      "type": "p",
+      "content": "Construct a Power BI agent from an LLM and tools."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.powerbi.chat_base.create_pbi_chat_agent(llm)"
+    },
+    {
+      "type": "p",
+      "content": "Construct a Power BI agent from a Chat LLM and tools."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.spark_sql.base.create_spark_sql_agent(...)"
+    },
+    {
+      "type": "p",
+      "content": "Construct a Spark SQL agent from an LLM and tools."
+    },
+    {
+      "type": "p",
+      "content": "agent_toolkits.sql.base.create_sql_agent(llm)"
+    },
+    {
+      "type": "p",
+      "content": "Construct a SQL agent from an LLM and toolkit or database."
+    }
+  ],
+  "code_examples": [
+    "agent_toolkits",
+    "agent_toolkits",
+    "agent_toolkits.ainetwork.toolkit.AINetworkToolkit",
+    "agent_toolkits.amadeus.toolkit.AmadeusToolkit",
+    "agent_toolkits.azure_ai_services.AzureAiServicesToolkit",
+    "agent_toolkits.azure_cognitive_services.AzureCognitiveServicesToolkit",
+    "agent_toolkits.cassandra_database.toolkit.CassandraDatabaseToolkit",
+    "agent_toolkits.clickup.toolkit.ClickupToolkit",
+    "agent_toolkits.cogniswitch.toolkit.CogniswitchToolkit",
+    "agent_toolkits.connery.toolkit.ConneryToolkit",
+    "agent_toolkits.file_management.toolkit.FileManagementToolkit",
+    "agent_toolkits.financial_datasets.toolkit.FinancialDatasetsToolkit",
+    "agent_toolkits.github.toolkit.BranchName",
+    "agent_toolkits.github.toolkit.CommentOnIssue",
+    "agent_toolkits.github.toolkit.CreateFile",
+    "agent_toolkits.github.toolkit.CreatePR",
+    "agent_toolkits.github.toolkit.CreateReviewRequest",
+    "agent_toolkits.github.toolkit.DeleteFile",
+    "agent_toolkits.github.toolkit.DirectoryPath",
+    "agent_toolkits.github.toolkit.GetIssue",
+    "agent_toolkits.github.toolkit.GetPR",
+    "agent_toolkits.github.toolkit.GitHubToolkit",
+    "agent_toolkits.github.toolkit.NoInput",
+    "agent_toolkits.github.toolkit.ReadFile",
+    "agent_toolkits.github.toolkit.SearchCode",
+    "agent_toolkits.github.toolkit.SearchIssuesAndPRs",
+    "agent_toolkits.github.toolkit.TagName",
+    "agent_toolkits.github.toolkit.UpdateFile",
+    "agent_toolkits.gitlab.toolkit.GitLabToolkit",
+    "agent_toolkits.gmail.toolkit.GmailToolkit",
+    "agent_toolkits.jira.toolkit.JiraToolkit",
+    "agent_toolkits.json.toolkit.JsonToolkit",
+    "agent_toolkits.multion.toolkit.MultionToolkit",
+    "agent_toolkits.nasa.toolkit.NasaToolkit",
+    "agent_toolkits.nla.tool.NLATool",
+    "agent_toolkits.nla.toolkit.NLAToolkit",
+    "agent_toolkits.office365.toolkit.O365Toolkit",
+    "agent_toolkits.openapi.planner.RequestsDeleteToolWithParsing",
+    "agent_toolkits.openapi.planner.RequestsGetToolWithParsing",
+    "agent_toolkits.openapi.planner.RequestsPatchToolWithParsing",
+    "agent_toolkits.openapi.planner.RequestsPostToolWithParsing",
+    "agent_toolkits.openapi.planner.RequestsPutToolWithParsing",
+    "agent_toolkits.openapi.spec.ReducedOpenAPISpec",
+    "agent_toolkits.openapi.toolkit.OpenAPIToolkit",
+    "agent_toolkits.openapi.toolkit.RequestsToolkit",
+    "agent_toolkits.playwright.toolkit.PlayWrightBrowserToolkit",
+    "agent_toolkits.polygon.toolkit.PolygonToolkit",
+    "agent_toolkits.powerbi.toolkit.PowerBIToolkit",
+    "agent_toolkits.slack.toolkit.SlackToolkit",
+    "agent_toolkits.spark_sql.toolkit.SparkSQLToolkit",
+    "agent_toolkits.sql.toolkit.SQLDatabaseToolkit",
+    "agent_toolkits.steam.toolkit.SteamToolkit",
+    "agent_toolkits.zapier.toolkit.ZapierToolkit",
+    "agent_toolkits.json.base.create_json_agent",
+    "agent_toolkits.load_tools.get_all_tool_names",
+    "agent_toolkits.load_tools.load_huggingface_tool",
+    "agent_toolkits.load_tools.load_tools",
+    "agent_toolkits.load_tools.raise_dangerous_tools_exception",
+    "agent_toolkits.openapi.base.create_openapi_agent",
+    "agent_toolkits.openapi.planner.create_openapi_agent",
+    "agent_toolkits.openapi.spec.reduce_openapi_spec",
+    "agent_toolkits.powerbi.base.create_pbi_agent",
+    "agent_toolkits.powerbi.chat_base.create_pbi_chat_agent",
+    "agent_toolkits.spark_sql.base.create_spark_sql_agent",
+    "agent_toolkits.sql.base.create_sql_agent"
+  ],
+  "api_signatures": [],
+  "parameters": []
+}

@@ -1,0 +1,43 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/callbacks/langchain_community.callbacks.streamlit.mutable_expander.ChildType.html",
+  "title": "ChildType#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Enumerator of the child type."
+    },
+    {
+      "type": "li",
+      "content": "ChildTypeMARKDOWNEXCEPTION"
+    }
+  ],
+  "code_examples": [
+    "callbacks",
+    "ChildType",
+    "MARKDOWN",
+    "EXCEPTION"
+  ],
+  "api_signatures": [
+    "classlangchain_community.callbacks.streamlit.mutable_expander.ChildType(value)[source]#",
+    "langchain_community.callbacks.streamlit.mutable_expander.",
+    "ChildType",
+    "(",
+    "value",
+    ")",
+    "MARKDOWN='MARKDOWN'#",
+    "MARKDOWN",
+    "EXCEPTION='EXCEPTION'#",
+    "EXCEPTION"
+  ],
+  "parameters": [
+    "value"
+  ]
+}

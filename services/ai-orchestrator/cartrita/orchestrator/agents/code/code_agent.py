@@ -20,7 +20,7 @@ except ImportError as e:
     _import_error = e  # store for later
     HumanMessage = None  # type: ignore
     SystemMessage = None  # type: ignore
-from langchain_openai import ChatOpenAI
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from pydantic import BaseModel, Field
 
 
@@ -137,15 +137,15 @@ class CodeAgent:
         # Get settings with proper initialization
         from cartrita.orchestrator.utils.config import get_settings
         _settings = get_settings()
-        
+
         self.model = model or _settings.ai.code_model
         self.api_key = api_key or _settings.ai.openai_api_key.get_secret_value()
 
-        # Initialize GPT-5 code model
-        self.code_llm = ChatOpenAI(
+        # Initialize GPT-5 code model via factory (normalizes token params)
+        self.code_llm = create_chat_openai(
             model=self.model,
-            temperature=0.2,  # Slightly higher temperature for creative code generation
-            max_completion_tokens=8192,  # Higher token limit for code generation
+            temperature=0.2,
+            max_completion_tokens=8192,
             openai_api_key=self.api_key,
         )
 
@@ -234,153 +234,229 @@ class CodeAgent:
         start_time = time.time()
 
         try:
-            # Extract code task from messages
+            # Prepare and execute task
             code_task = self._extract_code_task(messages)
-
-            # Determine task type
             task_type = self._determine_task_type(code_task, context)
+            result = await self._execute_code_task(code_task, task_type, context)
 
-            # Execute appropriate task
-            if task_type == "generate":
-                result = await self._generate_code(code_task, context)
-            elif task_type == "analyze":
-                result = await self._analyze_code(code_task, context)
-            elif task_type == "debug":
-                result = await self._debug_code(code_task, context)
-            elif task_type == "optimize":
-                result = await self._optimize_code(code_task, context)
-            elif task_type == "review":
-                result = await self._review_code(code_task, context)
-            else:
-                result = await self._generate_code(
-                    code_task, context
-                )  # Default to generation
-
-            # Format response
-            response = {
-                "response": result.get("response", ""),
-                "code_data": result,
-                "execution_time": time.time() - start_time,
-                "metadata": {
-                    "agent": "code_agent",
-                    "model": self.model,
-                    "task_type": task_type,
-                    "language": context.get("language", "python"),
-                    **metadata,
-                },
-            }
-
-            logger.info(
-                "Code task completed",
-                task_type=task_type,
-                language=context.get("language", "python"),
-                execution_time=time.time() - start_time,
-            )
+            # Build and return response
+            response = self._build_code_success_response(result, task_type, start_time, context, metadata)
+            self._log_code_completion(task_type, context, start_time)
 
             return response
 
         except Exception as e:
-            logger.error(
-                "Code execution failed",
-                error=str(e),
-                task=code_task[:100] if "code_task" in locals() else "unknown",
-            )
-            return {
-                "response": f"I apologize, but I encountered an error while processing the code task: {str(e)}",
-                "error": str(e),
-                "execution_time": time.time() - start_time,
-                "metadata": {
-                    "agent": "code_agent",
-                    "status": "error",
-                    **metadata,
-                },
-            }
+            return self._build_code_error_response(e, start_time, metadata, locals())
+
+    async def _execute_code_task(
+        self, code_task: str, task_type: str, context: dict[str, Any]
+    ) -> dict[str, Any]:
+        """Execute the appropriate code task based on type."""
+        task_handlers = {
+            "generate": self._generate_code,
+            "analyze": self._analyze_code,
+            "debug": self._debug_code,
+            "optimize": self._optimize_code,
+            "review": self._review_code,
+        }
+
+        handler = task_handlers.get(task_type, self._generate_code)
+        return await handler(code_task, context)
+
+    def _build_code_success_response(
+        self, result: dict[str, Any], task_type: str, start_time: float,
+        context: dict[str, Any], metadata: dict[str, Any]
+    ) -> dict[str, Any]:
+        """Build success response from code task result."""
+        execution_time = time.time() - start_time
+
+        return {
+            "response": result.get("response", ""),
+            "code_data": result,
+            "execution_time": execution_time,
+            "metadata": {
+                "agent": "code_agent",
+                "model": self.model,
+                "task_type": task_type,
+                "language": context.get("language", "python"),
+                **metadata,
+            },
+        }
+
+    def _log_code_completion(self, task_type: str, context: dict[str, Any], start_time: float) -> None:
+        """Log information about completed code task."""
+        execution_time = time.time() - start_time
+
+        logger.info(
+            "Code task completed",
+            task_type=task_type,
+            language=context.get("language", "python"),
+            execution_time=execution_time,
+        )
+
+    def _build_code_error_response(
+        self, error: Exception, start_time: float, metadata: dict[str, Any], local_vars: dict[str, Any]
+    ) -> dict[str, Any]:
+        """Build error response when code execution fails."""
+        execution_time = time.time() - start_time
+        task_info = self._extract_code_task_info_for_error(local_vars)
+
+        logger.error(
+            "Code execution failed",
+            error=str(error),
+            task=task_info,
+        )
+
+        return {
+            "response": f"I apologize, but I encountered an error while processing the code task: {str(error)}",
+            "error": str(error),
+            "execution_time": execution_time,
+            "metadata": {
+                "agent": "code_agent",
+                "status": "error",
+                **metadata,
+            },
+        }
+
+    def _extract_code_task_info_for_error(self, local_vars: dict[str, Any]) -> str:
+        """Extract code task information for error logging."""
+        code_task = local_vars.get("code_task")
+        if code_task:
+            return code_task[:100]
+        return "unknown"
 
     async def _generate_code(
         self, task: str, context: dict[str, Any]
     ) -> dict[str, Any]:
         """Generate code using GPT-5."""
-        language = context.get("language", "python")
-        framework = context.get("framework")
-        complexity = context.get("complexity", "intermediate")
-        include_tests = context.get("include_tests", True)
-        include_docs = context.get("include_docs", True)
-        existing_code = context.get("existing_code")
+        # Extract context parameters
+        generation_params = self._extract_generation_parameters(context)
 
-        # Create code generation prompt
-        prompt_parts = [
-            f"Generate {complexity} level {language} code for the following task:",
+        # Build generation prompt
+        generation_prompt = self._build_generation_prompt(task, generation_params)
+
+        # Generate code via LLM
+        try:
+            return await self._execute_code_generation(generation_prompt, generation_params)
+        except Exception as e:
+            return self._create_generation_error_response(e, generation_params["language"])
+
+    def _extract_generation_parameters(self, context: dict[str, Any]) -> dict[str, Any]:
+        """Extract code generation parameters from context."""
+        return {
+            "language": context.get("language", "python"),
+            "framework": context.get("framework"),
+            "complexity": context.get("complexity", "intermediate"),
+            "include_tests": context.get("include_tests", True),
+            "include_docs": context.get("include_docs", True),
+            "existing_code": context.get("existing_code"),
+        }
+
+    def _build_generation_prompt(self, task: str, params: dict[str, Any]) -> str:
+        """Build the code generation prompt."""
+        prompt_parts = self._create_prompt_header(task, params)
+        prompt_parts.extend(self._add_optional_prompt_sections(params))
+        prompt_parts.extend(self._add_output_format_instructions())
+
+        return "\n".join(prompt_parts)
+
+    def _create_prompt_header(self, task: str, params: dict[str, Any]) -> list[str]:
+        """Create the header section of the generation prompt."""
+        header = [
+            f"Generate {params['complexity']} level {params['language']} code for the following task:",
             f"Task: {task}",
-            f"Language: {language}",
+            f"Language: {params['language']}",
         ]
 
-        if framework:
-            prompt_parts.append(f"Framework: {framework}")
+        if params["framework"]:
+            header.append(f"Framework: {params['framework']}")
 
-        if existing_code:
-            prompt_parts.append(f"Existing code to work with:\n{existing_code}")
+        return header
 
-        if include_tests:
-            prompt_parts.append("Include comprehensive unit tests")
+    def _add_optional_prompt_sections(self, params: dict[str, Any]) -> list[str]:
+        """Add optional sections to the prompt based on parameters."""
+        sections = []
 
-        if include_docs:
-            prompt_parts.append("Include detailed documentation and docstrings")
+        if params["existing_code"]:
+            sections.append(f"Existing code to work with:\n{params['existing_code']}")
 
-        prompt_parts.extend(
-            [
-                "",
-                "Provide the response in the following JSON format:",
-                "{",
-                '  "code": "the generated code",',
-                '  "explanation": "detailed explanation of the code",',
-                '  "tests": "unit tests if requested",',
-                '  "documentation": "documentation if requested",',
-                '  "dependencies": ["list", "of", "dependencies"],',
-                '  "usage_examples": ["example1", "example2"]',
-                "}",
-            ]
+        if params["include_tests"]:
+            sections.append("Include comprehensive unit tests")
+
+        if params["include_docs"]:
+            sections.append("Include detailed documentation and docstrings")
+
+        return sections
+
+    def _add_output_format_instructions(self) -> list[str]:
+        """Add JSON output format instructions."""
+        return [
+            "",
+            "Provide the response in the following JSON format:",
+            "{",
+            '  "code": "the generated code",',
+            '  "explanation": "detailed explanation of the code",',
+            '  "tests": "unit tests if requested",',
+            '  "documentation": "documentation if requested",',
+            '  "dependencies": ["list", "of", "dependencies"],',
+            '  "usage_examples": ["example1", "example2"]',
+            "}",
+        ]
+
+    async def _execute_code_generation(
+        self, generation_prompt: str, params: dict[str, Any]
+    ) -> dict[str, Any]:
+        """Execute code generation via LLM."""
+        messages = [
+            SystemMessage(
+                content=f"You are an expert {params['language']} developer using GPT-5. Generate high-quality, well-documented code that follows best practices."
+            ),
+            HumanMessage(content=generation_prompt),
+        ]
+
+        response = await self.code_llm.ainvoke(messages)
+        code_text = response.content.strip()
+
+        # Parse and validate JSON response
+        code_result = json.loads(code_text)
+        result = CodeGeneration(**code_result)
+
+        logger.info(
+            "Code generation completed",
+            language=params["language"],
+            lines=len(result.code.split("\n")),
         )
+        return result.dict()
 
-        generation_prompt = "\n".join(prompt_parts)
+    def _create_generation_error_response(self, error: Exception, language: str) -> dict[str, Any]:
+        """Create error response for failed code generation."""
+        logger.error("Code generation failed", error=str(error), language=language)
 
-        try:
-            messages = [
-                SystemMessage(
-                    content=f"You are an expert {language} developer using GPT-5. Generate high-quality, well-documented code that follows best practices."
-                ),
-                HumanMessage(content=generation_prompt),
-            ]
-
-            response = await self.code_llm.ainvoke(messages)
-            code_text = response.content.strip()
-
-            # Parse JSON response
-            code_result = json.loads(code_text)
-            result = CodeGeneration(**code_result)
-
-            logger.info(
-                "Code generation completed",
-                language=language,
-                lines=len(result.code.split("\n")),
-            )
-            return result.dict()
-
-        except Exception as e:
-            logger.error("Code generation failed", error=str(e), language=language)
-            return {
-                "code": f"# Error generating code: {str(e)}",
-                "explanation": f"Code generation failed: {str(e)}",
-                "tests": None,
-                "documentation": None,
-                "dependencies": [],
-                "usage_examples": [],
-            }
+        return {
+            "code": f"# Error generating code: {str(error)}",
+            "explanation": f"Code generation failed: {str(error)}",
+            "tests": None,
+            "documentation": None,
+            "dependencies": [],
+            "usage_examples": [],
+        }
 
     async def _analyze_code(self, code: str, context: dict[str, Any]) -> dict[str, Any]:
         """Analyze code using GPT-5."""
         language = self._detect_language(code)
 
-        analysis_prompt = f"""Analyze the following {language} code for quality, complexity, and potential issues:
+        # Build analysis prompt
+        analysis_prompt = self._build_analysis_prompt(code, language)
+
+        # Execute analysis
+        try:
+            return await self._execute_code_analysis(analysis_prompt, language)
+        except Exception as e:
+            return self._create_analysis_error_response(e, language)
+
+    def _build_analysis_prompt(self, code: str, language: str) -> str:
+        """Build the code analysis prompt."""
+        return f"""Analyze the following {language} code for quality, complexity, and potential issues:
 
 Code to analyze:
 ``` {language}
@@ -407,44 +483,47 @@ Format your response as JSON:
     "security_concerns": ["concern1", "concern2"]
 }}"""
 
-        try:
-            messages = [
-                SystemMessage(
-                    content="You are an expert code analyst using GPT-5. Provide thorough, actionable code analysis."
-                ),
-                HumanMessage(content=analysis_prompt),
-            ]
+    async def _execute_code_analysis(self, analysis_prompt: str, language: str) -> dict[str, Any]:
+        """Execute code analysis via LLM."""
+        messages = [
+            SystemMessage(
+                content="You are an expert code analyst using GPT-5. Provide thorough, actionable code analysis."
+            ),
+            HumanMessage(content=analysis_prompt),
+        ]
 
-            response = await self.code_llm.ainvoke(messages)
-            analysis_text = response.content.strip()
+        response = await self.code_llm.ainvoke(messages)
+        analysis_text = response.content.strip()
 
-            # Parse JSON response
-            analysis_result = json.loads(analysis_text)
-            result = CodeAnalysis(**analysis_result)
+        # Parse and validate JSON response
+        analysis_result = json.loads(analysis_text)
+        result = CodeAnalysis(**analysis_result)
 
-            logger.info(
-                "Code analysis completed",
-                language=language,
-                quality_score=result.quality_score,
-            )
-            return result.dict()
+        logger.info(
+            "Code analysis completed",
+            language=language,
+            quality_score=result.quality_score,
+        )
+        return result.dict()
 
-        except Exception as e:
-            logger.error("Code analysis failed", error=str(e))
-            return {
-                "language": language,
-                "complexity": "unknown",
-                "quality_score": 0.0,
-                "issues": [
-                    {
-                        "type": "error",
-                        "severity": "high",
-                        "description": f"Analysis failed: {str(e)}",
-                    }
-                ],
-                "suggestions": [],
-                "security_concerns": [],
-            }
+    def _create_analysis_error_response(self, error: Exception, language: str) -> dict[str, Any]:
+        """Create error response for failed code analysis."""
+        logger.error("Code analysis failed", error=str(error))
+
+        return {
+            "language": language,
+            "complexity": "unknown",
+            "quality_score": 0.0,
+            "issues": [
+                {
+                    "type": "error",
+                    "severity": "high",
+                    "description": f"Analysis failed: {str(error)}",
+                }
+            ],
+            "suggestions": [],
+            "security_concerns": [],
+        }
 
     async def _debug_code(
         self, code_with_error: str, context: dict[str, Any]

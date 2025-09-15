@@ -1,0 +1,66 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/retrievers/langchain_community.retrievers.nanopq.create_index.html#langchain_community.retrievers.nanopq.create_index",
+  "title": "create_index#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "create_index"
+    },
+    {
+      "type": "p",
+      "content": "Create an index of embeddings for a list of contexts."
+    },
+    {
+      "type": "li",
+      "content": "contexts(List[str]) – List of contexts to embed."
+    },
+    {
+      "type": "p",
+      "content": "contexts(List[str]) – List of contexts to embed."
+    },
+    {
+      "type": "li",
+      "content": "embeddings(Embeddings) – Embeddings model to use."
+    },
+    {
+      "type": "p",
+      "content": "embeddings(Embeddings) – Embeddings model to use."
+    },
+    {
+      "type": "p",
+      "content": "Index of embeddings."
+    },
+    {
+      "type": "li",
+      "content": "create_index()"
+    }
+  ],
+  "code_examples": [
+    "retrievers",
+    "create_index()"
+  ],
+  "api_signatures": [
+    "langchain_community.retrievers.nanopq.create_index(contexts:List[str],embeddings:Embeddings,)→ndarray[source]#",
+    "langchain_community.retrievers.nanopq.",
+    "create_index",
+    "(",
+    "contexts:List[str]",
+    "embeddings:Embeddings",
+    ")",
+    "→ndarray",
+    "→",
+    "ndarray"
+  ],
+  "parameters": [
+    "contexts:List[str]",
+    "embeddings:Embeddings"
+  ]
+}

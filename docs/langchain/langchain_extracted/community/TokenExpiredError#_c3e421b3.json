@@ -1,0 +1,36 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/llms/langchain_community.llms.oci_data_science_model_deployment_endpoint.TokenExpiredError.html#langchain_community.llms.oci_data_science_model_deployment_endpoint.TokenExpiredError",
+  "title": "TokenExpiredError#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "TokenExpiredError"
+    },
+    {
+      "type": "p",
+      "content": "Raises when token expired."
+    },
+    {
+      "type": "li",
+      "content": "TokenExpiredError"
+    }
+  ],
+  "code_examples": [
+    "llms",
+    "TokenExpiredError"
+  ],
+  "api_signatures": [
+    "classlangchain_community.llms.oci_data_science_model_deployment_endpoint.TokenExpiredError[source]#",
+    "langchain_community.llms.oci_data_science_model_deployment_endpoint.",
+    "TokenExpiredError"
+  ],
+  "parameters": []
+}

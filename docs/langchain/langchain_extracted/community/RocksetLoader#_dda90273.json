@@ -1,0 +1,321 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.rocksetdb.RocksetLoader.html",
+  "title": "RocksetLoader#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "RocksetLoader"
+    },
+    {
+      "type": "p",
+      "content": "Load from aRocksetdatabase."
+    },
+    {
+      "type": "p",
+      "content": "To use, you should have therocksetpython package installed."
+    },
+    {
+      "type": "p",
+      "content": "Initialize with Rockset client."
+    },
+    {
+      "type": "li",
+      "content": "client(Any) – Rockset client object."
+    },
+    {
+      "type": "p",
+      "content": "client(Any) – Rockset client object."
+    },
+    {
+      "type": "li",
+      "content": "query(Any) – Rockset query object."
+    },
+    {
+      "type": "p",
+      "content": "query(Any) – Rockset query object."
+    },
+    {
+      "type": "li",
+      "content": "content_keys(List[str]) – The collection columns to be written into thepage_contentof the Documents."
+    },
+    {
+      "type": "p",
+      "content": "content_keys(List[str]) – The collection columns to be written into thepage_contentof the Documents."
+    },
+    {
+      "type": "li",
+      "content": "metadata_keys(List[str]|None) – The collection columns to be written into themetadataof\nthe Documents. By default, this is all the keys in the document."
+    },
+    {
+      "type": "p",
+      "content": "metadata_keys(List[str]|None) – The collection columns to be written into themetadataof\nthe Documents. By default, this is all the keys in the document."
+    },
+    {
+      "type": "li",
+      "content": "content_columns_joiner(Callable[[List[Tuple[str,Any]]],str]) – Method that joins content_keys and its values into a\nstring. It’s method that takes in a List[Tuple[str, Any]]],\nrepresenting a list of tuples of (column name, column value).\nBy default, this is a method that joins each column value with a new\nline. This method is only relevant if there are multiple content_keys."
+    },
+    {
+      "type": "p",
+      "content": "content_columns_joiner(Callable[[List[Tuple[str,Any]]],str]) – Method that joins content_keys and its values into a\nstring. It’s method that takes in a List[Tuple[str, Any]]],\nrepresenting a list of tuples of (column name, column value).\nBy default, this is a method that joins each column value with a new\nline. This method is only relevant if there are multiple content_keys."
+    },
+    {
+      "type": "p",
+      "content": "__init__(client, query, content_keys[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with Rockset client."
+    },
+    {
+      "type": "p",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "load_and_split([text_splitter])"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks."
+    },
+    {
+      "type": "p",
+      "content": "Initialize with Rockset client."
+    },
+    {
+      "type": "li",
+      "content": "client(Any) – Rockset client object."
+    },
+    {
+      "type": "p",
+      "content": "client(Any) – Rockset client object."
+    },
+    {
+      "type": "li",
+      "content": "query(Any) – Rockset query object."
+    },
+    {
+      "type": "p",
+      "content": "query(Any) – Rockset query object."
+    },
+    {
+      "type": "li",
+      "content": "content_keys(List[str]) – The collection columns to be written into thepage_contentof the Documents."
+    },
+    {
+      "type": "p",
+      "content": "content_keys(List[str]) – The collection columns to be written into thepage_contentof the Documents."
+    },
+    {
+      "type": "li",
+      "content": "metadata_keys(List[str]|None) – The collection columns to be written into themetadataof\nthe Documents. By default, this is all the keys in the document."
+    },
+    {
+      "type": "p",
+      "content": "metadata_keys(List[str]|None) – The collection columns to be written into themetadataof\nthe Documents. By default, this is all the keys in the document."
+    },
+    {
+      "type": "li",
+      "content": "content_columns_joiner(Callable[[List[Tuple[str,Any]]],str]) – Method that joins content_keys and its values into a\nstring. It’s method that takes in a List[Tuple[str, Any]]],\nrepresenting a list of tuples of (column name, column value).\nBy default, this is a method that joins each column value with a new\nline. This method is only relevant if there are multiple content_keys."
+    },
+    {
+      "type": "p",
+      "content": "content_columns_joiner(Callable[[List[Tuple[str,Any]]],str]) – Method that joins content_keys and its values into a\nstring. It’s method that takes in a List[Tuple[str, Any]]],\nrepresenting a list of tuples of (column name, column value).\nBy default, this is a method that joins each column value with a new\nline. This method is only relevant if there are multiple content_keys."
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks. Chunks are returned as Documents."
+    },
+    {
+      "type": "p",
+      "content": "Do not override this method. It should be considered to be deprecated!"
+    },
+    {
+      "type": "p",
+      "content": "text_splitter(Optional[TextSplitter]) – TextSplitter instance to use for splitting documents.\nDefaults to RecursiveCharacterTextSplitter."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If langchain-text-splitters is not installed\n    and no text_splitter is provided."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using RocksetLoader"
+    },
+    {
+      "type": "li",
+      "content": "RocksetLoader__init__()alazy_load()aload()lazy_load()load()load_and_split()"
+    },
+    {
+      "type": "li",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "load_and_split()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "# This code will load 3 records from the \"langchain_demo\"# collection as Documents, with the `text` column used as# the contentfromlangchain_community.document_loadersimportRocksetLoaderfromrocksetimportRocksetClient,Regions,modelsloader=RocksetLoader(RocksetClient(Regions.usw2a1,\"<api key>\"),models.QueryRequestSql(query=\"select * from langchain_demo limit 3\"),[\"text\"])",
+    "__init__",
+    "alazy_load",
+    "aload",
+    "lazy_load",
+    "load",
+    "load_and_split",
+    "RocksetLoader",
+    "__init__()",
+    "alazy_load()",
+    "aload()",
+    "lazy_load()",
+    "load()",
+    "load_and_split()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.rocksetdb.RocksetLoader(client:~typing.Any,query:~typing.Any,content_keys:~typing.List[str],metadata_keys:~typing.List[str]|None=None,content_columns_joiner:~typing.Callable[[~typing.List[~typing.Tuple[str,~typing.Any]]],str]=<functiondefault_joiner>)[source]#",
+    "langchain_community.document_loaders.rocksetdb.",
+    "RocksetLoader",
+    "(",
+    "client:~typing.Any,query:~typing.Any,content_keys:~typing.List[str],metadata_keys:~typing.List[str]|None=None,content_columns_joiner:~typing.Callable[[~typing.List[~typing.Tuple[str,~typing.Any]]],str]=<functiondefault_joiner>",
+    ")",
+    "__init__(client:~typing.Any,query:~typing.Any,content_keys:~typing.List[str],metadata_keys:~typing.List[str]|None=None,content_columns_joiner:~typing.Callable[[~typing.List[~typing.Tuple[str,~typing.Any]]],str]=<functiondefault_joiner>)[source]#",
+    "__init__",
+    "(",
+    "client:~typing.Any,query:~typing.Any,content_keys:~typing.List[str],metadata_keys:~typing.List[str]|None=None,content_columns_joiner:~typing.Callable[[~typing.List[~typing.Tuple[str,~typing.Any]]],str]=<functiondefault_joiner>",
+    ")",
+    "asyncalazy_load()→AsyncIterator[Document]#",
+    "alazy_load",
+    "(",
+    ")",
+    "→AsyncIterator[Document]",
+    "→",
+    "AsyncIterator[Document]",
+    "asyncaload()→list[Document]#",
+    "aload",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "lazy_load()→Iterator[Document][source]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "load()→list[Document]#",
+    "load",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "load_and_split(text_splitter:TextSplitter|None=None,)→list[Document]#",
+    "load_and_split",
+    "(",
+    "text_splitter:TextSplitter|None=None",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "client:~typing.Any,query:~typing.Any,content_keys:~typing.List[str],metadata_keys:~typing.List[str]|None=None,content_columns_joiner:~typing.Callable[[~typing.List[~typing.Tuple[str,~typing.Any]]],str]=<functiondefault_joiner>",
+    "client:~typing.Any,query:~typing.Any,content_keys:~typing.List[str],metadata_keys:~typing.List[str]|None=None,content_columns_joiner:~typing.Callable[[~typing.List[~typing.Tuple[str,~typing.Any]]],str]=<functiondefault_joiner>",
+    "text_splitter:TextSplitter|None=None"
+  ]
+}

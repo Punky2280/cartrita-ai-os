@@ -1,0 +1,62 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/llms/langchain_community.llms.cohere.acompletion_with_retry.html#langchain_community.llms.cohere.acompletion_with_retry",
+  "title": "acompletion_with_retry#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "acompletion_with_retry"
+    },
+    {
+      "type": "p",
+      "content": "Use tenacity to retry the completion call."
+    },
+    {
+      "type": "li",
+      "content": "llm(Cohere)"
+    },
+    {
+      "type": "p",
+      "content": "llm(Cohere)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "li",
+      "content": "acompletion_with_retry()"
+    }
+  ],
+  "code_examples": [
+    "llms",
+    "acompletion_with_retry()"
+  ],
+  "api_signatures": [
+    "langchain_community.llms.cohere.acompletion_with_retry(llm:Cohere,**kwargs:Any,)→Any[source]#",
+    "langchain_community.llms.cohere.",
+    "acompletion_with_retry",
+    "(",
+    "llm:Cohere",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any"
+  ],
+  "parameters": [
+    "llm:Cohere",
+    "**kwargs:Any"
+  ]
+}

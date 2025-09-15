@@ -1,44 +1,52 @@
-import React, { useEffect, useRef } from 'react'
-import { createPortal } from 'react-dom'
+import React, { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
 interface DialogProps {
-  open: boolean
-  onClose: () => void
-  title?: string
-  children: React.ReactNode
-  initialFocusRef?: React.RefObject<HTMLElement>
+  open: boolean;
+  onClose: () => void;
+  title?: string;
+  children: React.ReactNode;
+  initialFocusRef?: React.RefObject<HTMLElement>;
 }
 
-export const Dialog: React.FC<DialogProps> = ({ open, onClose, title, children, initialFocusRef }) => {
-  const dialogRef = useRef<HTMLDivElement>(null)
+export const Dialog: React.FC<DialogProps> = ({
+  open,
+  onClose,
+  title,
+  children,
+  initialFocusRef,
+}) => {
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (open && initialFocusRef?.current) {
-      initialFocusRef.current.focus()
+      initialFocusRef.current.focus();
     }
-    if (!open) return
+    if (!open) return;
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-      if (e.key === 'Tab') {
+      if (e.key === "Escape") onClose();
+      if (e.key === "Tab") {
         // Trap focus
         const focusable = dialogRef.current?.querySelectorAll<HTMLElement>(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        )
-        if (!focusable || focusable.length === 0) return
-        const first = focusable[0]
-        const last = focusable[focusable.length - 1]
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+        );
+        if (!focusable || focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
         if (e.shiftKey && document.activeElement === first) {
-          last.focus(); e.preventDefault()
+          last.focus();
+          e.preventDefault();
         } else if (!e.shiftKey && document.activeElement === last) {
-          first.focus(); e.preventDefault()
+          first.focus();
+          e.preventDefault();
         }
       }
-    }
-    document.addEventListener('keydown', handleKey)
-    return () => document.removeEventListener('keydown', handleKey)
-  }, [open, onClose, initialFocusRef])
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [open, onClose, initialFocusRef]);
 
-  if (!open) return null
+  if (!open) return null;
   return createPortal(
     <div
       role="dialog"
@@ -51,7 +59,7 @@ export const Dialog: React.FC<DialogProps> = ({ open, onClose, title, children, 
         ref={dialogRef}
         className="bg-white dark:bg-chatgpt-grey-light rounded-lg shadow-xl max-w-lg w-full p-6 relative"
         tabIndex={-1}
-        onClick={e => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
       >
         {title && <h2 className="text-lg font-bold mb-4">{title}</h2>}
         {children}
@@ -64,6 +72,6 @@ export const Dialog: React.FC<DialogProps> = ({ open, onClose, title, children, 
         </button>
       </div>
     </div>,
-    document.body
-  )
-}
+    document.body,
+  );
+};

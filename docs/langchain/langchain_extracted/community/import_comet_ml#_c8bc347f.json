@@ -1,0 +1,41 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/callbacks/langchain_community.callbacks.comet_ml_callback.import_comet_ml.html",
+  "title": "import_comet_ml#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "import_comet_ml"
+    },
+    {
+      "type": "p",
+      "content": "Import comet_ml and raise an error if it is not installed."
+    },
+    {
+      "type": "li",
+      "content": "import_comet_ml()"
+    }
+  ],
+  "code_examples": [
+    "callbacks",
+    "import_comet_ml()"
+  ],
+  "api_signatures": [
+    "langchain_community.callbacks.comet_ml_callback.import_comet_ml()→Any[source]#",
+    "langchain_community.callbacks.comet_ml_callback.",
+    "import_comet_ml",
+    "(",
+    ")",
+    "→Any",
+    "→",
+    "Any"
+  ],
+  "parameters": []
+}

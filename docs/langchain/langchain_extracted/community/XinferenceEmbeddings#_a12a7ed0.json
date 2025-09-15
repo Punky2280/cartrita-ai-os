@@ -1,0 +1,297 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/embeddings/langchain_community.embeddings.xinference.XinferenceEmbeddings.html#langchain_community.embeddings.xinference.XinferenceEmbeddings.aembed_query",
+  "title": "XinferenceEmbeddings#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "XinferenceEmbeddings"
+    },
+    {
+      "type": "p",
+      "content": "Xinference embedding models."
+    },
+    {
+      "type": "p",
+      "content": "To use, you should have the xinference library installed:"
+    },
+    {
+      "type": "p",
+      "content": "If you’re simply using the services provided by Xinference, you can utilize the xinference_client package:"
+    },
+    {
+      "type": "p",
+      "content": "Check out:xorbitsai/inferenceTo run, you need to start a Xinference supervisor on one server and Xinference workers on the other servers."
+    },
+    {
+      "type": "p",
+      "content": "To start a local instance of Xinference, run"
+    },
+    {
+      "type": "p",
+      "content": "You can also deploy Xinference in a distributed cluster. Here are the steps:"
+    },
+    {
+      "type": "p",
+      "content": "Starting the supervisor:"
+    },
+    {
+      "type": "p",
+      "content": "If you’re simply using the services provided by Xinference, you can utilize the xinference_client package:"
+    },
+    {
+      "type": "p",
+      "content": "Starting the worker:"
+    },
+    {
+      "type": "p",
+      "content": "Then, launch a model using command line interface (CLI)."
+    },
+    {
+      "type": "p",
+      "content": "It will return a model UID. Then you can use Xinference Embedding with LangChain."
+    },
+    {
+      "type": "p",
+      "content": "__init__([server_url, model_uid])"
+    },
+    {
+      "type": "p",
+      "content": "aembed_documents(texts)"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed search docs."
+    },
+    {
+      "type": "p",
+      "content": "aembed_query(text)"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed query text."
+    },
+    {
+      "type": "p",
+      "content": "embed_documents(texts)"
+    },
+    {
+      "type": "p",
+      "content": "Embed a list of documents using Xinference."
+    },
+    {
+      "type": "p",
+      "content": "embed_query(text)"
+    },
+    {
+      "type": "p",
+      "content": "Embed a query of documents using Xinference."
+    },
+    {
+      "type": "li",
+      "content": "server_url(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "server_url(str|None)"
+    },
+    {
+      "type": "li",
+      "content": "model_uid(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "model_uid(str|None)"
+    },
+    {
+      "type": "li",
+      "content": "server_url(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "server_url(str|None)"
+    },
+    {
+      "type": "li",
+      "content": "model_uid(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "model_uid(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed search docs."
+    },
+    {
+      "type": "p",
+      "content": "texts(list[str]) – List of text to embed."
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings."
+    },
+    {
+      "type": "p",
+      "content": "list[list[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Asynchronous Embed query text."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – Text to embed."
+    },
+    {
+      "type": "p",
+      "content": "list[float]"
+    },
+    {
+      "type": "p",
+      "content": "Embed a list of documents using Xinference.\n:param texts: The list of texts to embed."
+    },
+    {
+      "type": "p",
+      "content": "List of embeddings, one for each text."
+    },
+    {
+      "type": "p",
+      "content": "texts(List[str])"
+    },
+    {
+      "type": "p",
+      "content": "List[List[float]]"
+    },
+    {
+      "type": "p",
+      "content": "Embed a query of documents using Xinference.\n:param text: The text to embed."
+    },
+    {
+      "type": "p",
+      "content": "Embeddings for the text."
+    },
+    {
+      "type": "p",
+      "content": "List[float]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using XinferenceEmbeddings"
+    },
+    {
+      "type": "li",
+      "content": "Xorbits inference (Xinference)"
+    },
+    {
+      "type": "p",
+      "content": "Xorbits inference (Xinference)"
+    },
+    {
+      "type": "li",
+      "content": "XinferenceEmbeddings__init__()aembed_documents()aembed_query()embed_documents()embed_query()"
+    },
+    {
+      "type": "li",
+      "content": "aembed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "aembed_query()"
+    },
+    {
+      "type": "li",
+      "content": "embed_documents()"
+    },
+    {
+      "type": "li",
+      "content": "embed_query()"
+    }
+  ],
+  "code_examples": [
+    "embeddings",
+    "pipinstallxinference",
+    "pipinstallxinference_client",
+    "$xinference",
+    "$xinference-supervisor",
+    "pipinstallxinference_client",
+    "$xinference-worker",
+    "$xinferencelaunch-norca-s3-qq4_0",
+    "fromlangchain_community.embeddingsimportXinferenceEmbeddingsxinference=XinferenceEmbeddings(server_url=\"http://0.0.0.0:9997\",model_uid={model_uid}# replace model_uid with the model UID return from launching the model)",
+    "__init__",
+    "aembed_documents",
+    "aembed_query",
+    "embed_documents",
+    "embed_query",
+    "XinferenceEmbeddings",
+    "__init__()",
+    "aembed_documents()",
+    "aembed_query()",
+    "embed_documents()",
+    "embed_query()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.embeddings.xinference.XinferenceEmbeddings(server_url:str|None=None,model_uid:str|None=None,)[source]#",
+    "langchain_community.embeddings.xinference.",
+    "XinferenceEmbeddings",
+    "(",
+    "server_url:str|None=None",
+    "model_uid:str|None=None",
+    ")",
+    "__init__(server_url:str|None=None,model_uid:str|None=None,)[source]#",
+    "__init__",
+    "(",
+    "server_url:str|None=None",
+    "model_uid:str|None=None",
+    ")",
+    "asyncaembed_documents(texts:list[str],)→list[list[float]]#",
+    "aembed_documents",
+    "(",
+    "texts:list[str]",
+    ")",
+    "→list[list[float]]",
+    "→",
+    "list[list[float]]",
+    "asyncaembed_query(text:str)→list[float]#",
+    "aembed_query",
+    "(",
+    "text:str",
+    ")",
+    "→list[float]",
+    "→",
+    "list[float]",
+    "embed_documents(texts:List[str],)→List[List[float]][source]#",
+    "embed_documents",
+    "(",
+    "texts:List[str]",
+    ")",
+    "→List[List[float]]",
+    "→",
+    "List[List[float]]",
+    "embed_query(text:str,)→List[float][source]#",
+    "embed_query",
+    "(",
+    "text:str",
+    ")",
+    "→List[float]",
+    "→",
+    "List[float]"
+  ],
+  "parameters": [
+    "server_url:str|None=None",
+    "model_uid:str|None=None",
+    "server_url:str|None=None",
+    "model_uid:str|None=None",
+    "texts:list[str]",
+    "text:str",
+    "texts:List[str]",
+    "text:str"
+  ]
+}

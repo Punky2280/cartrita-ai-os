@@ -1,0 +1,564 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.oracleai.ParseOracleDocMetadata.html",
+  "title": "ParseOracleDocMetadata#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "ParseOracleDocMetadata"
+    },
+    {
+      "type": "p",
+      "content": "Parse Oracle doc metadata…"
+    },
+    {
+      "type": "p",
+      "content": "Initialize and reset this instance."
+    },
+    {
+      "type": "p",
+      "content": "If convert_charrefs is True (the default), all character references\nare automatically converted to the corresponding Unicode characters."
+    },
+    {
+      "type": "p",
+      "content": "CDATA_CONTENT_ELEMENTS"
+    },
+    {
+      "type": "p",
+      "content": "Initialize and reset this instance."
+    },
+    {
+      "type": "p",
+      "content": "check_for_whole_start_tag(i)"
+    },
+    {
+      "type": "p",
+      "content": "clear_cdata_mode()"
+    },
+    {
+      "type": "p",
+      "content": "Handle any buffered data."
+    },
+    {
+      "type": "p",
+      "content": "Feed data to the parser."
+    },
+    {
+      "type": "p",
+      "content": "get_metadata()"
+    },
+    {
+      "type": "p",
+      "content": "get_starttag_text()"
+    },
+    {
+      "type": "p",
+      "content": "Return full source of start tag: '<...>'."
+    },
+    {
+      "type": "p",
+      "content": "Return current line number and offset."
+    },
+    {
+      "type": "p",
+      "content": "goahead(end)"
+    },
+    {
+      "type": "p",
+      "content": "handle_charref(name)"
+    },
+    {
+      "type": "p",
+      "content": "handle_comment(data)"
+    },
+    {
+      "type": "p",
+      "content": "handle_data(data)"
+    },
+    {
+      "type": "p",
+      "content": "handle_decl(decl)"
+    },
+    {
+      "type": "p",
+      "content": "handle_endtag(tag)"
+    },
+    {
+      "type": "p",
+      "content": "handle_entityref(name)"
+    },
+    {
+      "type": "p",
+      "content": "handle_pi(data)"
+    },
+    {
+      "type": "p",
+      "content": "handle_startendtag(tag, attrs)"
+    },
+    {
+      "type": "p",
+      "content": "handle_starttag(tag, attrs)"
+    },
+    {
+      "type": "p",
+      "content": "parse_bogus_comment(i[, report])"
+    },
+    {
+      "type": "p",
+      "content": "parse_comment(i[, report])"
+    },
+    {
+      "type": "p",
+      "content": "parse_declaration(i)"
+    },
+    {
+      "type": "p",
+      "content": "parse_endtag(i)"
+    },
+    {
+      "type": "p",
+      "content": "parse_html_declaration(i)"
+    },
+    {
+      "type": "p",
+      "content": "parse_marked_section(i[, report])"
+    },
+    {
+      "type": "p",
+      "content": "parse_pi(i)"
+    },
+    {
+      "type": "p",
+      "content": "parse_starttag(i)"
+    },
+    {
+      "type": "p",
+      "content": "Reset this instance."
+    },
+    {
+      "type": "p",
+      "content": "set_cdata_mode(elem)"
+    },
+    {
+      "type": "p",
+      "content": "unknown_decl(data)"
+    },
+    {
+      "type": "p",
+      "content": "updatepos(i, j)"
+    },
+    {
+      "type": "p",
+      "content": "Initialize and reset this instance."
+    },
+    {
+      "type": "p",
+      "content": "If convert_charrefs is True (the default), all character references\nare automatically converted to the corresponding Unicode characters."
+    },
+    {
+      "type": "p",
+      "content": "Handle any buffered data."
+    },
+    {
+      "type": "p",
+      "content": "Feed data to the parser."
+    },
+    {
+      "type": "p",
+      "content": "Call this as often as you want, with as little or as much text\nas you want (may include ‘n’)."
+    },
+    {
+      "type": "p",
+      "content": "Dict[str,Any]"
+    },
+    {
+      "type": "p",
+      "content": "Return full source of start tag: ‘<…>’."
+    },
+    {
+      "type": "p",
+      "content": "Return current line number and offset."
+    },
+    {
+      "type": "li",
+      "content": "attrs(List[Tuple[str,str|None]])"
+    },
+    {
+      "type": "p",
+      "content": "attrs(List[Tuple[str,str|None]])"
+    },
+    {
+      "type": "p",
+      "content": "Reset this instance.  Loses all unprocessed data."
+    },
+    {
+      "type": "li",
+      "content": "ParseOracleDocMetadata__init__()check_for_whole_start_tag()clear_cdata_mode()close()feed()get_metadata()get_starttag_text()getpos()goahead()handle_charref()handle_comment()handle_data()handle_decl()handle_endtag()handle_entityref()handle_pi()handle_startendtag()handle_starttag()parse_bogus_comment()parse_comment()parse_declaration()parse_endtag()parse_html_declaration()parse_marked_section()parse_pi()parse_starttag()reset()set_cdata_mode()unknown_decl()updatepos()"
+    },
+    {
+      "type": "li",
+      "content": "check_for_whole_start_tag()"
+    },
+    {
+      "type": "li",
+      "content": "clear_cdata_mode()"
+    },
+    {
+      "type": "li",
+      "content": "get_metadata()"
+    },
+    {
+      "type": "li",
+      "content": "get_starttag_text()"
+    },
+    {
+      "type": "li",
+      "content": "handle_charref()"
+    },
+    {
+      "type": "li",
+      "content": "handle_comment()"
+    },
+    {
+      "type": "li",
+      "content": "handle_data()"
+    },
+    {
+      "type": "li",
+      "content": "handle_decl()"
+    },
+    {
+      "type": "li",
+      "content": "handle_endtag()"
+    },
+    {
+      "type": "li",
+      "content": "handle_entityref()"
+    },
+    {
+      "type": "li",
+      "content": "handle_pi()"
+    },
+    {
+      "type": "li",
+      "content": "handle_startendtag()"
+    },
+    {
+      "type": "li",
+      "content": "handle_starttag()"
+    },
+    {
+      "type": "li",
+      "content": "parse_bogus_comment()"
+    },
+    {
+      "type": "li",
+      "content": "parse_comment()"
+    },
+    {
+      "type": "li",
+      "content": "parse_declaration()"
+    },
+    {
+      "type": "li",
+      "content": "parse_endtag()"
+    },
+    {
+      "type": "li",
+      "content": "parse_html_declaration()"
+    },
+    {
+      "type": "li",
+      "content": "parse_marked_section()"
+    },
+    {
+      "type": "li",
+      "content": "parse_starttag()"
+    },
+    {
+      "type": "li",
+      "content": "set_cdata_mode()"
+    },
+    {
+      "type": "li",
+      "content": "unknown_decl()"
+    },
+    {
+      "type": "li",
+      "content": "updatepos()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "CDATA_CONTENT_ELEMENTS",
+    "__init__",
+    "check_for_whole_start_tag",
+    "clear_cdata_mode",
+    "close",
+    "feed",
+    "get_metadata",
+    "get_starttag_text",
+    "getpos",
+    "goahead",
+    "handle_charref",
+    "handle_comment",
+    "handle_data",
+    "handle_decl",
+    "handle_endtag",
+    "handle_entityref",
+    "handle_pi",
+    "handle_startendtag",
+    "handle_starttag",
+    "parse_bogus_comment",
+    "parse_comment",
+    "parse_declaration",
+    "parse_endtag",
+    "parse_html_declaration",
+    "parse_marked_section",
+    "parse_pi",
+    "parse_starttag",
+    "reset",
+    "set_cdata_mode",
+    "unknown_decl",
+    "updatepos",
+    "ParseOracleDocMetadata",
+    "__init__()",
+    "check_for_whole_start_tag()",
+    "clear_cdata_mode()",
+    "close()",
+    "feed()",
+    "get_metadata()",
+    "get_starttag_text()",
+    "getpos()",
+    "goahead()",
+    "handle_charref()",
+    "handle_comment()",
+    "handle_data()",
+    "handle_decl()",
+    "handle_endtag()",
+    "handle_entityref()",
+    "handle_pi()",
+    "handle_startendtag()",
+    "handle_starttag()",
+    "parse_bogus_comment()",
+    "parse_comment()",
+    "parse_declaration()",
+    "parse_endtag()",
+    "parse_html_declaration()",
+    "parse_marked_section()",
+    "parse_pi()",
+    "parse_starttag()",
+    "reset()",
+    "set_cdata_mode()",
+    "unknown_decl()",
+    "updatepos()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.oracleai.ParseOracleDocMetadata[source]#",
+    "langchain_community.document_loaders.oracleai.",
+    "ParseOracleDocMetadata",
+    "__init__()→None[source]#",
+    "__init__",
+    "(",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "check_for_whole_start_tag(i)#",
+    "check_for_whole_start_tag",
+    "(",
+    "i",
+    ")",
+    "clear_cdata_mode()#",
+    "clear_cdata_mode",
+    "(",
+    ")",
+    "close()#",
+    "close",
+    "(",
+    ")",
+    "feed(data)#",
+    "feed",
+    "(",
+    "data",
+    ")",
+    "get_metadata()→Dict[str,Any][source]#",
+    "get_metadata",
+    "(",
+    ")",
+    "→Dict[str,Any]",
+    "→",
+    "Dict[str,Any]",
+    "get_starttag_text()#",
+    "get_starttag_text",
+    "(",
+    ")",
+    "getpos()#",
+    "getpos",
+    "(",
+    ")",
+    "goahead(end)#",
+    "goahead",
+    "(",
+    "end",
+    ")",
+    "handle_charref(name)#",
+    "handle_charref",
+    "(",
+    "name",
+    ")",
+    "handle_comment(data)#",
+    "handle_comment",
+    "(",
+    "data",
+    ")",
+    "handle_data(data:str)→None[source]#",
+    "handle_data",
+    "(",
+    "data:str",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "handle_decl(decl)#",
+    "handle_decl",
+    "(",
+    "decl",
+    ")",
+    "handle_endtag(tag)#",
+    "handle_endtag",
+    "(",
+    "tag",
+    ")",
+    "handle_entityref(name)#",
+    "handle_entityref",
+    "(",
+    "name",
+    ")",
+    "handle_pi(data)#",
+    "handle_pi",
+    "(",
+    "data",
+    ")",
+    "handle_startendtag(tag,attrs)#",
+    "handle_startendtag",
+    "(",
+    "tag",
+    "attrs",
+    ")",
+    "handle_starttag(tag:str,attrs:List[Tuple[str,str|None]],)→None[source]#",
+    "handle_starttag",
+    "(",
+    "tag:str",
+    "attrs:List[Tuple[str,str|None]]",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "parse_bogus_comment(i,report=1)#",
+    "parse_bogus_comment",
+    "(",
+    "i",
+    "report=1",
+    ")",
+    "parse_comment(i,report=1)#",
+    "parse_comment",
+    "(",
+    "i",
+    "report=1",
+    ")",
+    "parse_declaration(i)#",
+    "parse_declaration",
+    "(",
+    "i",
+    ")",
+    "parse_endtag(i)#",
+    "parse_endtag",
+    "(",
+    "i",
+    ")",
+    "parse_html_declaration(i)#",
+    "parse_html_declaration",
+    "(",
+    "i",
+    ")",
+    "parse_marked_section(i,report=1)#",
+    "parse_marked_section",
+    "(",
+    "i",
+    "report=1",
+    ")",
+    "parse_pi(i)#",
+    "parse_pi",
+    "(",
+    "i",
+    ")",
+    "parse_starttag(i)#",
+    "parse_starttag",
+    "(",
+    "i",
+    ")",
+    "reset()#",
+    "reset",
+    "(",
+    ")",
+    "set_cdata_mode(elem)#",
+    "set_cdata_mode",
+    "(",
+    "elem",
+    ")",
+    "unknown_decl(data)#",
+    "unknown_decl",
+    "(",
+    "data",
+    ")",
+    "updatepos(i,j)#",
+    "updatepos",
+    "(",
+    "i",
+    "j",
+    ")"
+  ],
+  "parameters": [
+    "i",
+    "data",
+    "end",
+    "name",
+    "data",
+    "data:str",
+    "decl",
+    "tag",
+    "name",
+    "data",
+    "tag",
+    "attrs",
+    "tag:str",
+    "attrs:List[Tuple[str,str|None]]",
+    "i",
+    "report=1",
+    "i",
+    "report=1",
+    "i",
+    "i",
+    "i",
+    "i",
+    "report=1",
+    "i",
+    "i",
+    "elem",
+    "data",
+    "i",
+    "j"
+  ]
+}

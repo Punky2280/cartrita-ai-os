@@ -73,7 +73,7 @@ interface VoiceAgentConfig {
 const useDeepgramVoiceAgent = (config: VoiceAgentConfig) => {
   const [agentState, setAgentState] = useState<'idle' | 'listening' | 'thinking' | 'speaking'>('idle')
   const [isActive, setIsActive] = useState(false)
-  
+
   return {
     startAgent,
     stopAgent,
@@ -97,7 +97,7 @@ const useDeepgramVoiceAgent = (config: VoiceAgentConfig) => {
 // Updated DeepgramVoiceService with 2025 API
 class DeepgramVoiceService {
   private voiceAgent: DeepgramVoiceInteraction | null = null
-  
+
   async startVoiceAgent(config: VoiceAgentConfig): Promise<void> {
     this.voiceAgent = new DeepgramVoiceInteraction({
       apiKey: this.apiKey,
@@ -108,13 +108,13 @@ class DeepgramVoiceService {
         listenModel: config.listenModel
       }
     })
-    
+
     // Enhanced event handling
     this.voiceAgent.onAgentStateChange(this.handleStateChange)
     this.voiceAgent.onAgentUtterance(this.handleResponse)
     this.voiceAgent.onUserMessage(this.handleUserInput)
     this.voiceAgent.onError(this.handleError)
-    
+
     await this.voiceAgent.start()
   }
 }
@@ -200,7 +200,7 @@ describe('VoiceAgent', () => {
   it('should handle agent state transitions correctly', async () => {
     const mockAgent = new MockDeepgramVoiceInteraction()
     render(<VoiceAgent agent={mockAgent} />)
-    
+
     await user.click(screen.getByText('Start Agent'))
     expect(mockAgent.start).toHaveBeenCalled()
     expect(screen.getByText('listening')).toBeInTheDocument()

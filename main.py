@@ -1,347 +1,212 @@
-# Cartrita AI OS - Main FastAPI Application
-# GPT-4.1 Orchestrator with Hierarchical Multi-Agent System
-
 """
-Main FastAPI application for Cartrita AI OS.
-Implements GPT-4.1 orchestrator with hierarchical multi-agent architecture.
+Cartrita AI OS - Optimized Main FastAPI Application
+High-performance hierarchical multi-agent system with GPT-4.1 orchestration.
 """
 
 import asyncio
 import json
 import os
-import structlog
-import uvicorn
-from collections.abc import AsyncGenerator
+import shutil
 from contextlib import asynccontextmanager
 from typing import Any, Dict, List, Optional
-from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket, File, UploadFile
+
+import structlog
+import uvicorn
+from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
-from typing import List
-import shutil
-import os
-import socketio
-# Load environment variables from .env file
-from dotenv import load_dotenv
-load_dotenv("/home/robbie/cartrita-ai-os/.env")
+import time  # Added for timestamp in /health response
 
-# Import core components with fallbacks
+# Conditional imports with graceful fallbacks
 try:
-    from cartrita.orchestrator.core.supervisor import (  # type: ignore
-        SupervisorOrchestrator,
-    )
+    from dotenv import load_dotenv
+    load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
 except ImportError:
-    SupervisorOrchestrator = None
+    pass
 
-try:
-    # Import core services with fallbacks
-    from cartrita.orchestrator.core.database import (  # type: ignore
-        DatabaseManager,
-    )
-except ImportError:
-    DatabaseManager = None
+import sys
+_repo_root = os.path.dirname(os.path.abspath(__file__))
+_ai_path = os.path.join(_repo_root, "services", "ai-orchestrator")
+if os.path.isdir(os.path.join(_ai_path, "cartrita")) and _ai_path not in sys.path:
+    sys.path.insert(0, _ai_path)
 
-try:
-    from cartrita.orchestrator.core.cache import CacheManager  # type: ignore
-except ImportError:
-    CacheManager = None
+# Core service imports
+from cartrita.orchestrator.core.supervisor import SupervisorOrchestrator  # noqa: E402
+from cartrita.orchestrator.core.database import DatabaseManager  # noqa: E402
+from cartrita.orchestrator.core.cache import CacheManager  # noqa: E402
+from cartrita.orchestrator.core.metrics import MetricsCollector  # noqa: E402
+from cartrita.orchestrator.services.auth import verify_api_key  # noqa: E402
+from cartrita.orchestrator.services.jwt_auth import verify_api_key_or_jwt, jwt_manager  # noqa: E402
+from jose import jwt  # noqa: E402
+from cartrita.orchestrator.services.rate_limiter import check_api_rate_limit, check_auth_rate_limit  # noqa: E402
+from cartrita.orchestrator.services.openai_service import OpenAIService  # noqa: E402
+from cartrita.orchestrator.utils.config import Settings  # noqa: E402
+from cartrita.orchestrator.utils.logger import setup_logging  # noqa: E402
+from cartrita.orchestrator.models.schemas import (  # noqa: E402
+    AgentStatusResponse,
+    ChatRequest,
+    ChatResponse,
+    HealthResponse,
+    Message,
+    MessageRole,
+)
+from cartrita.orchestrator.models.auth_schemas import (  # noqa: E402
+    LoginRequest,
+    TokenResponse,
+    RefreshTokenRequest,
+    AuthStatusResponse,
+)
 
-try:
-    from cartrita.orchestrator.core.metrics import (  # type: ignore
-        MetricsCollector,
-    )
-except ImportError:
-    MetricsCollector = None
-
-# Import agents with fallbacks
-try:
-    from cartrita.orchestrator.agents.research_agent import (  # type: ignore
-        ResearchAgent,
-    )
-except ImportError:
-    ResearchAgent = None
-
-try:
-    from cartrita.orchestrator.agents.code_agent import (  # type: ignore
-        CodeAgent,
-    )
-except ImportError:
-    CodeAgent = None
-
-try:
-    from cartrita.orchestrator.agents.computer_use_agent import (  # type: ignore
-        ComputerUseAgent,
-    )
-except ImportError:
-    ComputerUseAgent = None
-
-try:
-    from cartrita.orchestrator.agents.knowledge_agent import (  # type: ignore
-        KnowledgeAgent,
-    )
-except ImportError:
-    KnowledgeAgent = None
-
-try:
-    from cartrita.orchestrator.agents.task_agent import (  # type: ignore
-        TaskAgent,
-    )
-except ImportError:
-    TaskAgent = None
-
-# Import models with fallbacks
-try:
-    from cartrita.orchestrator.models.schemas import (  # type: ignore
-        AgentStatusResponse,
-        ChatRequest,
-        ChatResponse,
-        HealthResponse,
-        Message,
-        MessageRole,
-    )
-except ImportError:
-    ChatRequest = None
-    ChatResponse = None
-    AgentStatusResponse = None
-    HealthResponse = None
-    Message = None
-    MessageRole = None
-
-
-# Voice Chat Request Model
-class VoiceChatRequest(BaseModel):
-    """Request model for voice conversations."""
-    conversationId: str = Field(..., description="Unique conversation identifier")
-    transcribedText: str = Field(..., description="Text transcribed from user's speech")
-    conversationHistory: Optional[List[Dict[str, Any]]] = Field(
-        None, description="Previous conversation messages for context"
-    )
-    voiceMode: bool = Field(True, description="Whether this is a voice conversation")
-
-
-# ============================================
-# Lifespan Management
-# ============================================
-
-# Import services with fallbacks
-try:
-    from cartrita.orchestrator.services.auth import (  # type: ignore
-        verify_api_key,
-    )
-except ImportError:
-    # Fallback auth function
-    async def verify_api_key(api_key: Optional[str] = None) -> str:
-        """Fallback API key verification."""
-        if not api_key:
-            expected_key = os.getenv("CARTRITA_API_KEY", "dev-api-key-2025")
-            if api_key != expected_key:
-                raise HTTPException(status_code=403, detail="Invalid API key")
-        return api_key or "dev-api-key-2025"
-
-try:
-    from cartrita.orchestrator.utils.config import Settings  # type: ignore
-except ImportError:
-    Settings = None
-
-try:
-    from cartrita.orchestrator.utils.logger import (  # type: ignore
-        setup_logging,
-    )
-except ImportError:
-    setup_logging = None
-
-# Configure structured logging
+# Configure logging
+# Initialize structured logging configuration for the application (sets up structlog, log level, handlers, etc.)
 setup_logging()
 logger = structlog.get_logger(__name__)
 
-# Global instances
-supervisor = None
-db_manager = None
-cache_manager = None
-metrics_collector = None
+# Temporary instrumentation to capture Pydantic v2 orm_mode deprecation stacks.
+# Captures first few occurrences and logs structured stack traces for remediation.
+import warnings  # noqa: E402
+import traceback  # noqa: E402
 
-# Specialized agents
-research_agent = None
-code_agent = None
-computer_use_agent = None
-knowledge_agent = None
-task_agent = None
+_ORM_MODE_CAPTURE_LIMIT = int(os.getenv("ORM_MODE_CAPTURE_LIMIT", "5"))
+_orm_mode_captured = 0
+_original_showwarning = warnings.showwarning
 
-# ============================================
-# Lifespan Management
-# ============================================
+
+def _orm_mode_showwarning(message, category, filename, lineno, file=None, line=None):  # type: ignore[override]
+    global _orm_mode_captured
+    text = str(message)
+    if "orm_mode" in text and _orm_mode_captured < _ORM_MODE_CAPTURE_LIMIT:
+        _orm_mode_captured += 1
+        stack_str = "".join(traceback.format_stack(limit=25))
+        logger.warning(
+            "pydantic.orm_mode.deprecation",
+            occurrence=_orm_mode_captured,
+            message=text,
+            file=filename,
+            line=lineno,
+            stack=stack_str,
+        )
+    return _original_showwarning(message, category, filename, lineno, file, line)
+
+
+warnings.showwarning = _orm_mode_showwarning  # type: ignore[assignment]
+
+# Global service instances
+services: dict[str, Optional[Any]] = {
+    "supervisor": None,
+    "db_manager": None,
+    "cache_manager": None,
+    "metrics_collector": None,
+    "openai_service": None,
+}
+
+
+class VoiceChatRequest(BaseModel):
+    """Voice conversation request model."""
+    conversationId: str = Field(..., description="Unique conversation identifier")
+    transcribedText: str = Field(..., description="Transcribed speech text")
+    conversationHistory: Optional[List[Dict[str, Any]]] = Field(
+        None, description="Previous conversation context"
+    )
+    voiceMode: bool = Field(True, description="Voice conversation flag")
+
+
+class ErrorResponse(BaseModel):
+    """Standardized error response."""
+    error: str = Field(..., description="Error message")
+    code: str = Field(..., description="Error code")
+    details: Optional[Dict[str, Any]] = Field(None, description="Additional details")
 
 
 @asynccontextmanager
-async def lifespan(_app: FastAPI) -> AsyncGenerator[None]:
-    """Application lifespan manager with proper resource cleanup."""
-    global supervisor, db_manager, cache_manager, metrics_collector
-    global research_agent, code_agent, computer_use_agent
-    global knowledge_agent, task_agent
-
-    logger.info("🚀 Starting Cartrita AI Orchestrator...")
+async def lifespan(_: FastAPI):
+    """Optimized application lifespan with robust initialization."""
+    logger.info("🚀 Initializing Cartrita AI Orchestrator...")
 
     try:
-        # Initialize core components
+        # Initialize configuration
         settings = Settings()
 
-        # Initialize database
-        db_manager = DatabaseManager(settings)
-        await db_manager.connect()
+        # Initialize core services
+        services["db_manager"] = DatabaseManager(settings)
+        await services["db_manager"].connect()
 
-        # Initialize cache
-        cache_manager = CacheManager(settings.redis.url)
+        services["cache_manager"] = CacheManager(settings.redis.url)
+        services["metrics_collector"] = MetricsCollector()
+        services["openai_service"] = OpenAIService()
 
-        # Initialize metrics
-        # metrics_collector = MetricsCollector()
-
-        # Initialize specialized agents
-        # research_agent = ResearchAgent()
-        # await research_agent.start()
-
-        # code_agent = CodeAgent()
-        # await code_agent.start()
-
-        # computer_use_agent = ComputerUseAgent()
-        # await computer_use_agent.start()
-
-        # knowledge_agent = KnowledgeAgent()
-        # await knowledge_agent.start()
-
-        # task_agent = TaskAgent()
-        # await task_agent.start()
-
-        # Initialize GPT-4.1 Supervisor Orchestrator
-        supervisor = SupervisorOrchestrator(
-            db_manager=db_manager,
-            cache_manager=cache_manager,
-            metrics_collector=metrics_collector,
+        # Initialize supervisor orchestrator
+        services["supervisor"] = SupervisorOrchestrator(
+            db_manager=services["db_manager"],
+            cache_manager=services["cache_manager"],
+            metrics_collector=services["metrics_collector"],
             settings=settings,
         )
 
-        # Start background tasks
-        # await supervisor.start()
-
-        logger.info("✅ Cartrita AI Orchestrator started successfully")
-
+        logger.info("✅ Cartrita AI Orchestrator initialized successfully")
         yield
 
     except Exception as e:
-        logger.error("❌ Failed to start Cartrita AI Orchestrator", error=str(e))
+        logger.error("❌ Initialization failed", error=str(e))
         raise
 
     finally:
         logger.info("🛑 Shutting down Cartrita AI Orchestrator...")
 
         # Graceful shutdown
-        if supervisor:
-            await supervisor.stop()
-
-        # Stop specialized agents
-        agents_to_stop = [
-            research_agent,
-            code_agent,
-            computer_use_agent,
-            knowledge_agent,
-            task_agent,
-        ]
-
-        for agent in agents_to_stop:
-            if agent:
+        for service_name, service in services.items():
+            if service and hasattr(service, 'disconnect'):
                 try:
-                    await agent.stop()
-                except Exception as exc:
-                    logger.error(
-                        f"Error stopping agent {agent.__class__.__name__}",
-                        error=str(exc),
-                    )
+                    await service.disconnect()
+                except Exception as e:
+                    logger.error(f"Error shutting down {service_name}", error=str(e))
 
-        if db_manager:
-            await db_manager.disconnect()
-
-        if cache_manager:
-            await cache_manager.disconnect()
-
-        logger.info("✅ Cartrita AI Orchestrator shutdown complete")
+        logger.info("✅ Shutdown complete")
 
 
-# ============================================
-# FastAPI Application
-# ============================================
-
+# FastAPI application
 app = FastAPI(
     title="Cartrita AI OS - Orchestrator",
-    description="Hierarchical Multi-Agent AI OS with GPT-4.1 Orchestration",
-    version="2.0.0",
+    description="High-performance hierarchical multi-agent AI system",
+    version="2.1.0",
     lifespan=lifespan,
     docs_url="/docs",
     redoc_url="/redoc",
     openapi_url="/openapi.json",
 )
 
-# ============================================  
-# Socket.IO Status Endpoint (Simple Alternative)
-# ============================================
-
-@app.get("/socket.io/")
-async def socket_io_status():
-    """Socket.IO compatibility endpoint - returns status without full Socket.IO server."""
-    return {
-        "status": "Socket.IO endpoint available",
-        "transport": "polling fallback",
-        "message": "Full Socket.IO support disabled for compatibility",
-        "alternatives": {
-            "websocket": "/ws/chat",
-            "sse": "/api/chat/stream"
-        }
-    }
-
-# ============================================
-# Middleware Configuration
-# ============================================
-
-# CORS middleware
+# Middleware configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://cartrita-ai-os.com"],  # Specific origins for production
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "https://cartrita-ai-os.com"
+    ],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
-# Trusted host middleware
 app.add_middleware(
-    TrustedHostMiddleware, allowed_hosts=["*"]  # Configure for production
+    TrustedHostMiddleware,
+    allowed_hosts=[
+        "localhost",
+        "127.0.0.1",
+        "cartrita-ai-os.com"
+    ]  # Restrict to known hosts for production
 )
-
-# ============================================
-# Request/Response Models
-# ============================================
-
-
-class ErrorResponse(BaseModel):
-    """Standard error response model."""
-
-    error: str = Field(..., description="Error message")
-    code: str = Field(..., description="Error code")
-    details: dict[str, Any] | None = Field(None, description="Additional error details")
-
-
-# ============================================
-# Exception Handlers
-# ============================================
 
 
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request: Request, exc: HTTPException):
     """Handle HTTP exceptions with structured logging."""
     logger.warning(
-        "HTTP exception occurred",
+        "HTTP exception",
         status_code=exc.status_code,
         detail=exc.detail,
-        path=request.url.path,
+        path=str(request.url.path),
         method=request.method,
     )
 
@@ -350,26 +215,29 @@ async def http_exception_handler(request: Request, exc: HTTPException):
         content=ErrorResponse(
             error=exc.detail,
             code=f"HTTP_{exc.status_code}",
-            details={"path": request.url.path, "method": request.method},
-        ).dict(),
+            details={"path": str(request.url.path), "method": request.method},
+        ).model_dump(),
     )
 
 
 @app.exception_handler(Exception)
 async def general_exception_handler(request: Request, exc: Exception):
-    """Handle general exceptions with error tracking."""
+    """Handle general exceptions with comprehensive error tracking."""
     logger.error(
-        "Unhandled exception occurred",
+        "Unhandled exception",
         error=str(exc),
         error_type=type(exc).__name__,
-        path=request.url.path,
+        path=str(request.url.path),
         method=request.method,
         exc_info=True,
     )
 
-    # Report to error tracking service
-    if metrics_collector:
-        await metrics_collector.record_error(exc, request)
+    # Report to metrics collector
+    if services["metrics_collector"]:
+        try:
+            await services["metrics_collector"].record_error(exc, request)
+        except Exception:
+            pass  # Don't fail on metrics recording
 
     return JSONResponse(
         status_code=500,
@@ -377,32 +245,25 @@ async def general_exception_handler(request: Request, exc: Exception):
             error="Internal server error",
             code="INTERNAL_ERROR",
             details={"type": type(exc).__name__},
-        ).dict(),
+        ).model_dump(),
     )
-
-
-# ============================================
-# Root Endpoint
-# ============================================
 
 
 @app.get("/")
 async def root():
-    """Root endpoint providing API information and available endpoints."""
+    """API information and available endpoints."""
     return {
-        "message": "Welcome to Cartrita AI OS - Hierarchical Multi-Agent System",
-        "version": "2.0.0",
+        "message": "Cartrita AI OS - Hierarchical Multi-Agent System",
+        "version": "2.1.0",
         "status": "operational",
         "streaming": {
             "primary_transport": "SSE (Server-Sent Events)",
             "fallback_transport": "WebSocket",
-            "sse_events": [
-                "token", "function_call", "tool_result", "metrics",
-                "done", "agent_task_started", "agent_task_progress",
-                "agent_task_output", "agent_task_complete", "orchestration_decision",
-                "chain_reconfigured", "safety_flag", "evaluation_metric",
-                "audio_interim", "audio_final", "file.attach.progress",
-                "computer_use.execute.progress"
+            "events": [
+                "token", "function_call", "tool_result", "metrics", "done",
+                "agent_task_started", "agent_task_progress", "agent_task_complete",
+                "orchestration_decision", "safety_flag", "evaluation_metric",
+                "audio_interim", "audio_final", "file_attach_progress"
             ]
         },
         "endpoints": {
@@ -414,92 +275,216 @@ async def root():
             "voice_chat_stream": "/api/chat/voice/stream",
             "agents": "/api/agents",
             "websocket": "/ws/chat",
-            "docs": "/docs",
-            "admin": {
-                "reload_agents": "/api/admin/reload-agents",
-                "stats": "/api/admin/stats"
-            }
+            "docs": "/docs"
         },
-        "frontend": "http://localhost:3001",
-        "documentation": "Available at /docs"
+        "frontend": "http://localhost:3001"
     }
 
 
-# ============================================
-# Health & Monitoring Endpoints
-# ============================================
+@app.get("/socket.io/")
+async def socket_io_compatibility():
+    """Socket.IO compatibility endpoint."""
+    return {
+        "status": "Socket.IO endpoint available",
+        "transport": "polling fallback",
+        "message": "Full Socket.IO support disabled for compatibility",
+        "alternatives": {
+            "websocket": "/ws/chat",
+            "sse": "/api/chat/stream"
+        }
+    }
 
 
 @app.get("/health", response_model=HealthResponse)
 async def health_check():
-    """Comprehensive health check endpoint."""
-    if not all([db_manager, cache_manager]):
+    """Comprehensive health check."""
+    if not all([services["db_manager"], services["cache_manager"]]):
         raise HTTPException(status_code=503, detail="Service not ready")
 
-    # Check database connectivity
-    db_healthy = await db_manager.health_check()
-
-    # Check cache connectivity
-    cache_healthy = await cache_manager.health_check()
-
-    # Check supervisor status (optional for now)
-    supervisor_healthy = False
-    if supervisor:
-        supervisor_healthy = await supervisor.health_check()
+    # Check service health
+    db_healthy = await services["db_manager"].health_check()
+    cache_healthy = await services["cache_manager"].health_check()
+    supervisor_healthy = bool(
+        services["supervisor"]
+        and await services["supervisor"].health_check()
+    )
 
     overall_healthy = all([db_healthy, cache_healthy])
 
     return HealthResponse(
         status="healthy" if overall_healthy else "unhealthy",
-        version="2.0.0",
+        version="2.1.0",
         services={
             "database": "healthy" if db_healthy else "unhealthy",
             "cache": "healthy" if cache_healthy else "unhealthy",
             "supervisor": "healthy" if supervisor_healthy else "disabled",
         },
-        timestamp=asyncio.get_event_loop().time(),
+        timestamp=time.time(),
     )
 
 
 @app.get("/metrics")
 async def metrics():
     """Prometheus metrics endpoint."""
-    if not metrics_collector:
+    if not services["metrics_collector"]:
         raise HTTPException(status_code=503, detail="Metrics not available")
 
-    return await metrics_collector.get_metrics()
+    return await services["metrics_collector"].get_metrics()
 
 
-# ============================================
-# Core AI Endpoints
-# ============================================
+# Authentication Endpoints
+
+@app.post("/api/auth/login", response_model=TokenResponse)
+async def login(
+    request: Request,
+    login_data: LoginRequest,
+    _: None = Depends(check_auth_rate_limit)
+):
+    """User login endpoint with JWT token generation."""
+    # Simple demo implementation - in production, verify against database
+    demo_users = {
+        "admin@cartrita.com": {
+            "password_hash": jwt_manager.hash_password("admin123"),
+            "permissions": ["admin", "chat", "upload", "metrics"]
+        },
+        "user@cartrita.com": {
+            "password_hash": jwt_manager.hash_password("user123"),
+            "permissions": ["chat", "upload"]
+        }
+    }
+
+    user = demo_users.get(login_data.email)
+    if not user or not jwt_manager.verify_password(login_data.password, user["password_hash"]):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
+
+    # Generate tokens
+    access_token = jwt_manager.create_access_token(login_data.email, user["permissions"])
+    refresh_token = jwt_manager.create_refresh_token(login_data.email)
+
+    return TokenResponse(
+        access_token=access_token,
+        refresh_token=refresh_token,
+        expires_in=jwt_manager.access_token_expire_minutes * 60
+    )
+
+
+@app.post("/api/auth/refresh", response_model=TokenResponse)
+async def refresh_token(
+    request: Request,
+    refresh_data: RefreshTokenRequest,
+    _: None = Depends(check_auth_rate_limit)
+):
+    """Refresh access token using refresh token."""
+    try:
+        # Verify refresh token
+        token_data = jwt_manager.verify_token(refresh_data.refresh_token)
+
+        # Check if it's actually a refresh token
+        payload = jwt.decode(
+            refresh_data.refresh_token,
+            jwt_manager.secret_key,
+            algorithms=[jwt_manager.algorithm]
+        )
+
+        if payload.get("type") != "refresh":
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid token type"
+            )
+
+        # Generate new tokens
+        demo_users = {
+            "admin@cartrita.com": ["admin", "chat", "upload", "metrics"],
+            "user@cartrita.com": ["chat", "upload"]
+        }
+
+        permissions = demo_users.get(token_data.user_id, [])
+        access_token = jwt_manager.create_access_token(token_data.user_id, permissions)
+        new_refresh_token = jwt_manager.create_refresh_token(token_data.user_id)
+
+        return TokenResponse(
+            access_token=access_token,
+            refresh_token=new_refresh_token,
+            expires_in=jwt_manager.access_token_expire_minutes * 60
+        )
+
+    except Exception as e:
+        logger.warning(f"Token refresh failed: {str(e)}")
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or expired refresh token"
+        )
+
+
+@app.get("/api/auth/status", response_model=AuthStatusResponse)
+async def auth_status(
+    request: Request,
+    current_user: Optional[str] = Depends(verify_api_key_or_jwt)
+):
+    """Get current authentication status."""
+    # Check if authenticated via JWT
+    auth_header = request.headers.get("Authorization")
+    if auth_header and auth_header.startswith("Bearer "):
+        try:
+            token = auth_header.split(" ")[1]
+            token_data = jwt_manager.verify_token(token)
+            return AuthStatusResponse(
+                authenticated=True,
+                user_id=token_data.user_id,
+                permissions=token_data.permissions,
+                token_expires_at=token_data.expires_at,
+                auth_method="jwt"
+            )
+        except Exception:
+            pass
+
+    # Check if authenticated via API key
+    api_key = request.headers.get("X-API-Key")
+    if api_key:
+        return AuthStatusResponse(
+            authenticated=True,
+            user_id="api_key_user",
+            permissions=["api_access"],
+            auth_method="api_key"
+        )
+
+    return AuthStatusResponse(
+        authenticated=False,
+        auth_method="none"
+    )
 
 
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat(
-    request: ChatRequest, api_key: str = Depends(verify_api_key)
+    request_body: ChatRequest,
+    request: Request,
+    api_key: str = Depends(verify_api_key_or_jwt),
+    _: None = Depends(check_api_rate_limit)
 ):
     """Main chat endpoint with GPT-4.1 orchestration."""
-    if not supervisor:
+    if not services["supervisor"]:
         raise HTTPException(status_code=503, detail="Supervisor not available")
 
     try:
         # Record request metrics
-        if metrics_collector:
-            await metrics_collector.record_request(request, api_key)
+        if services["metrics_collector"]:
+            await services["metrics_collector"].record_request(request_body, api_key)
 
-        # Process through GPT-4.1 supervisor
-        response = await supervisor.process_chat_request(
-            message=request.message,
-            context=request.context,
-            agent_override=request.agent_override,
-            stream=request.stream,
+        # Process through supervisor
+        response = await services["supervisor"].process_chat_request(
+            message=request_body.message,
+            context=request_body.context,
+            agent_override=request_body.agent_override,
+            stream=request_body.stream,
             api_key=api_key,
         )
 
         # Record response metrics
-        if metrics_collector:
-            await metrics_collector.record_response(response)
+        if services["metrics_collector"]:
+            await services["metrics_collector"].record_response(response)
 
         return response
 
@@ -509,25 +494,21 @@ async def chat(
 
 
 @app.post("/api/chat/voice", response_model=ChatResponse)
-async def voice_chat(
-    request: VoiceChatRequest, api_key: str = Depends(verify_api_key)
-):
-    """Voice conversation endpoint with Deepgram ASR + OpenAI GPT-4.1 + Deepgram TTS."""
-    try:
-        # Get OpenAI service instance
-        from cartrita.orchestrator.services.openai_service import OpenAIService
-        openai_service = OpenAIService()
+async def voice_chat(request: VoiceChatRequest, api_key: str = Depends(verify_api_key)):
+    """Voice conversation endpoint with optimized processing."""
+    if not services["openai_service"]:
+        raise HTTPException(status_code=503, detail="OpenAI service not available")
 
+    try:
         logger.info(
             "Processing voice conversation",
             conversation_id=request.conversationId,
-            voice_mode=request.voiceMode,
             api_key=api_key[:8] + "..."
         )
 
         # Process voice conversation
         response_content = ""
-        async for chunk in openai_service.process_voice_conversation(
+        async for chunk in services["openai_service"].process_voice_conversation(
             conversation_id=request.conversationId,
             transcribed_text=request.transcribedText,
             conversation_history=request.conversationHistory
@@ -537,30 +518,23 @@ async def voice_chat(
             elif chunk["type"] == "error":
                 raise HTTPException(status_code=500, detail=chunk["error"])
 
-        # Create response
         return ChatResponse(
             response=response_content,
             conversation_id=request.conversationId,
             agent_type="openai-voice",
-            messages=[
-                Message(
-                    role=MessageRole.ASSISTANT,
-                    content=response_content
-                )
-            ],
+            messages=[Message(role=MessageRole.ASSISTANT, content=response_content)],
             context=request.conversationHistory,
-            task_result=None,
             metadata={
                 "voice_mode": request.voiceMode,
                 "transcription_length": len(request.transcribedText)
             },
-            processing_time=0.0,  # TODO: Track actual processing time
+            processing_time=0.0,
             token_usage=None
         )
 
     except Exception as e:
         logger.error(
-            "Voice chat request failed",
+            "Voice chat failed",
             error=str(e),
             conversation_id=request.conversationId,
             api_key=api_key[:8] + "..."
@@ -568,50 +542,37 @@ async def voice_chat(
         raise HTTPException(status_code=500, detail="Voice chat processing failed") from e
 
 
-@app.get("/api/agents", response_model=dict)
-async def list_agents(
-    _api_key: str = Depends(verify_api_key),
-):
+@app.get("/api/agents")
+async def list_agents(api_key: str = Depends(verify_api_key)):
     """List all available agents and their status."""
-    if not supervisor:
+    _ = api_key  # noqa: F841 (auth enforced via dependency)
+    if not services["supervisor"]:
         raise HTTPException(status_code=503, detail="Supervisor not available")
 
     try:
-        agents = await supervisor.get_agent_statuses()
-        return agents
-
+        return await services["supervisor"].get_agent_statuses()
     except Exception as e:
         logger.error("Failed to list agents", error=str(e))
         raise HTTPException(status_code=500, detail="Failed to retrieve agents") from e
 
 
 @app.get("/api/agents/{agent_id}", response_model=AgentStatusResponse)
-async def get_agent_status(
-    agent_id: str, _api_key: str = Depends(verify_api_key)
-):
+async def get_agent_status(agent_id: str, api_key: str = Depends(verify_api_key)):
     """Get detailed status of a specific agent."""
-    if not supervisor:
+    _ = api_key  # noqa: F841
+    if not services["supervisor"]:
         raise HTTPException(status_code=503, detail="Supervisor not available")
 
     try:
-        agent_status = await supervisor.get_agent_status(agent_id)
+        agent_status = await services["supervisor"].get_agent_status(agent_id)
         if not agent_status:
             raise HTTPException(status_code=404, detail="Agent not found")
-
         return agent_status
-
     except HTTPException:
         raise
     except Exception as e:
         logger.error("Failed to get agent status", error=str(e), agent_id=agent_id)
-        raise HTTPException(
-            status_code=500, detail="Failed to retrieve agent status"
-        ) from e
-
-
-# ============================================
-# WebSocket Endpoints
-# ============================================
+        raise HTTPException(status_code=500, detail="Failed to retrieve agent status") from e
 
 
 @app.get("/api/chat/stream")
@@ -622,12 +583,12 @@ async def chat_stream(
     api_key: str = Depends(verify_api_key)
 ):
     """SSE endpoint for streaming chat responses."""
-    if not supervisor:
+    if not services["supervisor"]:
         raise HTTPException(status_code=503, detail="Supervisor not available")
 
     async def generate():
         try:
-            # Parse context if provided
+            # Parse context
             context_dict = {}
             if context:
                 try:
@@ -635,37 +596,29 @@ async def chat_stream(
                 except json.JSONDecodeError:
                     context_dict = {"raw_context": context}
 
-            # Process through supervisor (currently non-streaming)
-            response = await supervisor.process_chat_request(
+            # Process through supervisor
+            response = await services["supervisor"].process_chat_request(
                 message=message,
                 context=context_dict,
                 agent_override=agent_override,
-                stream=False,  # Supervisor doesn't support streaming yet
+                stream=False,
                 api_key=api_key,
             )
 
-            # Send response as SSE event with proper serialization
+            # Send response as SSE
             try:
-                if hasattr(response, 'dict'):
-                    response_dict = response.dict()
-                elif hasattr(response, 'model_dump'):
-                    response_dict = response.model_dump()
-                else:
-                    response_dict = dict(response) if hasattr(response, '__dict__') else response
-                
-                # Safe JSON serialization with fallback
+                response_dict = response.model_dump() if hasattr(response, 'model_dump') else response.dict()
                 yield f"data: {json.dumps(response_dict, default=str, ensure_ascii=False)}\n\n"
             except Exception as serialize_error:
-                logger.error(f"Failed to serialize response: {serialize_error}")
-                # Send a simplified response
+                logger.error("Failed to serialize response", error=str(serialize_error))
                 simple_response = {
-                    "response": str(response.response) if hasattr(response, 'response') else str(response),
-                    "conversation_id": str(response.conversation_id) if hasattr(response, 'conversation_id') else "unknown",
-                    "agent_type": str(response.agent_type) if hasattr(response, 'agent_type') else "supervisor",
+                    "response": str(getattr(response, 'response', response)),
+                    "conversation_id": str(getattr(response, 'conversation_id', 'unknown')),
+                    "agent_type": str(getattr(response, 'agent_type', 'supervisor')),
                     "status": "completed"
                 }
                 yield f"data: {json.dumps(simple_response)}\n\n"
-            
+
             yield "data: [DONE]\n\n"
 
         except Exception as e:
@@ -691,10 +644,10 @@ async def voice_chat_stream(
     api_key: str = Depends(verify_api_key)
 ):
     """SSE endpoint for streaming voice conversations."""
-    if not supervisor:
+    if not services["supervisor"]:
         raise HTTPException(status_code=503, detail="Supervisor not available")
 
-    # Parse conversation history if provided
+    # Parse conversation history
     history = []
     if conversationHistory:
         try:
@@ -704,9 +657,7 @@ async def voice_chat_stream(
 
     async def generate():
         try:
-            # For now, use regular chat processing (voice processing not fully implemented)
-            # TODO: Implement proper voice processing pipeline
-            response = await supervisor.process_chat_request(
+            response = await services["supervisor"].process_chat_request(
                 message=transcribedText,
                 context={
                     "conversation_id": conversationId,
@@ -717,8 +668,8 @@ async def voice_chat_stream(
                 api_key=api_key,
             )
 
-            # Send response as SSE event with voice-specific metadata
-            response_dict = response.dict() if hasattr(response, 'dict') else response
+            # Send voice-specific response
+            response_dict = response.model_dump() if hasattr(response, 'model_dump') else response.dict()
             event_data = {
                 **response_dict,
                 "conversationId": conversationId,
@@ -729,7 +680,7 @@ async def voice_chat_stream(
             yield "data: [DONE]\n\n"
 
         except Exception as e:
-            logger.error("Streaming voice chat failed", error=str(e))
+            logger.error("Voice streaming failed", error=str(e))
             yield f"data: {json.dumps({'error': 'Voice streaming failed', 'conversationId': conversationId})}\n\n"
 
     return StreamingResponse(
@@ -743,10 +694,6 @@ async def voice_chat_stream(
     )
 
 
-# ============================================
-# File Upload Endpoints
-# ============================================
-
 @app.post("/upload/multiple")
 async def upload_multiple_files(
     files: List[UploadFile] = File(...),
@@ -754,21 +701,20 @@ async def upload_multiple_files(
     api_key: str = Depends(verify_api_key)
 ):
     """Upload multiple files endpoint."""
+    _ = api_key  # noqa: F841
     try:
         logger.info(f"Processing {len(files)} file uploads", conversation_id=conversationId)
-        
-        # Create upload directory if it doesn't exist
+
         upload_dir = "/tmp/uploads"
         os.makedirs(upload_dir, exist_ok=True)
-        
+
         uploaded_files = []
         for file in files:
             if file.filename:
-                # Save file temporarily
                 file_path = os.path.join(upload_dir, file.filename)
                 with open(file_path, "wb") as buffer:
                     shutil.copyfileobj(file.file, buffer)
-                
+
                 uploaded_files.append({
                     "filename": file.filename,
                     "size": os.path.getsize(file_path),
@@ -776,14 +722,14 @@ async def upload_multiple_files(
                     "content_type": file.content_type,
                     "url": f"/files/{file.filename}"
                 })
-        
+
         return {
             "success": True,
             "data": uploaded_files,
             "message": f"Successfully uploaded {len(uploaded_files)} files",
             "conversationId": conversationId
         }
-        
+
     except Exception as e:
         logger.error("File upload failed", error=str(e), conversation_id=conversationId)
         raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}")
@@ -796,63 +742,65 @@ async def upload_single_file(
     api_key: str = Depends(verify_api_key)
 ):
     """Upload single file endpoint."""
+    _ = api_key  # noqa: F841
     try:
-        logger.info(f"Processing single file upload: {file.filename}", conversation_id=conversationId)
-        
-        # Create upload directory if it doesn't exist
+        if not file.filename:
+            raise HTTPException(status_code=400, detail="No filename provided")
+
+        logger.info(f"Processing file upload: {file.filename}", conversation_id=conversationId)
+
         upload_dir = "/tmp/uploads"
         os.makedirs(upload_dir, exist_ok=True)
-        
-        if file.filename:
-            # Save file temporarily
-            file_path = os.path.join(upload_dir, file.filename)
-            with open(file_path, "wb") as buffer:
-                shutil.copyfileobj(file.file, buffer)
-            
-            file_info = {
-                "filename": file.filename,
-                "size": os.path.getsize(file_path),
-                "path": file_path,
-                "content_type": file.content_type,
-                "url": f"/files/{file.filename}"
-            }
-            
-            return {
-                "success": True,
-                "data": file_info,
-                "message": f"Successfully uploaded {file.filename}",
-                "conversationId": conversationId
-            }
-        else:
-            raise HTTPException(status_code=400, detail="No filename provided")
-            
+
+        file_path = os.path.join(upload_dir, file.filename)
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+
+        file_info = {
+            "filename": file.filename,
+            "size": os.path.getsize(file_path),
+            "path": file_path,
+            "content_type": file.content_type,
+            "url": f"/files/{file.filename}"
+        }
+
+        return {
+            "success": True,
+            "data": file_info,
+            "message": f"Successfully uploaded {file.filename}",
+            "conversationId": conversationId
+        }
+
     except Exception as e:
-        logger.error("Single file upload failed", error=str(e), conversation_id=conversationId)
+        logger.error("File upload failed", error=str(e), conversation_id=conversationId)
         raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}")
 
 
-# ============================================
-# WebSocket Endpoints
-# ============================================
-
-
 @app.websocket("/ws/chat")
-async def websocket_chat(websocket: WebSocket) -> None:
-    """WebSocket endpoint for real-time chat with streaming."""
+async def websocket_chat(websocket: WebSocket):
+    """WebSocket endpoint for real-time chat."""
     await websocket.accept()
 
     try:
-        # Authenticate WebSocket connection
+        # Authenticate connection
         auth_message = await websocket.receive_json()
         api_key = auth_message.get("api_key")
 
-        if not api_key or not await verify_api_key(api_key):
+        if not api_key:
+            await websocket.send_json({"error": "API key required"})
+            await websocket.close()
+            return
+
+        # Verify API key
+        try:
+            await verify_api_key(api_key)
+        except HTTPException:
             await websocket.send_json({"error": "Invalid API key"})
             await websocket.close()
             return
 
         while True:
-            # Receive chat message
+            # Receive and process messages
             data = await websocket.receive_json()
             message = data.get("message", "")
             context = data.get("context", {})
@@ -860,22 +808,26 @@ async def websocket_chat(websocket: WebSocket) -> None:
             if not message:
                 continue
 
-            # Process through supervisor (streaming not yet implemented,
-            # send as single response)
-            response = await supervisor.process_chat_request(
-                message=message, context=context, stream=False, api_key=api_key
+            if not services["supervisor"]:
+                await websocket.send_json({"error": "Supervisor not available"})
+                continue
+
+            # Process through supervisor
+            response = await services["supervisor"].process_chat_request(
+                message=message,
+                context=context,
+                stream=False,
+                api_key=api_key
             )
 
-            # Send response as WebSocket message
-            await websocket.send_json(
-                {
-                    "response": response.response,
-                    "conversation_id": response.conversation_id,
-                    "agent_type": response.agent_type,
-                    "processing_time": response.processing_time,
-                    "done": True,
-                }
-            )
+            # Send response
+            await websocket.send_json({
+                "response": response.response,
+                "conversation_id": response.conversation_id,
+                "agent_type": response.agent_type,
+                "processing_time": response.processing_time,
+                "done": True,
+            })
 
     except Exception as e:
         logger.error("WebSocket error", error=str(e))
@@ -890,60 +842,44 @@ async def websocket_chat(websocket: WebSocket) -> None:
             pass
 
 
-# ============================================
-# Administrative Endpoints
-# ============================================
-
-
 @app.post("/api/admin/reload-agents")
-async def reload_agents(
-    _api_key: str = Depends(verify_api_key),
-) -> dict[str, str]:
+async def reload_agents(api_key: str = Depends(verify_api_key)):
     """Reload all agents (admin only)."""
-    # TODO: Implement admin authentication
-    if not supervisor:
+    _ = api_key  # noqa: F841
+    if not services["supervisor"]:
         raise HTTPException(status_code=503, detail="Supervisor not available")
 
     try:
-        await supervisor.reload_agents()
+        await services["supervisor"].reload_agents()
         return {"message": "Agents reloaded successfully"}
-
     except Exception as e:
         logger.error("Failed to reload agents", error=str(e))
         raise HTTPException(status_code=500, detail="Failed to reload agents") from e
 
 
 @app.get("/api/admin/stats")
-async def get_system_stats(
-    _api_key: str = Depends(verify_api_key),
-) -> dict[str, Any]:
+async def get_system_stats(api_key: str = Depends(verify_api_key)):
     """Get system statistics (admin only)."""
-    # TODO: Implement admin authentication
-    if not metrics_collector:
+    _ = api_key  # noqa: F841
+    if not services["metrics_collector"]:
         raise HTTPException(status_code=503, detail="Metrics not available")
 
     try:
-        stats = metrics_collector.get_metrics_summary()
-        return stats
-
+        return await services["metrics_collector"].get_metrics_summary()
     except Exception as e:
         logger.error("Failed to get system stats", error=str(e))
-        raise HTTPException(
-            status_code=500, detail="Failed to retrieve system stats"
-        ) from e
+        raise HTTPException(status_code=500, detail="Failed to retrieve system stats") from e
 
-
-# ============================================
-# Startup Configuration
-# ============================================
 
 if __name__ == "__main__":
-    # Development server configuration
+    # Application entrypoint (run: python main.py)
+    # Enable reload only if explicitly set (development usage)
+    reload_enabled = os.getenv("AI_ORCHESTRATOR_RELOAD", "false").lower() == "true"
     uvicorn.run(
-        "main:app",  # Use the regular FastAPI app
-        host="127.0.0.1",  # Bind to localhost for security
+        "main:app",
+        host="127.0.0.1",
         port=int(os.getenv("AI_ORCHESTRATOR_PORT", "8000")),
-        reload=True,
+        reload=reload_enabled,
         log_level="info",
         access_log=True,
     )

@@ -1,0 +1,296 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.dataframe.DataFrameLoader.html",
+  "title": "DataFrameLoader#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "DataFrameLoader"
+    },
+    {
+      "type": "p",
+      "content": "LoadPandasDataFrame."
+    },
+    {
+      "type": "p",
+      "content": "Initialize with dataframe object."
+    },
+    {
+      "type": "li",
+      "content": "data_frame(Any) – Pandas DataFrame object."
+    },
+    {
+      "type": "p",
+      "content": "data_frame(Any) – Pandas DataFrame object."
+    },
+    {
+      "type": "li",
+      "content": "page_content_column(str) – Name of the column containing the page content.\nDefaults to “text”."
+    },
+    {
+      "type": "p",
+      "content": "page_content_column(str) – Name of the column containing the page content.\nDefaults to “text”."
+    },
+    {
+      "type": "li",
+      "content": "engine(Literal['pandas','modin'])"
+    },
+    {
+      "type": "p",
+      "content": "engine(Literal['pandas','modin'])"
+    },
+    {
+      "type": "p",
+      "content": "__init__(data_frame[, page_content_column, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with dataframe object."
+    },
+    {
+      "type": "p",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "Lazy load records from dataframe."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "load_and_split([text_splitter])"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks."
+    },
+    {
+      "type": "p",
+      "content": "Initialize with dataframe object."
+    },
+    {
+      "type": "li",
+      "content": "data_frame(Any) – Pandas DataFrame object."
+    },
+    {
+      "type": "p",
+      "content": "data_frame(Any) – Pandas DataFrame object."
+    },
+    {
+      "type": "li",
+      "content": "page_content_column(str) – Name of the column containing the page content.\nDefaults to “text”."
+    },
+    {
+      "type": "p",
+      "content": "page_content_column(str) – Name of the column containing the page content.\nDefaults to “text”."
+    },
+    {
+      "type": "li",
+      "content": "engine(Literal['pandas','modin'])"
+    },
+    {
+      "type": "p",
+      "content": "engine(Literal['pandas','modin'])"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Lazy load records from dataframe."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks. Chunks are returned as Documents."
+    },
+    {
+      "type": "p",
+      "content": "Do not override this method. It should be considered to be deprecated!"
+    },
+    {
+      "type": "p",
+      "content": "text_splitter(Optional[TextSplitter]) – TextSplitter instance to use for splitting documents.\nDefaults to RecursiveCharacterTextSplitter."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If langchain-text-splitters is not installed\n    and no text_splitter is provided."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using DataFrameLoader"
+    },
+    {
+      "type": "li",
+      "content": "Pandas DataFrame"
+    },
+    {
+      "type": "p",
+      "content": "Pandas DataFrame"
+    },
+    {
+      "type": "li",
+      "content": "DataFrameLoader__init__()alazy_load()aload()lazy_load()load()load_and_split()"
+    },
+    {
+      "type": "li",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "load_and_split()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "__init__",
+    "alazy_load",
+    "aload",
+    "lazy_load",
+    "load",
+    "load_and_split",
+    "DataFrameLoader",
+    "__init__()",
+    "alazy_load()",
+    "aload()",
+    "lazy_load()",
+    "load()",
+    "load_and_split()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.dataframe.DataFrameLoader(data_frame:Any,page_content_column:str='text',engine:Literal['pandas','modin']='pandas',)[source]#",
+    "langchain_community.document_loaders.dataframe.",
+    "DataFrameLoader",
+    "(",
+    "data_frame:Any",
+    "page_content_column:str='text'",
+    "engine:Literal['pandas','modin']='pandas'",
+    ")",
+    "__init__(data_frame:Any,page_content_column:str='text',engine:Literal['pandas','modin']='pandas',)[source]#",
+    "__init__",
+    "(",
+    "data_frame:Any",
+    "page_content_column:str='text'",
+    "engine:Literal['pandas','modin']='pandas'",
+    ")",
+    "asyncalazy_load()→AsyncIterator[Document]#",
+    "alazy_load",
+    "(",
+    ")",
+    "→AsyncIterator[Document]",
+    "→",
+    "AsyncIterator[Document]",
+    "asyncaload()→list[Document]#",
+    "aload",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "lazy_load()→Iterator[Document]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "load()→list[Document]#",
+    "load",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "load_and_split(text_splitter:TextSplitter|None=None,)→list[Document]#",
+    "load_and_split",
+    "(",
+    "text_splitter:TextSplitter|None=None",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "data_frame:Any",
+    "page_content_column:str='text'",
+    "engine:Literal['pandas','modin']='pandas'",
+    "data_frame:Any",
+    "page_content_column:str='text'",
+    "engine:Literal['pandas','modin']='pandas'",
+    "text_splitter:TextSplitter|None=None"
+  ]
+}

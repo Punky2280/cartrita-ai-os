@@ -9,8 +9,15 @@
 
 -r requirements.in
 
-# Core GPU framework (PyTorch). Pin explicitly to control transitive CUDA libs.
+######## Core GPU Framework ########
+# Single authoritative PyTorch pin. Keep only one torch version to avoid resolver conflicts.
 torch==2.8.0
+
+# Transformer / Accelerator stack relocated from base to keep CPU layer slim.
+######## Transformer Stack (moved from base) ########
+transformers==4.44.2
+accelerate==0.33.0
+safetensors==0.4.5
 
 # Future optional GPU-specific acceleration libraries (add explicitly, never implicit):
 # xformers==<pin>
@@ -18,15 +25,11 @@ torch==2.8.0
 # GPU / heavy ML optional extras
 # Install with: pip install -r requirements-gpu.in -c constraints-gpu.txt
 
-# Core torch stack (CUDA 12.1 example; adjust if different base image / driver)
-torch==2.3.1
-# torchvision / torchaudio versions aligned with torch 2.3 line
-torchvision==0.18.1
-torchaudio==2.3.1
+# Optional ecosystem (add only when required for deployment/runtime)
+# torchvision==<match_torch_version>
+# torchaudio==<match_torch_version>
+# deepSpeed==0.15.4
+# bitsandbytes==0.43.1
 
-# Performance / optimization
-deepSpeed==0.15.4
-bitsandbytes==0.43.1
-
-# If using GPU accelerate features (already in base for now). Can be removed from base and here pinned instead.
+# If moving accelerate out of base, pin here instead (kept in base presently for CPU workflows)
 # accelerate==0.33.0

@@ -11,7 +11,7 @@ The Cartrita AI OS implements a sophisticated multi-agent architecture based on 
 The supervisor serves as the central coordinator and uses GPT-4.1 to:
 
 - **Agent Selection**: Intelligently routes user requests to appropriate specialized agents
-- **Task Coordination**: Manages complex multi-step tasks across different agents  
+- **Task Coordination**: Manages complex multi-step tasks across different agents
 - **Response Synthesis**: Combines responses from multiple agents when needed
 - **Fallback Handling**: Provides direct responses when no specialized agent is suitable
 
@@ -85,7 +85,7 @@ def _initialize_agents(self) -> dict[AgentType, Any]:
     """Initialize all specialized agents."""
     try:
         from cartrita.orchestrator.agents import (
-            ResearchAgent, CodeAgent, ComputerUseAgent, 
+            ResearchAgent, CodeAgent, ComputerUseAgent,
             KnowledgeAgent, TaskAgent
         )
         logger.info("Successfully imported all agents")
@@ -131,7 +131,7 @@ agent_configs = {
 3. GPT-4.1 determines optimal agent selection
 4. Request is routed to appropriate specialized agent
 
-### 2. Agent Execution  
+### 2. Agent Execution
 
 1. Specialized agent processes request using domain-specific logic
 2. Agent leverages appropriate tools and APIs

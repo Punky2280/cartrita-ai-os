@@ -1,0 +1,77 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chat_models/langchain_community.chat_models.mlflow_ai_gateway.ChatParams.html",
+  "title": "ChatParams#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "chat_models"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Parameters for theMLflow AI GatewayLLM."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "The number of candidates to return."
+    },
+    {
+      "type": "li",
+      "content": "ChatParamscandidate_countmax_tokensstoptemperature"
+    },
+    {
+      "type": "li",
+      "content": "candidate_count"
+    },
+    {
+      "type": "li",
+      "content": "temperature"
+    }
+  ],
+  "code_examples": [
+    "chat_models",
+    "BaseModel",
+    "ChatParams",
+    "candidate_count",
+    "max_tokens",
+    "stop",
+    "temperature"
+  ],
+  "api_signatures": [
+    "classlangchain_community.chat_models.mlflow_ai_gateway.ChatParams[source]#",
+    "langchain_community.chat_models.mlflow_ai_gateway.",
+    "ChatParams",
+    "paramcandidate_count:int=1#",
+    "candidate_count",
+    "parammax_tokens:int|None=None#",
+    "max_tokens",
+    "paramstop:List[str]|None=None#",
+    "stop",
+    "paramtemperature:float=0.0#",
+    "temperature"
+  ],
+  "parameters": []
+}

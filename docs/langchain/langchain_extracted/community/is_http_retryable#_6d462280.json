@@ -1,0 +1,48 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.passio_nutrition_ai.is_http_retryable.html#langchain_community.utilities.passio_nutrition_ai.is_http_retryable",
+  "title": "is_http_retryable#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "is_http_retryable"
+    },
+    {
+      "type": "p",
+      "content": "Check if a HTTP response is retryable."
+    },
+    {
+      "type": "p",
+      "content": "rsp(Response)"
+    },
+    {
+      "type": "li",
+      "content": "is_http_retryable()"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "is_http_retryable()"
+  ],
+  "api_signatures": [
+    "langchain_community.utilities.passio_nutrition_ai.is_http_retryable(rsp:Response)→bool[source]#",
+    "langchain_community.utilities.passio_nutrition_ai.",
+    "is_http_retryable",
+    "(",
+    "rsp:Response",
+    ")",
+    "→bool",
+    "→",
+    "bool"
+  ],
+  "parameters": [
+    "rsp:Response"
+  ]
+}

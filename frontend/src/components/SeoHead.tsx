@@ -1,17 +1,17 @@
-import Head from 'next/head'
+import Head from "next/head";
 
 type Props = {
-  title: string
-  description: string
-  url?: string
-  image?: string
-  imageType?: string
-}
+  title: string;
+  description: string;
+  url?: string;
+  image?: string;
+  imageType?: string;
+};
 
 const DEFAULTS = {
-  siteName: 'Cartrita AI OS',
-  twitterCard: 'summary',
-}
+  siteName: "Cartrita AI OS",
+  twitterCard: "summary",
+};
 
 export function SeoHead({ title, description, url, image, imageType }: Props) {
   return (
@@ -37,7 +37,7 @@ export function SeoHead({ title, description, url, image, imageType }: Props) {
       {/* Canonical */}
       {url ? <link rel="canonical" href={url} /> : null}
     </Head>
-  )
+  );
 }
 
-export default SeoHead
+export default SeoHead;

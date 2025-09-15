@@ -38,10 +38,10 @@ class OrchestratorState(TypedDict):
 def orchestrator_node(state: OrchestratorState):
     """Main orchestrator that delegates tasks to workers"""
     messages = state["messages"]
-    
+
     # Analyze the latest message
     decision = analyze_task_requirements(messages[-1])
-    
+
     return {
         "current_worker": decision["selected_worker"],
         "orchestrator_decision": decision
@@ -52,10 +52,10 @@ def create_worker_node(worker_name: str):
     def worker_node(state: OrchestratorState):
         messages = state["messages"]
         decision = state["orchestrator_decision"]
-        
+
         # Execute worker-specific logic
         result = execute_worker_task(worker_name, messages, decision)
-        
+
         return {
             "task_results": {
                 **state.get("task_results", {}),
@@ -80,7 +80,7 @@ workflow.add_conditional_edges(
     route_to_worker,
     {
         "research_worker": "research_worker",
-        "code_worker": "code_worker", 
+        "code_worker": "code_worker",
         "analysis_worker": "analysis_worker"
     }
 )
@@ -107,29 +107,29 @@ class SupervisorState(TypedDict):
 
 def supervisor_agent(state: SupervisorState):
     """Supervisor coordinates and delegates to specialized agents"""
-    
+
     supervisor_prompt = ChatPromptTemplate.from_messages([
         ("system", """You are a supervisor managing a team of AI agents:
-        
+
         Available agents:
         - researcher: Handles web search, data gathering, fact-checking
         - coder: Writes, debugs, and optimizes code
         - analyst: Performs data analysis and generates insights
         - writer: Creates reports, summaries, and documentation
-        
+
         Based on the conversation, determine which agent should act next.
         Consider the current context and agent capabilities.
-        
+
         Respond with just the agent name: researcher, coder, analyst, writer, or FINISH
         """),
         ("placeholder", "{messages}")
     ])
-    
+
     llm = ChatOpenAI(model="gpt-4")
     chain = supervisor_prompt | llm
-    
+
     result = chain.invoke({"messages": state["messages"]})
-    
+
     return {
         "next_agent": result.content.strip().lower(),
         "supervisor_notes": f"Delegated to: {result.content}"
@@ -142,21 +142,21 @@ def create_agent_node(agent_name: str, system_prompt: str):
             ("system", system_prompt),
             ("placeholder", "{messages}")
         ])
-        
+
         llm = ChatOpenAI(model="gpt-4")
         chain = agent_prompt | llm
-        
+
         result = chain.invoke({"messages": state["messages"]})
-        
+
         # Update agent scratchpad
         scratchpads = state.get("agent_scratchpads", {})
         scratchpads[agent_name] = result.content
-        
+
         return {
             "messages": [result],
             "agent_scratchpads": scratchpads
         }
-    
+
     return agent_node
 
 # Build supervisor workflow
@@ -208,10 +208,10 @@ class CollaborationState(TypedDict):
 def planning_agent(state: CollaborationState):
     """Initial planning and task breakdown"""
     messages = state["messages"]
-    
+
     # Analyze requirements and create plan
     plan = create_execution_plan(messages[-1].content)
-    
+
     return {
         "shared_context": {
             **state.get("shared_context", {}),
@@ -224,10 +224,10 @@ def planning_agent(state: CollaborationState):
 def execution_agent(state: CollaborationState):
     """Execute the planned tasks"""
     plan = state["shared_context"]["execution_plan"]
-    
+
     # Execute tasks based on plan
     results = execute_plan_tasks(plan)
-    
+
     return {
         "agent_outputs": {
             **state.get("agent_outputs", {}),
@@ -239,10 +239,10 @@ def execution_agent(state: CollaborationState):
 def review_agent(state: CollaborationState):
     """Review and validate execution results"""
     execution_results = state["agent_outputs"]["execution"]
-    
+
     # Review and suggest improvements
     review = review_execution_results(execution_results)
-    
+
     if review["needs_revision"]:
         return {
             "collaboration_phase": "revision",
@@ -260,9 +260,9 @@ def review_agent(state: CollaborationState):
 def finalization_agent(state: CollaborationState):
     """Finalize and format results"""
     result = state.get("final_result", "")
-    
+
     formatted_result = format_final_output(result)
-    
+
     return {
         "messages": [BaseMessage(content=formatted_result, type="ai")],
         "collaboration_phase": "complete"
@@ -287,7 +287,7 @@ collab_workflow.add_conditional_edges(
 )
 
 collab_workflow.add_conditional_edges(
-    "execution", 
+    "execution",
     route_collaboration_phase,
     {"review": "review"}
 )
@@ -346,19 +346,19 @@ class HITLState(TypedDict):
 def requires_human_approval(state: HITLState):
     """Check if human approval is needed"""
     pending_action = state.get("pending_action", {})
-    
+
     # Define conditions requiring human approval
     high_risk_actions = ["delete_file", "send_email", "make_payment"]
-    
+
     if pending_action.get("type") in high_risk_actions:
         return True
-    
+
     return False
 
 def human_approval_node(state: HITLState):
     """Wait for human input"""
     pending_action = state["pending_action"]
-    
+
     # In practice, this would integrate with your UI
     # For now, we'll use a simple interrupt mechanism
     raise NodeInterrupt(f"Human approval needed for: {pending_action}")
@@ -410,10 +410,10 @@ from langgraph.graph.message import Send
 def orchestrator_with_dynamic_agents(state: OrchestratorState):
     """Orchestrator that creates workers dynamically"""
     task = state["messages"][-1].content
-    
+
     # Analyze task and determine required workers
     required_workers = analyze_required_workers(task)
-    
+
     # Create worker tasks dynamically
     worker_tasks = []
     for worker_type in required_workers:
@@ -421,14 +421,14 @@ def orchestrator_with_dynamic_agents(state: OrchestratorState):
         worker_tasks.append(
             Send("dynamic_worker", {"worker_type": worker_type, "task": worker_task})
         )
-    
+
     return worker_tasks
 
 def dynamic_worker_node(state: dict):
     """Generic worker that adapts based on worker_type"""
     worker_type = state["worker_type"]
     task = state["task"]
-    
+
     # Execute task based on worker type
     if worker_type == "research":
         result = research_worker_logic(task)
@@ -438,7 +438,7 @@ def dynamic_worker_node(state: dict):
         result = coding_worker_logic(task)
     else:
         result = generic_worker_logic(task)
-    
+
     return {
         "worker_result": {
             "type": worker_type,
@@ -450,10 +450,10 @@ def aggregator_node(state: OrchestratorState):
     """Aggregate results from dynamic workers"""
     # All worker results are collected automatically
     worker_results = state.get("worker_results", [])
-    
+
     # Aggregate and synthesize results
     final_result = synthesize_worker_results(worker_results)
-    
+
     return {
         "messages": [AIMessage(content=final_result)]
     }
@@ -480,28 +480,28 @@ def resilient_agent_node(state: StateType):
     """Agent node with comprehensive error handling"""
     max_retries = 3
     base_delay = 1.0
-    
+
     for attempt in range(max_retries):
         try:
             # Execute agent logic
             result = execute_agent_logic(state)
             return result
-            
+
         except RetryableError as e:
             if attempt == max_retries - 1:
                 # Log error and return graceful fallback
                 logger.error(f"Agent failed after {max_retries} attempts: {e}")
                 return create_fallback_response(state, str(e))
-            
+
             # Exponential backoff
             delay = base_delay * (2 ** attempt)
             time.sleep(delay)
-            
+
         except NonRetryableError as e:
             # Immediate failure for non-retryable errors
             logger.error(f"Non-retryable error in agent: {e}")
             return create_error_response(state, str(e))
-    
+
     return create_fallback_response(state, "Max retries exceeded")
 ```
 
@@ -516,48 +516,48 @@ tracer = trace.get_tracer(__name__)
 
 def monitored_agent_node(state: StateType):
     """Agent node with comprehensive monitoring"""
-    
+
     with tracer.start_as_current_span("agent_execution") as span:
         span.set_attribute("agent.type", "research")
         span.set_attribute("state.message_count", len(state.get("messages", [])))
-        
+
         start_time = time.time()
-        
+
         try:
             logger.info(
                 "Agent execution started",
                 agent_type="research",
                 state_keys=list(state.keys())
             )
-            
+
             result = execute_agent_logic(state)
-            
+
             execution_time = time.time() - start_time
             span.set_attribute("execution.duration", execution_time)
             span.set_status(trace.Status(trace.StatusCode.OK))
-            
+
             logger.info(
                 "Agent execution completed",
                 execution_time=execution_time,
                 result_size=len(str(result))
             )
-            
+
             return result
-            
+
         except Exception as e:
             execution_time = time.time() - start_time
             span.set_attribute("execution.duration", execution_time)
             span.set_status(
                 trace.Status(trace.StatusCode.ERROR, str(e))
             )
-            
+
             logger.error(
                 "Agent execution failed",
                 error=str(e),
                 execution_time=execution_time,
                 exc_info=True
             )
-            
+
             raise
 ```
 
@@ -575,34 +575,34 @@ def cached_llm_call(prompt_hash: str, model: str):
 
 async def parallel_agent_execution(state: StateType):
     """Execute multiple agents in parallel when possible"""
-    
+
     # Identify independent agents
     independent_agents = identify_independent_agents(state)
-    
+
     # Execute in parallel
     tasks = [
         execute_agent_async(agent_name, state)
         for agent_name in independent_agents
     ]
-    
+
     results = await asyncio.gather(*tasks, return_exceptions=True)
-    
+
     # Process results and handle any exceptions
     processed_results = process_parallel_results(results, independent_agents)
-    
+
     return processed_results
 
 def optimized_state_updates(state: StateType, updates: dict):
     """Efficiently merge state updates"""
     # Only update changed fields
     new_state = state.copy()
-    
+
     for key, value in updates.items():
         if key in new_state and new_state[key] != value:
             new_state[key] = value
         elif key not in new_state:
             new_state[key] = value
-    
+
     return new_state
 ```
 
@@ -621,13 +621,13 @@ def test_research_agent():
         "messages": [HumanMessage(content="Research AI trends")],
         "context": {}
     }
-    
+
     # Mock external dependencies
     with patch('research_api.search') as mock_search:
         mock_search.return_value = {"results": ["AI trend 1", "AI trend 2"]}
-        
+
         result = research_agent_node(test_state)
-        
+
         assert "messages" in result
         assert len(result["messages"]) == 1
         assert "AI trend" in result["messages"][0].content
@@ -636,13 +636,13 @@ def test_research_agent():
 async def test_workflow_execution():
     """Test complete workflow execution"""
     app = workflow.compile()
-    
+
     initial_state = {
         "messages": [HumanMessage(content="Test message")]
     }
-    
+
     result = await app.ainvoke(initial_state)
-    
+
     assert "messages" in result
     assert len(result["messages"]) > 1  # Should have response
 ```
@@ -653,23 +653,23 @@ async def test_workflow_execution():
 def test_multi_agent_collaboration():
     """Test agents working together"""
     app = supervisor_app.compile()
-    
+
     test_cases = [
         {
             "input": "Write and test a Python function",
             "expected_agents": ["coder", "researcher"]
         },
         {
-            "input": "Analyze sales data and create report", 
+            "input": "Analyze sales data and create report",
             "expected_agents": ["analyst", "writer"]
         }
     ]
-    
+
     for test_case in test_cases:
         result = app.invoke({
             "messages": [HumanMessage(content=test_case["input"])]
         })
-        
+
         # Verify expected agents were involved
         used_agents = extract_used_agents(result)
         for expected_agent in test_case["expected_agents"]:

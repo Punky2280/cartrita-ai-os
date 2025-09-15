@@ -1,0 +1,47 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.pebblo.Routes.html",
+  "title": "Routes#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Routes available for the Pebblo API as enumerator."
+    },
+    {
+      "type": "li",
+      "content": "Routesloader_docloader_app_discover"
+    },
+    {
+      "type": "li",
+      "content": "loader_app_discover"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "Routes",
+    "loader_doc",
+    "loader_app_discover"
+  ],
+  "api_signatures": [
+    "classlangchain_community.utilities.pebblo.Routes(value)[source]#",
+    "langchain_community.utilities.pebblo.",
+    "Routes",
+    "(",
+    "value",
+    ")",
+    "loader_doc='/v1/loader/doc'#",
+    "loader_doc",
+    "loader_app_discover='/v1/app/discover'#",
+    "loader_app_discover"
+  ],
+  "parameters": [
+    "value"
+  ]
+}

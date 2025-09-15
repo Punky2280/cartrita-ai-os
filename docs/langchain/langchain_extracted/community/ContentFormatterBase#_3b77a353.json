@@ -1,0 +1,200 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/llms/langchain_community.llms.azureml_endpoint.ContentFormatterBase.html#langchain_community.llms.azureml_endpoint.ContentFormatterBase",
+  "title": "ContentFormatterBase#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "ContentFormatterBase"
+    },
+    {
+      "type": "p",
+      "content": "Transform request and response of AzureML endpoint to match with\nrequired schema."
+    },
+    {
+      "type": "p",
+      "content": "The MIME type of the response data returned from the endpoint"
+    },
+    {
+      "type": "p",
+      "content": "content_type"
+    },
+    {
+      "type": "p",
+      "content": "The MIME type of the input data passed to the endpoint"
+    },
+    {
+      "type": "p",
+      "content": "format_error_msg"
+    },
+    {
+      "type": "p",
+      "content": "supported_api_types"
+    },
+    {
+      "type": "p",
+      "content": "Supported APIs for the given formatter."
+    },
+    {
+      "type": "p",
+      "content": "escape_special_characters(prompt)"
+    },
+    {
+      "type": "p",
+      "content": "Escapes any special characters inprompt"
+    },
+    {
+      "type": "p",
+      "content": "format_request_payload(prompt, model_kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Formats the request body according to the input schema of the model."
+    },
+    {
+      "type": "p",
+      "content": "format_response_payload(output[, api_type])"
+    },
+    {
+      "type": "p",
+      "content": "Formats the response body according to the output schema of the model."
+    },
+    {
+      "type": "p",
+      "content": "Escapes any special characters inprompt"
+    },
+    {
+      "type": "p",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "p",
+      "content": "Formats the request body according to the input schema of\nthe model. Returns bytes or seekable file like object in the\nformat specified in the content_type request header."
+    },
+    {
+      "type": "li",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "p",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "li",
+      "content": "model_kwargs(Dict)"
+    },
+    {
+      "type": "p",
+      "content": "model_kwargs(Dict)"
+    },
+    {
+      "type": "li",
+      "content": "api_type(AzureMLEndpointApiType)"
+    },
+    {
+      "type": "p",
+      "content": "api_type(AzureMLEndpointApiType)"
+    },
+    {
+      "type": "p",
+      "content": "Formats the response body according to the output\nschema of the model. Returns the data type that is\nreceived from the response."
+    },
+    {
+      "type": "li",
+      "content": "output(bytes)"
+    },
+    {
+      "type": "p",
+      "content": "output(bytes)"
+    },
+    {
+      "type": "li",
+      "content": "api_type(AzureMLEndpointApiType)"
+    },
+    {
+      "type": "p",
+      "content": "api_type(AzureMLEndpointApiType)"
+    },
+    {
+      "type": "p",
+      "content": "Examples using ContentFormatterBase"
+    },
+    {
+      "type": "li",
+      "content": "ContentFormatterBaseescape_special_characters()format_request_payload()format_response_payload()"
+    },
+    {
+      "type": "li",
+      "content": "escape_special_characters()"
+    },
+    {
+      "type": "li",
+      "content": "format_request_payload()"
+    },
+    {
+      "type": "li",
+      "content": "format_response_payload()"
+    }
+  ],
+  "code_examples": [
+    "llms",
+    "accepts",
+    "content_type",
+    "format_error_msg",
+    "supported_api_types",
+    "escape_special_characters",
+    "format_request_payload",
+    "format_response_payload",
+    "ContentFormatterBase",
+    "escape_special_characters()",
+    "format_request_payload()",
+    "format_response_payload()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.llms.azureml_endpoint.ContentFormatterBase[source]#",
+    "langchain_community.llms.azureml_endpoint.",
+    "ContentFormatterBase",
+    "staticescape_special_characters(prompt:str,)→str[source]#",
+    "escape_special_characters",
+    "(",
+    "prompt:str",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "format_request_payload(prompt:str,model_kwargs:Dict,api_type:AzureMLEndpointApiType=AzureMLEndpointApiType.dedicated,)→Any[source]#",
+    "format_request_payload",
+    "(",
+    "prompt:str",
+    "model_kwargs:Dict",
+    "api_type:AzureMLEndpointApiType=AzureMLEndpointApiType.dedicated",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "abstractmethodformat_response_payload(output:bytes,api_type:AzureMLEndpointApiType=AzureMLEndpointApiType.dedicated,)→Generation[source]#",
+    "format_response_payload",
+    "(",
+    "output:bytes",
+    "api_type:AzureMLEndpointApiType=AzureMLEndpointApiType.dedicated",
+    ")",
+    "→Generation",
+    "→",
+    "Generation"
+  ],
+  "parameters": [
+    "prompt:str",
+    "prompt:str",
+    "model_kwargs:Dict",
+    "api_type:AzureMLEndpointApiType=AzureMLEndpointApiType.dedicated",
+    "output:bytes",
+    "api_type:AzureMLEndpointApiType=AzureMLEndpointApiType.dedicated"
+  ]
+}

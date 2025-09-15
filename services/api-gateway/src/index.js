@@ -1,69 +1,162 @@
 const fastify = require('fastify')({ logger: true });
 require('dotenv').config();
+const proxy = require('@fastify/http-proxy');
+const promClient = require('prom-client');
 
 const PORT = process.env.API_GATEWAY_PORT || 3000;
 const HOST = '0.0.0.0';
 
 // Register CORS
-fastify.register(require('@fastify/cors'), {
-  origin: true
+fastify.register(require('@fastify/cors'), { origin: true });
+
+// Register Helmet for security (will be registered in start function)
+
+// --------------------------------------------------
+// Health & Metrics
+// --------------------------------------------------
+fastify.get('/health', async () => ({ status: 'OK', timestamp: new Date().toISOString() }));
+
+// Prometheus metrics setup
+const collectDefaultMetrics = promClient.collectDefaultMetrics;
+collectDefaultMetrics();
+const gatewayRequests = new promClient.Counter({
+  name: 'gateway_requests_total',
+  help: 'Total number of requests received by the API gateway',
+  labelNames: ['method', 'route', 'status']
 });
 
-// Register Helmet for security
-fastify.register(require('@fastify/helmet'));
-
-// Health check endpoint
-fastify.get('/health', async (request, reply) => {
-  return { status: 'OK', timestamp: new Date().toISOString() };
+fastify.addHook('onResponse', (req, reply, done) => {
+  try {
+    const route = req.routerPath || req.url;
+    gatewayRequests.inc({ method: req.method, route, status: reply.statusCode });
+  } catch (_) { /* swallow metrics errors */ }
+  done();
 });
 
-// Default route
-fastify.get('/', async (request, reply) => {
-  return { 
-    message: 'Cartrita AI OS - API Gateway',
-    version: '2.0.0',
-    status: 'running'
-  };
+fastify.get('/metrics', async (request, reply) => {
+  try {
+    reply.header('Content-Type', promClient.register.contentType);
+    return await promClient.register.metrics();
+  } catch (err) {
+    reply.code(500);
+    return `# metrics collection error\n${err.message}`;
+  }
 });
 
-// Proxy to AI Orchestrator
+// Default route (non-frontend root informational JSON)
+fastify.get('/', async () => ({
+  message: 'Cartrita AI OS - API Gateway',
+  version: '2.0.0',
+  status: 'running'
+}));
+
+// --------------------------------------------------
+// Proxy Configuration
+// --------------------------------------------------
 fastify.register(async function (fastify) {
   const aiOrchestratorUrl = process.env.AI_ORCHESTRATOR_URL || 'http://ai-orchestrator:8000';
-  
+  const frontendInternal = process.env.FRONTEND_INTERNAL_URL || 'http://frontend:3000';
+
+  // API → Orchestrator proxy (retain existing axios logic for flexibility)
   fastify.all('/api/*', async (request, reply) => {
     const axios = require('axios');
     const path = request.url.replace('/api', '');
     const url = `${aiOrchestratorUrl}${path}`;
-    
     try {
+      const headers = { ...request.headers };
+      delete headers.host;
       const response = await axios({
         method: request.method,
-        url: url,
+        url,
         data: request.body,
-        headers: {
-          ...request.headers,
-          host: undefined, // Remove host header
-        },
-        params: request.query,
+        headers,
+        params: request.query
       });
-      
       reply.code(response.status);
       return response.data;
     } catch (error) {
       if (error.response) {
         reply.code(error.response.status);
         return error.response.data;
-      } else {
-        reply.code(500);
-        return { error: 'Proxy error', message: error.message };
+      }
+      reply.code(500);
+      return { error: 'Proxy error', message: error.message };
+    }
+  });
+
+  // Next.js asset & HMR proxying
+  // Static/_next assets & HMR
+  await fastify.register(proxy, {
+    upstream: frontendInternal,
+    prefix: '/_next',
+    rewritePrefix: '/_next'
+  });
+
+  // Service worker (if present)
+  await fastify.register(proxy, {
+    upstream: frontendInternal,
+    prefix: '/sw.js',
+    rewritePrefix: '/sw.js'
+  });
+
+  // Fallback HTML (SSR / SPA) - proxy everything else not matched (except API, metrics, health)
+  fastify.all('*', async (request, reply) => {
+    const skip = ['/health', '/metrics'];
+    // Check if the request matches a registered route
+    const routeExists = fastify.hasRoute(request.routerPath || request.url);
+    if (
+      !routeExists &&
+      request.url !== '/metrics' &&
+      request.url !== '/health' &&
+      !request.url.startsWith('/api')
+    ) {
+      // Stream proxy to frontend for page rendering
+      const undici = await import('undici');
+      const target = `${frontendInternal}${request.url}`;
+      try {
+        const proxied = await undici.request(target, {
+          method: request.method,
+          headers: request.headers,
+          body:
+            request.body && request.headers['content-type'] &&
+            request.headers['content-type'].includes('application/json')
+              ? JSON.stringify(request.body)
+              : undefined
+        });
+        reply.code(proxied.statusCode);
+        // Filter out hop-by-hop headers per RFC 7230 section 6.1
+        const hopByHopHeaders = [
+          'connection',
+          'keep-alive',
+          'proxy-authenticate',
+          'proxy-authorization',
+          'te',
+          'trailer',
+          'transfer-encoding',
+          'upgrade'
+        ];
+        for (const [h, v] of Object.entries(proxied.headers)) {
+          if (!hopByHopHeaders.includes(h.toLowerCase())) {
+            reply.header(h, v);
+          }
+        }
+        return proxied.body;
+      } catch (e) {
+        reply.code(502);
+        return { error: 'Frontend proxy failed', message: e.message };
       }
     }
+    reply.code(404);
+    return { error: 'Not found' };
   });
 });
 
 // Start server
 const start = async () => {
   try {
+    // Register Helmet for security
+    await fastify.register((await import('@fastify/helmet')).default);
+
     await fastify.listen({ port: PORT, host: HOST });
     fastify.log.info(`🚀 API Gateway started on http://${HOST}:${PORT}`);
   } catch (err) {

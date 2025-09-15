@@ -1,0 +1,1625 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/callbacks/langchain_community.callbacks.human.HumanApprovalCallbackHandler.html",
+  "title": "HumanApprovalCallbackHandler#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "HumanApprovalCallbackHandler"
+    },
+    {
+      "type": "p",
+      "content": "Callback for manually validating values."
+    },
+    {
+      "type": "p",
+      "content": "ignore_agent"
+    },
+    {
+      "type": "p",
+      "content": "Whether to ignore agent callbacks."
+    },
+    {
+      "type": "p",
+      "content": "ignore_chain"
+    },
+    {
+      "type": "p",
+      "content": "Whether to ignore chain callbacks."
+    },
+    {
+      "type": "p",
+      "content": "ignore_chat_model"
+    },
+    {
+      "type": "p",
+      "content": "Whether to ignore chat model callbacks."
+    },
+    {
+      "type": "p",
+      "content": "ignore_custom_event"
+    },
+    {
+      "type": "p",
+      "content": "Ignore custom event."
+    },
+    {
+      "type": "p",
+      "content": "Whether to ignore LLM callbacks."
+    },
+    {
+      "type": "p",
+      "content": "ignore_retriever"
+    },
+    {
+      "type": "p",
+      "content": "Whether to ignore retriever callbacks."
+    },
+    {
+      "type": "p",
+      "content": "ignore_retry"
+    },
+    {
+      "type": "p",
+      "content": "Whether to ignore retry callbacks."
+    },
+    {
+      "type": "p",
+      "content": "raise_error"
+    },
+    {
+      "type": "p",
+      "content": "Whether to raise an error if an exception occurs."
+    },
+    {
+      "type": "p",
+      "content": "Whether to run the callback inline."
+    },
+    {
+      "type": "p",
+      "content": "__init__([approve, should_check])"
+    },
+    {
+      "type": "p",
+      "content": "on_agent_action(action, *, run_id[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Run on agent action."
+    },
+    {
+      "type": "p",
+      "content": "on_agent_finish(finish, *, run_id[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Run on the agent end."
+    },
+    {
+      "type": "p",
+      "content": "on_chain_end(outputs, *, run_id[, parent_run_id])"
+    },
+    {
+      "type": "p",
+      "content": "Run when chain ends running."
+    },
+    {
+      "type": "p",
+      "content": "on_chain_error(error, *, run_id[, parent_run_id])"
+    },
+    {
+      "type": "p",
+      "content": "Run when chain errors."
+    },
+    {
+      "type": "p",
+      "content": "on_chain_start(serialized, inputs, *, run_id)"
+    },
+    {
+      "type": "p",
+      "content": "Run when a chain starts running."
+    },
+    {
+      "type": "p",
+      "content": "on_chat_model_start(serialized, messages, *, ...)"
+    },
+    {
+      "type": "p",
+      "content": "Run when a chat model starts running."
+    },
+    {
+      "type": "p",
+      "content": "on_custom_event(name, data, *, run_id[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Override to define a handler for a custom event."
+    },
+    {
+      "type": "p",
+      "content": "on_llm_end(response, *, run_id[, parent_run_id])"
+    },
+    {
+      "type": "p",
+      "content": "Run when LLM ends running."
+    },
+    {
+      "type": "p",
+      "content": "on_llm_error(error, *, run_id[, parent_run_id])"
+    },
+    {
+      "type": "p",
+      "content": "Run when LLM errors."
+    },
+    {
+      "type": "p",
+      "content": "on_llm_new_token(token, *[, chunk, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Run on new output token."
+    },
+    {
+      "type": "p",
+      "content": "on_llm_start(serialized, prompts, *, run_id)"
+    },
+    {
+      "type": "p",
+      "content": "Run when LLM starts running."
+    },
+    {
+      "type": "p",
+      "content": "on_retriever_end(documents, *, run_id[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Run when Retriever ends running."
+    },
+    {
+      "type": "p",
+      "content": "on_retriever_error(error, *, run_id[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Run when Retriever errors."
+    },
+    {
+      "type": "p",
+      "content": "on_retriever_start(serialized, query, *, run_id)"
+    },
+    {
+      "type": "p",
+      "content": "Run when the Retriever starts running."
+    },
+    {
+      "type": "p",
+      "content": "on_retry(retry_state, *, run_id[, parent_run_id])"
+    },
+    {
+      "type": "p",
+      "content": "Run on a retry event."
+    },
+    {
+      "type": "p",
+      "content": "on_text(text, *, run_id[, parent_run_id])"
+    },
+    {
+      "type": "p",
+      "content": "Run on an arbitrary text."
+    },
+    {
+      "type": "p",
+      "content": "on_tool_end(output, *, run_id[, parent_run_id])"
+    },
+    {
+      "type": "p",
+      "content": "Run when the tool ends running."
+    },
+    {
+      "type": "p",
+      "content": "on_tool_error(error, *, run_id[, parent_run_id])"
+    },
+    {
+      "type": "p",
+      "content": "Run when tool errors."
+    },
+    {
+      "type": "p",
+      "content": "on_tool_start(serialized, input_str, *, run_id)"
+    },
+    {
+      "type": "p",
+      "content": "Run when the tool starts running."
+    },
+    {
+      "type": "li",
+      "content": "approve(Callable[[Any],bool])"
+    },
+    {
+      "type": "p",
+      "content": "approve(Callable[[Any],bool])"
+    },
+    {
+      "type": "li",
+      "content": "should_check(Callable[[Dict[str,Any]],bool])"
+    },
+    {
+      "type": "p",
+      "content": "should_check(Callable[[Dict[str,Any]],bool])"
+    },
+    {
+      "type": "li",
+      "content": "approve(Callable[[Any],bool])"
+    },
+    {
+      "type": "p",
+      "content": "approve(Callable[[Any],bool])"
+    },
+    {
+      "type": "li",
+      "content": "should_check(Callable[[Dict[str,Any]],bool])"
+    },
+    {
+      "type": "p",
+      "content": "should_check(Callable[[Dict[str,Any]],bool])"
+    },
+    {
+      "type": "p",
+      "content": "Run on agent action."
+    },
+    {
+      "type": "li",
+      "content": "action(AgentAction) – The agent action."
+    },
+    {
+      "type": "p",
+      "content": "action(AgentAction) – The agent action."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run on the agent end."
+    },
+    {
+      "type": "li",
+      "content": "finish(AgentFinish) – The agent finish."
+    },
+    {
+      "type": "p",
+      "content": "finish(AgentFinish) – The agent finish."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run when chain ends running."
+    },
+    {
+      "type": "li",
+      "content": "outputs(dict[str,Any]) – The outputs of the chain."
+    },
+    {
+      "type": "p",
+      "content": "outputs(dict[str,Any]) – The outputs of the chain."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run when chain errors."
+    },
+    {
+      "type": "li",
+      "content": "error(BaseException) – The error that occurred."
+    },
+    {
+      "type": "p",
+      "content": "error(BaseException) – The error that occurred."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run when a chain starts running."
+    },
+    {
+      "type": "li",
+      "content": "serialized(dict[str,Any]) – The serialized chain."
+    },
+    {
+      "type": "p",
+      "content": "serialized(dict[str,Any]) – The serialized chain."
+    },
+    {
+      "type": "li",
+      "content": "inputs(dict[str,Any]) – The inputs."
+    },
+    {
+      "type": "p",
+      "content": "inputs(dict[str,Any]) – The inputs."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "tags(Optional[list[str]]) – The tags."
+    },
+    {
+      "type": "p",
+      "content": "tags(Optional[list[str]]) – The tags."
+    },
+    {
+      "type": "li",
+      "content": "metadata(Optional[dict[str,Any]]) – The metadata."
+    },
+    {
+      "type": "p",
+      "content": "metadata(Optional[dict[str,Any]]) – The metadata."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run when a chat model starts running."
+    },
+    {
+      "type": "p",
+      "content": "This method is called for chat models. If you’re implementing a handler for\na non-chat model, you should useon_llm_startinstead."
+    },
+    {
+      "type": "li",
+      "content": "serialized(dict[str,Any]) – The serialized chat model."
+    },
+    {
+      "type": "p",
+      "content": "serialized(dict[str,Any]) – The serialized chat model."
+    },
+    {
+      "type": "li",
+      "content": "messages(list[list[BaseMessage]]) – The messages."
+    },
+    {
+      "type": "p",
+      "content": "messages(list[list[BaseMessage]]) – The messages."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "tags(Optional[list[str]]) – The tags."
+    },
+    {
+      "type": "p",
+      "content": "tags(Optional[list[str]]) – The tags."
+    },
+    {
+      "type": "li",
+      "content": "metadata(Optional[dict[str,Any]]) – The metadata."
+    },
+    {
+      "type": "p",
+      "content": "metadata(Optional[dict[str,Any]]) – The metadata."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Override to define a handler for a custom event."
+    },
+    {
+      "type": "li",
+      "content": "name(str) – The name of the custom event."
+    },
+    {
+      "type": "p",
+      "content": "name(str) – The name of the custom event."
+    },
+    {
+      "type": "li",
+      "content": "data(Any) – The data for the custom event. Format will match\nthe format specified by the user."
+    },
+    {
+      "type": "p",
+      "content": "data(Any) – The data for the custom event. Format will match\nthe format specified by the user."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The ID of the run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The ID of the run."
+    },
+    {
+      "type": "li",
+      "content": "tags(Optional[list[str]]) – The tags associated with the custom event\n(includes inherited tags)."
+    },
+    {
+      "type": "p",
+      "content": "tags(Optional[list[str]]) – The tags associated with the custom event\n(includes inherited tags)."
+    },
+    {
+      "type": "li",
+      "content": "metadata(Optional[dict[str,Any]]) – The metadata associated with the custom event\n(includes inherited metadata)."
+    },
+    {
+      "type": "p",
+      "content": "metadata(Optional[dict[str,Any]]) – The metadata associated with the custom event\n(includes inherited metadata)."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Added in version 0.2.15."
+    },
+    {
+      "type": "p",
+      "content": "Run when LLM ends running."
+    },
+    {
+      "type": "li",
+      "content": "response(LLMResult) – The response which was generated."
+    },
+    {
+      "type": "p",
+      "content": "response(LLMResult) – The response which was generated."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run when LLM errors."
+    },
+    {
+      "type": "li",
+      "content": "error(BaseException) – The error that occurred."
+    },
+    {
+      "type": "p",
+      "content": "error(BaseException) – The error that occurred."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run on new output token. Only available when streaming is enabled."
+    },
+    {
+      "type": "p",
+      "content": "For both chat models and non-chat models (legacy LLMs)."
+    },
+    {
+      "type": "li",
+      "content": "token(str) – The new token."
+    },
+    {
+      "type": "p",
+      "content": "token(str) – The new token."
+    },
+    {
+      "type": "li",
+      "content": "chunk(GenerationChunk|ChatGenerationChunk) – The new generated chunk,\ncontaining content and other information."
+    },
+    {
+      "type": "p",
+      "content": "chunk(GenerationChunk|ChatGenerationChunk) – The new generated chunk,\ncontaining content and other information."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run when LLM starts running."
+    },
+    {
+      "type": "p",
+      "content": "This method is called for non-chat models (regular LLMs). If you’re\nimplementing a handler for a chat model, you should useon_chat_model_startinstead."
+    },
+    {
+      "type": "li",
+      "content": "serialized(dict[str,Any]) – The serialized LLM."
+    },
+    {
+      "type": "p",
+      "content": "serialized(dict[str,Any]) – The serialized LLM."
+    },
+    {
+      "type": "li",
+      "content": "prompts(list[str]) – The prompts."
+    },
+    {
+      "type": "p",
+      "content": "prompts(list[str]) – The prompts."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "tags(Optional[list[str]]) – The tags."
+    },
+    {
+      "type": "p",
+      "content": "tags(Optional[list[str]]) – The tags."
+    },
+    {
+      "type": "li",
+      "content": "metadata(Optional[dict[str,Any]]) – The metadata."
+    },
+    {
+      "type": "p",
+      "content": "metadata(Optional[dict[str,Any]]) – The metadata."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run when Retriever ends running."
+    },
+    {
+      "type": "li",
+      "content": "documents(Sequence[Document]) – The documents retrieved."
+    },
+    {
+      "type": "p",
+      "content": "documents(Sequence[Document]) – The documents retrieved."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run when Retriever errors."
+    },
+    {
+      "type": "li",
+      "content": "error(BaseException) – The error that occurred."
+    },
+    {
+      "type": "p",
+      "content": "error(BaseException) – The error that occurred."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run when the Retriever starts running."
+    },
+    {
+      "type": "li",
+      "content": "serialized(dict[str,Any]) – The serialized Retriever."
+    },
+    {
+      "type": "p",
+      "content": "serialized(dict[str,Any]) – The serialized Retriever."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – The query."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – The query."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "tags(Optional[list[str]]) – The tags."
+    },
+    {
+      "type": "p",
+      "content": "tags(Optional[list[str]]) – The tags."
+    },
+    {
+      "type": "li",
+      "content": "metadata(Optional[dict[str,Any]]) – The metadata."
+    },
+    {
+      "type": "p",
+      "content": "metadata(Optional[dict[str,Any]]) – The metadata."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run on a retry event."
+    },
+    {
+      "type": "li",
+      "content": "retry_state(RetryCallState) – The retry state."
+    },
+    {
+      "type": "p",
+      "content": "retry_state(RetryCallState) – The retry state."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run on an arbitrary text."
+    },
+    {
+      "type": "li",
+      "content": "text(str) – The text."
+    },
+    {
+      "type": "p",
+      "content": "text(str) – The text."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run when the tool ends running."
+    },
+    {
+      "type": "li",
+      "content": "output(Any) – The output of the tool."
+    },
+    {
+      "type": "p",
+      "content": "output(Any) – The output of the tool."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run when tool errors."
+    },
+    {
+      "type": "li",
+      "content": "error(BaseException) – The error that occurred."
+    },
+    {
+      "type": "p",
+      "content": "error(BaseException) – The error that occurred."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Run when the tool starts running."
+    },
+    {
+      "type": "li",
+      "content": "serialized(dict[str,Any]) – The serialized tool."
+    },
+    {
+      "type": "p",
+      "content": "serialized(dict[str,Any]) – The serialized tool."
+    },
+    {
+      "type": "li",
+      "content": "input_str(str) – The input string."
+    },
+    {
+      "type": "p",
+      "content": "input_str(str) – The input string."
+    },
+    {
+      "type": "li",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "p",
+      "content": "run_id(UUID) – The run ID. This is the ID of the current run."
+    },
+    {
+      "type": "li",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "p",
+      "content": "parent_run_id(UUID) – The parent run ID. This is the ID of the parent run."
+    },
+    {
+      "type": "li",
+      "content": "tags(Optional[list[str]]) – The tags."
+    },
+    {
+      "type": "p",
+      "content": "tags(Optional[list[str]]) – The tags."
+    },
+    {
+      "type": "li",
+      "content": "metadata(Optional[dict[str,Any]]) – The metadata."
+    },
+    {
+      "type": "p",
+      "content": "metadata(Optional[dict[str,Any]]) – The metadata."
+    },
+    {
+      "type": "li",
+      "content": "inputs(Optional[dict[str,Any]]) – The inputs."
+    },
+    {
+      "type": "p",
+      "content": "inputs(Optional[dict[str,Any]]) – The inputs."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "li",
+      "content": "HumanApprovalCallbackHandler__init__()on_agent_action()on_agent_finish()on_chain_end()on_chain_error()on_chain_start()on_chat_model_start()on_custom_event()on_llm_end()on_llm_error()on_llm_new_token()on_llm_start()on_retriever_end()on_retriever_error()on_retriever_start()on_retry()on_text()on_tool_end()on_tool_error()on_tool_start()"
+    },
+    {
+      "type": "li",
+      "content": "on_agent_action()"
+    },
+    {
+      "type": "li",
+      "content": "on_agent_finish()"
+    },
+    {
+      "type": "li",
+      "content": "on_chain_end()"
+    },
+    {
+      "type": "li",
+      "content": "on_chain_error()"
+    },
+    {
+      "type": "li",
+      "content": "on_chain_start()"
+    },
+    {
+      "type": "li",
+      "content": "on_chat_model_start()"
+    },
+    {
+      "type": "li",
+      "content": "on_custom_event()"
+    },
+    {
+      "type": "li",
+      "content": "on_llm_end()"
+    },
+    {
+      "type": "li",
+      "content": "on_llm_error()"
+    },
+    {
+      "type": "li",
+      "content": "on_llm_new_token()"
+    },
+    {
+      "type": "li",
+      "content": "on_llm_start()"
+    },
+    {
+      "type": "li",
+      "content": "on_retriever_end()"
+    },
+    {
+      "type": "li",
+      "content": "on_retriever_error()"
+    },
+    {
+      "type": "li",
+      "content": "on_retriever_start()"
+    },
+    {
+      "type": "li",
+      "content": "on_tool_end()"
+    },
+    {
+      "type": "li",
+      "content": "on_tool_error()"
+    },
+    {
+      "type": "li",
+      "content": "on_tool_start()"
+    }
+  ],
+  "code_examples": [
+    "callbacks",
+    "ignore_agent",
+    "ignore_chain",
+    "ignore_chat_model",
+    "ignore_custom_event",
+    "ignore_llm",
+    "ignore_retriever",
+    "ignore_retry",
+    "raise_error",
+    "run_inline",
+    "__init__",
+    "on_agent_action",
+    "on_agent_finish",
+    "on_chain_end",
+    "on_chain_error",
+    "on_chain_start",
+    "on_chat_model_start",
+    "on_custom_event",
+    "on_llm_end",
+    "on_llm_error",
+    "on_llm_new_token",
+    "on_llm_start",
+    "on_retriever_end",
+    "on_retriever_error",
+    "on_retriever_start",
+    "on_retry",
+    "on_text",
+    "on_tool_end",
+    "on_tool_error",
+    "on_tool_start",
+    "on_llm_start",
+    "on_chat_model_start",
+    "HumanApprovalCallbackHandler",
+    "__init__()",
+    "on_agent_action()",
+    "on_agent_finish()",
+    "on_chain_end()",
+    "on_chain_error()",
+    "on_chain_start()",
+    "on_chat_model_start()",
+    "on_custom_event()",
+    "on_llm_end()",
+    "on_llm_error()",
+    "on_llm_new_token()",
+    "on_llm_start()",
+    "on_retriever_end()",
+    "on_retriever_error()",
+    "on_retriever_start()",
+    "on_retry()",
+    "on_text()",
+    "on_tool_end()",
+    "on_tool_error()",
+    "on_tool_start()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.callbacks.human.HumanApprovalCallbackHandler(approve:~typing.Callable[[~typing.Any],bool]=<function_default_approve>,should_check:~typing.Callable[[~typing.Dict[str,~typing.Any]],bool]=<function_default_true>)[source]#",
+    "langchain_community.callbacks.human.",
+    "HumanApprovalCallbackHandler",
+    "(",
+    "approve:~typing.Callable[[~typing.Any],bool]=<function_default_approve>,should_check:~typing.Callable[[~typing.Dict[str,~typing.Any]],bool]=<function_default_true>",
+    ")",
+    "__init__(approve:~typing.Callable[[~typing.Any],bool]=<function_default_approve>,should_check:~typing.Callable[[~typing.Dict[str,~typing.Any]],bool]=<function_default_true>)[source]#",
+    "__init__",
+    "(",
+    "approve:~typing.Callable[[~typing.Any],bool]=<function_default_approve>,should_check:~typing.Callable[[~typing.Dict[str,~typing.Any]],bool]=<function_default_true>",
+    ")",
+    "on_agent_action(action:AgentAction,*,run_id:UUID,parent_run_id:UUID|None=None,**kwargs:Any,)→Any#",
+    "on_agent_action",
+    "(",
+    "action:AgentAction",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_agent_finish(finish:AgentFinish,*,run_id:UUID,parent_run_id:UUID|None=None,**kwargs:Any,)→Any#",
+    "on_agent_finish",
+    "(",
+    "finish:AgentFinish",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_chain_end(outputs:dict[str,Any],*,run_id:UUID,parent_run_id:UUID|None=None,**kwargs:Any,)→Any#",
+    "on_chain_end",
+    "(",
+    "outputs:dict[str,Any]",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_chain_error(error:BaseException,*,run_id:UUID,parent_run_id:UUID|None=None,**kwargs:Any,)→Any#",
+    "on_chain_error",
+    "(",
+    "error:BaseException",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_chain_start(serialized:dict[str,Any],inputs:dict[str,Any],*,run_id:UUID,parent_run_id:UUID|None=None,tags:list[str]|None=None,metadata:dict[str,Any]|None=None,**kwargs:Any,)→Any#",
+    "on_chain_start",
+    "(",
+    "serialized:dict[str,Any]",
+    "inputs:dict[str,Any]",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "tags:list[str]|None=None",
+    "metadata:dict[str,Any]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_chat_model_start(serialized:dict[str,Any],messages:list[list[BaseMessage]],*,run_id:UUID,parent_run_id:UUID|None=None,tags:list[str]|None=None,metadata:dict[str,Any]|None=None,**kwargs:Any,)→Any#",
+    "on_chat_model_start",
+    "(",
+    "serialized:dict[str,Any]",
+    "messages:list[list[BaseMessage]]",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "tags:list[str]|None=None",
+    "metadata:dict[str,Any]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_custom_event(name:str,data:Any,*,run_id:UUID,tags:list[str]|None=None,metadata:dict[str,Any]|None=None,**kwargs:Any,)→Any#",
+    "on_custom_event",
+    "(",
+    "name:str",
+    "data:Any",
+    "*",
+    "run_id:UUID",
+    "tags:list[str]|None=None",
+    "metadata:dict[str,Any]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_llm_end(response:LLMResult,*,run_id:UUID,parent_run_id:UUID|None=None,**kwargs:Any,)→Any#",
+    "on_llm_end",
+    "(",
+    "response:LLMResult",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_llm_error(error:BaseException,*,run_id:UUID,parent_run_id:UUID|None=None,**kwargs:Any,)→Any#",
+    "on_llm_error",
+    "(",
+    "error:BaseException",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_llm_new_token(token:str,*,chunk:GenerationChunk|ChatGenerationChunk|None=None,run_id:UUID,parent_run_id:UUID|None=None,**kwargs:Any,)→Any#",
+    "on_llm_new_token",
+    "(",
+    "token:str",
+    "*",
+    "chunk:GenerationChunk|ChatGenerationChunk|None=None",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_llm_start(serialized:dict[str,Any],prompts:list[str],*,run_id:UUID,parent_run_id:UUID|None=None,tags:list[str]|None=None,metadata:dict[str,Any]|None=None,**kwargs:Any,)→Any#",
+    "on_llm_start",
+    "(",
+    "serialized:dict[str,Any]",
+    "prompts:list[str]",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "tags:list[str]|None=None",
+    "metadata:dict[str,Any]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_retriever_end(documents:Sequence[Document],*,run_id:UUID,parent_run_id:UUID|None=None,**kwargs:Any,)→Any#",
+    "on_retriever_end",
+    "(",
+    "documents:Sequence[Document]",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_retriever_error(error:BaseException,*,run_id:UUID,parent_run_id:UUID|None=None,**kwargs:Any,)→Any#",
+    "on_retriever_error",
+    "(",
+    "error:BaseException",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_retriever_start(serialized:dict[str,Any],query:str,*,run_id:UUID,parent_run_id:UUID|None=None,tags:list[str]|None=None,metadata:dict[str,Any]|None=None,**kwargs:Any,)→Any#",
+    "on_retriever_start",
+    "(",
+    "serialized:dict[str,Any]",
+    "query:str",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "tags:list[str]|None=None",
+    "metadata:dict[str,Any]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_retry(retry_state:RetryCallState,*,run_id:UUID,parent_run_id:UUID|None=None,**kwargs:Any,)→Any#",
+    "on_retry",
+    "(",
+    "retry_state:RetryCallState",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_text(text:str,*,run_id:UUID,parent_run_id:UUID|None=None,**kwargs:Any,)→Any#",
+    "on_text",
+    "(",
+    "text:str",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_tool_end(output:Any,*,run_id:UUID,parent_run_id:UUID|None=None,**kwargs:Any,)→Any#",
+    "on_tool_end",
+    "(",
+    "output:Any",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_tool_error(error:BaseException,*,run_id:UUID,parent_run_id:UUID|None=None,**kwargs:Any,)→Any#",
+    "on_tool_error",
+    "(",
+    "error:BaseException",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "on_tool_start(serialized:Dict[str,Any],input_str:str,*,run_id:UUID,parent_run_id:UUID|None=None,**kwargs:Any,)→Any[source]#",
+    "on_tool_start",
+    "(",
+    "serialized:Dict[str,Any]",
+    "input_str:str",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any"
+  ],
+  "parameters": [
+    "approve:~typing.Callable[[~typing.Any],bool]=<function_default_approve>,should_check:~typing.Callable[[~typing.Dict[str,~typing.Any]],bool]=<function_default_true>",
+    "approve:~typing.Callable[[~typing.Any],bool]=<function_default_approve>,should_check:~typing.Callable[[~typing.Dict[str,~typing.Any]],bool]=<function_default_true>",
+    "action:AgentAction",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    "finish:AgentFinish",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    "outputs:dict[str,Any]",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    "error:BaseException",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    "serialized:dict[str,Any]",
+    "inputs:dict[str,Any]",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "tags:list[str]|None=None",
+    "metadata:dict[str,Any]|None=None",
+    "**kwargs:Any",
+    "serialized:dict[str,Any]",
+    "messages:list[list[BaseMessage]]",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "tags:list[str]|None=None",
+    "metadata:dict[str,Any]|None=None",
+    "**kwargs:Any",
+    "name:str",
+    "data:Any",
+    "*",
+    "run_id:UUID",
+    "tags:list[str]|None=None",
+    "metadata:dict[str,Any]|None=None",
+    "**kwargs:Any",
+    "response:LLMResult",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    "error:BaseException",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    "token:str",
+    "*",
+    "chunk:GenerationChunk|ChatGenerationChunk|None=None",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    "serialized:dict[str,Any]",
+    "prompts:list[str]",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "tags:list[str]|None=None",
+    "metadata:dict[str,Any]|None=None",
+    "**kwargs:Any",
+    "documents:Sequence[Document]",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    "error:BaseException",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    "serialized:dict[str,Any]",
+    "query:str",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "tags:list[str]|None=None",
+    "metadata:dict[str,Any]|None=None",
+    "**kwargs:Any",
+    "retry_state:RetryCallState",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    "text:str",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    "output:Any",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    "error:BaseException",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any",
+    "serialized:Dict[str,Any]",
+    "input_str:str",
+    "*",
+    "run_id:UUID",
+    "parent_run_id:UUID|None=None",
+    "**kwargs:Any"
+  ]
+}

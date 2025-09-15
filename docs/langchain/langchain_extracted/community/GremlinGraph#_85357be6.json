@@ -1,0 +1,439 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/graphs/langchain_community.graphs.gremlin_graph.GremlinGraph.html",
+  "title": "GremlinGraph#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "GremlinGraph"
+    },
+    {
+      "type": "p",
+      "content": "Gremlin wrapper for graph operations."
+    },
+    {
+      "type": "p",
+      "content": "Parameters:\nurl (Optional[str]): The URL of the Gremlin database server or env GREMLIN_URI\nusername (Optional[str]): The collection-identifier like ‘/dbs/database/colls/graph’"
+    },
+    {
+      "type": "p",
+      "content": "or env GREMLIN_USERNAME if none provided"
+    },
+    {
+      "type": "p",
+      "content": "or env GREMLIN_PASSWORD if none provided"
+    },
+    {
+      "type": "p",
+      "content": "traversal_source (str): The traversal source to use for queries. Defaults to ‘g’.\nmessage_serializer (Optional[Any]): The message serializer to use for requests."
+    },
+    {
+      "type": "p",
+      "content": "Defaults to serializer.GraphSONSerializersV2d0()"
+    },
+    {
+      "type": "p",
+      "content": "the gremlin graph schema. Defaults to False"
+    },
+    {
+      "type": "p",
+      "content": "that are narrowly-scoped to only include necessary permissions.\nFailure to do so may result in data corruption or loss, since the calling\ncode may attempt commands that would result in deletion, mutation\nof data if appropriately prompted or reading sensitive data if such\ndata is present in the database.\nThe best way to guard against such negative outcomes is to (as appropriate)\nlimit the permissions granted to the credentials used with this tool."
+    },
+    {
+      "type": "p",
+      "content": "Seehttps://python.langchain.com/docs/securityfor more information."
+    },
+    {
+      "type": "p",
+      "content": "The Gremlin queries are designed to work with Azure CosmosDB limitations"
+    },
+    {
+      "type": "p",
+      "content": "Create a new Gremlin graph wrapper instance."
+    },
+    {
+      "type": "p",
+      "content": "Returns the schema of the Gremlin database"
+    },
+    {
+      "type": "p",
+      "content": "get_structured_schema"
+    },
+    {
+      "type": "p",
+      "content": "Return the schema of the Graph database"
+    },
+    {
+      "type": "p",
+      "content": "__init__([url, username, password, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Create a new Gremlin graph wrapper instance."
+    },
+    {
+      "type": "p",
+      "content": "add_edge(relationship)"
+    },
+    {
+      "type": "p",
+      "content": "add_graph_documents(graph_documents[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Take GraphDocument as input as uses it to construct a graph."
+    },
+    {
+      "type": "p",
+      "content": "add_node(node[, node_cache])"
+    },
+    {
+      "type": "p",
+      "content": "build_edge_query(relationship)"
+    },
+    {
+      "type": "p",
+      "content": "build_vertex_query(node)"
+    },
+    {
+      "type": "p",
+      "content": "query(query[, params])"
+    },
+    {
+      "type": "p",
+      "content": "Query the graph."
+    },
+    {
+      "type": "p",
+      "content": "refresh_schema()"
+    },
+    {
+      "type": "p",
+      "content": "Refreshes the Gremlin graph schema information."
+    },
+    {
+      "type": "li",
+      "content": "url(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "url(str|None)"
+    },
+    {
+      "type": "li",
+      "content": "username(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "username(str|None)"
+    },
+    {
+      "type": "li",
+      "content": "password(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "password(str|None)"
+    },
+    {
+      "type": "li",
+      "content": "traversal_source(str)"
+    },
+    {
+      "type": "p",
+      "content": "traversal_source(str)"
+    },
+    {
+      "type": "li",
+      "content": "message_serializer(Any|None)"
+    },
+    {
+      "type": "p",
+      "content": "message_serializer(Any|None)"
+    },
+    {
+      "type": "li",
+      "content": "include_edge_properties(bool)"
+    },
+    {
+      "type": "p",
+      "content": "include_edge_properties(bool)"
+    },
+    {
+      "type": "p",
+      "content": "Create a new Gremlin graph wrapper instance."
+    },
+    {
+      "type": "li",
+      "content": "url(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "url(str|None)"
+    },
+    {
+      "type": "li",
+      "content": "username(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "username(str|None)"
+    },
+    {
+      "type": "li",
+      "content": "password(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "password(str|None)"
+    },
+    {
+      "type": "li",
+      "content": "traversal_source(str)"
+    },
+    {
+      "type": "p",
+      "content": "traversal_source(str)"
+    },
+    {
+      "type": "li",
+      "content": "message_serializer(Any|None)"
+    },
+    {
+      "type": "p",
+      "content": "message_serializer(Any|None)"
+    },
+    {
+      "type": "li",
+      "content": "include_edge_properties(bool)"
+    },
+    {
+      "type": "p",
+      "content": "include_edge_properties(bool)"
+    },
+    {
+      "type": "p",
+      "content": "relationship(Relationship)"
+    },
+    {
+      "type": "p",
+      "content": "Take GraphDocument as input as uses it to construct a graph."
+    },
+    {
+      "type": "li",
+      "content": "graph_documents(List[GraphDocument])"
+    },
+    {
+      "type": "p",
+      "content": "graph_documents(List[GraphDocument])"
+    },
+    {
+      "type": "li",
+      "content": "include_source(bool)"
+    },
+    {
+      "type": "p",
+      "content": "include_source(bool)"
+    },
+    {
+      "type": "li",
+      "content": "node_cache(dict)"
+    },
+    {
+      "type": "p",
+      "content": "node_cache(dict)"
+    },
+    {
+      "type": "p",
+      "content": "relationship(Relationship)"
+    },
+    {
+      "type": "p",
+      "content": "Query the graph."
+    },
+    {
+      "type": "li",
+      "content": "params(dict)"
+    },
+    {
+      "type": "p",
+      "content": "params(dict)"
+    },
+    {
+      "type": "p",
+      "content": "List[Dict[str,Any]]"
+    },
+    {
+      "type": "p",
+      "content": "Refreshes the Gremlin graph schema information."
+    },
+    {
+      "type": "p",
+      "content": "Examples using GremlinGraph"
+    },
+    {
+      "type": "li",
+      "content": "Azure Cosmos DB for Apache Gremlin"
+    },
+    {
+      "type": "p",
+      "content": "Azure Cosmos DB for Apache Gremlin"
+    },
+    {
+      "type": "li",
+      "content": "GremlinGraph__init__()add_edge()add_graph_documents()add_node()build_edge_query()build_vertex_query()query()refresh_schema()"
+    },
+    {
+      "type": "li",
+      "content": "add_graph_documents()"
+    },
+    {
+      "type": "li",
+      "content": "build_edge_query()"
+    },
+    {
+      "type": "li",
+      "content": "build_vertex_query()"
+    },
+    {
+      "type": "li",
+      "content": "refresh_schema()"
+    }
+  ],
+  "code_examples": [
+    "graphs",
+    "get_schema",
+    "get_structured_schema",
+    "__init__",
+    "add_edge",
+    "add_graph_documents",
+    "add_node",
+    "build_edge_query",
+    "build_vertex_query",
+    "query",
+    "refresh_schema",
+    "GremlinGraph",
+    "__init__()",
+    "add_edge()",
+    "add_graph_documents()",
+    "add_node()",
+    "build_edge_query()",
+    "build_vertex_query()",
+    "query()",
+    "refresh_schema()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.graphs.gremlin_graph.GremlinGraph(url:str|None=None,username:str|None=None,password:str|None=None,traversal_source:str='g',message_serializer:Any|None=None,include_edge_properties:bool=False,)[source]#",
+    "langchain_community.graphs.gremlin_graph.",
+    "GremlinGraph",
+    "(",
+    "url:str|None=None",
+    "username:str|None=None",
+    "password:str|None=None",
+    "traversal_source:str='g'",
+    "message_serializer:Any|None=None",
+    "include_edge_properties:bool=False",
+    ")",
+    "__init__(url:str|None=None,username:str|None=None,password:str|None=None,traversal_source:str='g',message_serializer:Any|None=None,include_edge_properties:bool=False,)→None[source]#",
+    "__init__",
+    "(",
+    "url:str|None=None",
+    "username:str|None=None",
+    "password:str|None=None",
+    "traversal_source:str='g'",
+    "message_serializer:Any|None=None",
+    "include_edge_properties:bool=False",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "add_edge(relationship:Relationship,)→Any[source]#",
+    "add_edge",
+    "(",
+    "relationship:Relationship",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "add_graph_documents(graph_documents:List[GraphDocument],include_source:bool=False,)→None[source]#",
+    "add_graph_documents",
+    "(",
+    "graph_documents:List[GraphDocument]",
+    "include_source:bool=False",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "add_node(node:Node,node_cache:dict={},)→Node[source]#",
+    "add_node",
+    "(",
+    "node:Node",
+    "node_cache:dict={}",
+    ")",
+    "→Node",
+    "→",
+    "Node",
+    "build_edge_query(relationship:Relationship,)→str[source]#",
+    "build_edge_query",
+    "(",
+    "relationship:Relationship",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "build_vertex_query(node:Node,)→str[source]#",
+    "build_vertex_query",
+    "(",
+    "node:Node",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "query(query:str,params:dict={},)→List[Dict[str,Any]][source]#",
+    "query",
+    "(",
+    "query:str",
+    "params:dict={}",
+    ")",
+    "→List[Dict[str,Any]]",
+    "→",
+    "List[Dict[str,Any]]",
+    "refresh_schema()→None[source]#",
+    "refresh_schema",
+    "(",
+    ")",
+    "→None",
+    "→",
+    "None"
+  ],
+  "parameters": [
+    "url:str|None=None",
+    "username:str|None=None",
+    "password:str|None=None",
+    "traversal_source:str='g'",
+    "message_serializer:Any|None=None",
+    "include_edge_properties:bool=False",
+    "url:str|None=None",
+    "username:str|None=None",
+    "password:str|None=None",
+    "traversal_source:str='g'",
+    "message_serializer:Any|None=None",
+    "include_edge_properties:bool=False",
+    "relationship:Relationship",
+    "graph_documents:List[GraphDocument]",
+    "include_source:bool=False",
+    "node:Node",
+    "node_cache:dict={}",
+    "relationship:Relationship",
+    "node:Node",
+    "query:str",
+    "params:dict={}"
+  ]
+}

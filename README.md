@@ -191,9 +191,27 @@ pytest tests/ -v
 # Integration tests
 pytest tests/test_integration.py -v
 
-# With coverage
-pytest --cov=cartrita.orchestrator --cov-report=html
+# With coverage (project-wide)
+pytest --cov --cov-report=term-missing
 ```
+
+### Coverage Policy (Ratchet)
+
+We enforce an incremental coverage ratchet to improve quality safely:
+
+| Phase | Minimum Coverage | Status |
+|-------|------------------|--------|
+| 1     | 25%              | Complete |
+| 2     | 30%              | Pending (next after new service tests) |
+| 3     | 35%              | Planned |
+
+Legacy/backup agent modules are excluded via `.coveragerc` to avoid denominator distortion while they await archival or refactor. Exclusions are explicitly documented for transparency.
+
+Raise sequence: add targeted tests → validate stable > threshold + buffer (≥ +4%) → bump `--cov-fail-under`.
+
+### Runtime Policy
+
+All services target Python `>=3.13,<3.14`. Local development should use the pinned patch in `.python-version`. CI and Docker images are aligned to `python:3.13-slim` for determinism. Earlier versions (3.11/3.12) are no longer tested.
 
 ### Test Categories
 
@@ -267,3 +285,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 **Cartrita AI OS** - Building the future of hierarchical multi-agent AI systems.
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/19effc69e3c54f548927869d28656546)](https://app.codacy.com?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)

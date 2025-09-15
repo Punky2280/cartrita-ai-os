@@ -1,0 +1,74 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.financial_datasets.balance_sheets.BalanceSheetsSchema.html",
+  "title": "BalanceSheetsSchema#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "BalanceSheetsSchema"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Input for BalanceSheets."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "The number of balance sheets to return. Default is 10."
+    },
+    {
+      "type": "p",
+      "content": "The period of the balance sheets. Possible values are: annual, quarterly, ttm. Default is ‘annual’."
+    },
+    {
+      "type": "p",
+      "content": "The ticker symbol to fetch balance sheets for."
+    },
+    {
+      "type": "li",
+      "content": "BalanceSheetsSchemalimitperiodticker"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "BaseModel",
+    "BalanceSheetsSchema",
+    "limit",
+    "period",
+    "ticker"
+  ],
+  "api_signatures": [
+    "classlangchain_community.tools.financial_datasets.balance_sheets.BalanceSheetsSchema[source]#",
+    "langchain_community.tools.financial_datasets.balance_sheets.",
+    "BalanceSheetsSchema",
+    "paramlimit:int[Required]#",
+    "limit",
+    "paramperiod:str[Required]#",
+    "period",
+    "paramticker:str[Required]#",
+    "ticker"
+  ],
+  "parameters": []
+}

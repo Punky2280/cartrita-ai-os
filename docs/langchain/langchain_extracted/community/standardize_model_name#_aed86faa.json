@@ -1,0 +1,80 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/callbacks/langchain_community.callbacks.openai_info.standardize_model_name.html#langchain_community.callbacks.openai_info.standardize_model_name",
+  "title": "standardize_model_name#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "standardize_model_name"
+    },
+    {
+      "type": "p",
+      "content": "Standardize the model name to a format that can be used in the OpenAI API."
+    },
+    {
+      "type": "li",
+      "content": "model_name(str) – Model name to standardize."
+    },
+    {
+      "type": "p",
+      "content": "model_name(str) – Model name to standardize."
+    },
+    {
+      "type": "li",
+      "content": "is_completion(bool) – Whether the model is used for completion or not.\nDefaults to False. Deprecated in favor oftoken_type."
+    },
+    {
+      "type": "p",
+      "content": "is_completion(bool) – Whether the model is used for completion or not.\nDefaults to False. Deprecated in favor oftoken_type."
+    },
+    {
+      "type": "li",
+      "content": "token_type(TokenType) – Token type. Defaults toTokenType.PROMPT."
+    },
+    {
+      "type": "p",
+      "content": "token_type(TokenType) – Token type. Defaults toTokenType.PROMPT."
+    },
+    {
+      "type": "p",
+      "content": "Standardized model name."
+    },
+    {
+      "type": "li",
+      "content": "standardize_model_name()"
+    }
+  ],
+  "code_examples": [
+    "callbacks",
+    "token_type",
+    "TokenType.PROMPT",
+    "standardize_model_name()"
+  ],
+  "api_signatures": [
+    "langchain_community.callbacks.openai_info.standardize_model_name(model_name:str,is_completion:bool=False,*,token_type:TokenType=TokenType.PROMPT,)→str[source]#",
+    "langchain_community.callbacks.openai_info.",
+    "standardize_model_name",
+    "(",
+    "model_name:str",
+    "is_completion:bool=False",
+    "*",
+    "token_type:TokenType=TokenType.PROMPT",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "model_name:str",
+    "is_completion:bool=False",
+    "*",
+    "token_type:TokenType=TokenType.PROMPT"
+  ]
+}

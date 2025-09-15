@@ -1,0 +1,212 @@
+{
+  "summary": {
+    "total_patterns_identified": 6,
+    "total_agents_analyzed": 9,
+    "langchain_compatible_agents": 6
+  },
+  "patterns": {
+    "agent": [
+      {
+        "name": "agent_toolkits#",
+        "description": "Toolkitsare sets of tools that can be used to interact with\nvarious services and APIs.",
+        "key_concepts": [
+          "Toolkitsare sets of tools that can be used to interact with\nvarious services and APIs.",
+          "agent_toolkits.ainetwork.toolkit.AINetworkToolkit",
+          "Toolkit for interacting with AINetwork Blockchain."
+        ]
+      },
+      {
+        "name": "BaseAgent",
+        "description": "Standard LangChain agent pattern",
+        "key_concepts": [
+          "Agents use an LLM to determine actions",
+          "Agents have access to tools",
+          "Agents follow a thought-action-observation loop"
+        ]
+      }
+    ],
+    "chain": [
+      {
+        "name": "LLMChain",
+        "description": "Basic LangChain chain pattern",
+        "key_concepts": [
+          "Chains combine LLMs with prompts",
+          "Chains can be composed together",
+          "Use invoke() for synchronous calls"
+        ]
+      }
+    ],
+    "tool": [
+      {
+        "name": "BaseTool",
+        "description": "Standard LangChain tool pattern",
+        "key_concepts": [
+          "Tools are functions agents can use",
+          "Tools should inherit from BaseTool",
+          "Tools must have name and description"
+        ]
+      }
+    ],
+    "core": [
+      {
+        "name": "Messages",
+        "description": "LangChain message types",
+        "key_concepts": [
+          "Use HumanMessage for user input",
+          "Use AIMessage for assistant responses",
+          "Use SystemMessage for system prompts"
+        ]
+      },
+      {
+        "name": "Callbacks",
+        "description": "LangChain callback system",
+        "key_concepts": [
+          "Callbacks allow hooking into chain execution",
+          "Use CallbackManager for managing callbacks",
+          "Implement BaseCallbackHandler for custom callbacks"
+        ]
+      }
+    ]
+  },
+  "agent_analyses": [
+    {
+      "agent": "computer_use_agent",
+      "file": "services/ai-orchestrator/cartrita/orchestrator/agents/computer_use/computer_use_agent.py",
+      "langchain_compatible": true,
+      "follows_patterns": [],
+      "missing_patterns": [
+        "agent_toolkits#",
+        "BaseAgent"
+      ],
+      "recommendations": [
+        "Implement standard LangChain agent interface",
+        "Implement callback support for monitoring"
+      ]
+    },
+    {
+      "agent": "knowledge_agent",
+      "file": "services/ai-orchestrator/cartrita/orchestrator/agents/knowledge/knowledge_agent.py",
+      "langchain_compatible": true,
+      "follows_patterns": [],
+      "missing_patterns": [
+        "agent_toolkits#",
+        "BaseAgent"
+      ],
+      "recommendations": [
+        "Implement standard LangChain agent interface",
+        "Implement callback support for monitoring"
+      ]
+    },
+    {
+      "agent": "code_agent",
+      "file": "services/ai-orchestrator/cartrita/orchestrator/agents/code/code_agent.py",
+      "langchain_compatible": true,
+      "follows_patterns": [],
+      "missing_patterns": [
+        "agent_toolkits#",
+        "BaseAgent"
+      ],
+      "recommendations": [
+        "Implement standard LangChain agent interface",
+        "Implement callback support for monitoring"
+      ]
+    },
+    {
+      "agent": "research_agent",
+      "file": "services/ai-orchestrator/cartrita/orchestrator/agents/research/research_agent.py",
+      "langchain_compatible": true,
+      "follows_patterns": [],
+      "missing_patterns": [
+        "agent_toolkits#",
+        "BaseAgent"
+      ],
+      "recommendations": [
+        "Implement standard LangChain agent interface",
+        "Implement callback support for monitoring"
+      ]
+    },
+    {
+      "agent": "cartrita_agent",
+      "file": "services/ai-orchestrator/cartrita/orchestrator/agents/cartrita_core/cartrita_agent.py",
+      "langchain_compatible": true,
+      "follows_patterns": [],
+      "missing_patterns": [
+        "agent_toolkits#",
+        "BaseAgent"
+      ],
+      "recommendations": [
+        "Implement standard LangChain agent interface",
+        "Implement callback support for monitoring"
+      ]
+    },
+    {
+      "agent": "audio_agent",
+      "file": "services/ai-orchestrator/cartrita/orchestrator/agents/audio/audio_agent.py",
+      "langchain_compatible": false,
+      "follows_patterns": [],
+      "missing_patterns": [
+        "agent_toolkits#",
+        "BaseAgent"
+      ],
+      "recommendations": [
+        "Consider migrating to LangChain framework",
+        "Implement standard LangChain agent interface",
+        "Implement callback support for monitoring"
+      ]
+    },
+    {
+      "agent": "task_agent",
+      "file": "services/ai-orchestrator/cartrita/orchestrator/agents/task/task_agent.py",
+      "langchain_compatible": true,
+      "follows_patterns": [],
+      "missing_patterns": [
+        "agent_toolkits#",
+        "BaseAgent"
+      ],
+      "recommendations": [
+        "Implement standard LangChain agent interface",
+        "Implement callback support for monitoring"
+      ]
+    },
+    {
+      "agent": "image_agent",
+      "file": "services/ai-orchestrator/cartrita/orchestrator/agents/image/image_agent.py",
+      "langchain_compatible": false,
+      "follows_patterns": [],
+      "missing_patterns": [
+        "agent_toolkits#",
+        "BaseAgent"
+      ],
+      "recommendations": [
+        "Consider migrating to LangChain framework",
+        "Implement standard LangChain agent interface",
+        "Implement callback support for monitoring"
+      ]
+    },
+    {
+      "agent": "reasoning_agent",
+      "file": "services/ai-orchestrator/cartrita/orchestrator/agents/reasoning/reasoning_agent.py",
+      "langchain_compatible": false,
+      "follows_patterns": [],
+      "missing_patterns": [
+        "agent_toolkits#",
+        "BaseAgent"
+      ],
+      "recommendations": [
+        "Consider migrating to LangChain framework",
+        "Implement standard LangChain agent interface",
+        "Implement callback support for monitoring"
+      ]
+    }
+  ],
+  "recommendations": [
+    "Implement standardized agent base class following LangChain patterns",
+    "Add comprehensive tool library using LangChain tool patterns",
+    "Implement chain composition for complex workflows",
+    "Add callback system for monitoring and debugging",
+    "Use LangChain's memory systems for conversation management",
+    "Implement proper async support across all agents",
+    "Add structured output parsing using LangChain output parsers",
+    "Use LangChain's prompt templates for consistency"
+  ]
+}

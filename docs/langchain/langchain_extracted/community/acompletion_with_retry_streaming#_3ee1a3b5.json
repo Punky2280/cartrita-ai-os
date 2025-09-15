@@ -1,0 +1,84 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/llms/langchain_community.llms.fireworks.acompletion_with_retry_streaming.html",
+  "title": "acompletion_with_retry_streaming#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "acompletion_with_retry_streaming"
+    },
+    {
+      "type": "p",
+      "content": "Use tenacity to retry the completion call for streaming."
+    },
+    {
+      "type": "li",
+      "content": "llm(Fireworks)"
+    },
+    {
+      "type": "p",
+      "content": "llm(Fireworks)"
+    },
+    {
+      "type": "li",
+      "content": "use_retry(bool)"
+    },
+    {
+      "type": "p",
+      "content": "use_retry(bool)"
+    },
+    {
+      "type": "li",
+      "content": "run_manager(AsyncCallbackManagerForLLMRun|None)"
+    },
+    {
+      "type": "p",
+      "content": "run_manager(AsyncCallbackManagerForLLMRun|None)"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "li",
+      "content": "acompletion_with_retry_streaming()"
+    }
+  ],
+  "code_examples": [
+    "llms",
+    "acompletion_with_retry_streaming()"
+  ],
+  "api_signatures": [
+    "asynclangchain_community.llms.fireworks.acompletion_with_retry_streaming(llm:Fireworks,use_retry:bool,*,run_manager:AsyncCallbackManagerForLLMRun|None=None,**kwargs:Any,)→Any[source]#",
+    "langchain_community.llms.fireworks.",
+    "acompletion_with_retry_streaming",
+    "(",
+    "llm:Fireworks",
+    "use_retry:bool",
+    "*",
+    "run_manager:AsyncCallbackManagerForLLMRun|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Any",
+    "→",
+    "Any"
+  ],
+  "parameters": [
+    "llm:Fireworks",
+    "use_retry:bool",
+    "*",
+    "run_manager:AsyncCallbackManagerForLLMRun|None=None",
+    "**kwargs:Any"
+  ]
+}

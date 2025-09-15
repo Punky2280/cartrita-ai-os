@@ -8,8 +8,8 @@ This document outlines the modern patterns and best practices for React TypeScri
 ### Direct Function Typing Over React.FC
 **Recommended approach:**
 ```typescript
-type Props = { 
-  title: string; 
+type Props = {
+  title: string;
   children?: React.ReactNode;
 };
 

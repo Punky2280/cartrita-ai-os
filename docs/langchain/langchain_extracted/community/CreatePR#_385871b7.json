@@ -1,0 +1,64 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/agent_toolkits/langchain_community.agent_toolkits.github.toolkit.CreatePR.html#langchain_community.agent_toolkits.github.toolkit.CreatePR",
+  "title": "CreatePR#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "agent_toolkits"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Schema for operations that require a PR title and body as input."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Follow the required formatting."
+    },
+    {
+      "type": "li",
+      "content": "CreatePRformatted_pr"
+    },
+    {
+      "type": "li",
+      "content": "formatted_pr"
+    }
+  ],
+  "code_examples": [
+    "agent_toolkits",
+    "BaseModel",
+    "CreatePR",
+    "formatted_pr"
+  ],
+  "api_signatures": [
+    "classlangchain_community.agent_toolkits.github.toolkit.CreatePR[source]#",
+    "langchain_community.agent_toolkits.github.toolkit.",
+    "CreatePR",
+    "paramformatted_pr:str[Required]#",
+    "formatted_pr"
+  ],
+  "parameters": []
+}

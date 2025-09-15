@@ -1,0 +1,386 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.parsers.pdf.PyPDFParser.html",
+  "title": "PyPDFParser#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "PyPDFParser"
+    },
+    {
+      "type": "p",
+      "content": "Parse a blob from a PDF usingpypdflibrary."
+    },
+    {
+      "type": "p",
+      "content": "This class provides methods to parse a blob from a PDF document, supporting various\nconfigurations such as handling password-protected PDFs, extracting images.\nIt integrates the ‘pypdf’ library for PDF processing and offers synchronous blob\nparsing."
+    },
+    {
+      "type": "p",
+      "content": "Load a blob from a PDF file:"
+    },
+    {
+      "type": "p",
+      "content": "Instantiate the parser:"
+    },
+    {
+      "type": "p",
+      "content": "# images_parser = TesseractBlobParser(),"
+    },
+    {
+      "type": "p",
+      "content": "Lazily parse the blob:"
+    },
+    {
+      "type": "p",
+      "content": "Initialize a parser based on PyPDF."
+    },
+    {
+      "type": "li",
+      "content": "password(Optional[Union[str,bytes]]) – Optional password for opening encrypted PDFs."
+    },
+    {
+      "type": "p",
+      "content": "password(Optional[Union[str,bytes]]) – Optional password for opening encrypted PDFs."
+    },
+    {
+      "type": "li",
+      "content": "extract_images(bool) – Whether to extract images from the PDF."
+    },
+    {
+      "type": "p",
+      "content": "extract_images(bool) – Whether to extract images from the PDF."
+    },
+    {
+      "type": "li",
+      "content": "mode(Literal['single','page']) – The extraction mode, either “single” for the entire document or “page”\nfor page-wise extraction."
+    },
+    {
+      "type": "p",
+      "content": "mode(Literal['single','page']) – The extraction mode, either “single” for the entire document or “page”\nfor page-wise extraction."
+    },
+    {
+      "type": "li",
+      "content": "pages_delimiter(str) – A string delimiter to separate pages in single-mode\nextraction."
+    },
+    {
+      "type": "p",
+      "content": "pages_delimiter(str) – A string delimiter to separate pages in single-mode\nextraction."
+    },
+    {
+      "type": "li",
+      "content": "images_parser(Optional[BaseImageBlobParser]) – Optional image blob parser."
+    },
+    {
+      "type": "p",
+      "content": "images_parser(Optional[BaseImageBlobParser]) – Optional image blob parser."
+    },
+    {
+      "type": "li",
+      "content": "images_inner_format(Literal['text','markdown-img','html-img']) – The format for the parsed output.\n- “text” = return the content as is\n- “markdown-img” = wrap the content into an image markdown link, w/ link\npointing to (![body)(#)]\n- “html-img” = wrap the content as thealttext of an tag and link to\n(<img alt=”{body}” src=”#”/>)"
+    },
+    {
+      "type": "p",
+      "content": "images_inner_format(Literal['text','markdown-img','html-img']) – The format for the parsed output.\n- “text” = return the content as is\n- “markdown-img” = wrap the content into an image markdown link, w/ link\npointing to (![body)(#)]\n- “html-img” = wrap the content as thealttext of an tag and link to\n(<img alt=”{body}” src=”#”/>)"
+    },
+    {
+      "type": "li",
+      "content": "extraction_mode(Literal['plain','layout']) – “plain” for legacy functionality, “layout” extract text\nin a fixed width format that closely adheres to the rendered layout in\nthe source pdf."
+    },
+    {
+      "type": "p",
+      "content": "extraction_mode(Literal['plain','layout']) – “plain” for legacy functionality, “layout” extract text\nin a fixed width format that closely adheres to the rendered layout in\nthe source pdf."
+    },
+    {
+      "type": "li",
+      "content": "extraction_kwargs(Optional[dict[str,Any]]) – Optional additional parameters for the extraction\nprocess."
+    },
+    {
+      "type": "p",
+      "content": "extraction_kwargs(Optional[dict[str,Any]]) – Optional additional parameters for the extraction\nprocess."
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If themodeis not “single” or “page”."
+    },
+    {
+      "type": "p",
+      "content": "__init__([password, extract_images, mode, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize a parser based on PyPDF."
+    },
+    {
+      "type": "p",
+      "content": "extract_images_from_page(page)"
+    },
+    {
+      "type": "p",
+      "content": "Extract images from a PDF page and get the text using images_to_text."
+    },
+    {
+      "type": "p",
+      "content": "lazy_parse(blob)"
+    },
+    {
+      "type": "p",
+      "content": "Lazily parse the blob."
+    },
+    {
+      "type": "p",
+      "content": "parse(blob)"
+    },
+    {
+      "type": "p",
+      "content": "Eagerly parse the blob into a document or documents."
+    },
+    {
+      "type": "p",
+      "content": "Initialize a parser based on PyPDF."
+    },
+    {
+      "type": "li",
+      "content": "password(str|bytes|None) – Optional password for opening encrypted PDFs."
+    },
+    {
+      "type": "p",
+      "content": "password(str|bytes|None) – Optional password for opening encrypted PDFs."
+    },
+    {
+      "type": "li",
+      "content": "extract_images(bool) – Whether to extract images from the PDF."
+    },
+    {
+      "type": "p",
+      "content": "extract_images(bool) – Whether to extract images from the PDF."
+    },
+    {
+      "type": "li",
+      "content": "mode(Literal['single','page']) – The extraction mode, either “single” for the entire document or “page”\nfor page-wise extraction."
+    },
+    {
+      "type": "p",
+      "content": "mode(Literal['single','page']) – The extraction mode, either “single” for the entire document or “page”\nfor page-wise extraction."
+    },
+    {
+      "type": "li",
+      "content": "pages_delimiter(str) – A string delimiter to separate pages in single-mode\nextraction."
+    },
+    {
+      "type": "p",
+      "content": "pages_delimiter(str) – A string delimiter to separate pages in single-mode\nextraction."
+    },
+    {
+      "type": "li",
+      "content": "images_parser(BaseImageBlobParser|None) – Optional image blob parser."
+    },
+    {
+      "type": "p",
+      "content": "images_parser(BaseImageBlobParser|None) – Optional image blob parser."
+    },
+    {
+      "type": "li",
+      "content": "images_inner_format(Literal['text','markdown-img','html-img']) – The format for the parsed output.\n- “text” = return the content as is\n- “markdown-img” = wrap the content into an image markdown link, w/ link\npointing to (![body)(#)]\n- “html-img” = wrap the content as thealttext of an tag and link to\n(<img alt=”{body}” src=”#”/>)"
+    },
+    {
+      "type": "p",
+      "content": "images_inner_format(Literal['text','markdown-img','html-img']) – The format for the parsed output.\n- “text” = return the content as is\n- “markdown-img” = wrap the content into an image markdown link, w/ link\npointing to (![body)(#)]\n- “html-img” = wrap the content as thealttext of an tag and link to\n(<img alt=”{body}” src=”#”/>)"
+    },
+    {
+      "type": "li",
+      "content": "extraction_mode(Literal['plain','layout']) – “plain” for legacy functionality, “layout” extract text\nin a fixed width format that closely adheres to the rendered layout in\nthe source pdf."
+    },
+    {
+      "type": "p",
+      "content": "extraction_mode(Literal['plain','layout']) – “plain” for legacy functionality, “layout” extract text\nin a fixed width format that closely adheres to the rendered layout in\nthe source pdf."
+    },
+    {
+      "type": "li",
+      "content": "extraction_kwargs(dict[str,Any]|None) – Optional additional parameters for the extraction\nprocess."
+    },
+    {
+      "type": "p",
+      "content": "extraction_kwargs(dict[str,Any]|None) – Optional additional parameters for the extraction\nprocess."
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If themodeis not “single” or “page”."
+    },
+    {
+      "type": "p",
+      "content": "Extract images from a PDF page and get the text using images_to_text."
+    },
+    {
+      "type": "p",
+      "content": "page(pypdf._page.PageObject) – The page object from which to extract images."
+    },
+    {
+      "type": "p",
+      "content": "The extracted text from the images on the page."
+    },
+    {
+      "type": "p",
+      "content": "Lazily parse the blob.\nInsert image, if possible, between two paragraphs.\nIn this way, a paragraph can be continued on the next page."
+    },
+    {
+      "type": "p",
+      "content": "blob(Blob) – The blob to parse."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If thepypdfpackage is not found."
+    },
+    {
+      "type": "p",
+      "content": "An iterator over the parsed documents."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Eagerly parse the blob into a document or documents."
+    },
+    {
+      "type": "p",
+      "content": "This is a convenience method for interactive development environment."
+    },
+    {
+      "type": "p",
+      "content": "Production applications should favor the lazy_parse method instead."
+    },
+    {
+      "type": "p",
+      "content": "Subclasses should generally not over-ride this parse method."
+    },
+    {
+      "type": "p",
+      "content": "blob(Blob) – Blob instance"
+    },
+    {
+      "type": "p",
+      "content": "List of documents"
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "li",
+      "content": "PyPDFParser__init__()extract_images_from_page()lazy_parse()parse()"
+    },
+    {
+      "type": "li",
+      "content": "extract_images_from_page()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_parse()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "pipinstall-Ulangchain-communitypypdf",
+    "fromlangchain_core.documents.baseimportBlobblob=Blob.from_path(\"./example_data/layout-parser-paper.pdf\")",
+    "fromlangchain_community.document_loaders.parsersimportPyPDFParserparser=PyPDFParser(# password = None,mode=\"single\",pages_delimiter=\"",
+    "docs=[]docs_lazy=parser.lazy_parse(blob)fordocindocs_lazy:docs.append(doc)print(docs[0].page_content[:100])print(docs[0].metadata)",
+    "__init__",
+    "extract_images_from_page",
+    "lazy_parse",
+    "parse",
+    "PyPDFParser",
+    "__init__()",
+    "extract_images_from_page()",
+    "lazy_parse()",
+    "parse()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.parsers.pdf.PyPDFParser(password:str|bytes|None=None,extract_images:bool=False,*,mode:Literal['single','page']='page',pages_delimiter:str='\\n\\x0c',images_parser:BaseImageBlobParser|None=None,images_inner_format:Literal['text','markdown-img','html-img']='text',extraction_mode:Literal['plain','layout']='plain',extraction_kwargs:dict[str,Any]|None=None,)[source]#",
+    "langchain_community.document_loaders.parsers.pdf.",
+    "PyPDFParser",
+    "(",
+    "password:str|bytes|None=None",
+    "extract_images:bool=False",
+    "*",
+    "mode:Literal['single','page']='page'",
+    "pages_delimiter:str='\\n\\x0c'",
+    "images_parser:BaseImageBlobParser|None=None",
+    "images_inner_format:Literal['text','markdown-img','html-img']='text'",
+    "extraction_mode:Literal['plain','layout']='plain'",
+    "extraction_kwargs:dict[str,Any]|None=None",
+    ")",
+    "__init__(password:str|bytes|None=None,extract_images:bool=False,*,mode:Literal['single','page']='page',pages_delimiter:str='\\n\\x0c',images_parser:BaseImageBlobParser|None=None,images_inner_format:Literal['text','markdown-img','html-img']='text',extraction_mode:Literal['plain','layout']='plain',extraction_kwargs:dict[str,Any]|None=None,)[source]#",
+    "__init__",
+    "(",
+    "password:str|bytes|None=None",
+    "extract_images:bool=False",
+    "*",
+    "mode:Literal['single','page']='page'",
+    "pages_delimiter:str='\\n\\x0c'",
+    "images_parser:BaseImageBlobParser|None=None",
+    "images_inner_format:Literal['text','markdown-img','html-img']='text'",
+    "extraction_mode:Literal['plain','layout']='plain'",
+    "extraction_kwargs:dict[str,Any]|None=None",
+    ")",
+    "extract_images_from_page(page:pypdf._page.PageObject,)→str[source]#",
+    "extract_images_from_page",
+    "(",
+    "page:pypdf._page.PageObject",
+    ")",
+    "→str",
+    "→",
+    "str",
+    "lazy_parse(blob:Blob,)→Iterator[Document][source]#",
+    "lazy_parse",
+    "(",
+    "blob:Blob",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "parse(blob:Blob)→list[Document]#",
+    "parse",
+    "(",
+    "blob:Blob",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "password:str|bytes|None=None",
+    "extract_images:bool=False",
+    "*",
+    "mode:Literal['single','page']='page'",
+    "pages_delimiter:str='\\n\\x0c'",
+    "images_parser:BaseImageBlobParser|None=None",
+    "images_inner_format:Literal['text','markdown-img','html-img']='text'",
+    "extraction_mode:Literal['plain','layout']='plain'",
+    "extraction_kwargs:dict[str,Any]|None=None",
+    "password:str|bytes|None=None",
+    "extract_images:bool=False",
+    "*",
+    "mode:Literal['single','page']='page'",
+    "pages_delimiter:str='\\n\\x0c'",
+    "images_parser:BaseImageBlobParser|None=None",
+    "images_inner_format:Literal['text','markdown-img','html-img']='text'",
+    "extraction_mode:Literal['plain','layout']='plain'",
+    "extraction_kwargs:dict[str,Any]|None=None",
+    "page:pypdf._page.PageObject",
+    "blob:Blob",
+    "blob:Blob"
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.connery.models.Action.html#langchain_community.tools.connery.models.Action",
+  "title": "Action#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Connery Action model."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "li",
+      "content": "ActiondescriptionidinputParameterskeyoutputParameterspluginIdtitletype"
+    },
+    {
+      "type": "li",
+      "content": "description"
+    },
+    {
+      "type": "li",
+      "content": "inputParameters"
+    },
+    {
+      "type": "li",
+      "content": "outputParameters"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "BaseModel",
+    "Action",
+    "description",
+    "id",
+    "inputParameters",
+    "key",
+    "outputParameters",
+    "pluginId",
+    "title",
+    "type"
+  ],
+  "api_signatures": [
+    "classlangchain_community.tools.connery.models.Action[source]#",
+    "langchain_community.tools.connery.models.",
+    "Action",
+    "paramdescription:str|None=None#",
+    "description",
+    "paramid:str[Required]#",
+    "id",
+    "paraminputParameters:List[Parameter][Required]#",
+    "inputParameters",
+    "paramkey:str[Required]#",
+    "key",
+    "paramoutputParameters:List[Parameter][Required]#",
+    "outputParameters",
+    "parampluginId:str[Required]#",
+    "pluginId",
+    "paramtitle:str[Required]#",
+    "title",
+    "paramtype:str[Required]#",
+    "type"
+  ],
+  "parameters": []
+}

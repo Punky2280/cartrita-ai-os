@@ -1,0 +1,82 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/llms/langchain_community.llms.anyscale.create_llm_result.html#langchain_community.llms.anyscale.create_llm_result",
+  "title": "create_llm_result#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "create_llm_result"
+    },
+    {
+      "type": "p",
+      "content": "Create the LLMResult from the choices and prompts."
+    },
+    {
+      "type": "li",
+      "content": "choices(Any)"
+    },
+    {
+      "type": "p",
+      "content": "choices(Any)"
+    },
+    {
+      "type": "li",
+      "content": "prompts(List[str])"
+    },
+    {
+      "type": "p",
+      "content": "prompts(List[str])"
+    },
+    {
+      "type": "li",
+      "content": "token_usage(Dict[str,int])"
+    },
+    {
+      "type": "p",
+      "content": "token_usage(Dict[str,int])"
+    },
+    {
+      "type": "li",
+      "content": "model_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "model_name(str)"
+    },
+    {
+      "type": "li",
+      "content": "create_llm_result()"
+    }
+  ],
+  "code_examples": [
+    "llms",
+    "create_llm_result()"
+  ],
+  "api_signatures": [
+    "langchain_community.llms.anyscale.create_llm_result(choices:Any,prompts:List[str],token_usage:Dict[str,int],model_name:str,)→LLMResult[source]#",
+    "langchain_community.llms.anyscale.",
+    "create_llm_result",
+    "(",
+    "choices:Any",
+    "prompts:List[str]",
+    "token_usage:Dict[str,int]",
+    "model_name:str",
+    ")",
+    "→LLMResult",
+    "→",
+    "LLMResult"
+  ],
+  "parameters": [
+    "choices:Any",
+    "prompts:List[str]",
+    "token_usage:Dict[str,int]",
+    "model_name:str"
+  ]
+}

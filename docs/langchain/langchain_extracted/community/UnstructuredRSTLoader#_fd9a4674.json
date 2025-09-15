@@ -1,0 +1,308 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.rst.UnstructuredRSTLoader.html#langchain_community.document_loaders.rst.UnstructuredRSTLoader",
+  "title": "UnstructuredRSTLoader#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "UnstructuredRSTLoader"
+    },
+    {
+      "type": "p",
+      "content": "LoadRSTfiles usingUnstructured."
+    },
+    {
+      "type": "p",
+      "content": "You can run the loader in one of two modes: “single” and “elements”.\nIf you use “single” mode, the document will be returned as a single\nlangchain Document object. If you use “elements” mode, the unstructured\nlibrary will split the document into elements such as Title and NarrativeText.\nYou can pass in additional unstructured kwargs after mode to apply\ndifferent unstructured settings."
+    },
+    {
+      "type": "p",
+      "content": "from langchain_community.document_loaders import UnstructuredRSTLoader"
+    },
+    {
+      "type": "p",
+      "content": "“example.rst”, mode=”elements”, strategy=”fast”,"
+    },
+    {
+      "type": "p",
+      "content": ")\ndocs = loader.load()"
+    },
+    {
+      "type": "p",
+      "content": "https://unstructured-io.github.io/unstructured/bricks.html#partition-rst"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with a file path."
+    },
+    {
+      "type": "li",
+      "content": "file_path(str|Path) – The path to the file to load."
+    },
+    {
+      "type": "p",
+      "content": "file_path(str|Path) – The path to the file to load."
+    },
+    {
+      "type": "li",
+      "content": "mode(str) – The mode to use for partitioning. See unstructured for details.\nDefaults to “single”."
+    },
+    {
+      "type": "p",
+      "content": "mode(str) – The mode to use for partitioning. See unstructured for details.\nDefaults to “single”."
+    },
+    {
+      "type": "li",
+      "content": "**unstructured_kwargs(Any) – Additional keyword arguments to pass\nto unstructured."
+    },
+    {
+      "type": "p",
+      "content": "**unstructured_kwargs(Any) – Additional keyword arguments to pass\nto unstructured."
+    },
+    {
+      "type": "p",
+      "content": "__init__(file_path[, mode])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with a file path."
+    },
+    {
+      "type": "p",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "load_and_split([text_splitter])"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks."
+    },
+    {
+      "type": "p",
+      "content": "Initialize with a file path."
+    },
+    {
+      "type": "li",
+      "content": "file_path(str|Path) – The path to the file to load."
+    },
+    {
+      "type": "p",
+      "content": "file_path(str|Path) – The path to the file to load."
+    },
+    {
+      "type": "li",
+      "content": "mode(str) – The mode to use for partitioning. See unstructured for details.\nDefaults to “single”."
+    },
+    {
+      "type": "p",
+      "content": "mode(str) – The mode to use for partitioning. See unstructured for details.\nDefaults to “single”."
+    },
+    {
+      "type": "li",
+      "content": "**unstructured_kwargs(Any) – Additional keyword arguments to pass\nto unstructured."
+    },
+    {
+      "type": "p",
+      "content": "**unstructured_kwargs(Any) – Additional keyword arguments to pass\nto unstructured."
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks. Chunks are returned as Documents."
+    },
+    {
+      "type": "p",
+      "content": "Do not override this method. It should be considered to be deprecated!"
+    },
+    {
+      "type": "p",
+      "content": "text_splitter(Optional[TextSplitter]) – TextSplitter instance to use for splitting documents.\nDefaults to RecursiveCharacterTextSplitter."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If langchain-text-splitters is not installed\n    and no text_splitter is provided."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using UnstructuredRSTLoader"
+    },
+    {
+      "type": "li",
+      "content": "Unstructured"
+    },
+    {
+      "type": "p",
+      "content": "Unstructured"
+    },
+    {
+      "type": "li",
+      "content": "UnstructuredRSTLoader__init__()alazy_load()aload()lazy_load()load()load_and_split()"
+    },
+    {
+      "type": "li",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "load_and_split()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "__init__",
+    "alazy_load",
+    "aload",
+    "lazy_load",
+    "load",
+    "load_and_split",
+    "UnstructuredRSTLoader",
+    "__init__()",
+    "alazy_load()",
+    "aload()",
+    "lazy_load()",
+    "load()",
+    "load_and_split()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.rst.UnstructuredRSTLoader(file_path:str|Path,mode:str='single',**unstructured_kwargs:Any,)[source]#",
+    "langchain_community.document_loaders.rst.",
+    "UnstructuredRSTLoader",
+    "(",
+    "file_path:str|Path",
+    "mode:str='single'",
+    "**unstructured_kwargs:Any",
+    ")",
+    "__init__(file_path:str|Path,mode:str='single',**unstructured_kwargs:Any,)[source]#",
+    "__init__",
+    "(",
+    "file_path:str|Path",
+    "mode:str='single'",
+    "**unstructured_kwargs:Any",
+    ")",
+    "asyncalazy_load()→AsyncIterator[Document]#",
+    "alazy_load",
+    "(",
+    ")",
+    "→AsyncIterator[Document]",
+    "→",
+    "AsyncIterator[Document]",
+    "asyncaload()→list[Document]#",
+    "aload",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "lazy_load()→Iterator[Document]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "load()→list[Document]#",
+    "load",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "load_and_split(text_splitter:TextSplitter|None=None,)→list[Document]#",
+    "load_and_split",
+    "(",
+    "text_splitter:TextSplitter|None=None",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "file_path:str|Path",
+    "mode:str='single'",
+    "**unstructured_kwargs:Any",
+    "file_path:str|Path",
+    "mode:str='single'",
+    "**unstructured_kwargs:Any",
+    "text_splitter:TextSplitter|None=None"
+  ]
+}

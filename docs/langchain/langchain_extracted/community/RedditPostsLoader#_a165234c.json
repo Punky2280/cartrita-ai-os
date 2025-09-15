@@ -1,0 +1,380 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.reddit.RedditPostsLoader.html",
+  "title": "RedditPostsLoader#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "RedditPostsLoader"
+    },
+    {
+      "type": "p",
+      "content": "LoadRedditposts."
+    },
+    {
+      "type": "p",
+      "content": "Read posts on a subreddit.\nFirst, you need to go tohttps://www.reddit.com/prefs/apps/and create your application"
+    },
+    {
+      "type": "p",
+      "content": "categories, number_posts."
+    },
+    {
+      "type": "p",
+      "content": "Example:https://www.reddit.com/r/learnpython/"
+    },
+    {
+      "type": "li",
+      "content": "client_id(str) – Reddit client id."
+    },
+    {
+      "type": "p",
+      "content": "client_id(str) – Reddit client id."
+    },
+    {
+      "type": "li",
+      "content": "client_secret(str) – Reddit client secret."
+    },
+    {
+      "type": "p",
+      "content": "client_secret(str) – Reddit client secret."
+    },
+    {
+      "type": "li",
+      "content": "user_agent(str) – Reddit user agent."
+    },
+    {
+      "type": "p",
+      "content": "user_agent(str) – Reddit user agent."
+    },
+    {
+      "type": "li",
+      "content": "search_queries(Sequence[str]) – The search queries."
+    },
+    {
+      "type": "p",
+      "content": "search_queries(Sequence[str]) – The search queries."
+    },
+    {
+      "type": "li",
+      "content": "mode(str) – The mode."
+    },
+    {
+      "type": "p",
+      "content": "mode(str) – The mode."
+    },
+    {
+      "type": "li",
+      "content": "categories(Sequence[str]) – The categories. Default: [“new”]"
+    },
+    {
+      "type": "p",
+      "content": "categories(Sequence[str]) – The categories. Default: [“new”]"
+    },
+    {
+      "type": "li",
+      "content": "number_posts(Optional[int]) – The number of posts. Default: 10"
+    },
+    {
+      "type": "p",
+      "content": "number_posts(Optional[int]) – The number of posts. Default: 10"
+    },
+    {
+      "type": "p",
+      "content": "__init__(client_id, client_secret, ...[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize with client_id, client_secret, user_agent, search_queries, mode,"
+    },
+    {
+      "type": "p",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load reddits."
+    },
+    {
+      "type": "p",
+      "content": "load_and_split([text_splitter])"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks."
+    },
+    {
+      "type": "p",
+      "content": "categories, number_posts."
+    },
+    {
+      "type": "p",
+      "content": "Example:https://www.reddit.com/r/learnpython/"
+    },
+    {
+      "type": "li",
+      "content": "client_id(str) – Reddit client id."
+    },
+    {
+      "type": "p",
+      "content": "client_id(str) – Reddit client id."
+    },
+    {
+      "type": "li",
+      "content": "client_secret(str) – Reddit client secret."
+    },
+    {
+      "type": "p",
+      "content": "client_secret(str) – Reddit client secret."
+    },
+    {
+      "type": "li",
+      "content": "user_agent(str) – Reddit user agent."
+    },
+    {
+      "type": "p",
+      "content": "user_agent(str) – Reddit user agent."
+    },
+    {
+      "type": "li",
+      "content": "search_queries(Sequence[str]) – The search queries."
+    },
+    {
+      "type": "p",
+      "content": "search_queries(Sequence[str]) – The search queries."
+    },
+    {
+      "type": "li",
+      "content": "mode(str) – The mode."
+    },
+    {
+      "type": "p",
+      "content": "mode(str) – The mode."
+    },
+    {
+      "type": "li",
+      "content": "categories(Sequence[str]) – The categories. Default: [“new”]"
+    },
+    {
+      "type": "p",
+      "content": "categories(Sequence[str]) – The categories. Default: [“new”]"
+    },
+    {
+      "type": "li",
+      "content": "number_posts(int|None) – The number of posts. Default: 10"
+    },
+    {
+      "type": "p",
+      "content": "number_posts(int|None) – The number of posts. Default: 10"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load reddits."
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks. Chunks are returned as Documents."
+    },
+    {
+      "type": "p",
+      "content": "Do not override this method. It should be considered to be deprecated!"
+    },
+    {
+      "type": "p",
+      "content": "text_splitter(Optional[TextSplitter]) – TextSplitter instance to use for splitting documents.\nDefaults to RecursiveCharacterTextSplitter."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If langchain-text-splitters is not installed\n    and no text_splitter is provided."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using RedditPostsLoader"
+    },
+    {
+      "type": "li",
+      "content": "RedditPostsLoader__init__()alazy_load()aload()lazy_load()load()load_and_split()"
+    },
+    {
+      "type": "li",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "load_and_split()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "__init__",
+    "alazy_load",
+    "aload",
+    "lazy_load",
+    "load",
+    "load_and_split",
+    "RedditPostsLoader",
+    "__init__()",
+    "alazy_load()",
+    "aload()",
+    "lazy_load()",
+    "load()",
+    "load_and_split()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.reddit.RedditPostsLoader(client_id:str,client_secret:str,user_agent:str,search_queries:Sequence[str],mode:str,categories:Sequence[str]=['new'],number_posts:int|None=10,)[source]#",
+    "langchain_community.document_loaders.reddit.",
+    "RedditPostsLoader",
+    "(",
+    "client_id:str",
+    "client_secret:str",
+    "user_agent:str",
+    "search_queries:Sequence[str]",
+    "mode:str",
+    "categories:Sequence[str]=['new']",
+    "number_posts:int|None=10",
+    ")",
+    "__init__(client_id:str,client_secret:str,user_agent:str,search_queries:Sequence[str],mode:str,categories:Sequence[str]=['new'],number_posts:int|None=10,)[source]#",
+    "__init__",
+    "(",
+    "client_id:str",
+    "client_secret:str",
+    "user_agent:str",
+    "search_queries:Sequence[str]",
+    "mode:str",
+    "categories:Sequence[str]=['new']",
+    "number_posts:int|None=10",
+    ")",
+    "asyncalazy_load()→AsyncIterator[Document]#",
+    "alazy_load",
+    "(",
+    ")",
+    "→AsyncIterator[Document]",
+    "→",
+    "AsyncIterator[Document]",
+    "asyncaload()→list[Document]#",
+    "aload",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "lazy_load()→Iterator[Document]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "load()→List[Document][source]#",
+    "load",
+    "(",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]",
+    "load_and_split(text_splitter:TextSplitter|None=None,)→list[Document]#",
+    "load_and_split",
+    "(",
+    "text_splitter:TextSplitter|None=None",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "client_id:str",
+    "client_secret:str",
+    "user_agent:str",
+    "search_queries:Sequence[str]",
+    "mode:str",
+    "categories:Sequence[str]=['new']",
+    "number_posts:int|None=10",
+    "client_id:str",
+    "client_secret:str",
+    "user_agent:str",
+    "search_queries:Sequence[str]",
+    "mode:str",
+    "categories:Sequence[str]=['new']",
+    "number_posts:int|None=10",
+    "text_splitter:TextSplitter|None=None"
+  ]
+}

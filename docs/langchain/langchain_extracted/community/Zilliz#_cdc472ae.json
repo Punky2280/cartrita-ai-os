@@ -1,0 +1,2974 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.zilliz.Zilliz.html#langchain_community.vectorstores.zilliz.Zilliz.max_marginal_relevance_search",
+  "title": "Zilliz#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "vectorstores"
+    },
+    {
+      "type": "p",
+      "content": "Zillizvector store."
+    },
+    {
+      "type": "p",
+      "content": "You need to havepymilvusinstalled and a\nrunning Zilliz database."
+    },
+    {
+      "type": "p",
+      "content": "See the following documentation for how to run a Zilliz instance:https://docs.zilliz.com/docs/create-cluster"
+    },
+    {
+      "type": "p",
+      "content": "IF USING L2/IP metric IT IS HIGHLY SUGGESTED TO NORMALIZE YOUR DATA."
+    },
+    {
+      "type": "li",
+      "content": "embedding_function(Embeddings) – Function used to embed the text."
+    },
+    {
+      "type": "p",
+      "content": "embedding_function(Embeddings) – Function used to embed the text."
+    },
+    {
+      "type": "li",
+      "content": "collection_name(str) – Which Zilliz collection to use. Defaults to\n“LangChainCollection”."
+    },
+    {
+      "type": "p",
+      "content": "collection_name(str) – Which Zilliz collection to use. Defaults to\n“LangChainCollection”."
+    },
+    {
+      "type": "li",
+      "content": "connection_args(Optional[dict[str,any]]) – The connection args used for\nthis class comes in the form of a dict."
+    },
+    {
+      "type": "p",
+      "content": "connection_args(Optional[dict[str,any]]) – The connection args used for\nthis class comes in the form of a dict."
+    },
+    {
+      "type": "li",
+      "content": "consistency_level(str) – The consistency level to use for a collection.\nDefaults to “Session”."
+    },
+    {
+      "type": "p",
+      "content": "consistency_level(str) – The consistency level to use for a collection.\nDefaults to “Session”."
+    },
+    {
+      "type": "li",
+      "content": "index_params(Optional[dict]) – Which index params to use. Defaults to\nHNSW/AUTOINDEX depending on service."
+    },
+    {
+      "type": "p",
+      "content": "index_params(Optional[dict]) – Which index params to use. Defaults to\nHNSW/AUTOINDEX depending on service."
+    },
+    {
+      "type": "li",
+      "content": "search_params(Optional[dict]) – Which search params to use. Defaults to\ndefault of index."
+    },
+    {
+      "type": "p",
+      "content": "search_params(Optional[dict]) – Which search params to use. Defaults to\ndefault of index."
+    },
+    {
+      "type": "li",
+      "content": "drop_old(Optional[bool]) – Whether to drop the current collection. Defaults\nto False."
+    },
+    {
+      "type": "p",
+      "content": "drop_old(Optional[bool]) – Whether to drop the current collection. Defaults\nto False."
+    },
+    {
+      "type": "li",
+      "content": "auto_id(bool) – Whether to enable auto id for primary key. Defaults to False.\nIf False, you needs to provide text ids (string less than 65535 bytes).\nIf True, Milvus will generate unique integers as primary keys."
+    },
+    {
+      "type": "p",
+      "content": "auto_id(bool) – Whether to enable auto id for primary key. Defaults to False.\nIf False, you needs to provide text ids (string less than 65535 bytes).\nIf True, Milvus will generate unique integers as primary keys."
+    },
+    {
+      "type": "li",
+      "content": "collection_description(str)"
+    },
+    {
+      "type": "p",
+      "content": "collection_description(str)"
+    },
+    {
+      "type": "li",
+      "content": "collection_properties(Optional[dict[str,Any]])"
+    },
+    {
+      "type": "p",
+      "content": "collection_properties(Optional[dict[str,Any]])"
+    },
+    {
+      "type": "li",
+      "content": "primary_field(str)"
+    },
+    {
+      "type": "p",
+      "content": "primary_field(str)"
+    },
+    {
+      "type": "li",
+      "content": "text_field(str)"
+    },
+    {
+      "type": "p",
+      "content": "text_field(str)"
+    },
+    {
+      "type": "li",
+      "content": "vector_field(str)"
+    },
+    {
+      "type": "p",
+      "content": "vector_field(str)"
+    },
+    {
+      "type": "li",
+      "content": "metadata_field(Optional[str])"
+    },
+    {
+      "type": "p",
+      "content": "metadata_field(Optional[str])"
+    },
+    {
+      "type": "li",
+      "content": "partition_key_field(Optional[str])"
+    },
+    {
+      "type": "p",
+      "content": "partition_key_field(Optional[str])"
+    },
+    {
+      "type": "li",
+      "content": "partition_names(Optional[list])"
+    },
+    {
+      "type": "p",
+      "content": "partition_names(Optional[list])"
+    },
+    {
+      "type": "li",
+      "content": "replica_number(int)"
+    },
+    {
+      "type": "p",
+      "content": "replica_number(int)"
+    },
+    {
+      "type": "li",
+      "content": "timeout(Optional[float])"
+    },
+    {
+      "type": "p",
+      "content": "timeout(Optional[float])"
+    },
+    {
+      "type": "li",
+      "content": "num_shards(Optional[int])"
+    },
+    {
+      "type": "p",
+      "content": "num_shards(Optional[int])"
+    },
+    {
+      "type": "p",
+      "content": "The connection args used for this class comes in the form of a dict,\nhere are a few of the options:"
+    },
+    {
+      "type": "p",
+      "content": "instance. Example address: “localhost:19530”"
+    },
+    {
+      "type": "p",
+      "content": "“https://in03-ba4234asae.api.gcp-us-west1.zillizcloud.com”,"
+    },
+    {
+      "type": "p",
+      "content": "PyMilvus will fill in the default host if only port is provided."
+    },
+    {
+      "type": "p",
+      "content": "will fill in the default port if only host is provided."
+    },
+    {
+      "type": "p",
+      "content": "password are provided, we will add related header in every RPC call."
+    },
+    {
+      "type": "p",
+      "content": "corresponding to the user."
+    },
+    {
+      "type": "p",
+      "content": "replacements for user and password."
+    },
+    {
+      "type": "p",
+      "content": "secure (bool): Default is false. If set to true, tls will be enabled.\nclient_key_path (str): If use tls two-way authentication, need to"
+    },
+    {
+      "type": "p",
+      "content": "write the client.key path."
+    },
+    {
+      "type": "p",
+      "content": "write the client.pem path."
+    },
+    {
+      "type": "p",
+      "content": "the ca.pem path."
+    },
+    {
+      "type": "p",
+      "content": "write the server.pem path."
+    },
+    {
+      "type": "p",
+      "content": "server_name (str): If use tls, need to write the common name."
+    },
+    {
+      "type": "p",
+      "content": "from langchain_community.vectorstores import Zilliz\nfrom langchain_community.embeddings import OpenAIEmbeddings"
+    },
+    {
+      "type": "p",
+      "content": "embedding = OpenAIEmbeddings()\n# Connect to a Zilliz instance\nmilvus_store = Milvus("
+    },
+    {
+      "type": "p",
+      "content": "embedding_function = embedding,\ncollection_name = “LangChainCollection”,\nconnection_args = {"
+    },
+    {
+      "type": "p",
+      "content": "“uri”: “https://in03-ba4234asae.api.gcp-us-west1.zillizcloud.com”,\n“user”: “temp”,\n“password”: “temp”,\n“token”: “temp”, # API key as replacements for user and password\n“secure”: True"
+    },
+    {
+      "type": "p",
+      "content": "}\ndrop_old: True,"
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If the pymilvus python package is not installed."
+    },
+    {
+      "type": "li",
+      "content": "embedding_function(Embeddings)"
+    },
+    {
+      "type": "p",
+      "content": "embedding_function(Embeddings)"
+    },
+    {
+      "type": "li",
+      "content": "collection_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "collection_name(str)"
+    },
+    {
+      "type": "li",
+      "content": "collection_description(str)"
+    },
+    {
+      "type": "p",
+      "content": "collection_description(str)"
+    },
+    {
+      "type": "li",
+      "content": "collection_properties(Optional[dict[str,Any]])"
+    },
+    {
+      "type": "p",
+      "content": "collection_properties(Optional[dict[str,Any]])"
+    },
+    {
+      "type": "li",
+      "content": "connection_args(Optional[dict[str,Any]])"
+    },
+    {
+      "type": "p",
+      "content": "connection_args(Optional[dict[str,Any]])"
+    },
+    {
+      "type": "li",
+      "content": "consistency_level(str)"
+    },
+    {
+      "type": "p",
+      "content": "consistency_level(str)"
+    },
+    {
+      "type": "li",
+      "content": "index_params(Optional[dict])"
+    },
+    {
+      "type": "p",
+      "content": "index_params(Optional[dict])"
+    },
+    {
+      "type": "li",
+      "content": "search_params(Optional[dict])"
+    },
+    {
+      "type": "p",
+      "content": "search_params(Optional[dict])"
+    },
+    {
+      "type": "li",
+      "content": "drop_old(Optional[bool])"
+    },
+    {
+      "type": "p",
+      "content": "drop_old(Optional[bool])"
+    },
+    {
+      "type": "li",
+      "content": "auto_id(bool)"
+    },
+    {
+      "type": "p",
+      "content": "auto_id(bool)"
+    },
+    {
+      "type": "li",
+      "content": "primary_field(str)"
+    },
+    {
+      "type": "p",
+      "content": "primary_field(str)"
+    },
+    {
+      "type": "li",
+      "content": "text_field(str)"
+    },
+    {
+      "type": "p",
+      "content": "text_field(str)"
+    },
+    {
+      "type": "li",
+      "content": "vector_field(str)"
+    },
+    {
+      "type": "p",
+      "content": "vector_field(str)"
+    },
+    {
+      "type": "li",
+      "content": "metadata_field(Optional[str])"
+    },
+    {
+      "type": "p",
+      "content": "metadata_field(Optional[str])"
+    },
+    {
+      "type": "li",
+      "content": "partition_key_field(Optional[str])"
+    },
+    {
+      "type": "p",
+      "content": "partition_key_field(Optional[str])"
+    },
+    {
+      "type": "li",
+      "content": "partition_names(Optional[list])"
+    },
+    {
+      "type": "p",
+      "content": "partition_names(Optional[list])"
+    },
+    {
+      "type": "li",
+      "content": "replica_number(int)"
+    },
+    {
+      "type": "p",
+      "content": "replica_number(int)"
+    },
+    {
+      "type": "li",
+      "content": "timeout(Optional[float])"
+    },
+    {
+      "type": "p",
+      "content": "timeout(Optional[float])"
+    },
+    {
+      "type": "li",
+      "content": "num_shards(Optional[int])"
+    },
+    {
+      "type": "p",
+      "content": "num_shards(Optional[int])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize the Milvus vector store."
+    },
+    {
+      "type": "p",
+      "content": "Access the query embedding object if available."
+    },
+    {
+      "type": "p",
+      "content": "__init__(embedding_function[, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Initialize the Milvus vector store."
+    },
+    {
+      "type": "p",
+      "content": "aadd_documents(documents, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Async run more documents through the embeddings and add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "aadd_texts(texts[, metadatas, ids])"
+    },
+    {
+      "type": "p",
+      "content": "Async run more texts through the embeddings and add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "add_documents(documents, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Add or update documents in the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "add_texts(texts[, metadatas, timeout, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Insert text data into Milvus."
+    },
+    {
+      "type": "p",
+      "content": "adelete([ids])"
+    },
+    {
+      "type": "p",
+      "content": "Async delete by vector ID or other criteria."
+    },
+    {
+      "type": "p",
+      "content": "afrom_documents(documents, embedding, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Async return VectorStore initialized from documents and embeddings."
+    },
+    {
+      "type": "p",
+      "content": "afrom_texts(texts, embedding[, metadatas, ids])"
+    },
+    {
+      "type": "p",
+      "content": "Async return VectorStore initialized from texts and embeddings."
+    },
+    {
+      "type": "p",
+      "content": "aget_by_ids(ids, /)"
+    },
+    {
+      "type": "p",
+      "content": "Async get documents by their IDs."
+    },
+    {
+      "type": "p",
+      "content": "amax_marginal_relevance_search(query[, k, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs selected using the maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "amax_marginal_relevance_search_by_vector(...)"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs selected using the maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "as_retriever(**kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Return VectorStoreRetriever initialized from this VectorStore."
+    },
+    {
+      "type": "p",
+      "content": "asearch(query, search_type, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs most similar to query using a specified search type."
+    },
+    {
+      "type": "p",
+      "content": "asimilarity_search(query[, k])"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs most similar to query."
+    },
+    {
+      "type": "p",
+      "content": "asimilarity_search_by_vector(embedding[, k])"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs most similar to embedding vector."
+    },
+    {
+      "type": "p",
+      "content": "asimilarity_search_with_relevance_scores(query)"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs and relevance scores in the range [0, 1]."
+    },
+    {
+      "type": "p",
+      "content": "asimilarity_search_with_score(*args, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Async run similarity search with distance."
+    },
+    {
+      "type": "p",
+      "content": "delete([ids, expr])"
+    },
+    {
+      "type": "p",
+      "content": "Delete by vector ID or boolean expression."
+    },
+    {
+      "type": "p",
+      "content": "from_documents(documents, embedding, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Return VectorStore initialized from documents and embeddings."
+    },
+    {
+      "type": "p",
+      "content": "from_texts(texts, embedding[, metadatas, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Create a Zilliz collection, indexes it with HNSW, and insert data."
+    },
+    {
+      "type": "p",
+      "content": "get_by_ids(ids, /)"
+    },
+    {
+      "type": "p",
+      "content": "Get documents by their IDs."
+    },
+    {
+      "type": "p",
+      "content": "get_pks(expr, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Get primary keys with expression"
+    },
+    {
+      "type": "p",
+      "content": "max_marginal_relevance_search(query[, k, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Perform a search and return results that are reordered by MMR."
+    },
+    {
+      "type": "p",
+      "content": "max_marginal_relevance_search_by_vector(...)"
+    },
+    {
+      "type": "p",
+      "content": "Perform a search and return results that are reordered by MMR."
+    },
+    {
+      "type": "p",
+      "content": "search(query, search_type, **kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Return docs most similar to query using a specified search type."
+    },
+    {
+      "type": "p",
+      "content": "similarity_search(query[, k, param, expr, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Perform a similarity search against the query string."
+    },
+    {
+      "type": "p",
+      "content": "similarity_search_by_vector(embedding[, k, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Perform a similarity search against the query string."
+    },
+    {
+      "type": "p",
+      "content": "similarity_search_with_relevance_scores(query)"
+    },
+    {
+      "type": "p",
+      "content": "Return docs and relevance scores in the range [0, 1]."
+    },
+    {
+      "type": "p",
+      "content": "similarity_search_with_score(query[, k, ...])"
+    },
+    {
+      "type": "p",
+      "content": "Perform a search on a query string and return results with score."
+    },
+    {
+      "type": "p",
+      "content": "similarity_search_with_score_by_vector(embedding)"
+    },
+    {
+      "type": "p",
+      "content": "Perform a search on a query string and return results with score."
+    },
+    {
+      "type": "p",
+      "content": "upsert([ids, documents])"
+    },
+    {
+      "type": "p",
+      "content": "Update/Insert documents to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "Initialize the Milvus vector store."
+    },
+    {
+      "type": "li",
+      "content": "embedding_function(Embeddings)"
+    },
+    {
+      "type": "p",
+      "content": "embedding_function(Embeddings)"
+    },
+    {
+      "type": "li",
+      "content": "collection_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "collection_name(str)"
+    },
+    {
+      "type": "li",
+      "content": "collection_description(str)"
+    },
+    {
+      "type": "p",
+      "content": "collection_description(str)"
+    },
+    {
+      "type": "li",
+      "content": "collection_properties(dict[str,Any]|None)"
+    },
+    {
+      "type": "p",
+      "content": "collection_properties(dict[str,Any]|None)"
+    },
+    {
+      "type": "li",
+      "content": "connection_args(dict[str,Any]|None)"
+    },
+    {
+      "type": "p",
+      "content": "connection_args(dict[str,Any]|None)"
+    },
+    {
+      "type": "li",
+      "content": "consistency_level(str)"
+    },
+    {
+      "type": "p",
+      "content": "consistency_level(str)"
+    },
+    {
+      "type": "li",
+      "content": "index_params(dict|None)"
+    },
+    {
+      "type": "p",
+      "content": "index_params(dict|None)"
+    },
+    {
+      "type": "li",
+      "content": "search_params(dict|None)"
+    },
+    {
+      "type": "p",
+      "content": "search_params(dict|None)"
+    },
+    {
+      "type": "li",
+      "content": "drop_old(bool|None)"
+    },
+    {
+      "type": "p",
+      "content": "drop_old(bool|None)"
+    },
+    {
+      "type": "li",
+      "content": "auto_id(bool)"
+    },
+    {
+      "type": "p",
+      "content": "auto_id(bool)"
+    },
+    {
+      "type": "li",
+      "content": "primary_field(str)"
+    },
+    {
+      "type": "p",
+      "content": "primary_field(str)"
+    },
+    {
+      "type": "li",
+      "content": "text_field(str)"
+    },
+    {
+      "type": "p",
+      "content": "text_field(str)"
+    },
+    {
+      "type": "li",
+      "content": "vector_field(str)"
+    },
+    {
+      "type": "p",
+      "content": "vector_field(str)"
+    },
+    {
+      "type": "li",
+      "content": "metadata_field(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "metadata_field(str|None)"
+    },
+    {
+      "type": "li",
+      "content": "partition_key_field(str|None)"
+    },
+    {
+      "type": "p",
+      "content": "partition_key_field(str|None)"
+    },
+    {
+      "type": "li",
+      "content": "partition_names(list|None)"
+    },
+    {
+      "type": "p",
+      "content": "partition_names(list|None)"
+    },
+    {
+      "type": "li",
+      "content": "replica_number(int)"
+    },
+    {
+      "type": "p",
+      "content": "replica_number(int)"
+    },
+    {
+      "type": "li",
+      "content": "timeout(float|None)"
+    },
+    {
+      "type": "p",
+      "content": "timeout(float|None)"
+    },
+    {
+      "type": "li",
+      "content": "num_shards(int|None)"
+    },
+    {
+      "type": "p",
+      "content": "num_shards(int|None)"
+    },
+    {
+      "type": "p",
+      "content": "Async run more documents through the embeddings and add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "documents(list[Document]) – Documents to add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "documents(list[Document]) – Documents to add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "List of IDs of the added texts."
+    },
+    {
+      "type": "p",
+      "content": "Async run more texts through the embeddings and add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "texts(Iterable[str]) – Iterable of strings to add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "texts(Iterable[str]) – Iterable of strings to add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "metadatas(Optional[list[dict]]) – Optional list of metadatas associated with the texts.\nDefault is None."
+    },
+    {
+      "type": "p",
+      "content": "metadatas(Optional[list[dict]]) – Optional list of metadatas associated with the texts.\nDefault is None."
+    },
+    {
+      "type": "li",
+      "content": "ids(Optional[list[str]]) – Optional list"
+    },
+    {
+      "type": "p",
+      "content": "ids(Optional[list[str]]) – Optional list"
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – vectorstore specific parameters."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – vectorstore specific parameters."
+    },
+    {
+      "type": "p",
+      "content": "List of ids from adding the texts into the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "ValueError– If the number of metadatas does not match the number of texts."
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If the number of metadatas does not match the number of texts."
+    },
+    {
+      "type": "li",
+      "content": "ValueError– If the number of ids does not match the number of texts."
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If the number of ids does not match the number of texts."
+    },
+    {
+      "type": "p",
+      "content": "Add or update documents in the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "documents(list[Document]) – Documents to add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "documents(list[Document]) – Documents to add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments.\nif kwargs contains ids and documents contain ids,\nthe ids in the kwargs will receive precedence."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments.\nif kwargs contains ids and documents contain ids,\nthe ids in the kwargs will receive precedence."
+    },
+    {
+      "type": "p",
+      "content": "List of IDs of the added texts."
+    },
+    {
+      "type": "p",
+      "content": "Insert text data into Milvus."
+    },
+    {
+      "type": "p",
+      "content": "Inserting data when the collection has not be made yet will result\nin creating a new Collection. The data of the first entity decides\nthe schema of the new collection, the dim is extracted from the first\nembedding and the columns are decided by the first metadata dict.\nMetadata keys will need to be present for all inserted values. At\nthe moment there is no None equivalent in Milvus."
+    },
+    {
+      "type": "li",
+      "content": "texts(Iterable[str]) – The texts to embed, it is assumed\nthat they all fit in memory."
+    },
+    {
+      "type": "p",
+      "content": "texts(Iterable[str]) – The texts to embed, it is assumed\nthat they all fit in memory."
+    },
+    {
+      "type": "li",
+      "content": "metadatas(Optional[List[dict]]) – Metadata dicts attached to each of\nthe texts. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "metadatas(Optional[List[dict]]) – Metadata dicts attached to each of\nthe texts. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "False.(should be less than 65535 bytes. Required and work when auto_id is)"
+    },
+    {
+      "type": "p",
+      "content": "False.(should be less than 65535 bytes. Required and work when auto_id is)"
+    },
+    {
+      "type": "li",
+      "content": "timeout(Optional[float]) – Timeout for each batch insert. Defaults\nto None."
+    },
+    {
+      "type": "p",
+      "content": "timeout(Optional[float]) – Timeout for each batch insert. Defaults\nto None."
+    },
+    {
+      "type": "li",
+      "content": "batch_size(int,optional) – Batch size to use for insertion.\nDefaults to 1000."
+    },
+    {
+      "type": "p",
+      "content": "batch_size(int,optional) – Batch size to use for insertion.\nDefaults to 1000."
+    },
+    {
+      "type": "li",
+      "content": "ids(Optional[List[str]]) – List of text ids. The length of each item"
+    },
+    {
+      "type": "p",
+      "content": "ids(Optional[List[str]]) – List of text ids. The length of each item"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "MilvusException– Failure to add texts"
+    },
+    {
+      "type": "p",
+      "content": "The resulting keys for each inserted element."
+    },
+    {
+      "type": "p",
+      "content": "Async delete by vector ID or other criteria."
+    },
+    {
+      "type": "li",
+      "content": "ids(list[str]|None) – List of ids to delete. If None, delete all. Default is None."
+    },
+    {
+      "type": "p",
+      "content": "ids(list[str]|None) – List of ids to delete. If None, delete all. Default is None."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Other keyword arguments that subclasses might use."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Other keyword arguments that subclasses might use."
+    },
+    {
+      "type": "p",
+      "content": "True if deletion is successful,\nFalse otherwise, None if not implemented."
+    },
+    {
+      "type": "p",
+      "content": "Optional[bool]"
+    },
+    {
+      "type": "p",
+      "content": "Async return VectorStore initialized from documents and embeddings."
+    },
+    {
+      "type": "li",
+      "content": "documents(list[Document]) – List of Documents to add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "documents(list[Document]) – List of Documents to add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "embedding(Embeddings) – Embedding function to use."
+    },
+    {
+      "type": "p",
+      "content": "embedding(Embeddings) – Embedding function to use."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "VectorStore initialized from documents and embeddings."
+    },
+    {
+      "type": "p",
+      "content": "VectorStore"
+    },
+    {
+      "type": "p",
+      "content": "Async return VectorStore initialized from texts and embeddings."
+    },
+    {
+      "type": "li",
+      "content": "texts(list[str]) – Texts to add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "texts(list[str]) – Texts to add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "embedding(Embeddings) – Embedding function to use."
+    },
+    {
+      "type": "p",
+      "content": "embedding(Embeddings) – Embedding function to use."
+    },
+    {
+      "type": "li",
+      "content": "metadatas(list[dict]|None) – Optional list of metadatas associated with the texts.\nDefault is None."
+    },
+    {
+      "type": "p",
+      "content": "metadatas(list[dict]|None) – Optional list of metadatas associated with the texts.\nDefault is None."
+    },
+    {
+      "type": "li",
+      "content": "ids(list[str]|None) – Optional list of IDs associated with the texts."
+    },
+    {
+      "type": "p",
+      "content": "ids(list[str]|None) – Optional list of IDs associated with the texts."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "VectorStore initialized from texts and embeddings."
+    },
+    {
+      "type": "p",
+      "content": "VectorStore"
+    },
+    {
+      "type": "p",
+      "content": "Async get documents by their IDs."
+    },
+    {
+      "type": "p",
+      "content": "The returned documents are expected to have the ID field set to the ID of the\ndocument in the vector store."
+    },
+    {
+      "type": "p",
+      "content": "Fewer documents may be returned than requested if some IDs are not found or\nif there are duplicated IDs."
+    },
+    {
+      "type": "p",
+      "content": "Users should not assume that the order of the returned documents matches\nthe order of the input IDs. Instead, users should rely on the ID field of the\nreturned documents."
+    },
+    {
+      "type": "p",
+      "content": "This method shouldNOTraise exceptions if no documents are found for\nsome IDs."
+    },
+    {
+      "type": "p",
+      "content": "ids(Sequence[str]) – List of ids to retrieve."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Added in version 0.2.11."
+    },
+    {
+      "type": "p",
+      "content": "Async return docs selected using the maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "Maximal marginal relevance optimizes for similarity to query AND diversity\namong selected documents."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Text to look up documents similar to."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Text to look up documents similar to."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "fetch_k(int) – Number of Documents to fetch to pass to MMR algorithm.\nDefault is 20."
+    },
+    {
+      "type": "p",
+      "content": "fetch_k(int) – Number of Documents to fetch to pass to MMR algorithm.\nDefault is 20."
+    },
+    {
+      "type": "li",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5."
+    },
+    {
+      "type": "p",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents selected by maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs selected using the maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "Maximal marginal relevance optimizes for similarity to query AND diversity\namong selected documents."
+    },
+    {
+      "type": "li",
+      "content": "embedding(list[float]) – Embedding to look up documents similar to."
+    },
+    {
+      "type": "p",
+      "content": "embedding(list[float]) – Embedding to look up documents similar to."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "fetch_k(int) – Number of Documents to fetch to pass to MMR algorithm.\nDefault is 20."
+    },
+    {
+      "type": "p",
+      "content": "fetch_k(int) – Number of Documents to fetch to pass to MMR algorithm.\nDefault is 20."
+    },
+    {
+      "type": "li",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5."
+    },
+    {
+      "type": "p",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents selected by maximal marginal relevance."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Return VectorStoreRetriever initialized from this VectorStore."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) –Keyword arguments to pass to the search function.\nCan include:\nsearch_type (Optional[str]): Defines the type of search thatthe Retriever should perform.\nCan be “similarity” (default), “mmr”, or\n“similarity_score_threshold”.search_kwargs (Optional[Dict]): Keyword arguments to pass to thesearch function. Can include things like:k: Amount of documents to return (Default: 4)\nscore_threshold: Minimum relevance thresholdfor similarity_score_thresholdfetch_k: Amount of documents to pass to MMR algorithm(Default: 20)lambda_mult: Diversity of results returned by MMR;1 for minimum diversity and 0 for maximum. (Default: 0.5)filter: Filter by document metadata"
+    },
+    {
+      "type": "p",
+      "content": "Keyword arguments to pass to the search function.\nCan include:\nsearch_type (Optional[str]): Defines the type of search that"
+    },
+    {
+      "type": "p",
+      "content": "the Retriever should perform.\nCan be “similarity” (default), “mmr”, or\n“similarity_score_threshold”."
+    },
+    {
+      "type": "p",
+      "content": "k: Amount of documents to return (Default: 4)\nscore_threshold: Minimum relevance threshold"
+    },
+    {
+      "type": "p",
+      "content": "for similarity_score_threshold"
+    },
+    {
+      "type": "p",
+      "content": "(Default: 20)"
+    },
+    {
+      "type": "p",
+      "content": "1 for minimum diversity and 0 for maximum. (Default: 0.5)"
+    },
+    {
+      "type": "p",
+      "content": "filter: Filter by document metadata"
+    },
+    {
+      "type": "p",
+      "content": "Retriever class for VectorStore."
+    },
+    {
+      "type": "p",
+      "content": "VectorStoreRetriever"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs most similar to query using a specified search type."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "li",
+      "content": "search_type(str) – Type of search to perform. Can be “similarity”,\n“mmr”, or “similarity_score_threshold”."
+    },
+    {
+      "type": "p",
+      "content": "search_type(str) – Type of search to perform. Can be “similarity”,\n“mmr”, or “similarity_score_threshold”."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents most similar to the query."
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If search_type is not one of “similarity”,\n    “mmr”, or “similarity_score_threshold”."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs most similar to query."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents most similar to the query."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs most similar to embedding vector."
+    },
+    {
+      "type": "li",
+      "content": "embedding(list[float]) – Embedding to look up documents similar to."
+    },
+    {
+      "type": "p",
+      "content": "embedding(list[float]) – Embedding to look up documents similar to."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents most similar to the query vector."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Async return docs and relevance scores in the range [0, 1]."
+    },
+    {
+      "type": "p",
+      "content": "0 is dissimilar, 1 is most similar."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) –kwargs to be passed to similarity search. Should include:\nscore_threshold: Optional, a floating point value between 0 to 1 tofilter the resulting set of retrieved docs"
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) –kwargs to be passed to similarity search. Should include:\nscore_threshold: Optional, a floating point value between 0 to 1 tofilter the resulting set of retrieved docs"
+    },
+    {
+      "type": "p",
+      "content": "kwargs to be passed to similarity search. Should include:\nscore_threshold: Optional, a floating point value between 0 to 1 to"
+    },
+    {
+      "type": "p",
+      "content": "filter the resulting set of retrieved docs"
+    },
+    {
+      "type": "p",
+      "content": "List of Tuples of (doc, similarity_score)"
+    },
+    {
+      "type": "p",
+      "content": "list[tuple[Document, float]]"
+    },
+    {
+      "type": "p",
+      "content": "Async run similarity search with distance."
+    },
+    {
+      "type": "li",
+      "content": "*args(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "*args(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Tuples of (doc, similarity_score)."
+    },
+    {
+      "type": "p",
+      "content": "list[tuple[Document, float]]"
+    },
+    {
+      "type": "p",
+      "content": "Delete by vector ID or boolean expression.\nRefer to [Milvus documentation](https://milvus.io/docs/delete_data.md)\nfor notes and examples of expressions."
+    },
+    {
+      "type": "li",
+      "content": "ids(Optional[List[str]]) – List of ids to delete."
+    },
+    {
+      "type": "p",
+      "content": "ids(Optional[List[str]]) – List of ids to delete."
+    },
+    {
+      "type": "li",
+      "content": "expr(Optional[str]) – Boolean expression that specifies the entities to delete."
+    },
+    {
+      "type": "p",
+      "content": "expr(Optional[str]) – Boolean expression that specifies the entities to delete."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Other parameters in Milvus delete api."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Other parameters in Milvus delete api."
+    },
+    {
+      "type": "p",
+      "content": "MutationResult"
+    },
+    {
+      "type": "p",
+      "content": "Return VectorStore initialized from documents and embeddings."
+    },
+    {
+      "type": "li",
+      "content": "documents(list[Document]) – List of Documents to add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "documents(list[Document]) – List of Documents to add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "embedding(Embeddings) – Embedding function to use."
+    },
+    {
+      "type": "p",
+      "content": "embedding(Embeddings) – Embedding function to use."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Additional keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "VectorStore initialized from documents and embeddings."
+    },
+    {
+      "type": "p",
+      "content": "VectorStore"
+    },
+    {
+      "type": "p",
+      "content": "Create a Zilliz collection, indexes it with HNSW, and insert data."
+    },
+    {
+      "type": "li",
+      "content": "texts(List[str]) – Text data."
+    },
+    {
+      "type": "p",
+      "content": "texts(List[str]) – Text data."
+    },
+    {
+      "type": "li",
+      "content": "embedding(Embeddings) – Embedding function."
+    },
+    {
+      "type": "p",
+      "content": "embedding(Embeddings) – Embedding function."
+    },
+    {
+      "type": "li",
+      "content": "metadatas(Optional[List[dict]]) – Metadata for each text if it exists.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "metadatas(Optional[List[dict]]) – Metadata for each text if it exists.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "collection_name(str,optional) – Collection name to use. Defaults to\n“LangChainCollection”."
+    },
+    {
+      "type": "p",
+      "content": "collection_name(str,optional) – Collection name to use. Defaults to\n“LangChainCollection”."
+    },
+    {
+      "type": "li",
+      "content": "connection_args(dict[str,Any],optional) – Connection args to use. Defaults\nto DEFAULT_MILVUS_CONNECTION."
+    },
+    {
+      "type": "p",
+      "content": "connection_args(dict[str,Any],optional) – Connection args to use. Defaults\nto DEFAULT_MILVUS_CONNECTION."
+    },
+    {
+      "type": "li",
+      "content": "consistency_level(str,optional) – Which consistency level to use. Defaults\nto “Session”."
+    },
+    {
+      "type": "p",
+      "content": "consistency_level(str,optional) – Which consistency level to use. Defaults\nto “Session”."
+    },
+    {
+      "type": "li",
+      "content": "index_params(Optional[dict],optional) – Which index_params to use.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "index_params(Optional[dict],optional) – Which index_params to use.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "search_params(Optional[dict],optional) – Which search params to use.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "search_params(Optional[dict],optional) – Which search params to use.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "drop_old(Optional[bool],optional) – Whether to drop the collection with\nthat name if it exists. Defaults to False."
+    },
+    {
+      "type": "p",
+      "content": "drop_old(Optional[bool],optional) – Whether to drop the collection with\nthat name if it exists. Defaults to False."
+    },
+    {
+      "type": "li",
+      "content": "ids(Optional[List[str]]) – List of text ids."
+    },
+    {
+      "type": "p",
+      "content": "ids(Optional[List[str]]) – List of text ids."
+    },
+    {
+      "type": "li",
+      "content": "auto_id(bool) – Whether to enable auto id for primary key. Defaults to\nFalse. If False, you needs to provide text ids (string less than 65535\nbytes). If True, Milvus will generate unique integers as primary keys."
+    },
+    {
+      "type": "p",
+      "content": "auto_id(bool) – Whether to enable auto id for primary key. Defaults to\nFalse. If False, you needs to provide text ids (string less than 65535\nbytes). If True, Milvus will generate unique integers as primary keys."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Zilliz Vector Store"
+    },
+    {
+      "type": "p",
+      "content": "Get documents by their IDs."
+    },
+    {
+      "type": "p",
+      "content": "The returned documents are expected to have the ID field set to the ID of the\ndocument in the vector store."
+    },
+    {
+      "type": "p",
+      "content": "Fewer documents may be returned than requested if some IDs are not found or\nif there are duplicated IDs."
+    },
+    {
+      "type": "p",
+      "content": "Users should not assume that the order of the returned documents matches\nthe order of the input IDs. Instead, users should rely on the ID field of the\nreturned documents."
+    },
+    {
+      "type": "p",
+      "content": "This method shouldNOTraise exceptions if no documents are found for\nsome IDs."
+    },
+    {
+      "type": "p",
+      "content": "ids(Sequence[str]) – List of ids to retrieve."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Added in version 0.2.11."
+    },
+    {
+      "type": "p",
+      "content": "Get primary keys with expression"
+    },
+    {
+      "type": "li",
+      "content": "expr(str) – Expression - E.g: “id in [1, 2]”, or “title LIKE ‘Abc%’”"
+    },
+    {
+      "type": "p",
+      "content": "expr(str) – Expression - E.g: “id in [1, 2]”, or “title LIKE ‘Abc%’”"
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "List of IDs (Primary Keys)"
+    },
+    {
+      "type": "p",
+      "content": "Perform a search and return results that are reordered by MMR."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – The text being searched."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – The text being searched."
+    },
+    {
+      "type": "li",
+      "content": "k(int,optional) – How many results to give. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int,optional) – How many results to give. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "fetch_k(int,optional) – Total results to select k from.\nDefaults to 20."
+    },
+    {
+      "type": "p",
+      "content": "fetch_k(int,optional) – Total results to select k from.\nDefaults to 20."
+    },
+    {
+      "type": "li",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5"
+    },
+    {
+      "type": "p",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5"
+    },
+    {
+      "type": "li",
+      "content": "param(dict,optional) – The search params for the specified index.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "param(dict,optional) – The search params for the specified index.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "expr(str,optional) – Filtering expression. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "expr(str,optional) – Filtering expression. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "timeout(float,optional) – How long to wait before timeout error.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "timeout(float,optional) – How long to wait before timeout error.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Collection.search() keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Collection.search() keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Document results for search."
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Perform a search and return results that are reordered by MMR."
+    },
+    {
+      "type": "li",
+      "content": "embedding(str) – The embedding vector being searched."
+    },
+    {
+      "type": "p",
+      "content": "embedding(str) – The embedding vector being searched."
+    },
+    {
+      "type": "li",
+      "content": "k(int,optional) – How many results to give. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int,optional) – How many results to give. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "fetch_k(int,optional) – Total results to select k from.\nDefaults to 20."
+    },
+    {
+      "type": "p",
+      "content": "fetch_k(int,optional) – Total results to select k from.\nDefaults to 20."
+    },
+    {
+      "type": "li",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5"
+    },
+    {
+      "type": "p",
+      "content": "lambda_mult(float) – Number between 0 and 1 that determines the degree\nof diversity among the results with 0 corresponding\nto maximum diversity and 1 to minimum diversity.\nDefaults to 0.5"
+    },
+    {
+      "type": "li",
+      "content": "param(dict,optional) – The search params for the specified index.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "param(dict,optional) – The search params for the specified index.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "expr(str,optional) – Filtering expression. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "expr(str,optional) – Filtering expression. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "timeout(float,optional) – How long to wait before timeout error.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "timeout(float,optional) – How long to wait before timeout error.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Collection.search() keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Collection.search() keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Document results for search."
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Return docs most similar to query using a specified search type."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Input text"
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Input text"
+    },
+    {
+      "type": "li",
+      "content": "search_type(str) – Type of search to perform. Can be “similarity”,\n“mmr”, or “similarity_score_threshold”."
+    },
+    {
+      "type": "p",
+      "content": "search_type(str) – Type of search to perform. Can be “similarity”,\n“mmr”, or “similarity_score_threshold”."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) – Arguments to pass to the search method."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents most similar to the query."
+    },
+    {
+      "type": "p",
+      "content": "ValueError– If search_type is not one of “similarity”,\n    “mmr”, or “similarity_score_threshold”."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Perform a similarity search against the query string."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – The text to search."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – The text to search."
+    },
+    {
+      "type": "li",
+      "content": "k(int,optional) – How many results to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int,optional) – How many results to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "param(dict,optional) – The search params for the index type.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "param(dict,optional) – The search params for the index type.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "expr(str,optional) – Filtering expression. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "expr(str,optional) – Filtering expression. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "timeout(int,optional) – How long to wait before timeout error.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "timeout(int,optional) – How long to wait before timeout error.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Collection.search() keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Collection.search() keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Document results for search."
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Perform a similarity search against the query string."
+    },
+    {
+      "type": "li",
+      "content": "embedding(List[float]) – The embedding vector to search."
+    },
+    {
+      "type": "p",
+      "content": "embedding(List[float]) – The embedding vector to search."
+    },
+    {
+      "type": "li",
+      "content": "k(int,optional) – How many results to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int,optional) – How many results to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "param(dict,optional) – The search params for the index type.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "param(dict,optional) – The search params for the index type.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "expr(str,optional) – Filtering expression. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "expr(str,optional) – Filtering expression. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "timeout(int,optional) – How long to wait before timeout error.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "timeout(int,optional) – How long to wait before timeout error.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Collection.search() keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Collection.search() keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Document results for search."
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Return docs and relevance scores in the range [0, 1]."
+    },
+    {
+      "type": "p",
+      "content": "0 is dissimilar, 1 is most similar."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – Input text."
+    },
+    {
+      "type": "li",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int) – Number of Documents to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "**kwargs(Any) –kwargs to be passed to similarity search. Should include:\nscore_threshold: Optional, a floating point value between 0 to 1 tofilter the resulting set of retrieved docs."
+    },
+    {
+      "type": "p",
+      "content": "**kwargs(Any) –kwargs to be passed to similarity search. Should include:\nscore_threshold: Optional, a floating point value between 0 to 1 tofilter the resulting set of retrieved docs."
+    },
+    {
+      "type": "p",
+      "content": "kwargs to be passed to similarity search. Should include:\nscore_threshold: Optional, a floating point value between 0 to 1 to"
+    },
+    {
+      "type": "p",
+      "content": "filter the resulting set of retrieved docs."
+    },
+    {
+      "type": "p",
+      "content": "List of Tuples of (doc, similarity_score)."
+    },
+    {
+      "type": "p",
+      "content": "list[tuple[Document, float]]"
+    },
+    {
+      "type": "p",
+      "content": "Perform a search on a query string and return results with score."
+    },
+    {
+      "type": "p",
+      "content": "For more information about the search parameters, take a look at the pymilvus\ndocumentation found here:https://milvus.io/api-reference/pymilvus/v2.2.6/Collection/search().md"
+    },
+    {
+      "type": "li",
+      "content": "query(str) – The text being searched."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – The text being searched."
+    },
+    {
+      "type": "li",
+      "content": "k(int,optional) – The amount of results to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int,optional) – The amount of results to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "param(dict) – The search params for the specified index.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "param(dict) – The search params for the specified index.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "expr(str,optional) – Filtering expression. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "expr(str,optional) – Filtering expression. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "timeout(float,optional) – How long to wait before timeout error.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "timeout(float,optional) – How long to wait before timeout error.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Collection.search() keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Collection.search() keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "List[float], List[Tuple[Document, any, any]]"
+    },
+    {
+      "type": "p",
+      "content": "Perform a search on a query string and return results with score."
+    },
+    {
+      "type": "p",
+      "content": "For more information about the search parameters, take a look at the pymilvus\ndocumentation found here:https://milvus.io/api-reference/pymilvus/v2.2.6/Collection/search().md"
+    },
+    {
+      "type": "li",
+      "content": "embedding(List[float]) – The embedding vector being searched."
+    },
+    {
+      "type": "p",
+      "content": "embedding(List[float]) – The embedding vector being searched."
+    },
+    {
+      "type": "li",
+      "content": "k(int,optional) – The amount of results to return. Defaults to 4."
+    },
+    {
+      "type": "p",
+      "content": "k(int,optional) – The amount of results to return. Defaults to 4."
+    },
+    {
+      "type": "li",
+      "content": "param(dict) – The search params for the specified index.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "param(dict) – The search params for the specified index.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "expr(str,optional) – Filtering expression. Defaults to None."
+    },
+    {
+      "type": "p",
+      "content": "expr(str,optional) – Filtering expression. Defaults to None."
+    },
+    {
+      "type": "li",
+      "content": "timeout(float,optional) – How long to wait before timeout error.\nDefaults to None."
+    },
+    {
+      "type": "p",
+      "content": "timeout(float,optional) – How long to wait before timeout error.\nDefaults to None."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any) – Collection.search() keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any) – Collection.search() keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Result doc and score."
+    },
+    {
+      "type": "p",
+      "content": "List[Tuple[Document, float]]"
+    },
+    {
+      "type": "p",
+      "content": "Update/Insert documents to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "ids(List[str]|None) – IDs to update - Let’s call get_pks to get ids with expression"
+    },
+    {
+      "type": "p",
+      "content": "ids(List[str]|None) – IDs to update - Let’s call get_pks to get ids with expression"
+    },
+    {
+      "type": "li",
+      "content": "documents(List[Document]) – Documents to add to the vectorstore."
+    },
+    {
+      "type": "p",
+      "content": "documents(List[Document]) – Documents to add to the vectorstore."
+    },
+    {
+      "type": "li",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "IDs of the added texts."
+    },
+    {
+      "type": "li",
+      "content": "Zilliz__init__()aadd_documents()aadd_texts()add_documents()add_texts()adelete()afrom_documents()afrom_texts()aget_by_ids()amax_marginal_relevance_search()amax_marginal_relevance_search_by_vector()as_retriever()asearch()asimilarity_search()asimilarity_search_by_vector()asimilarity_search_with_relevance_scores()asimilarity_search_with_score()delete()from_documents()from_texts()get_by_ids()get_pks()max_marginal_relevance_search()max_marginal_relevance_search_by_vector()search()similarity_search()similarity_search_by_vector()similarity_search_with_relevance_scores()similarity_search_with_score()similarity_search_with_score_by_vector()upsert()"
+    },
+    {
+      "type": "li",
+      "content": "aadd_documents()"
+    },
+    {
+      "type": "li",
+      "content": "aadd_texts()"
+    },
+    {
+      "type": "li",
+      "content": "add_documents()"
+    },
+    {
+      "type": "li",
+      "content": "add_texts()"
+    },
+    {
+      "type": "li",
+      "content": "afrom_documents()"
+    },
+    {
+      "type": "li",
+      "content": "afrom_texts()"
+    },
+    {
+      "type": "li",
+      "content": "aget_by_ids()"
+    },
+    {
+      "type": "li",
+      "content": "amax_marginal_relevance_search()"
+    },
+    {
+      "type": "li",
+      "content": "amax_marginal_relevance_search_by_vector()"
+    },
+    {
+      "type": "li",
+      "content": "as_retriever()"
+    },
+    {
+      "type": "li",
+      "content": "asimilarity_search()"
+    },
+    {
+      "type": "li",
+      "content": "asimilarity_search_by_vector()"
+    },
+    {
+      "type": "li",
+      "content": "asimilarity_search_with_relevance_scores()"
+    },
+    {
+      "type": "li",
+      "content": "asimilarity_search_with_score()"
+    },
+    {
+      "type": "li",
+      "content": "from_documents()"
+    },
+    {
+      "type": "li",
+      "content": "from_texts()"
+    },
+    {
+      "type": "li",
+      "content": "get_by_ids()"
+    },
+    {
+      "type": "li",
+      "content": "max_marginal_relevance_search()"
+    },
+    {
+      "type": "li",
+      "content": "max_marginal_relevance_search_by_vector()"
+    },
+    {
+      "type": "li",
+      "content": "similarity_search()"
+    },
+    {
+      "type": "li",
+      "content": "similarity_search_by_vector()"
+    },
+    {
+      "type": "li",
+      "content": "similarity_search_with_relevance_scores()"
+    },
+    {
+      "type": "li",
+      "content": "similarity_search_with_score()"
+    },
+    {
+      "type": "li",
+      "content": "similarity_search_with_score_by_vector()"
+    }
+  ],
+  "code_examples": [
+    "vectorstores",
+    "",
+    "embeddings",
+    "__init__",
+    "aadd_documents",
+    "aadd_texts",
+    "add_documents",
+    "add_texts",
+    "adelete",
+    "afrom_documents",
+    "afrom_texts",
+    "aget_by_ids",
+    "amax_marginal_relevance_search",
+    "amax_marginal_relevance_search_by_vector",
+    "as_retriever",
+    "asearch",
+    "asimilarity_search",
+    "asimilarity_search_by_vector",
+    "asimilarity_search_with_relevance_scores",
+    "asimilarity_search_with_score",
+    "delete",
+    "from_documents",
+    "from_texts",
+    "get_by_ids",
+    "get_pks",
+    "max_marginal_relevance_search",
+    "max_marginal_relevance_search_by_vector",
+    "search",
+    "similarity_search",
+    "similarity_search_by_vector",
+    "similarity_search_with_relevance_scores",
+    "similarity_search_with_score",
+    "similarity_search_with_score_by_vector",
+    "upsert",
+    "# Retrieve more documents with higher diversity# Useful if your dataset has many similar documentsdocsearch.as_retriever(search_type=\"mmr\",search_kwargs={\"k\":6,\"lambda_mult\":0.25})# Fetch more documents for the MMR algorithm to consider# But only return the top 5docsearch.as_retriever(search_type=\"mmr\",search_kwargs={\"k\":5,\"fetch_k\":50})# Only retrieve documents that have a relevance score# Above a certain thresholddocsearch.as_retriever(search_type=\"similarity_score_threshold\",search_kwargs={\"score_threshold\":0.8},)# Only get the single most similar document from the datasetdocsearch.as_retriever(search_kwargs={\"k\":1})# Use a filter to only retrieve documents from a specific paperdocsearch.as_retriever(search_kwargs={\"filter\":{\"paper_title\":\"GPT-4 Technical Report\"}})",
+    "Zilliz",
+    "__init__()",
+    "aadd_documents()",
+    "aadd_texts()",
+    "add_documents()",
+    "add_texts()",
+    "adelete()",
+    "afrom_documents()",
+    "afrom_texts()",
+    "aget_by_ids()",
+    "amax_marginal_relevance_search()",
+    "amax_marginal_relevance_search_by_vector()",
+    "as_retriever()",
+    "asearch()",
+    "asimilarity_search()",
+    "asimilarity_search_by_vector()",
+    "asimilarity_search_with_relevance_scores()",
+    "asimilarity_search_with_score()",
+    "delete()",
+    "from_documents()",
+    "from_texts()",
+    "get_by_ids()",
+    "get_pks()",
+    "max_marginal_relevance_search()",
+    "max_marginal_relevance_search_by_vector()",
+    "search()",
+    "similarity_search()",
+    "similarity_search_by_vector()",
+    "similarity_search_with_relevance_scores()",
+    "similarity_search_with_score()",
+    "similarity_search_with_score_by_vector()",
+    "upsert()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.vectorstores.zilliz.Zilliz(embedding_function:Embeddings,collection_name:str='LangChainCollection',collection_description:str='',collection_properties:dict[str,Any]|None=None,connection_args:dict[str,Any]|None=None,consistency_level:str='Session',index_params:dict|None=None,search_params:dict|None=None,drop_old:bool|None=False,auto_id:bool=False,*,primary_field:str='pk',text_field:str='text',vector_field:str='vector',metadata_field:str|None=None,partition_key_field:str|None=None,partition_names:list|None=None,replica_number:int=1,timeout:float|None=None,num_shards:int|None=None,)[source]#",
+    "langchain_community.vectorstores.zilliz.",
+    "Zilliz",
+    "(",
+    "embedding_function:Embeddings",
+    "collection_name:str='LangChainCollection'",
+    "collection_description:str=''",
+    "collection_properties:dict[str,Any]|None=None",
+    "connection_args:dict[str,Any]|None=None",
+    "consistency_level:str='Session'",
+    "index_params:dict|None=None",
+    "search_params:dict|None=None",
+    "drop_old:bool|None=False",
+    "auto_id:bool=False",
+    "*",
+    "primary_field:str='pk'",
+    "text_field:str='text'",
+    "vector_field:str='vector'",
+    "metadata_field:str|None=None",
+    "partition_key_field:str|None=None",
+    "partition_names:list|None=None",
+    "replica_number:int=1",
+    "timeout:float|None=None",
+    "num_shards:int|None=None",
+    ")",
+    "__init__(embedding_function:Embeddings,collection_name:str='LangChainCollection',collection_description:str='',collection_properties:dict[str,Any]|None=None,connection_args:dict[str,Any]|None=None,consistency_level:str='Session',index_params:dict|None=None,search_params:dict|None=None,drop_old:bool|None=False,auto_id:bool=False,*,primary_field:str='pk',text_field:str='text',vector_field:str='vector',metadata_field:str|None=None,partition_key_field:str|None=None,partition_names:list|None=None,replica_number:int=1,timeout:float|None=None,num_shards:int|None=None,)#",
+    "__init__",
+    "(",
+    "embedding_function:Embeddings",
+    "collection_name:str='LangChainCollection'",
+    "collection_description:str=''",
+    "collection_properties:dict[str,Any]|None=None",
+    "connection_args:dict[str,Any]|None=None",
+    "consistency_level:str='Session'",
+    "index_params:dict|None=None",
+    "search_params:dict|None=None",
+    "drop_old:bool|None=False",
+    "auto_id:bool=False",
+    "*",
+    "primary_field:str='pk'",
+    "text_field:str='text'",
+    "vector_field:str='vector'",
+    "metadata_field:str|None=None",
+    "partition_key_field:str|None=None",
+    "partition_names:list|None=None",
+    "replica_number:int=1",
+    "timeout:float|None=None",
+    "num_shards:int|None=None",
+    ")",
+    "asyncaadd_documents(documents:list[Document],**kwargs:Any,)→list[str]#",
+    "aadd_documents",
+    "(",
+    "documents:list[Document]",
+    "**kwargs:Any",
+    ")",
+    "→list[str]",
+    "→",
+    "list[str]",
+    "asyncaadd_texts(texts:Iterable[str],metadatas:list[dict]|None=None,*,ids:list[str]|None=None,**kwargs:Any,)→list[str]#",
+    "aadd_texts",
+    "(",
+    "texts:Iterable[str]",
+    "metadatas:list[dict]|None=None",
+    "*",
+    "ids:list[str]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→list[str]",
+    "→",
+    "list[str]",
+    "add_documents(documents:list[Document],**kwargs:Any,)→list[str]#",
+    "add_documents",
+    "(",
+    "documents:list[Document]",
+    "**kwargs:Any",
+    ")",
+    "→list[str]",
+    "→",
+    "list[str]",
+    "add_texts(texts:Iterable[str],metadatas:List[dict]|None=None,timeout:float|None=None,batch_size:int=1000,*,ids:List[str]|None=None,**kwargs:Any,)→List[str]#",
+    "add_texts",
+    "(",
+    "texts:Iterable[str]",
+    "metadatas:List[dict]|None=None",
+    "timeout:float|None=None",
+    "batch_size:int=1000",
+    "*",
+    "ids:List[str]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→List[str]",
+    "→",
+    "List[str]",
+    "asyncadelete(ids:list[str]|None=None,**kwargs:Any,)→bool|None#",
+    "adelete",
+    "(",
+    "ids:list[str]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→bool|None",
+    "→",
+    "bool|None",
+    "asyncclassmethodafrom_documents(documents:list[Document],embedding:Embeddings,**kwargs:Any,)→Self#",
+    "afrom_documents",
+    "(",
+    "documents:list[Document]",
+    "embedding:Embeddings",
+    "**kwargs:Any",
+    ")",
+    "→Self",
+    "→",
+    "Self",
+    "asyncclassmethodafrom_texts(texts:list[str],embedding:Embeddings,metadatas:list[dict]|None=None,*,ids:list[str]|None=None,**kwargs:Any,)→Self#",
+    "afrom_texts",
+    "(",
+    "texts:list[str]",
+    "embedding:Embeddings",
+    "metadatas:list[dict]|None=None",
+    "*",
+    "ids:list[str]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→Self",
+    "→",
+    "Self",
+    "asyncaget_by_ids(ids:Sequence[str],/)→list[Document]#",
+    "aget_by_ids",
+    "(",
+    "ids:Sequence[str]",
+    "/",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "asyncamax_marginal_relevance_search(query:str,k:int=4,fetch_k:int=20,lambda_mult:float=0.5,**kwargs:Any,)→list[Document]#",
+    "amax_marginal_relevance_search",
+    "(",
+    "query:str",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "**kwargs:Any",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "asyncamax_marginal_relevance_search_by_vector(embedding:list[float],k:int=4,fetch_k:int=20,lambda_mult:float=0.5,**kwargs:Any,)→list[Document]#",
+    "amax_marginal_relevance_search_by_vector",
+    "(",
+    "embedding:list[float]",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "**kwargs:Any",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "as_retriever(**kwargs:Any,)→VectorStoreRetriever#",
+    "as_retriever",
+    "(",
+    "**kwargs:Any",
+    ")",
+    "→VectorStoreRetriever",
+    "→",
+    "VectorStoreRetriever",
+    "asyncasearch(query:str,search_type:str,**kwargs:Any,)→list[Document]#",
+    "asearch",
+    "(",
+    "query:str",
+    "search_type:str",
+    "**kwargs:Any",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "asyncasimilarity_search(query:str,k:int=4,**kwargs:Any,)→list[Document]#",
+    "asimilarity_search",
+    "(",
+    "query:str",
+    "k:int=4",
+    "**kwargs:Any",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "asyncasimilarity_search_by_vector(embedding:list[float],k:int=4,**kwargs:Any,)→list[Document]#",
+    "asimilarity_search_by_vector",
+    "(",
+    "embedding:list[float]",
+    "k:int=4",
+    "**kwargs:Any",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "asyncasimilarity_search_with_relevance_scores(query:str,k:int=4,**kwargs:Any,)→list[tuple[Document,float]]#",
+    "asimilarity_search_with_relevance_scores",
+    "(",
+    "query:str",
+    "k:int=4",
+    "**kwargs:Any",
+    ")",
+    "→list[tuple[Document,float]]",
+    "→",
+    "list[tuple[Document,float]]",
+    "asyncasimilarity_search_with_score(*args:Any,**kwargs:Any,)→list[tuple[Document,float]]#",
+    "asimilarity_search_with_score",
+    "(",
+    "*args:Any",
+    "**kwargs:Any",
+    ")",
+    "→list[tuple[Document,float]]",
+    "→",
+    "list[tuple[Document,float]]",
+    "delete(ids:List[str]|None=None,expr:str|None=None,**kwargs:Any,)→MutationResult#",
+    "delete",
+    "(",
+    "ids:List[str]|None=None",
+    "expr:str|None=None",
+    "**kwargs:Any",
+    ")",
+    "→MutationResult",
+    "→",
+    "MutationResult",
+    "classmethodfrom_documents(documents:list[Document],embedding:Embeddings,**kwargs:Any,)→Self#",
+    "from_documents",
+    "(",
+    "documents:list[Document]",
+    "embedding:Embeddings",
+    "**kwargs:Any",
+    ")",
+    "→Self",
+    "→",
+    "Self",
+    "classmethodfrom_texts(texts:List[str],embedding:Embeddings,metadatas:List[dict]|None=None,collection_name:str='LangChainCollection',connection_args:Dict[str,Any]|None=None,consistency_level:str='Session',index_params:dict|None=None,search_params:dict|None=None,drop_old:bool=False,*,ids:List[str]|None=None,auto_id:bool=False,**kwargs:Any,)→Zilliz[source]#",
+    "from_texts",
+    "(",
+    "texts:List[str]",
+    "embedding:Embeddings",
+    "metadatas:List[dict]|None=None",
+    "collection_name:str='LangChainCollection'",
+    "connection_args:Dict[str,Any]|None=None",
+    "consistency_level:str='Session'",
+    "index_params:dict|None=None",
+    "search_params:dict|None=None",
+    "drop_old:bool=False",
+    "*",
+    "ids:List[str]|None=None",
+    "auto_id:bool=False",
+    "**kwargs:Any",
+    ")",
+    "→Zilliz",
+    "→",
+    "Zilliz",
+    "get_by_ids(ids:Sequence[str],/)→list[Document]#",
+    "get_by_ids",
+    "(",
+    "ids:Sequence[str]",
+    "/",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "get_pks(expr:str,**kwargs:Any,)→List[int]|None#",
+    "get_pks",
+    "(",
+    "expr:str",
+    "**kwargs:Any",
+    ")",
+    "→List[int]|None",
+    "→",
+    "List[int]|None",
+    "max_marginal_relevance_search(query:str,k:int=4,fetch_k:int=20,lambda_mult:float=0.5,param:dict|None=None,expr:str|None=None,timeout:float|None=None,**kwargs:Any,)→List[Document]#",
+    "max_marginal_relevance_search",
+    "(",
+    "query:str",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "param:dict|None=None",
+    "expr:str|None=None",
+    "timeout:float|None=None",
+    "**kwargs:Any",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]",
+    "max_marginal_relevance_search_by_vector(embedding:list[float],k:int=4,fetch_k:int=20,lambda_mult:float=0.5,param:dict|None=None,expr:str|None=None,timeout:float|None=None,**kwargs:Any,)→List[Document]#",
+    "max_marginal_relevance_search_by_vector",
+    "(",
+    "embedding:list[float]",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "param:dict|None=None",
+    "expr:str|None=None",
+    "timeout:float|None=None",
+    "**kwargs:Any",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]",
+    "search(query:str,search_type:str,**kwargs:Any,)→list[Document]#",
+    "search",
+    "(",
+    "query:str",
+    "search_type:str",
+    "**kwargs:Any",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "similarity_search(query:str,k:int=4,param:dict|None=None,expr:str|None=None,timeout:float|None=None,**kwargs:Any,)→List[Document]#",
+    "similarity_search",
+    "(",
+    "query:str",
+    "k:int=4",
+    "param:dict|None=None",
+    "expr:str|None=None",
+    "timeout:float|None=None",
+    "**kwargs:Any",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]",
+    "similarity_search_by_vector(embedding:List[float],k:int=4,param:dict|None=None,expr:str|None=None,timeout:float|None=None,**kwargs:Any,)→List[Document]#",
+    "similarity_search_by_vector",
+    "(",
+    "embedding:List[float]",
+    "k:int=4",
+    "param:dict|None=None",
+    "expr:str|None=None",
+    "timeout:float|None=None",
+    "**kwargs:Any",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]",
+    "similarity_search_with_relevance_scores(query:str,k:int=4,**kwargs:Any,)→list[tuple[Document,float]]#",
+    "similarity_search_with_relevance_scores",
+    "(",
+    "query:str",
+    "k:int=4",
+    "**kwargs:Any",
+    ")",
+    "→list[tuple[Document,float]]",
+    "→",
+    "list[tuple[Document,float]]",
+    "similarity_search_with_score(query:str,k:int=4,param:dict|None=None,expr:str|None=None,timeout:float|None=None,**kwargs:Any,)→List[Tuple[Document,float]]#",
+    "similarity_search_with_score",
+    "(",
+    "query:str",
+    "k:int=4",
+    "param:dict|None=None",
+    "expr:str|None=None",
+    "timeout:float|None=None",
+    "**kwargs:Any",
+    ")",
+    "→List[Tuple[Document,float]]",
+    "→",
+    "List[Tuple[Document,float]]",
+    "similarity_search_with_score_by_vector(embedding:List[float],k:int=4,param:dict|None=None,expr:str|None=None,timeout:float|None=None,**kwargs:Any,)→List[Tuple[Document,float]]#",
+    "similarity_search_with_score_by_vector",
+    "(",
+    "embedding:List[float]",
+    "k:int=4",
+    "param:dict|None=None",
+    "expr:str|None=None",
+    "timeout:float|None=None",
+    "**kwargs:Any",
+    ")",
+    "→List[Tuple[Document,float]]",
+    "→",
+    "List[Tuple[Document,float]]",
+    "upsert(ids:List[str]|None=None,documents:List[Document]|None=None,**kwargs:Any,)→List[str]|None#",
+    "upsert",
+    "(",
+    "ids:List[str]|None=None",
+    "documents:List[Document]|None=None",
+    "**kwargs:Any",
+    ")",
+    "→List[str]|None",
+    "→",
+    "List[str]|None"
+  ],
+  "parameters": [
+    "embedding_function:Embeddings",
+    "collection_name:str='LangChainCollection'",
+    "collection_description:str=''",
+    "collection_properties:dict[str,Any]|None=None",
+    "connection_args:dict[str,Any]|None=None",
+    "consistency_level:str='Session'",
+    "index_params:dict|None=None",
+    "search_params:dict|None=None",
+    "drop_old:bool|None=False",
+    "auto_id:bool=False",
+    "*",
+    "primary_field:str='pk'",
+    "text_field:str='text'",
+    "vector_field:str='vector'",
+    "metadata_field:str|None=None",
+    "partition_key_field:str|None=None",
+    "partition_names:list|None=None",
+    "replica_number:int=1",
+    "timeout:float|None=None",
+    "num_shards:int|None=None",
+    "embedding_function:Embeddings",
+    "collection_name:str='LangChainCollection'",
+    "collection_description:str=''",
+    "collection_properties:dict[str,Any]|None=None",
+    "connection_args:dict[str,Any]|None=None",
+    "consistency_level:str='Session'",
+    "index_params:dict|None=None",
+    "search_params:dict|None=None",
+    "drop_old:bool|None=False",
+    "auto_id:bool=False",
+    "*",
+    "primary_field:str='pk'",
+    "text_field:str='text'",
+    "vector_field:str='vector'",
+    "metadata_field:str|None=None",
+    "partition_key_field:str|None=None",
+    "partition_names:list|None=None",
+    "replica_number:int=1",
+    "timeout:float|None=None",
+    "num_shards:int|None=None",
+    "documents:list[Document]",
+    "**kwargs:Any",
+    "texts:Iterable[str]",
+    "metadatas:list[dict]|None=None",
+    "*",
+    "ids:list[str]|None=None",
+    "**kwargs:Any",
+    "documents:list[Document]",
+    "**kwargs:Any",
+    "texts:Iterable[str]",
+    "metadatas:List[dict]|None=None",
+    "timeout:float|None=None",
+    "batch_size:int=1000",
+    "*",
+    "ids:List[str]|None=None",
+    "**kwargs:Any",
+    "ids:list[str]|None=None",
+    "**kwargs:Any",
+    "documents:list[Document]",
+    "embedding:Embeddings",
+    "**kwargs:Any",
+    "texts:list[str]",
+    "embedding:Embeddings",
+    "metadatas:list[dict]|None=None",
+    "*",
+    "ids:list[str]|None=None",
+    "**kwargs:Any",
+    "ids:Sequence[str]",
+    "/",
+    "query:str",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "**kwargs:Any",
+    "embedding:list[float]",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "**kwargs:Any",
+    "**kwargs:Any",
+    "query:str",
+    "search_type:str",
+    "**kwargs:Any",
+    "query:str",
+    "k:int=4",
+    "**kwargs:Any",
+    "embedding:list[float]",
+    "k:int=4",
+    "**kwargs:Any",
+    "query:str",
+    "k:int=4",
+    "**kwargs:Any",
+    "*args:Any",
+    "**kwargs:Any",
+    "ids:List[str]|None=None",
+    "expr:str|None=None",
+    "**kwargs:Any",
+    "documents:list[Document]",
+    "embedding:Embeddings",
+    "**kwargs:Any",
+    "texts:List[str]",
+    "embedding:Embeddings",
+    "metadatas:List[dict]|None=None",
+    "collection_name:str='LangChainCollection'",
+    "connection_args:Dict[str,Any]|None=None",
+    "consistency_level:str='Session'",
+    "index_params:dict|None=None",
+    "search_params:dict|None=None",
+    "drop_old:bool=False",
+    "*",
+    "ids:List[str]|None=None",
+    "auto_id:bool=False",
+    "**kwargs:Any",
+    "ids:Sequence[str]",
+    "/",
+    "expr:str",
+    "**kwargs:Any",
+    "query:str",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "param:dict|None=None",
+    "expr:str|None=None",
+    "timeout:float|None=None",
+    "**kwargs:Any",
+    "embedding:list[float]",
+    "k:int=4",
+    "fetch_k:int=20",
+    "lambda_mult:float=0.5",
+    "param:dict|None=None",
+    "expr:str|None=None",
+    "timeout:float|None=None",
+    "**kwargs:Any",
+    "query:str",
+    "search_type:str",
+    "**kwargs:Any",
+    "query:str",
+    "k:int=4",
+    "param:dict|None=None",
+    "expr:str|None=None",
+    "timeout:float|None=None",
+    "**kwargs:Any",
+    "embedding:List[float]",
+    "k:int=4",
+    "param:dict|None=None",
+    "expr:str|None=None",
+    "timeout:float|None=None",
+    "**kwargs:Any",
+    "query:str",
+    "k:int=4",
+    "**kwargs:Any",
+    "query:str",
+    "k:int=4",
+    "param:dict|None=None",
+    "expr:str|None=None",
+    "timeout:float|None=None",
+    "**kwargs:Any",
+    "embedding:List[float]",
+    "k:int=4",
+    "param:dict|None=None",
+    "expr:str|None=None",
+    "timeout:float|None=None",
+    "**kwargs:Any",
+    "ids:List[str]|None=None",
+    "documents:List[Document]|None=None",
+    "**kwargs:Any"
+  ]
+}

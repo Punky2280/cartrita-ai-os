@@ -1,0 +1,52 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/llms/langchain_community.llms.tongyi.agenerate_with_last_element_mark.html#main-content",
+  "title": "agenerate_with_last_element_mark#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "agenerate_with_last_element_mark"
+    },
+    {
+      "type": "p",
+      "content": "Generate elements from an async iterable,\nand a boolean indicating if it is the last element."
+    },
+    {
+      "type": "p",
+      "content": "iterable(AsyncIterable[T])"
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[Tuple[T, bool]]"
+    },
+    {
+      "type": "li",
+      "content": "agenerate_with_last_element_mark()"
+    }
+  ],
+  "code_examples": [
+    "llms",
+    "agenerate_with_last_element_mark()"
+  ],
+  "api_signatures": [
+    "asynclangchain_community.llms.tongyi.agenerate_with_last_element_mark(iterable:AsyncIterable[T],)→AsyncIterator[Tuple[T,bool]][source]#",
+    "langchain_community.llms.tongyi.",
+    "agenerate_with_last_element_mark",
+    "(",
+    "iterable:AsyncIterable[T]",
+    ")",
+    "→AsyncIterator[Tuple[T,bool]]",
+    "→",
+    "AsyncIterator[Tuple[T,bool]]"
+  ],
+  "parameters": [
+    "iterable:AsyncIterable[T]"
+  ]
+}

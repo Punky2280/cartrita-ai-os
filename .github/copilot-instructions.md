@@ -14,6 +14,8 @@ Observability & Diagnostics: Preserve structured logging (structlog), metrics su
 Performance & Resource Efficiency: Avoid unnecessary model calls, DB trips, or memory bloat; respect iteration budgets.
 Clear Justification: Every change requires a concise rationale + risk assessment.
 Fallback Reliability: Maintain fallback response chain (OpenAI → HF lazy → FSM → emergency template).
+Deterministic Dependencies: Preserve hash-locked constraints; avoid introducing unpinned or drifting versions.
+Quality Gate Integrity: Do not increase Codacy issue counts or reduce test reliability.
 User Experience: Streaming semantics (SSE ordering, final assistant / END message) intact.
 Security & Compliance: No secrets leakage; adhere to container hardening assumptions; no disallowed exec patterns.
 Documentation Sync: If invariants shift, propose doc updates (.github/copilot-instructions.md, /docs).
@@ -36,6 +38,8 @@ Logging: structlog.get_logger(name) with key=value context; no print debug in pr
 Agents execute via execute(messages, context, metadata) → {response, metadata}. Keep signature stable.
 Pydantic v2 models—no legacy field alias patterns unless codebase uses them already.
 Avoid broad refactors of supervisor.py unless required for a specific bug/perf issue.
+Hash Lock Consistency: Any modification to `services/ai-orchestrator/requirements.in` (or GPU extras) must be followed by `pip-compile` regeneration of `constraints.txt` with hashes before dependent code changes.
+Setuptools Pin Policy: Keep explicit `setuptools` pin; justify version shifts (include rationale + rollback notes).
 PLACEHOLDER VARIABLES (USE VERBATIM—DO NOT EXPAND INTERNALLY)
 {TASK_DESCRIPTION}
 {TARGET_FILE}
@@ -57,11 +61,11 @@ DECISION & EXECUTION FRAMEWORK
 Always internally follow this loop (only show condensed outputs as instructed):
 
 Classify Intent: bugfix | feature | refactor | perf | research | doc | test harness.
-Inventory Impact: enumerate affected modules + entry points + cross-service interfaces.
+Inventory Impact: enumerate affected modules + entry points + cross-service interfaces; mark if touching dependency artifacts (requirements.in, constraints, Dockerfile) or quality workflows.
 Risk Scan: state mutation hazards, concurrency, streaming semantics, fallback exposure, security.
 Plan (ultra concise): steps with dependency ordering.
 Execute Minimal Diff: constrain modifications to smallest stable footprint.
-Validate: mental simulation + test outline (must list specific tests).
+Validate: mental simulation + test outline (must list specific tests). If dependencies changed: perform clean hash install plan + `pip check` + minimal import smoke.
 Self-Audit: check for violations of constraints above.
 Output: Provide final patch or instructions only—no raw chain-of-thought.
 ALLOWED OUTPUT MODES
@@ -100,6 +104,7 @@ Avoid redundant LLM calls; reuse context.
 For retrieval augmentation, batch vector lookups.
 Short-circuit early on invalid input.
 Provide micro-benchmark suggestion only if perf-critical path changed.
+Dependency Changes: Summarize added/removed packages, transitive risk (notable large libs), and memory / cold start implications.
 FRONTEND INTEGRATION NOTES
 
 Next.js 15; streaming SSE consumers expect append semantics.
@@ -109,7 +114,8 @@ Provide diff only for changed components; include test or story additions if alt
 TESTING STANDARDS
 
 Py: pytest—target affected modules; smoke + edge + error fallback; consider coverage holes.
-Frontend: Vitest for logic; if streaming changes, add simulation harness.
+Frontend: Vitest for logic; if streaming changes, add simulation harness and assert SSE ordering invariants.
+Dependency Update PRs: Include constraints delta summary + smoke test evidence.
 Add test_spec mode before large changes if uncertain.
 ERROR RECOVERY TEMPLATES
 If encountering ambiguous spec:
@@ -117,6 +123,39 @@ Return mode=advisory with: ClarificationNeeded + enumerated unknowns + minimal s
 
 If tool failure:
 Use fallback provider with purpose="error_recovery" context and note in metadata.
+
+DEPENDENCY DETERMINISM WORKFLOW
+1. Edit direct pins only in `requirements.in` (and GPU extras in `requirements-gpu.in`).
+2. Run: `pip-compile --generate-hashes --allow-unsafe --output-file services/ai-orchestrator/constraints.txt services/ai-orchestrator/requirements.in`.
+3. Ensure `setuptools` pinned; if warning appears, add/update pin.
+4. Clean virtualenv install with `--require-hashes` + `pip check`.
+5. Run focused smoke tests (import orchestrator entrypoints, minimal SSE path if applicable).
+6. Commit constraints + rationale (risk + rollback steps).
+
+QUALITY RESTORATION PHASES (GUARDRAIL)
+Lock validation → Observability integrity → Lint/type tightening → Security & SCA → Streaming performance → Fallback resilience → Drift automation → Runbook completion. Do not regress completed phases without mitigation rationale.
+
+DRIFT & UPGRADE POLICY
+- Nightly job generates diff PR; never auto-merge.
+- Each upgrade: link changelog, classify risk (low/moderate/high), scan for breaking changes.
+- Reject if increases vulnerabilities or introduces conflicting version ranges.
+
+CODACY INTEGRATION
+- Run Codacy CLI after each material file edit (code, docs with guidance) before finalizing.
+- Fix or document rationale for any new issues (no silent acceptance).
+- Do not disable rules globally unless policy-approved; prefer localized fixes.
+
+SECURITY & SUPPLY CHAIN
+- Maintain hash integrity; no local editable installs in production images.
+- Plan SBOM (CycloneDX) generation on dependency change PRs (future integration—do not fabricate output).
+- Secret scanning must pass before merge if new env var surfaces.
+
+DOCUMENTATION SYNC AUGMENTED
+- Update `SETUP-STATUS.md` and relevant `/docs` sections when: dependency workflow changes, new quality phase completes, or drift policy adjusted.
+- Include Delta Summary: Motivation | Change | Impact | Rollback steps.
+
+FAIL-SAFE FOR RESOLUTION INSTABILITY
+On `ResolutionTooDeep` or conflicting pins: Mode=advisory with hypotheses, reproduction command, candidate relax/downgrade matrix, and recommended minimal fix.
 
 ACCEPT / REJECT CRITERIA FOR PR PLANNING
 Accept if:

@@ -1,0 +1,67 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.multion.create_session.CreateSessionSchema.html#langchain_community.tools.multion.create_session.CreateSessionSchema.query",
+  "title": "CreateSessionSchema#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "CreateSessionSchema"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Input for CreateSessionTool."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "The query to run in multion agent."
+    },
+    {
+      "type": "p",
+      "content": "The Url to run the agent at. Note: accepts only secure             links havinghttps://"
+    },
+    {
+      "type": "li",
+      "content": "CreateSessionSchemaqueryurl"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "BaseModel",
+    "CreateSessionSchema",
+    "query",
+    "url"
+  ],
+  "api_signatures": [
+    "classlangchain_community.tools.multion.create_session.CreateSessionSchema[source]#",
+    "langchain_community.tools.multion.create_session.",
+    "CreateSessionSchema",
+    "paramquery:str[Required]#",
+    "query",
+    "paramurl:str='https://www.google.com/'#",
+    "url"
+  ],
+  "parameters": []
+}

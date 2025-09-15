@@ -1,0 +1,790 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/cache/langchain_community.cache.CassandraSemanticCache.html#langchain_community.cache.CassandraSemanticCache",
+  "title": "CassandraSemanticCache#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "CassandraSemanticCache"
+    },
+    {
+      "type": "p",
+      "content": "Cache that uses Cassandra as a vector-store backend for semantic\n(i.e. similarity-based) lookup."
+    },
+    {
+      "type": "p",
+      "content": "It uses a single (vector) Cassandra table and stores, in principle,\ncached values from several LLMs, so the LLM’s llm_string is part\nof the rows’ primary keys."
+    },
+    {
+      "type": "p",
+      "content": "One can choose a similarity measure (default: “dot” for dot-product).\nChoosing another one (“cos”, “l2”) almost certainly requires threshold tuning.\n(which may be in order nevertheless, even if sticking to “dot”)."
+    },
+    {
+      "type": "li",
+      "content": "session(Optional[CassandraSession]) – an open Cassandra session.\nLeave unspecified to use the global cassio init (see below)"
+    },
+    {
+      "type": "p",
+      "content": "session(Optional[CassandraSession]) – an open Cassandra session.\nLeave unspecified to use the global cassio init (see below)"
+    },
+    {
+      "type": "li",
+      "content": "keyspace(Optional[str]) – the keyspace to use for storing the cache.\nLeave unspecified to use the global cassio init (see below)"
+    },
+    {
+      "type": "p",
+      "content": "keyspace(Optional[str]) – the keyspace to use for storing the cache.\nLeave unspecified to use the global cassio init (see below)"
+    },
+    {
+      "type": "li",
+      "content": "embedding(Optional[Embeddings]) – Embedding provider for semantic\nencoding and search."
+    },
+    {
+      "type": "p",
+      "content": "embedding(Optional[Embeddings]) – Embedding provider for semantic\nencoding and search."
+    },
+    {
+      "type": "li",
+      "content": "table_name(str) – name of the Cassandra (vector) table\nto use as cache. There is a default for “simple” usage, but\nremember to explicitly specify different tables if several embedding\nmodels coexist in your app (they cannot share one cache table)."
+    },
+    {
+      "type": "p",
+      "content": "table_name(str) – name of the Cassandra (vector) table\nto use as cache. There is a default for “simple” usage, but\nremember to explicitly specify different tables if several embedding\nmodels coexist in your app (they cannot share one cache table)."
+    },
+    {
+      "type": "li",
+      "content": "distance_metric(Optional[str]) – an alias for the ‘similarity_measure’ parameter (see below).\nAs the “distance” terminology is misleading, please prefer\n‘similarity_measure’ for clarity."
+    },
+    {
+      "type": "p",
+      "content": "distance_metric(Optional[str]) – an alias for the ‘similarity_measure’ parameter (see below).\nAs the “distance” terminology is misleading, please prefer\n‘similarity_measure’ for clarity."
+    },
+    {
+      "type": "li",
+      "content": "score_threshold(float) – numeric value to use as\ncutoff for the similarity searches"
+    },
+    {
+      "type": "p",
+      "content": "score_threshold(float) – numeric value to use as\ncutoff for the similarity searches"
+    },
+    {
+      "type": "li",
+      "content": "ttl_seconds(Optional[int]) – time-to-live for cache entries\n(default: None, i.e. forever)"
+    },
+    {
+      "type": "p",
+      "content": "ttl_seconds(Optional[int]) – time-to-live for cache entries\n(default: None, i.e. forever)"
+    },
+    {
+      "type": "li",
+      "content": "similarity_measure(str) – which measure to adopt for similarity searches.\nNote: this parameter is aliased by ‘distance_metric’ - however,\nit is suggested to use the “similarity” terminology since this value\nis in fact a similarity (i.e. higher means closer).\nNote that at most one of the two parameters ‘distance_metric’\nand ‘similarity_measure’ can be provided."
+    },
+    {
+      "type": "p",
+      "content": "similarity_measure(str) – which measure to adopt for similarity searches.\nNote: this parameter is aliased by ‘distance_metric’ - however,\nit is suggested to use the “similarity” terminology since this value\nis in fact a similarity (i.e. higher means closer).\nNote that at most one of the two parameters ‘distance_metric’\nand ‘similarity_measure’ can be provided."
+    },
+    {
+      "type": "li",
+      "content": "setup_mode(CassandraSetupMode) – a value in langchain_community.utilities.cassandra.SetupMode.\nChoose between SYNC, ASYNC and OFF - the latter if the Cassandra\ntable is guaranteed to exist already, for a faster initialization."
+    },
+    {
+      "type": "p",
+      "content": "setup_mode(CassandraSetupMode) – a value in langchain_community.utilities.cassandra.SetupMode.\nChoose between SYNC, ASYNC and OFF - the latter if the Cassandra\ntable is guaranteed to exist already, for a faster initialization."
+    },
+    {
+      "type": "li",
+      "content": "skip_provisioning(bool)"
+    },
+    {
+      "type": "p",
+      "content": "skip_provisioning(bool)"
+    },
+    {
+      "type": "p",
+      "content": "The session and keyspace parameters, when left out (or passed as None),\nfall back to the globally-available cassio settings if any are available.\nIn other words, if a previously-run ‘cassio.init(…)’ has been\nexecuted previously anywhere in the code, Cassandra-based objects\nneed not specify the connection parameters at all."
+    },
+    {
+      "type": "p",
+      "content": "__init__([session, keyspace, embedding, ...])"
+    },
+    {
+      "type": "p",
+      "content": "aclear(**kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Clear thewholesemantic cache."
+    },
+    {
+      "type": "p",
+      "content": "adelete_by_document_id(document_id)"
+    },
+    {
+      "type": "p",
+      "content": "Given this is a \"similarity search\" cache, an invalidation pattern that makes sense is first a lookup to get an ID, and then deleting with that ID."
+    },
+    {
+      "type": "p",
+      "content": "alookup(prompt, llm_string)"
+    },
+    {
+      "type": "p",
+      "content": "Async look up based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "alookup_with_id(prompt, llm_string)"
+    },
+    {
+      "type": "p",
+      "content": "Look up based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "alookup_with_id_through_llm(prompt, llm[, stop])"
+    },
+    {
+      "type": "p",
+      "content": "aupdate(prompt, llm_string, return_val)"
+    },
+    {
+      "type": "p",
+      "content": "Async update cache based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "clear(**kwargs)"
+    },
+    {
+      "type": "p",
+      "content": "Clear thewholesemantic cache."
+    },
+    {
+      "type": "p",
+      "content": "delete_by_document_id(document_id)"
+    },
+    {
+      "type": "p",
+      "content": "Given this is a \"similarity search\" cache, an invalidation pattern that makes sense is first a lookup to get an ID, and then deleting with that ID."
+    },
+    {
+      "type": "p",
+      "content": "lookup(prompt, llm_string)"
+    },
+    {
+      "type": "p",
+      "content": "Look up based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "lookup_with_id(prompt, llm_string)"
+    },
+    {
+      "type": "p",
+      "content": "Look up based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "lookup_with_id_through_llm(prompt, llm[, stop])"
+    },
+    {
+      "type": "p",
+      "content": "update(prompt, llm_string, return_val)"
+    },
+    {
+      "type": "p",
+      "content": "Update cache based on prompt and llm_string."
+    },
+    {
+      "type": "li",
+      "content": "session(Optional[CassandraSession])"
+    },
+    {
+      "type": "p",
+      "content": "session(Optional[CassandraSession])"
+    },
+    {
+      "type": "li",
+      "content": "keyspace(Optional[str])"
+    },
+    {
+      "type": "p",
+      "content": "keyspace(Optional[str])"
+    },
+    {
+      "type": "li",
+      "content": "embedding(Optional[Embeddings])"
+    },
+    {
+      "type": "p",
+      "content": "embedding(Optional[Embeddings])"
+    },
+    {
+      "type": "li",
+      "content": "table_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "table_name(str)"
+    },
+    {
+      "type": "li",
+      "content": "distance_metric(Optional[str])"
+    },
+    {
+      "type": "p",
+      "content": "distance_metric(Optional[str])"
+    },
+    {
+      "type": "li",
+      "content": "score_threshold(float)"
+    },
+    {
+      "type": "p",
+      "content": "score_threshold(float)"
+    },
+    {
+      "type": "li",
+      "content": "ttl_seconds(Optional[int])"
+    },
+    {
+      "type": "p",
+      "content": "ttl_seconds(Optional[int])"
+    },
+    {
+      "type": "li",
+      "content": "skip_provisioning(bool)"
+    },
+    {
+      "type": "p",
+      "content": "skip_provisioning(bool)"
+    },
+    {
+      "type": "li",
+      "content": "similarity_measure(str)"
+    },
+    {
+      "type": "p",
+      "content": "similarity_measure(str)"
+    },
+    {
+      "type": "li",
+      "content": "setup_mode(CassandraSetupMode)"
+    },
+    {
+      "type": "p",
+      "content": "setup_mode(CassandraSetupMode)"
+    },
+    {
+      "type": "p",
+      "content": "Clear thewholesemantic cache."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Given this is a “similarity search” cache, an invalidation pattern\nthat makes sense is first a lookup to get an ID, and then deleting\nwith that ID. This is for the second step."
+    },
+    {
+      "type": "p",
+      "content": "document_id(str)"
+    },
+    {
+      "type": "p",
+      "content": "Async look up based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "A cache implementation is expected to generate a key from the 2-tuple\nof prompt and llm_string (e.g., by concatenating them with a delimiter)."
+    },
+    {
+      "type": "li",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "p",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "li",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "p",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "p",
+      "content": "On a cache miss, return None. On a cache hit, return the cached value.\nThe cached value is a list of Generations (or subclasses)."
+    },
+    {
+      "type": "p",
+      "content": "Sequence[Generation] | None"
+    },
+    {
+      "type": "p",
+      "content": "Look up based on prompt and llm_string.\nIf there are hits, return (document_id, cached_entry)"
+    },
+    {
+      "type": "li",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "p",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "li",
+      "content": "llm_string(str)"
+    },
+    {
+      "type": "p",
+      "content": "llm_string(str)"
+    },
+    {
+      "type": "p",
+      "content": "Tuple[str,Sequence[Generation]] | None"
+    },
+    {
+      "type": "li",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "p",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "li",
+      "content": "stop(List[str]|None)"
+    },
+    {
+      "type": "p",
+      "content": "stop(List[str]|None)"
+    },
+    {
+      "type": "p",
+      "content": "Tuple[str,Sequence[Generation]] | None"
+    },
+    {
+      "type": "p",
+      "content": "Async update cache based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "The prompt and llm_string are used to generate a key for the cache.\nThe key should match that of the look up method."
+    },
+    {
+      "type": "li",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "p",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "li",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "p",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "li",
+      "content": "return_val(Sequence[Generation]) – The value to be cached. The value is a list of Generations\n(or subclasses)."
+    },
+    {
+      "type": "p",
+      "content": "return_val(Sequence[Generation]) – The value to be cached. The value is a list of Generations\n(or subclasses)."
+    },
+    {
+      "type": "p",
+      "content": "Clear thewholesemantic cache."
+    },
+    {
+      "type": "p",
+      "content": "kwargs(Any)"
+    },
+    {
+      "type": "p",
+      "content": "Given this is a “similarity search” cache, an invalidation pattern\nthat makes sense is first a lookup to get an ID, and then deleting\nwith that ID. This is for the second step."
+    },
+    {
+      "type": "p",
+      "content": "document_id(str)"
+    },
+    {
+      "type": "p",
+      "content": "Look up based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "A cache implementation is expected to generate a key from the 2-tuple\nof prompt and llm_string (e.g., by concatenating them with a delimiter)."
+    },
+    {
+      "type": "li",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "p",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "li",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "p",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "p",
+      "content": "On a cache miss, return None. On a cache hit, return the cached value.\nThe cached value is a list of Generations (or subclasses)."
+    },
+    {
+      "type": "p",
+      "content": "Sequence[Generation] | None"
+    },
+    {
+      "type": "p",
+      "content": "Look up based on prompt and llm_string.\nIf there are hits, return (document_id, cached_entry)"
+    },
+    {
+      "type": "li",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "p",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "li",
+      "content": "llm_string(str)"
+    },
+    {
+      "type": "p",
+      "content": "llm_string(str)"
+    },
+    {
+      "type": "p",
+      "content": "Tuple[str,Sequence[Generation]] | None"
+    },
+    {
+      "type": "li",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "p",
+      "content": "prompt(str)"
+    },
+    {
+      "type": "li",
+      "content": "stop(List[str]|None)"
+    },
+    {
+      "type": "p",
+      "content": "stop(List[str]|None)"
+    },
+    {
+      "type": "p",
+      "content": "Tuple[str,Sequence[Generation]] | None"
+    },
+    {
+      "type": "p",
+      "content": "Update cache based on prompt and llm_string."
+    },
+    {
+      "type": "p",
+      "content": "The prompt and llm_string are used to generate a key for the cache.\nThe key should match that of the lookup method."
+    },
+    {
+      "type": "li",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "p",
+      "content": "prompt(str) – a string representation of the prompt.\nIn the case of a Chat model, the prompt is a non-trivial\nserialization of the prompt into the language model."
+    },
+    {
+      "type": "li",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "p",
+      "content": "llm_string(str) – A string representation of the LLM configuration.\nThis is used to capture the invocation parameters of the LLM\n(e.g., model name, temperature, stop tokens, max tokens, etc.).\nThese invocation parameters are serialized into a string\nrepresentation."
+    },
+    {
+      "type": "li",
+      "content": "return_val(Sequence[Generation]) – The value to be cached. The value is a list of Generations\n(or subclasses)."
+    },
+    {
+      "type": "p",
+      "content": "return_val(Sequence[Generation]) – The value to be cached. The value is a list of Generations\n(or subclasses)."
+    },
+    {
+      "type": "p",
+      "content": "Examples using CassandraSemanticCache"
+    },
+    {
+      "type": "li",
+      "content": "Model caches"
+    },
+    {
+      "type": "p",
+      "content": "Model caches"
+    },
+    {
+      "type": "li",
+      "content": "CassandraSemanticCache__init__()aclear()adelete_by_document_id()alookup()alookup_with_id()alookup_with_id_through_llm()aupdate()clear()delete_by_document_id()lookup()lookup_with_id()lookup_with_id_through_llm()update()"
+    },
+    {
+      "type": "li",
+      "content": "adelete_by_document_id()"
+    },
+    {
+      "type": "li",
+      "content": "alookup_with_id()"
+    },
+    {
+      "type": "li",
+      "content": "alookup_with_id_through_llm()"
+    },
+    {
+      "type": "li",
+      "content": "delete_by_document_id()"
+    },
+    {
+      "type": "li",
+      "content": "lookup_with_id()"
+    },
+    {
+      "type": "li",
+      "content": "lookup_with_id_through_llm()"
+    }
+  ],
+  "code_examples": [
+    "cache",
+    "importcassiofromlangchain_community.cacheimportCassandraSemanticCachefromlangchain_core.globalsimportset_llm_cachecassio.init(auto=True)# Requires env. variables, see CassIO docsmy_embedding=...set_llm_cache(CassandraSemanticCache(embedding=my_embedding,table_name=\"my_semantic_cache\",))",
+    "__init__",
+    "aclear",
+    "adelete_by_document_id",
+    "alookup",
+    "alookup_with_id",
+    "alookup_with_id_through_llm",
+    "aupdate",
+    "clear",
+    "delete_by_document_id",
+    "lookup",
+    "lookup_with_id",
+    "lookup_with_id_through_llm",
+    "update",
+    "CassandraSemanticCache",
+    "__init__()",
+    "aclear()",
+    "adelete_by_document_id()",
+    "alookup()",
+    "alookup_with_id()",
+    "alookup_with_id_through_llm()",
+    "aupdate()",
+    "clear()",
+    "delete_by_document_id()",
+    "lookup()",
+    "lookup_with_id()",
+    "lookup_with_id_through_llm()",
+    "update()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.cache.CassandraSemanticCache(session:CassandraSession|None=None,keyspace:str|None=None,embedding:Embeddings|None=None,table_name:str='langchain_llm_semantic_cache',distance_metric:str|None=None,score_threshold:float=0.85,ttl_seconds:int|None=None,skip_provisioning:bool=False,similarity_measure:str='dot',setup_mode:CassandraSetupMode=SetupMode.SYNC,)[source]#",
+    "langchain_community.cache.",
+    "CassandraSemanticCache",
+    "(",
+    "session:CassandraSession|None=None",
+    "keyspace:str|None=None",
+    "embedding:Embeddings|None=None",
+    "table_name:str='langchain_llm_semantic_cache'",
+    "distance_metric:str|None=None",
+    "score_threshold:float=0.85",
+    "ttl_seconds:int|None=None",
+    "skip_provisioning:bool=False",
+    "similarity_measure:str='dot'",
+    "setup_mode:CassandraSetupMode=SetupMode.SYNC",
+    ")",
+    "__init__(session:CassandraSession|None=None,keyspace:str|None=None,embedding:Embeddings|None=None,table_name:str='langchain_llm_semantic_cache',distance_metric:str|None=None,score_threshold:float=0.85,ttl_seconds:int|None=None,skip_provisioning:bool=False,similarity_measure:str='dot',setup_mode:CassandraSetupMode=SetupMode.SYNC,)[source]#",
+    "__init__",
+    "(",
+    "session:CassandraSession|None=None",
+    "keyspace:str|None=None",
+    "embedding:Embeddings|None=None",
+    "table_name:str='langchain_llm_semantic_cache'",
+    "distance_metric:str|None=None",
+    "score_threshold:float=0.85",
+    "ttl_seconds:int|None=None",
+    "skip_provisioning:bool=False",
+    "similarity_measure:str='dot'",
+    "setup_mode:CassandraSetupMode=SetupMode.SYNC",
+    ")",
+    "asyncaclear(**kwargs:Any)→None[source]#",
+    "aclear",
+    "(",
+    "**kwargs:Any",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "asyncadelete_by_document_id(document_id:str,)→None[source]#",
+    "adelete_by_document_id",
+    "(",
+    "document_id:str",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "asyncalookup(prompt:str,llm_string:str,)→Sequence[Generation]|None[source]#",
+    "alookup",
+    "(",
+    "prompt:str",
+    "llm_string:str",
+    ")",
+    "→Sequence[Generation]|None",
+    "→",
+    "Sequence[Generation]|None",
+    "asyncalookup_with_id(prompt:str,llm_string:str,)→Tuple[str,Sequence[Generation]]|None[source]#",
+    "alookup_with_id",
+    "(",
+    "prompt:str",
+    "llm_string:str",
+    ")",
+    "→Tuple[str,Sequence[Generation]]|None",
+    "→",
+    "Tuple[str,Sequence[Generation]]|None",
+    "asyncalookup_with_id_through_llm(prompt:str,llm:LLM,stop:List[str]|None=None,)→Tuple[str,Sequence[Generation]]|None[source]#",
+    "alookup_with_id_through_llm",
+    "(",
+    "prompt:str",
+    "llm:LLM",
+    "stop:List[str]|None=None",
+    ")",
+    "→Tuple[str,Sequence[Generation]]|None",
+    "→",
+    "Tuple[str,Sequence[Generation]]|None",
+    "asyncaupdate(prompt:str,llm_string:str,return_val:Sequence[Generation],)→None[source]#",
+    "aupdate",
+    "(",
+    "prompt:str",
+    "llm_string:str",
+    "return_val:Sequence[Generation]",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "clear(**kwargs:Any)→None[source]#",
+    "clear",
+    "(",
+    "**kwargs:Any",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "delete_by_document_id(document_id:str,)→None[source]#",
+    "delete_by_document_id",
+    "(",
+    "document_id:str",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "lookup(prompt:str,llm_string:str,)→Sequence[Generation]|None[source]#",
+    "lookup",
+    "(",
+    "prompt:str",
+    "llm_string:str",
+    ")",
+    "→Sequence[Generation]|None",
+    "→",
+    "Sequence[Generation]|None",
+    "lookup_with_id(prompt:str,llm_string:str,)→Tuple[str,Sequence[Generation]]|None[source]#",
+    "lookup_with_id",
+    "(",
+    "prompt:str",
+    "llm_string:str",
+    ")",
+    "→Tuple[str,Sequence[Generation]]|None",
+    "→",
+    "Tuple[str,Sequence[Generation]]|None",
+    "lookup_with_id_through_llm(prompt:str,llm:LLM,stop:List[str]|None=None,)→Tuple[str,Sequence[Generation]]|None[source]#",
+    "lookup_with_id_through_llm",
+    "(",
+    "prompt:str",
+    "llm:LLM",
+    "stop:List[str]|None=None",
+    ")",
+    "→Tuple[str,Sequence[Generation]]|None",
+    "→",
+    "Tuple[str,Sequence[Generation]]|None",
+    "update(prompt:str,llm_string:str,return_val:Sequence[Generation],)→None[source]#",
+    "update",
+    "(",
+    "prompt:str",
+    "llm_string:str",
+    "return_val:Sequence[Generation]",
+    ")",
+    "→None",
+    "→",
+    "None"
+  ],
+  "parameters": [
+    "session:CassandraSession|None=None",
+    "keyspace:str|None=None",
+    "embedding:Embeddings|None=None",
+    "table_name:str='langchain_llm_semantic_cache'",
+    "distance_metric:str|None=None",
+    "score_threshold:float=0.85",
+    "ttl_seconds:int|None=None",
+    "skip_provisioning:bool=False",
+    "similarity_measure:str='dot'",
+    "setup_mode:CassandraSetupMode=SetupMode.SYNC",
+    "session:CassandraSession|None=None",
+    "keyspace:str|None=None",
+    "embedding:Embeddings|None=None",
+    "table_name:str='langchain_llm_semantic_cache'",
+    "distance_metric:str|None=None",
+    "score_threshold:float=0.85",
+    "ttl_seconds:int|None=None",
+    "skip_provisioning:bool=False",
+    "similarity_measure:str='dot'",
+    "setup_mode:CassandraSetupMode=SetupMode.SYNC",
+    "**kwargs:Any",
+    "document_id:str",
+    "prompt:str",
+    "llm_string:str",
+    "prompt:str",
+    "llm_string:str",
+    "prompt:str",
+    "llm:LLM",
+    "stop:List[str]|None=None",
+    "prompt:str",
+    "llm_string:str",
+    "return_val:Sequence[Generation]",
+    "**kwargs:Any",
+    "document_id:str",
+    "prompt:str",
+    "llm_string:str",
+    "prompt:str",
+    "llm_string:str",
+    "prompt:str",
+    "llm:LLM",
+    "stop:List[str]|None=None",
+    "prompt:str",
+    "llm_string:str",
+    "return_val:Sequence[Generation]"
+  ]
+}

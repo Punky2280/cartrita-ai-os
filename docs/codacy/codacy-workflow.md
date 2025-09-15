@@ -32,6 +32,27 @@ export CODACY_PROJECT_TOKEN=*****
 bash scripts/codacy/run_codacy.sh
 ```
 
+## Direct SARIF Analysis (Temporary Workaround)
+
+When the MCP layer forces an unsupported `wsl` prefix or per‑file analysis fails,
+run the Codacy CLI directly to generate a SARIF for comparator workflows:
+
+```bash
+export CODACY_PROJECT_TOKEN=*****
+./.codacy/cli.sh analyze --format sarif > security/sarif/results.sarif
+```
+
+Then run the SARIF comparator (example):
+
+```bash
+python scripts/codacy/compare_sarif.py \
+  --baseline security/sarif/baseline.sarif \
+  --current security/sarif/results.sarif \
+  --out security/sarif/comparison.json
+```
+
+Do not overwrite the baseline until manual review confirms only expected reductions.
+
 ## CI Integration (Planned)
 
 In a future CI job (pre-baseline enforcement), steps will:

@@ -1,0 +1,670 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/chains/langchain_community.chains.pebblo_retrieval.utilities.PebbloRetrievalAPIWrapper.html",
+  "title": "PebbloRetrievalAPIWrapper#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "PebbloRetrievalAPIWrapper"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Wrapper for Pebblo Retrieval API."
+    },
+    {
+      "type": "p",
+      "content": "Validate that api key in environment."
+    },
+    {
+      "type": "p",
+      "content": "API key for Pebblo Cloud"
+    },
+    {
+      "type": "p",
+      "content": "Location of the classifier, local or cloud. Defaults to ‘local’"
+    },
+    {
+      "type": "p",
+      "content": "URL of the Pebblo Classifier"
+    },
+    {
+      "type": "p",
+      "content": "URL of the Pebblo Cloud"
+    },
+    {
+      "type": "p",
+      "content": "Make a async request to the Pebblo server/cloud API."
+    },
+    {
+      "type": "li",
+      "content": "method(str) – HTTP method (GET, POST, PUT, DELETE, etc.)."
+    },
+    {
+      "type": "p",
+      "content": "method(str) – HTTP method (GET, POST, PUT, DELETE, etc.)."
+    },
+    {
+      "type": "li",
+      "content": "url(str) – URL for the request."
+    },
+    {
+      "type": "p",
+      "content": "url(str) – URL for the request."
+    },
+    {
+      "type": "li",
+      "content": "headers(dict) – Headers for the request."
+    },
+    {
+      "type": "p",
+      "content": "headers(dict) – Headers for the request."
+    },
+    {
+      "type": "li",
+      "content": "payload(Optional[dict]) – Payload for the request (for POST, PUT, etc.)."
+    },
+    {
+      "type": "p",
+      "content": "payload(Optional[dict]) – Payload for the request (for POST, PUT, etc.)."
+    },
+    {
+      "type": "li",
+      "content": "timeout(int) – Timeout for the request in seconds."
+    },
+    {
+      "type": "p",
+      "content": "timeout(int) – Timeout for the request in seconds."
+    },
+    {
+      "type": "p",
+      "content": "Response json if the request is successful."
+    },
+    {
+      "type": "p",
+      "content": "Make a request to the Pebblo server/cloud API."
+    },
+    {
+      "type": "li",
+      "content": "method(str) – HTTP method (GET, POST, PUT, DELETE, etc.)."
+    },
+    {
+      "type": "p",
+      "content": "method(str) – HTTP method (GET, POST, PUT, DELETE, etc.)."
+    },
+    {
+      "type": "li",
+      "content": "url(str) – URL for the request."
+    },
+    {
+      "type": "p",
+      "content": "url(str) – URL for the request."
+    },
+    {
+      "type": "li",
+      "content": "headers(dict) – Headers for the request."
+    },
+    {
+      "type": "p",
+      "content": "headers(dict) – Headers for the request."
+    },
+    {
+      "type": "li",
+      "content": "payload(Optional[dict]) – Payload for the request (for POST, PUT, etc.)."
+    },
+    {
+      "type": "p",
+      "content": "payload(Optional[dict]) – Payload for the request (for POST, PUT, etc.)."
+    },
+    {
+      "type": "li",
+      "content": "timeout(int) – Timeout for the request in seconds."
+    },
+    {
+      "type": "p",
+      "content": "timeout(int) – Timeout for the request in seconds."
+    },
+    {
+      "type": "p",
+      "content": "Response object if the request is successful."
+    },
+    {
+      "type": "p",
+      "content": "Optional[Response]"
+    },
+    {
+      "type": "p",
+      "content": "Update the payload with response, prompt and context from Pebblo response."
+    },
+    {
+      "type": "li",
+      "content": "payload(dict) – Payload to be updated."
+    },
+    {
+      "type": "p",
+      "content": "payload(dict) – Payload to be updated."
+    },
+    {
+      "type": "li",
+      "content": "pebblo_resp(Optional[dict]) – Response from Pebblo server."
+    },
+    {
+      "type": "p",
+      "content": "pebblo_resp(Optional[dict]) – Response from Pebblo server."
+    },
+    {
+      "type": "p",
+      "content": "Check the validity of the given prompt using a remote classification service."
+    },
+    {
+      "type": "p",
+      "content": "This method sends a prompt to a remote classifier service and return entities\npresent in prompt or not."
+    },
+    {
+      "type": "p",
+      "content": "question(str) – The prompt question to be validated."
+    },
+    {
+      "type": "p",
+      "content": "True if the prompt is valid (does not contain deny list entities),\nFalse otherwise.\ndict: The entities present in the prompt"
+    },
+    {
+      "type": "p",
+      "content": "Send prompt to Pebblo server for classification.\nThen send prompt to Daxa cloud(If api_key is present)."
+    },
+    {
+      "type": "li",
+      "content": "app_name(str) – Name of the app."
+    },
+    {
+      "type": "p",
+      "content": "app_name(str) – Name of the app."
+    },
+    {
+      "type": "li",
+      "content": "retriever(VectorStoreRetriever) – Retriever instance."
+    },
+    {
+      "type": "p",
+      "content": "retriever(VectorStoreRetriever) – Retriever instance."
+    },
+    {
+      "type": "li",
+      "content": "question(str) – Question asked in the prompt."
+    },
+    {
+      "type": "p",
+      "content": "question(str) – Question asked in the prompt."
+    },
+    {
+      "type": "li",
+      "content": "answer(str) – Answer generated by the model."
+    },
+    {
+      "type": "p",
+      "content": "answer(str) – Answer generated by the model."
+    },
+    {
+      "type": "li",
+      "content": "auth_context(Optional[AuthContext]) – Authentication context."
+    },
+    {
+      "type": "p",
+      "content": "auth_context(Optional[AuthContext]) – Authentication context."
+    },
+    {
+      "type": "li",
+      "content": "docs(List[Document]) – List of documents retrieved."
+    },
+    {
+      "type": "p",
+      "content": "docs(List[Document]) – List of documents retrieved."
+    },
+    {
+      "type": "li",
+      "content": "prompt_entities(Dict[str,Any]) – Entities present in the prompt."
+    },
+    {
+      "type": "p",
+      "content": "prompt_entities(Dict[str,Any]) – Entities present in the prompt."
+    },
+    {
+      "type": "li",
+      "content": "prompt_time(str) – Time when the prompt was generated."
+    },
+    {
+      "type": "p",
+      "content": "prompt_time(str) – Time when the prompt was generated."
+    },
+    {
+      "type": "li",
+      "content": "prompt_gov_enabled(bool) – Whether prompt governance is enabled."
+    },
+    {
+      "type": "p",
+      "content": "prompt_gov_enabled(bool) – Whether prompt governance is enabled."
+    },
+    {
+      "type": "p",
+      "content": "Build the QA payload for the prompt."
+    },
+    {
+      "type": "p",
+      "content": "app_name (str): Name of the app.\nretriever (VectorStoreRetriever): Retriever instance.\nquestion (str): Question asked in the prompt.\nanswer (str): Answer generated by the model.\nauth_context (Optional[AuthContext]): Authentication context.\ndocs (List[Document]): List of documents retrieved.\nprompt_entities (Dict[str, Any]): Entities present in the prompt.\nprompt_time (str): Time when the prompt was generated.\nprompt_gov_enabled (bool): Whether prompt governance is enabled."
+    },
+    {
+      "type": "p",
+      "content": "The QA payload for the prompt."
+    },
+    {
+      "type": "li",
+      "content": "app_name(str)"
+    },
+    {
+      "type": "p",
+      "content": "app_name(str)"
+    },
+    {
+      "type": "li",
+      "content": "retriever(VectorStoreRetriever)"
+    },
+    {
+      "type": "p",
+      "content": "retriever(VectorStoreRetriever)"
+    },
+    {
+      "type": "li",
+      "content": "question(str)"
+    },
+    {
+      "type": "p",
+      "content": "question(str)"
+    },
+    {
+      "type": "li",
+      "content": "answer(str)"
+    },
+    {
+      "type": "p",
+      "content": "answer(str)"
+    },
+    {
+      "type": "li",
+      "content": "auth_context(AuthContext|None)"
+    },
+    {
+      "type": "p",
+      "content": "auth_context(AuthContext|None)"
+    },
+    {
+      "type": "li",
+      "content": "docs(List[Document])"
+    },
+    {
+      "type": "p",
+      "content": "docs(List[Document])"
+    },
+    {
+      "type": "li",
+      "content": "prompt_entities(Dict[str,Any])"
+    },
+    {
+      "type": "p",
+      "content": "prompt_entities(Dict[str,Any])"
+    },
+    {
+      "type": "li",
+      "content": "prompt_time(str)"
+    },
+    {
+      "type": "p",
+      "content": "prompt_time(str)"
+    },
+    {
+      "type": "li",
+      "content": "prompt_gov_enabled(bool)"
+    },
+    {
+      "type": "p",
+      "content": "prompt_gov_enabled(bool)"
+    },
+    {
+      "type": "p",
+      "content": "Check the validity of the given prompt using a remote classification service."
+    },
+    {
+      "type": "p",
+      "content": "This method sends a prompt to a remote classifier service and return entities\npresent in prompt or not."
+    },
+    {
+      "type": "p",
+      "content": "question(str) – The prompt question to be validated."
+    },
+    {
+      "type": "p",
+      "content": "True if the prompt is valid (does not contain deny list entities),\nFalse otherwise.\ndict: The entities present in the prompt"
+    },
+    {
+      "type": "p",
+      "content": "Send app discovery request to Pebblo server & cloud."
+    },
+    {
+      "type": "p",
+      "content": "app(App) – App instance to be discovered."
+    },
+    {
+      "type": "p",
+      "content": "Send prompt to Pebblo server for classification.\nThen send prompt to Daxa cloud(If api_key is present)."
+    },
+    {
+      "type": "li",
+      "content": "app_name(str) – Name of the app."
+    },
+    {
+      "type": "p",
+      "content": "app_name(str) – Name of the app."
+    },
+    {
+      "type": "li",
+      "content": "retriever(VectorStoreRetriever) – Retriever instance."
+    },
+    {
+      "type": "p",
+      "content": "retriever(VectorStoreRetriever) – Retriever instance."
+    },
+    {
+      "type": "li",
+      "content": "question(str) – Question asked in the prompt."
+    },
+    {
+      "type": "p",
+      "content": "question(str) – Question asked in the prompt."
+    },
+    {
+      "type": "li",
+      "content": "answer(str) – Answer generated by the model."
+    },
+    {
+      "type": "p",
+      "content": "answer(str) – Answer generated by the model."
+    },
+    {
+      "type": "li",
+      "content": "auth_context(Optional[AuthContext]) – Authentication context."
+    },
+    {
+      "type": "p",
+      "content": "auth_context(Optional[AuthContext]) – Authentication context."
+    },
+    {
+      "type": "li",
+      "content": "docs(List[Document]) – List of documents retrieved."
+    },
+    {
+      "type": "p",
+      "content": "docs(List[Document]) – List of documents retrieved."
+    },
+    {
+      "type": "li",
+      "content": "prompt_entities(Dict[str,Any]) – Entities present in the prompt."
+    },
+    {
+      "type": "p",
+      "content": "prompt_entities(Dict[str,Any]) – Entities present in the prompt."
+    },
+    {
+      "type": "li",
+      "content": "prompt_time(str) – Time when the prompt was generated."
+    },
+    {
+      "type": "p",
+      "content": "prompt_time(str) – Time when the prompt was generated."
+    },
+    {
+      "type": "li",
+      "content": "prompt_gov_enabled(bool) – Whether prompt governance is enabled."
+    },
+    {
+      "type": "p",
+      "content": "prompt_gov_enabled(bool) – Whether prompt governance is enabled."
+    },
+    {
+      "type": "li",
+      "content": "PebbloRetrievalAPIWrapperapi_keyclassifier_locationclassifier_urlcloud_urlamake_request()make_request()update_cloud_payload()acheck_prompt_validity()asend_prompt()build_prompt_qa_payload()check_prompt_validity()send_app_discover()send_prompt()"
+    },
+    {
+      "type": "li",
+      "content": "classifier_location"
+    },
+    {
+      "type": "li",
+      "content": "classifier_url"
+    },
+    {
+      "type": "li",
+      "content": "amake_request()"
+    },
+    {
+      "type": "li",
+      "content": "make_request()"
+    },
+    {
+      "type": "li",
+      "content": "update_cloud_payload()"
+    },
+    {
+      "type": "li",
+      "content": "acheck_prompt_validity()"
+    },
+    {
+      "type": "li",
+      "content": "asend_prompt()"
+    },
+    {
+      "type": "li",
+      "content": "build_prompt_qa_payload()"
+    },
+    {
+      "type": "li",
+      "content": "check_prompt_validity()"
+    },
+    {
+      "type": "li",
+      "content": "send_app_discover()"
+    },
+    {
+      "type": "li",
+      "content": "send_prompt()"
+    }
+  ],
+  "code_examples": [
+    "chains",
+    "BaseModel",
+    "PebbloRetrievalAPIWrapper",
+    "api_key",
+    "classifier_location",
+    "classifier_url",
+    "cloud_url",
+    "amake_request()",
+    "make_request()",
+    "update_cloud_payload()",
+    "acheck_prompt_validity()",
+    "asend_prompt()",
+    "build_prompt_qa_payload()",
+    "check_prompt_validity()",
+    "send_app_discover()",
+    "send_prompt()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.chains.pebblo_retrieval.utilities.PebbloRetrievalAPIWrapper[source]#",
+    "langchain_community.chains.pebblo_retrieval.utilities.",
+    "PebbloRetrievalAPIWrapper",
+    "paramapi_key:str|None[Required]#",
+    "api_key",
+    "paramclassifier_location:str='local'#",
+    "classifier_location",
+    "paramclassifier_url:str|None[Required]#",
+    "classifier_url",
+    "paramcloud_url:str|None[Required]#",
+    "cloud_url",
+    "asyncstaticamake_request(method:str,url:str,headers:dict,payload:dict|None=None,timeout:int=20,)→Any[source]#",
+    "amake_request",
+    "(",
+    "method:str",
+    "url:str",
+    "headers:dict",
+    "payload:dict|None=None",
+    "timeout:int=20",
+    ")",
+    "→Any",
+    "→",
+    "Any",
+    "staticmake_request(method:str,url:str,headers:dict,payload:dict|None=None,timeout:int=20,)→Response|None[source]#",
+    "make_request",
+    "(",
+    "method:str",
+    "url:str",
+    "headers:dict",
+    "payload:dict|None=None",
+    "timeout:int=20",
+    ")",
+    "→Response|None",
+    "→",
+    "Response|None",
+    "staticupdate_cloud_payload(payload:dict,pebblo_resp:dict|None,)→None[source]#",
+    "update_cloud_payload",
+    "(",
+    "payload:dict",
+    "pebblo_resp:dict|None",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "asyncacheck_prompt_validity(question:str,)→Tuple[bool,Dict[str,Any]][source]#",
+    "acheck_prompt_validity",
+    "(",
+    "question:str",
+    ")",
+    "→Tuple[bool,Dict[str,Any]]",
+    "→",
+    "Tuple[bool,Dict[str,Any]]",
+    "asyncasend_prompt(app_name:str,retriever:VectorStoreRetriever,question:str,answer:str,auth_context:AuthContext|None,docs:List[Document],prompt_entities:Dict[str,Any],prompt_time:str,prompt_gov_enabled:bool=False,)→None[source]#",
+    "asend_prompt",
+    "(",
+    "app_name:str",
+    "retriever:VectorStoreRetriever",
+    "question:str",
+    "answer:str",
+    "auth_context:AuthContext|None",
+    "docs:List[Document]",
+    "prompt_entities:Dict[str,Any]",
+    "prompt_time:str",
+    "prompt_gov_enabled:bool=False",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "build_prompt_qa_payload(app_name:str,retriever:VectorStoreRetriever,question:str,answer:str,auth_context:AuthContext|None,docs:List[Document],prompt_entities:Dict[str,Any],prompt_time:str,prompt_gov_enabled:bool=False,)→dict[source]#",
+    "build_prompt_qa_payload",
+    "(",
+    "app_name:str",
+    "retriever:VectorStoreRetriever",
+    "question:str",
+    "answer:str",
+    "auth_context:AuthContext|None",
+    "docs:List[Document]",
+    "prompt_entities:Dict[str,Any]",
+    "prompt_time:str",
+    "prompt_gov_enabled:bool=False",
+    ")",
+    "→dict",
+    "→",
+    "dict",
+    "check_prompt_validity(question:str,)→Tuple[bool,Dict[str,Any]][source]#",
+    "check_prompt_validity",
+    "(",
+    "question:str",
+    ")",
+    "→Tuple[bool,Dict[str,Any]]",
+    "→",
+    "Tuple[bool,Dict[str,Any]]",
+    "send_app_discover(app:App,)→None[source]#",
+    "send_app_discover",
+    "(",
+    "app:App",
+    ")",
+    "→None",
+    "→",
+    "None",
+    "send_prompt(app_name:str,retriever:VectorStoreRetriever,question:str,answer:str,auth_context:AuthContext|None,docs:List[Document],prompt_entities:Dict[str,Any],prompt_time:str,prompt_gov_enabled:bool=False,)→None[source]#",
+    "send_prompt",
+    "(",
+    "app_name:str",
+    "retriever:VectorStoreRetriever",
+    "question:str",
+    "answer:str",
+    "auth_context:AuthContext|None",
+    "docs:List[Document]",
+    "prompt_entities:Dict[str,Any]",
+    "prompt_time:str",
+    "prompt_gov_enabled:bool=False",
+    ")",
+    "→None",
+    "→",
+    "None"
+  ],
+  "parameters": [
+    "method:str",
+    "url:str",
+    "headers:dict",
+    "payload:dict|None=None",
+    "timeout:int=20",
+    "method:str",
+    "url:str",
+    "headers:dict",
+    "payload:dict|None=None",
+    "timeout:int=20",
+    "payload:dict",
+    "pebblo_resp:dict|None",
+    "question:str",
+    "app_name:str",
+    "retriever:VectorStoreRetriever",
+    "question:str",
+    "answer:str",
+    "auth_context:AuthContext|None",
+    "docs:List[Document]",
+    "prompt_entities:Dict[str,Any]",
+    "prompt_time:str",
+    "prompt_gov_enabled:bool=False",
+    "app_name:str",
+    "retriever:VectorStoreRetriever",
+    "question:str",
+    "answer:str",
+    "auth_context:AuthContext|None",
+    "docs:List[Document]",
+    "prompt_entities:Dict[str,Any]",
+    "prompt_time:str",
+    "prompt_gov_enabled:bool=False",
+    "question:str",
+    "app:App",
+    "app_name:str",
+    "retriever:VectorStoreRetriever",
+    "question:str",
+    "answer:str",
+    "auth_context:AuthContext|None",
+    "docs:List[Document]",
+    "prompt_entities:Dict[str,Any]",
+    "prompt_time:str",
+    "prompt_gov_enabled:bool=False"
+  ]
+}

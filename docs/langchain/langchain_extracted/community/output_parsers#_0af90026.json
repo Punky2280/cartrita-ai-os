@@ -1,0 +1,92 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/output_parsers.html#langchain-community-output-parsers",
+  "title": "output_parsers#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "output_parsers"
+    },
+    {
+      "type": "p",
+      "content": "OutputParserclasses parse the output of an LLM call."
+    },
+    {
+      "type": "p",
+      "content": "Class hierarchy:"
+    },
+    {
+      "type": "p",
+      "content": "Main helpers:"
+    },
+    {
+      "type": "p",
+      "content": "output_parsers.ernie_functions.JsonKeyOutputFunctionsParser"
+    },
+    {
+      "type": "p",
+      "content": "Parse an output as the element of the Json object."
+    },
+    {
+      "type": "p",
+      "content": "output_parsers.ernie_functions.JsonOutputFunctionsParser"
+    },
+    {
+      "type": "p",
+      "content": "Parse an output as the Json object."
+    },
+    {
+      "type": "p",
+      "content": "output_parsers.ernie_functions.OutputFunctionsParser"
+    },
+    {
+      "type": "p",
+      "content": "Parse an output that is one of sets of values."
+    },
+    {
+      "type": "p",
+      "content": "output_parsers.ernie_functions.PydanticAttrOutputFunctionsParser"
+    },
+    {
+      "type": "p",
+      "content": "Parse an output as an attribute of a pydantic object."
+    },
+    {
+      "type": "p",
+      "content": "output_parsers.ernie_functions.PydanticOutputFunctionsParser"
+    },
+    {
+      "type": "p",
+      "content": "Parse an output as a pydantic object."
+    },
+    {
+      "type": "p",
+      "content": "output_parsers.rail_parser.GuardrailsOutputParser"
+    },
+    {
+      "type": "p",
+      "content": "Parse the output of an LLM call using Guardrails."
+    }
+  ],
+  "code_examples": [
+    "output_parsers",
+    "output_parsers",
+    "BaseLLMOutputParser-->BaseOutputParser--><name>OutputParser# GuardrailsOutputParser",
+    "Serializable,Generation,PromptValue",
+    "output_parsers.ernie_functions.JsonKeyOutputFunctionsParser",
+    "output_parsers.ernie_functions.JsonOutputFunctionsParser",
+    "output_parsers.ernie_functions.OutputFunctionsParser",
+    "output_parsers.ernie_functions.PydanticAttrOutputFunctionsParser",
+    "output_parsers.ernie_functions.PydanticOutputFunctionsParser",
+    "output_parsers.rail_parser.GuardrailsOutputParser"
+  ],
+  "api_signatures": [],
+  "parameters": []
+}

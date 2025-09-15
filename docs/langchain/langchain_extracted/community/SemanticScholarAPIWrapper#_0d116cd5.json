@@ -1,0 +1,135 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.semanticscholar.SemanticScholarAPIWrapper.html",
+  "title": "SemanticScholarAPIWrapper#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "SemanticScholarAPIWrapper"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Wrapper around semanticscholar.org API.danielnsilva/semanticscholar"
+    },
+    {
+      "type": "p",
+      "content": "You should have this library installed."
+    },
+    {
+      "type": "p",
+      "content": "pip install semanticscholar"
+    },
+    {
+      "type": "p",
+      "content": "Semantic Scholar API can conduct searches and fetch document metadata\nlike title, abstract, authors, etc."
+    },
+    {
+      "type": "p",
+      "content": "Attributes:\ntop_k_results: number of the top-scored document used for the Semantic Scholar tool\nload_max_docs: a limit to the number of loaded documents"
+    },
+    {
+      "type": "p",
+      "content": "Example:\n.. code-block:: python"
+    },
+    {
+      "type": "p",
+      "content": "from langchain_community.utilities.semanticscholar import SemanticScholarAPIWrapper\nss = SemanticScholarAPIWrapper("
+    },
+    {
+      "type": "p",
+      "content": "top_k_results = 3,\nload_max_docs = 3"
+    },
+    {
+      "type": "p",
+      "content": ")\nss.run(“biases in large language models”)"
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Run the Semantic Scholar API."
+    },
+    {
+      "type": "li",
+      "content": "SemanticScholarAPIWrapperS2_MAX_QUERY_LENGTHdoc_content_chars_maxload_max_docsreturned_fieldstop_k_resultsrun()"
+    },
+    {
+      "type": "li",
+      "content": "S2_MAX_QUERY_LENGTH"
+    },
+    {
+      "type": "li",
+      "content": "doc_content_chars_max"
+    },
+    {
+      "type": "li",
+      "content": "load_max_docs"
+    },
+    {
+      "type": "li",
+      "content": "returned_fields"
+    },
+    {
+      "type": "li",
+      "content": "top_k_results"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "BaseModel",
+    "SemanticScholarAPIWrapper",
+    "S2_MAX_QUERY_LENGTH",
+    "doc_content_chars_max",
+    "load_max_docs",
+    "returned_fields",
+    "top_k_results",
+    "run()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.utilities.semanticscholar.SemanticScholarAPIWrapper[source]#",
+    "langchain_community.utilities.semanticscholar.",
+    "SemanticScholarAPIWrapper",
+    "paramS2_MAX_QUERY_LENGTH:int=300#",
+    "S2_MAX_QUERY_LENGTH",
+    "paramdoc_content_chars_max:int|None=4000#",
+    "doc_content_chars_max",
+    "paramload_max_docs:int=100#",
+    "load_max_docs",
+    "paramreturned_fields:List[str]=['title','abstract','venue','year','paperId','citationCount','openAccessPdf','authors','externalIds']#",
+    "returned_fields",
+    "paramtop_k_results:int=5#",
+    "top_k_results",
+    "run(query:str)→str[source]#",
+    "run",
+    "(",
+    "query:str",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "query:str"
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "url": "https://python.langchain.com/docs/integrations/providers/cratedb/",
+  "title": "CrateDB",
+  "sections": [
+    {
+      "type": "p",
+      "content": "CrateDBis a distributed and scalable SQL database for storing and\nanalyzing massive amounts of data in near real-time, even with complex\nqueries. It is PostgreSQL-compatible, based on Lucene, and inheriting\nfrom Elasticsearch."
+    },
+    {
+      "type": "h2",
+      "content": "Installation and Setup​"
+    },
+    {
+      "type": "h3",
+      "content": "Setup CrateDB​"
+    },
+    {
+      "type": "p",
+      "content": "There are two ways to get started with CrateDB quickly. Alternatively,\nchoose otherCrateDB installation options."
+    },
+    {
+      "type": "p",
+      "content": "Example: Run a single-node CrateDB instance with security disabled,\nusing Docker or Podman. This is not recommended for production use."
+    },
+    {
+      "type": "p",
+      "content": "CrateDB Cloudis a managed CrateDB service. Sign up for afree trial."
+    },
+    {
+      "type": "h3",
+      "content": "Install Client​"
+    },
+    {
+      "type": "p",
+      "content": "Install the most recent version of thelangchain-cratedbpackage\nand a few others that are needed for this tutorial."
+    },
+    {
+      "type": "h2",
+      "content": "Documentation​"
+    },
+    {
+      "type": "p",
+      "content": "For a more detailed walkthrough of the CrateDB wrapper, seeusing LangChain with CrateDB. See alsoall features of CrateDBto learn about other functionality provided by CrateDB."
+    },
+    {
+      "type": "p",
+      "content": "The CrateDB adapter for LangChain provides APIs to use CrateDB as vector store,\ndocument loader, and storage for chat messages."
+    },
+    {
+      "type": "h3",
+      "content": "Vector Store​"
+    },
+    {
+      "type": "p",
+      "content": "Use the CrateDB vector store functionality aroundFLOAT_VECTORandKNN_MATCHfor similarity search and other purposes. See alsoCrateDBVectorStore Tutorial."
+    },
+    {
+      "type": "p",
+      "content": "Make sure you've configured a valid OpenAI API key."
+    },
+    {
+      "type": "h3",
+      "content": "Document Loader​"
+    },
+    {
+      "type": "p",
+      "content": "Load load documents from a CrateDB database table, using the document loaderCrateDBLoader, which is based on SQLAlchemy. See alsoCrateDBLoader Tutorial."
+    },
+    {
+      "type": "p",
+      "content": "To use the document loader in your applications:"
+    },
+    {
+      "type": "h3",
+      "content": "Chat Message History​"
+    },
+    {
+      "type": "p",
+      "content": "Use CrateDB as the storage for your chat messages.\nSee alsoCrateDBChatMessageHistory Tutorial."
+    },
+    {
+      "type": "p",
+      "content": "To use the chat message history in your applications:"
+    },
+    {
+      "type": "h3",
+      "content": "Full Cache​"
+    },
+    {
+      "type": "p",
+      "content": "The standard / full cache avoids invoking the LLM when the supplied\nprompt is exactly the same as one encountered already.\nSee alsoCrateDBCache Example."
+    },
+    {
+      "type": "p",
+      "content": "To use the full cache in your applications:"
+    },
+    {
+      "type": "h3",
+      "content": "Semantic Cache​"
+    },
+    {
+      "type": "p",
+      "content": "The semantic cache allows users to retrieve cached prompts based on semantic\nsimilarity between the user input and previously cached inputs. It also avoids\ninvoking the LLM when not needed.\nSee alsoCrateDBSemanticCache Example."
+    },
+    {
+      "type": "p",
+      "content": "To use the semantic cache in your applications:"
+    },
+    {
+      "type": "li",
+      "content": "Installation and SetupSetup CrateDBInstall Client"
+    },
+    {
+      "type": "li",
+      "content": "Setup CrateDB"
+    },
+    {
+      "type": "li",
+      "content": "Install Client"
+    },
+    {
+      "type": "li",
+      "content": "Documentation"
+    },
+    {
+      "type": "li",
+      "content": "FeaturesVector StoreDocument LoaderChat Message HistoryFull CacheSemantic Cache"
+    },
+    {
+      "type": "li",
+      "content": "Vector Store"
+    },
+    {
+      "type": "li",
+      "content": "Document Loader"
+    },
+    {
+      "type": "li",
+      "content": "Chat Message History"
+    },
+    {
+      "type": "li",
+      "content": "Semantic Cache"
+    }
+  ],
+  "code_examples": [
+    "docker run --name=cratedb --rm \\--publish=4200:4200 --publish=5432:5432 --env=CRATE_HEAP_SIZE=2g \\crate:latest -Cdiscovery.type=single-node",
+    "docker run --name=cratedb --rm \\--publish=4200:4200 --publish=5432:5432 --env=CRATE_HEAP_SIZE=2g \\crate:latest -Cdiscovery.type=single-node",
+    "pip install --upgrade langchain-cratedb langchain-openai unstructured",
+    "pip install --upgrade langchain-cratedb langchain-openai unstructured",
+    "FLOAT_VECTOR",
+    "KNN_MATCH",
+    "export OPENAI_API_KEY=sk-XJZ...",
+    "export OPENAI_API_KEY=sk-XJZ...",
+    "fromlangchain_community.document_loadersimportUnstructuredURLLoaderfromlangchain_cratedbimportCrateDBVectorStorefromlangchain_openaiimportOpenAIEmbeddingsfromlangchain.text_splitterimportCharacterTextSplitterloader=UnstructuredURLLoader(urls=[\"https://github.com/langchain-ai/langchain/raw/refs/tags/langchain-core==0.3.28/docs/docs/how_to/state_of_the_union.txt\"])documents=loader.load()text_splitter=CharacterTextSplitter(chunk_size=1000,chunk_overlap=0)docs=text_splitter.split_documents(documents)embeddings=OpenAIEmbeddings()# Connect to a self-managed CrateDB instance on localhost.CONNECTION_STRING=\"crate://?schema=testdrive\"store=CrateDBVectorStore.from_documents(documents=docs,embedding=embeddings,collection_name=\"state_of_the_union\",connection=CONNECTION_STRING,)query=\"What did the president say about Ketanji Brown Jackson\"docs_with_score=store.similarity_search_with_score(query)",
+    "fromlangchain_community.document_loadersimportUnstructuredURLLoaderfromlangchain_cratedbimportCrateDBVectorStorefromlangchain_openaiimportOpenAIEmbeddingsfromlangchain.text_splitterimportCharacterTextSplitterloader=UnstructuredURLLoader(urls=[\"https://github.com/langchain-ai/langchain/raw/refs/tags/langchain-core==0.3.28/docs/docs/how_to/state_of_the_union.txt\"])documents=loader.load()text_splitter=CharacterTextSplitter(chunk_size=1000,chunk_overlap=0)docs=text_splitter.split_documents(documents)embeddings=OpenAIEmbeddings()# Connect to a self-managed CrateDB instance on localhost.CONNECTION_STRING=\"crate://?schema=testdrive\"store=CrateDBVectorStore.from_documents(documents=docs,embedding=embeddings,collection_name=\"state_of_the_union\",connection=CONNECTION_STRING,)query=\"What did the president say about Ketanji Brown Jackson\"docs_with_score=store.similarity_search_with_score(query)",
+    "CrateDBLoader",
+    "importsqlalchemyassafromlangchain_community.utilitiesimportSQLDatabasefromlangchain_cratedbimportCrateDBLoader# Connect to a self-managed CrateDB instance on localhost.CONNECTION_STRING=\"crate://?schema=testdrive\"db=SQLDatabase(engine=sa.create_engine(CONNECTION_STRING))loader=CrateDBLoader('SELECT * FROM sys.summits LIMIT 42',db=db,)documents=loader.load()",
+    "importsqlalchemyassafromlangchain_community.utilitiesimportSQLDatabasefromlangchain_cratedbimportCrateDBLoader# Connect to a self-managed CrateDB instance on localhost.CONNECTION_STRING=\"crate://?schema=testdrive\"db=SQLDatabase(engine=sa.create_engine(CONNECTION_STRING))loader=CrateDBLoader('SELECT * FROM sys.summits LIMIT 42',db=db,)documents=loader.load()",
+    "fromlangchain_cratedbimportCrateDBChatMessageHistory# Connect to a self-managed CrateDB instance on localhost.CONNECTION_STRING=\"crate://?schema=testdrive\"message_history=CrateDBChatMessageHistory(session_id=\"test-session\",connection=CONNECTION_STRING,)message_history.add_user_message(\"hi!\")",
+    "fromlangchain_cratedbimportCrateDBChatMessageHistory# Connect to a self-managed CrateDB instance on localhost.CONNECTION_STRING=\"crate://?schema=testdrive\"message_history=CrateDBChatMessageHistory(session_id=\"test-session\",connection=CONNECTION_STRING,)message_history.add_user_message(\"hi!\")",
+    "importsqlalchemyassafromlangchain.globalsimportset_llm_cachefromlangchain_openaiimportChatOpenAI,OpenAIEmbeddingsfromlangchain_cratedbimportCrateDBCache# Configure cache.engine=sa.create_engine(\"crate://crate@localhost:4200/?schema=testdrive\")set_llm_cache(CrateDBCache(engine))# Invoke LLM conversation.llm=ChatOpenAI(model_name=\"chatgpt-4o-latest\",temperature=0.7,)print()print(\"Asking with full cache:\")answer=llm.invoke(\"What is the answer to everything?\")print(answer.content)",
+    "importsqlalchemyassafromlangchain.globalsimportset_llm_cachefromlangchain_openaiimportChatOpenAI,OpenAIEmbeddingsfromlangchain_cratedbimportCrateDBCache# Configure cache.engine=sa.create_engine(\"crate://crate@localhost:4200/?schema=testdrive\")set_llm_cache(CrateDBCache(engine))# Invoke LLM conversation.llm=ChatOpenAI(model_name=\"chatgpt-4o-latest\",temperature=0.7,)print()print(\"Asking with full cache:\")answer=llm.invoke(\"What is the answer to everything?\")print(answer.content)",
+    "importsqlalchemyassafromlangchain.globalsimportset_llm_cachefromlangchain_openaiimportChatOpenAI,OpenAIEmbeddingsfromlangchain_cratedbimportCrateDBSemanticCache# Configure embeddings.embeddings=OpenAIEmbeddings(model=\"text-embedding-3-small\")# Configure cache.engine=sa.create_engine(\"crate://crate@localhost:4200/?schema=testdrive\")set_llm_cache(CrateDBSemanticCache(embedding=embeddings,connection=engine,search_threshold=1.0,))# Invoke LLM conversation.llm=ChatOpenAI(model_name=\"chatgpt-4o-latest\")print()print(\"Asking with semantic cache:\")answer=llm.invoke(\"What is the answer to everything?\")print(answer.content)",
+    "importsqlalchemyassafromlangchain.globalsimportset_llm_cachefromlangchain_openaiimportChatOpenAI,OpenAIEmbeddingsfromlangchain_cratedbimportCrateDBSemanticCache# Configure embeddings.embeddings=OpenAIEmbeddings(model=\"text-embedding-3-small\")# Configure cache.engine=sa.create_engine(\"crate://crate@localhost:4200/?schema=testdrive\")set_llm_cache(CrateDBSemanticCache(embedding=embeddings,connection=engine,search_threshold=1.0,))# Invoke LLM conversation.llm=ChatOpenAI(model_name=\"chatgpt-4o-latest\")print()print(\"Asking with semantic cache:\")answer=llm.invoke(\"What is the answer to everything?\")print(answer.content)"
+  ],
+  "api_signatures": [],
+  "parameters": []
+}

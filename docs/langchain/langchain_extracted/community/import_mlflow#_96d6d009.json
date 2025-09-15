@@ -1,0 +1,41 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/callbacks/langchain_community.callbacks.mlflow_callback.import_mlflow.html",
+  "title": "import_mlflow#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "import_mlflow"
+    },
+    {
+      "type": "p",
+      "content": "Import the mlflow python package and raise an error if it is not installed."
+    },
+    {
+      "type": "li",
+      "content": "import_mlflow()"
+    }
+  ],
+  "code_examples": [
+    "callbacks",
+    "import_mlflow()"
+  ],
+  "api_signatures": [
+    "langchain_community.callbacks.mlflow_callback.import_mlflow()→Any[source]#",
+    "langchain_community.callbacks.mlflow_callback.",
+    "import_mlflow",
+    "(",
+    ")",
+    "→Any",
+    "→",
+    "Any"
+  ],
+  "parameters": []
+}

@@ -1,0 +1,344 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.duckdb_loader.DuckDBLoader.html",
+  "title": "DuckDBLoader#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "document_loaders"
+    },
+    {
+      "type": "li",
+      "content": "DuckDBLoader"
+    },
+    {
+      "type": "p",
+      "content": "Load fromDuckDB."
+    },
+    {
+      "type": "p",
+      "content": "Each document represents one row of the result. Thepage_content_columnsare written into thepage_contentof the document. Themetadata_columnsare written into themetadataof the document. By default, all columns\nare written into thepage_contentand none into themetadata."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – The query to execute."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – The query to execute."
+    },
+    {
+      "type": "li",
+      "content": "database(str) – The database to connect to. Defaults to “:memory:”."
+    },
+    {
+      "type": "p",
+      "content": "database(str) – The database to connect to. Defaults to “:memory:”."
+    },
+    {
+      "type": "li",
+      "content": "read_only(bool) – Whether to open the database in read-only mode.\nDefaults to False."
+    },
+    {
+      "type": "p",
+      "content": "read_only(bool) – Whether to open the database in read-only mode.\nDefaults to False."
+    },
+    {
+      "type": "li",
+      "content": "config(Dict[str,str]|None) – A dictionary of configuration options to pass to the database.\nOptional."
+    },
+    {
+      "type": "p",
+      "content": "config(Dict[str,str]|None) – A dictionary of configuration options to pass to the database.\nOptional."
+    },
+    {
+      "type": "li",
+      "content": "page_content_columns(List[str]|None) – The columns to write into thepage_contentof the document. Optional."
+    },
+    {
+      "type": "p",
+      "content": "page_content_columns(List[str]|None) – The columns to write into thepage_contentof the document. Optional."
+    },
+    {
+      "type": "li",
+      "content": "metadata_columns(List[str]|None) – The columns to write into themetadataof the document.\nOptional."
+    },
+    {
+      "type": "p",
+      "content": "metadata_columns(List[str]|None) – The columns to write into themetadataof the document.\nOptional."
+    },
+    {
+      "type": "p",
+      "content": "__init__(query[, database, read_only, ...])"
+    },
+    {
+      "type": "p",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "load_and_split([text_splitter])"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks."
+    },
+    {
+      "type": "li",
+      "content": "query(str) – The query to execute."
+    },
+    {
+      "type": "p",
+      "content": "query(str) – The query to execute."
+    },
+    {
+      "type": "li",
+      "content": "database(str) – The database to connect to. Defaults to “:memory:”."
+    },
+    {
+      "type": "p",
+      "content": "database(str) – The database to connect to. Defaults to “:memory:”."
+    },
+    {
+      "type": "li",
+      "content": "read_only(bool) – Whether to open the database in read-only mode.\nDefaults to False."
+    },
+    {
+      "type": "p",
+      "content": "read_only(bool) – Whether to open the database in read-only mode.\nDefaults to False."
+    },
+    {
+      "type": "li",
+      "content": "config(Dict[str,str]|None) – A dictionary of configuration options to pass to the database.\nOptional."
+    },
+    {
+      "type": "p",
+      "content": "config(Dict[str,str]|None) – A dictionary of configuration options to pass to the database.\nOptional."
+    },
+    {
+      "type": "li",
+      "content": "page_content_columns(List[str]|None) – The columns to write into thepage_contentof the document. Optional."
+    },
+    {
+      "type": "p",
+      "content": "page_content_columns(List[str]|None) – The columns to write into thepage_contentof the document. Optional."
+    },
+    {
+      "type": "li",
+      "content": "metadata_columns(List[str]|None) – The columns to write into themetadataof the document.\nOptional."
+    },
+    {
+      "type": "p",
+      "content": "metadata_columns(List[str]|None) – The columns to write into themetadataof the document.\nOptional."
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "AsyncIterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "A lazy loader for Documents."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load data into Document objects."
+    },
+    {
+      "type": "p",
+      "content": "the documents."
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Load Documents and split into chunks. Chunks are returned as Documents."
+    },
+    {
+      "type": "p",
+      "content": "Do not override this method. It should be considered to be deprecated!"
+    },
+    {
+      "type": "p",
+      "content": "text_splitter(Optional[TextSplitter]) – TextSplitter instance to use for splitting documents.\nDefaults to RecursiveCharacterTextSplitter."
+    },
+    {
+      "type": "p",
+      "content": "ImportError– If langchain-text-splitters is not installed\n    and no text_splitter is provided."
+    },
+    {
+      "type": "p",
+      "content": "List of Documents."
+    },
+    {
+      "type": "p",
+      "content": "list[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Examples using DuckDBLoader"
+    },
+    {
+      "type": "li",
+      "content": "DuckDBLoader__init__()alazy_load()aload()lazy_load()load()load_and_split()"
+    },
+    {
+      "type": "li",
+      "content": "alazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    },
+    {
+      "type": "li",
+      "content": "load_and_split()"
+    }
+  ],
+  "code_examples": [
+    "document_loaders",
+    "__init__",
+    "alazy_load",
+    "aload",
+    "lazy_load",
+    "load",
+    "load_and_split",
+    "DuckDBLoader",
+    "__init__()",
+    "alazy_load()",
+    "aload()",
+    "lazy_load()",
+    "load()",
+    "load_and_split()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.document_loaders.duckdb_loader.DuckDBLoader(query:str,database:str=':memory:',read_only:bool=False,config:Dict[str,str]|None=None,page_content_columns:List[str]|None=None,metadata_columns:List[str]|None=None,)[source]#",
+    "langchain_community.document_loaders.duckdb_loader.",
+    "DuckDBLoader",
+    "(",
+    "query:str",
+    "database:str=':memory:'",
+    "read_only:bool=False",
+    "config:Dict[str,str]|None=None",
+    "page_content_columns:List[str]|None=None",
+    "metadata_columns:List[str]|None=None",
+    ")",
+    "__init__(query:str,database:str=':memory:',read_only:bool=False,config:Dict[str,str]|None=None,page_content_columns:List[str]|None=None,metadata_columns:List[str]|None=None,)[source]#",
+    "__init__",
+    "(",
+    "query:str",
+    "database:str=':memory:'",
+    "read_only:bool=False",
+    "config:Dict[str,str]|None=None",
+    "page_content_columns:List[str]|None=None",
+    "metadata_columns:List[str]|None=None",
+    ")",
+    "asyncalazy_load()→AsyncIterator[Document]#",
+    "alazy_load",
+    "(",
+    ")",
+    "→AsyncIterator[Document]",
+    "→",
+    "AsyncIterator[Document]",
+    "asyncaload()→list[Document]#",
+    "aload",
+    "(",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]",
+    "lazy_load()→Iterator[Document]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "load()→List[Document][source]#",
+    "load",
+    "(",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]",
+    "load_and_split(text_splitter:TextSplitter|None=None,)→list[Document]#",
+    "load_and_split",
+    "(",
+    "text_splitter:TextSplitter|None=None",
+    ")",
+    "→list[Document]",
+    "→",
+    "list[Document]"
+  ],
+  "parameters": [
+    "query:str",
+    "database:str=':memory:'",
+    "read_only:bool=False",
+    "config:Dict[str,str]|None=None",
+    "page_content_columns:List[str]|None=None",
+    "metadata_columns:List[str]|None=None",
+    "query:str",
+    "database:str=':memory:'",
+    "read_only:bool=False",
+    "config:Dict[str,str]|None=None",
+    "page_content_columns:List[str]|None=None",
+    "metadata_columns:List[str]|None=None",
+    "text_splitter:TextSplitter|None=None"
+  ]
+}

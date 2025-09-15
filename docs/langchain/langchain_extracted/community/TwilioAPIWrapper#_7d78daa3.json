@@ -1,0 +1,128 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.twilio.TwilioAPIWrapper.html#langchain_community.utilities.twilio.TwilioAPIWrapper",
+  "title": "TwilioAPIWrapper#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "TwilioAPIWrapper"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Messaging Client using Twilio."
+    },
+    {
+      "type": "p",
+      "content": "To use, you should have thetwiliopython package installed,\nand the environment variablesTWILIO_ACCOUNT_SID,TWILIO_AUTH_TOKEN, andTWILIO_FROM_NUMBER, or passaccount_sid,auth_token, andfrom_numberas\nnamed parameters to the constructor."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Twilio account string identifier."
+    },
+    {
+      "type": "p",
+      "content": "Twilio auth token."
+    },
+    {
+      "type": "p",
+      "content": "A Twilio phone number in [E.164](https://www.twilio.com/docs/glossary/what-e164)\nformat, an\n[alphanumeric sender ID](https://www.twilio.com/docs/sms/send-messages#use-an-alphanumeric-sender-id),\nor a [Channel Endpoint address](https://www.twilio.com/docs/sms/channels#channel-addresses)\nthat is enabled for the type of message you want to send. Phone numbers or\n[short codes](https://www.twilio.com/docs/sms/api/short-code) purchased from\nTwilio also work here. You cannot, for example, spoof messages from a private\ncell phone number. If you are usingmessaging_service_sid, this parameter\nmust be empty."
+    },
+    {
+      "type": "p",
+      "content": "Run body through Twilio and respond with message sid."
+    },
+    {
+      "type": "li",
+      "content": "body(str) – The text of the message you want to send. Can be up to 1,600\ncharacters in length."
+    },
+    {
+      "type": "p",
+      "content": "body(str) – The text of the message you want to send. Can be up to 1,600\ncharacters in length."
+    },
+    {
+      "type": "li",
+      "content": "to(str) – The destination phone number in\n[E.164](https://www.twilio.com/docs/glossary/what-e164) format for\nSMS/MMS or\n[Channel user address](https://www.twilio.com/docs/sms/channels#channel-addresses)\nfor other 3rd-party channels."
+    },
+    {
+      "type": "p",
+      "content": "to(str) – The destination phone number in\n[E.164](https://www.twilio.com/docs/glossary/what-e164) format for\nSMS/MMS or\n[Channel user address](https://www.twilio.com/docs/sms/channels#channel-addresses)\nfor other 3rd-party channels."
+    },
+    {
+      "type": "p",
+      "content": "Examples using TwilioAPIWrapper"
+    },
+    {
+      "type": "li",
+      "content": "TwilioAPIWrapperaccount_sidauth_tokenfrom_numberrun()"
+    },
+    {
+      "type": "li",
+      "content": "account_sid"
+    },
+    {
+      "type": "li",
+      "content": "from_number"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "BaseModel",
+    "twilio",
+    "TWILIO_ACCOUNT_SID",
+    "TWILIO_AUTH_TOKEN",
+    "TWILIO_FROM_NUMBER",
+    "fromlangchain_community.utilities.twilioimportTwilioAPIWrappertwilio=TwilioAPIWrapper(account_sid=\"ACxxx\",auth_token=\"xxx\",from_number=\"+10123456789\")twilio.run('test','+12484345508')",
+    "TwilioAPIWrapper",
+    "account_sid",
+    "auth_token",
+    "from_number",
+    "run()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.utilities.twilio.TwilioAPIWrapper[source]#",
+    "langchain_community.utilities.twilio.",
+    "TwilioAPIWrapper",
+    "paramaccount_sid:str|None=None#",
+    "account_sid",
+    "paramauth_token:str|None=None#",
+    "auth_token",
+    "paramfrom_number:str|None=None#",
+    "from_number",
+    "run(body:str,to:str)→str[source]#",
+    "run",
+    "(",
+    "body:str",
+    "to:str",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "body:str",
+    "to:str"
+  ]
+}

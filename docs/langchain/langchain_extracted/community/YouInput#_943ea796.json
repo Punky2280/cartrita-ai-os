@@ -1,0 +1,56 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.you.tool.YouInput.html#youinput",
+  "title": "YouInput#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Input schema for the you.com tool."
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "should be a search query"
+    },
+    {
+      "type": "li",
+      "content": "YouInputquery"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "BaseModel",
+    "YouInput",
+    "query"
+  ],
+  "api_signatures": [
+    "classlangchain_community.tools.you.tool.YouInput[source]#",
+    "langchain_community.tools.you.tool.",
+    "YouInput",
+    "paramquery:str[Required]#",
+    "query"
+  ],
+  "parameters": []
+}

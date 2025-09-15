@@ -25,13 +25,34 @@ self.addEventListener('fetch', (event) => {
   const { request } = event
   if (request.method !== 'GET') return
 
+  // Skip caching for external resources
+  const url = new URL(request.url)
+  if (!url.origin.includes(self.location.origin)) {
+    event.respondWith(fetch(request))
+    return
+  }
+
   event.respondWith(
-    caches.match(request).then((cached) =>
-      cached || fetch(request).then((response) => {
+    caches.match(request).then((cached) => {
+      if (cached) return cached
+
+      return fetch(request).then((response) => {
+        // Only cache successful responses
+        if (!response || response.status !== 200 || response.type !== 'basic') {
+          return response
+        }
+
         const copy = response.clone()
         caches.open(CACHE_NAME).then((cache) => cache.put(request, copy))
         return response
-      }).catch(() => cached)
-    )
+      }).catch((error) => {
+        console.error('Fetch failed:', error)
+        // Return a fallback response for navigation requests
+        if (request.mode === 'navigate') {
+          return caches.match('/')
+        }
+        throw error
+      })
+    })
   )
 })

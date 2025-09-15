@@ -49,16 +49,16 @@ b1f7d26e3ebc: Pull complete
 73ecb62a9eb1: Pull complete
 Digest: sha256:1dde7739c282cc06df025b5ced3d16793cfc80b444ca16e7559d003d22d3d685
 Status: Downloaded newer image for codacy/codacy-analysis-cli:latest
-09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/3251787460569316766, make sure it is readable by everybody. 
-09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/4592972644480343246, make sure it is readable by everybody. 
-09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/8861565124924762992, make sure it is readable by everybody. 
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for jacksonlinter 
-java.lang.Throwable: 
+09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/3251787460569316766, make sure it is readable by everybody.
+09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/4592972644480343246, make sure it is readable by everybody.
+09/12 04:22:52 [1;31mERROR[0;39m [36mc.c.a.core.files.FileCollector:102[0;39m - Could not read file /src/services/ai-orchestrator/.ruff_cache/0.12.11/8861565124924762992, make sure it is readable by everybody.
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for jacksonlinter
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -122,13 +122,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for pmd 
-java.lang.Throwable: 
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for pmd
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -172,13 +172,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:71[0;39m - Failed duplication for duplication 
-java.lang.Throwable: 
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:71[0;39m - Failed duplication for duplication
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -212,13 +212,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for pmd-7 
-java.lang.Throwable: 
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for pmd-7
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -282,13 +282,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics 
-java.lang.Throwable: 
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -322,13 +322,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for checkov 
-java.lang.Throwable: 
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for checkov
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -392,13 +392,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for trivy 
-java.lang.Throwable: 
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for trivy
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -462,13 +462,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for eslint 
-java.lang.Throwable: 
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for eslint
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -512,13 +512,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics 
-java.lang.Throwable: 
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -572,13 +572,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics 
-java.lang.Throwable: 
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -612,13 +612,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for csslint 
-java.lang.Throwable: 
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for csslint
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -682,13 +682,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics 
-java.lang.Throwable: 
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -722,13 +722,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for trivy 
-java.lang.Throwable: 
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for trivy
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -792,13 +792,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for checkov 
-java.lang.Throwable: 
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for checkov
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -842,13 +842,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for spectral 
-java.lang.Throwable: 
+09/12 04:25:22 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for spectral
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -912,13 +912,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -952,13 +952,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for semgrep 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for semgrep
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -1022,13 +1022,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for jshint 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for jshint
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -1072,13 +1072,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for lizard 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for lizard
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -1142,13 +1142,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for pmd 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for pmd
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -1192,13 +1192,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for hadolint 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for hadolint
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -1242,13 +1242,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -1282,13 +1282,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for eslint-9 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for eslint-9
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -1352,13 +1352,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for ruff 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for ruff
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -1402,13 +1402,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for pylint 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for pylint
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -1452,13 +1452,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -1492,13 +1492,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for eslint-8 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for eslint-8
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -1562,13 +1562,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for prospector 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for prospector
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -1612,133 +1612,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for trivy 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for trivy
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
-	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
-	at scala.util.Success.flatMap(Try.scala:251)
-	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
-	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$2(ToolRunner.scala:76)
-	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$2(CodacyDocker.scala:45)
-	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
-	at scala.util.Try$.apply(Try.scala:213)
-	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
-	at com.codacy.plugins.results.traits.CodacyDocker$.usingConfigPath(CodacyDocker.scala:57)
-	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$1(CodacyDocker.scala:39)
-	at scala.Option.map(Option.scala:230)
-	at com.codacy.plugins.results.traits.CodacyDocker$.usingDockerConfig(CodacyDocker.scala:38)
-	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$1(ToolRunner.scala:75)
-	at scala.util.Try$.apply(Try.scala:213)
-	at com.codacy.plugins.results.traits.ToolRunner.apply(ToolRunner.scala:60)
-	at com.codacy.plugins.results.traits.ToolRunner.run(ToolRunner.scala:48)
-	at com.codacy.analysis.core.tools.Tool.run(Tool.scala:95)
-	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.analyse(CodacyPluginsAnalyser.scala:25)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$issues$1(AnalyseExecutor.scala:159)
-	at scala.util.Success.flatMap(Try.scala:251)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.issues(AnalyseExecutor.scala:151)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:70)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
-	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
-	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
-	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
-	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
-	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
-	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
-	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
-	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
-	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinTask.doJoin(ForkJoinTask.java:389)
-	at java.util.concurrent.ForkJoinTask.join(ForkJoinTask.java:719)
-	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync(Tasks.scala:379)
-	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync$(Tasks.scala:379)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.sync(Tasks.scala:440)
-	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult(Tasks.scala:423)
-	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult$(Tasks.scala:416)
-	at scala.collection.parallel.ForkJoinTaskSupport.executeAndWaitResult(TaskSupport.scala:60)
-	at scala.collection.parallel.ParIterableLike$ResultMapping.leaf(ParIterableLike.scala:968)
-	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
-	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
-	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
-	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
-	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
-	at scala.collection.parallel.ParIterableLike$ResultMapping.tryLeaf(ParIterableLike.scala:963)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:153)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
-	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
-	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
-	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for lizard 
-java.lang.Throwable: 
-Docker exited with code 125
-stdout: 
-stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
-See 'docker run --help'.
-           
-	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
-	at scala.util.Success.flatMap(Try.scala:251)
-	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
-	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$2(ToolRunner.scala:76)
-	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$2(CodacyDocker.scala:45)
-	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
-	at scala.util.Try$.apply(Try.scala:213)
-	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
-	at com.codacy.plugins.results.traits.CodacyDocker$.usingConfigPath(CodacyDocker.scala:57)
-	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$1(CodacyDocker.scala:39)
-	at scala.Option.map(Option.scala:230)
-	at com.codacy.plugins.results.traits.CodacyDocker$.usingDockerConfig(CodacyDocker.scala:38)
-	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$1(ToolRunner.scala:75)
-	at scala.util.Try$.apply(Try.scala:213)
-	at com.codacy.plugins.results.traits.ToolRunner.apply(ToolRunner.scala:60)
-	at com.codacy.plugins.results.traits.ToolRunner.run(ToolRunner.scala:48)
-	at com.codacy.analysis.core.tools.Tool.run(Tool.scala:95)
-	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.analyse(CodacyPluginsAnalyser.scala:25)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$issues$1(AnalyseExecutor.scala:159)
-	at scala.util.Success.flatMap(Try.scala:251)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.issues(AnalyseExecutor.scala:151)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:70)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
-	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
-	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
-	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
-	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
-	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
-	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
-	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
-	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
-	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
-	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
-	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for spectral 
-java.lang.Throwable: 
-Docker exited with code 125
-stdout: 
-stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
-See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -1802,13 +1682,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for pmd-7 
-java.lang.Throwable: 
+09/12 04:25:23 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for lizard
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -1852,283 +1732,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for stylelint 
-java.lang.Throwable: 
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for spectral
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
-	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
-	at scala.util.Success.flatMap(Try.scala:251)
-	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
-	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$2(ToolRunner.scala:76)
-	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$2(CodacyDocker.scala:45)
-	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
-	at scala.util.Try$.apply(Try.scala:213)
-	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
-	at com.codacy.plugins.results.traits.CodacyDocker$.usingConfigPath(CodacyDocker.scala:57)
-	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$1(CodacyDocker.scala:39)
-	at scala.Option.map(Option.scala:230)
-	at com.codacy.plugins.results.traits.CodacyDocker$.usingDockerConfig(CodacyDocker.scala:38)
-	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$1(ToolRunner.scala:75)
-	at scala.util.Try$.apply(Try.scala:213)
-	at com.codacy.plugins.results.traits.ToolRunner.apply(ToolRunner.scala:60)
-	at com.codacy.plugins.results.traits.ToolRunner.run(ToolRunner.scala:48)
-	at com.codacy.analysis.core.tools.Tool.run(Tool.scala:95)
-	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.analyse(CodacyPluginsAnalyser.scala:25)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$issues$1(AnalyseExecutor.scala:159)
-	at scala.util.Success.flatMap(Try.scala:251)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.issues(AnalyseExecutor.scala:151)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:70)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
-	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
-	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
-	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
-	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
-	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
-	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
-	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
-	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
-	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinTask.doJoin(ForkJoinTask.java:389)
-	at java.util.concurrent.ForkJoinTask.join(ForkJoinTask.java:719)
-	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync(Tasks.scala:379)
-	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync$(Tasks.scala:379)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.sync(Tasks.scala:440)
-	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult(Tasks.scala:423)
-	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult$(Tasks.scala:416)
-	at scala.collection.parallel.ForkJoinTaskSupport.executeAndWaitResult(TaskSupport.scala:60)
-	at scala.collection.parallel.ParIterableLike$ResultMapping.leaf(ParIterableLike.scala:968)
-	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
-	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
-	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
-	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
-	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
-	at scala.collection.parallel.ParIterableLike$ResultMapping.tryLeaf(ParIterableLike.scala:963)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:153)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
-	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
-	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
-	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for trivy 
-java.lang.Throwable: 
-Docker exited with code 125
-stdout: 
-stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
-See 'docker run --help'.
-           
-	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
-	at scala.util.Success.flatMap(Try.scala:251)
-	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
-	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$2(ToolRunner.scala:76)
-	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$2(CodacyDocker.scala:45)
-	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
-	at scala.util.Try$.apply(Try.scala:213)
-	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
-	at com.codacy.plugins.results.traits.CodacyDocker$.usingConfigPath(CodacyDocker.scala:57)
-	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$1(CodacyDocker.scala:39)
-	at scala.Option.map(Option.scala:230)
-	at com.codacy.plugins.results.traits.CodacyDocker$.usingDockerConfig(CodacyDocker.scala:38)
-	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$1(ToolRunner.scala:75)
-	at scala.util.Try$.apply(Try.scala:213)
-	at com.codacy.plugins.results.traits.ToolRunner.apply(ToolRunner.scala:60)
-	at com.codacy.plugins.results.traits.ToolRunner.run(ToolRunner.scala:48)
-	at com.codacy.analysis.core.tools.Tool.run(Tool.scala:95)
-	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.analyse(CodacyPluginsAnalyser.scala:25)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$issues$1(AnalyseExecutor.scala:159)
-	at scala.util.Success.flatMap(Try.scala:251)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.issues(AnalyseExecutor.scala:151)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:70)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
-	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
-	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
-	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
-	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
-	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
-	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
-	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
-	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
-	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
-	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
-	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics 
-java.lang.Throwable: 
-Docker exited with code 125
-stdout: 
-stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
-See 'docker run --help'.
-           
-	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
-	at scala.util.Success.flatMap(Try.scala:251)
-	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
-	at com.codacy.plugins.metrics.traits.MetricsRunner.$anonfun$run$1(MetricsRunner.scala:46)
-	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
-	at scala.util.Try$.apply(Try.scala:213)
-	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
-	at com.codacy.plugins.metrics.traits.MetricsRunner.usingConfiguration(MetricsRunner.scala:53)
-	at com.codacy.plugins.metrics.traits.MetricsRunner.run(MetricsRunner.scala:38)
-	at com.codacy.analysis.core.tools.MetricsTool.run(MetricsTool.scala:53)
-	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.metrics(CodacyPluginsAnalyser.scala:46)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:87)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
-	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
-	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
-	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
-	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
-	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
-	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
-	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
-	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
-	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinTask.doJoin(ForkJoinTask.java:389)
-	at java.util.concurrent.ForkJoinTask.join(ForkJoinTask.java:719)
-	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync(Tasks.scala:379)
-	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync$(Tasks.scala:379)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.sync(Tasks.scala:440)
-	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult(Tasks.scala:423)
-	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult$(Tasks.scala:416)
-	at scala.collection.parallel.ForkJoinTaskSupport.executeAndWaitResult(TaskSupport.scala:60)
-	at scala.collection.parallel.ParIterableLike$ResultMapping.leaf(ParIterableLike.scala:968)
-	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
-	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
-	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
-	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
-	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
-	at scala.collection.parallel.ParIterableLike$ResultMapping.tryLeaf(ParIterableLike.scala:963)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:153)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
-	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
-	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
-	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics 
-java.lang.Throwable: 
-Docker exited with code 125
-stdout: 
-stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
-See 'docker run --help'.
-           
-	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
-	at scala.util.Success.flatMap(Try.scala:251)
-	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
-	at com.codacy.plugins.metrics.traits.MetricsRunner.$anonfun$run$1(MetricsRunner.scala:46)
-	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
-	at scala.util.Try$.apply(Try.scala:213)
-	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
-	at com.codacy.plugins.metrics.traits.MetricsRunner.usingConfiguration(MetricsRunner.scala:53)
-	at com.codacy.plugins.metrics.traits.MetricsRunner.run(MetricsRunner.scala:38)
-	at com.codacy.analysis.core.tools.MetricsTool.run(MetricsTool.scala:53)
-	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.metrics(CodacyPluginsAnalyser.scala:46)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:87)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
-	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
-	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
-	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
-	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
-	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
-	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
-	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
-	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
-	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
-	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
-	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for trivy 
-java.lang.Throwable: 
-Docker exited with code 125
-stdout: 
-stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
-See 'docker run --help'.
-           
-	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
-	at scala.util.Success.flatMap(Try.scala:251)
-	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
-	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$2(ToolRunner.scala:76)
-	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$2(CodacyDocker.scala:45)
-	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
-	at scala.util.Try$.apply(Try.scala:213)
-	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
-	at com.codacy.plugins.results.traits.CodacyDocker$.usingConfigPath(CodacyDocker.scala:57)
-	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$1(CodacyDocker.scala:39)
-	at scala.Option.map(Option.scala:230)
-	at com.codacy.plugins.results.traits.CodacyDocker$.usingDockerConfig(CodacyDocker.scala:38)
-	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$1(ToolRunner.scala:75)
-	at scala.util.Try$.apply(Try.scala:213)
-	at com.codacy.plugins.results.traits.ToolRunner.apply(ToolRunner.scala:60)
-	at com.codacy.plugins.results.traits.ToolRunner.run(ToolRunner.scala:48)
-	at com.codacy.analysis.core.tools.Tool.run(Tool.scala:95)
-	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.analyse(CodacyPluginsAnalyser.scala:25)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$issues$1(AnalyseExecutor.scala:159)
-	at scala.util.Success.flatMap(Try.scala:251)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.issues(AnalyseExecutor.scala:151)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:70)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
-	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
-	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
-	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
-	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
-	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
-	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
-	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
-	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
-	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
-	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
-	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for semgrep 
-java.lang.Throwable: 
-Docker exited with code 125
-stdout: 
-stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
-See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -2192,13 +1802,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for pylintpython3 
-java.lang.Throwable: 
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for pmd-7
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -2242,63 +1852,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for trivy 
-java.lang.Throwable: 
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for stylelint
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
-	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
-	at scala.util.Success.flatMap(Try.scala:251)
-	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
-	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$2(ToolRunner.scala:76)
-	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$2(CodacyDocker.scala:45)
-	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
-	at scala.util.Try$.apply(Try.scala:213)
-	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
-	at com.codacy.plugins.results.traits.CodacyDocker$.usingConfigPath(CodacyDocker.scala:57)
-	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$1(CodacyDocker.scala:39)
-	at scala.Option.map(Option.scala:230)
-	at com.codacy.plugins.results.traits.CodacyDocker$.usingDockerConfig(CodacyDocker.scala:38)
-	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$1(ToolRunner.scala:75)
-	at scala.util.Try$.apply(Try.scala:213)
-	at com.codacy.plugins.results.traits.ToolRunner.apply(ToolRunner.scala:60)
-	at com.codacy.plugins.results.traits.ToolRunner.run(ToolRunner.scala:48)
-	at com.codacy.analysis.core.tools.Tool.run(Tool.scala:95)
-	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.analyse(CodacyPluginsAnalyser.scala:25)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$issues$1(AnalyseExecutor.scala:159)
-	at scala.util.Success.flatMap(Try.scala:251)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.issues(AnalyseExecutor.scala:151)
-	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:70)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
-	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
-	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
-	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
-	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
-	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
-	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
-	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
-	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
-	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
-	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
-	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
-	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for semgrep 
-java.lang.Throwable: 
-Docker exited with code 125
-stdout: 
-stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
-See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -2362,13 +1922,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for semgrep 
-java.lang.Throwable: 
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for trivy
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -2409,36 +1969,16 @@ See 'docker run --help'.
 	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
 	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
 	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinTask.doJoin(ForkJoinTask.java:389)
-	at java.util.concurrent.ForkJoinTask.join(ForkJoinTask.java:719)
-	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync(Tasks.scala:379)
-	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync$(Tasks.scala:379)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.sync(Tasks.scala:440)
-	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult(Tasks.scala:423)
-	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult$(Tasks.scala:416)
-	at scala.collection.parallel.ForkJoinTaskSupport.executeAndWaitResult(TaskSupport.scala:60)
-	at scala.collection.parallel.ParIterableLike$ResultMapping.leaf(ParIterableLike.scala:968)
-	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
-	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
-	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
-	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
-	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
-	at scala.collection.parallel.ParIterableLike$ResultMapping.tryLeaf(ParIterableLike.scala:963)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:153)
-	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
-	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
-	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics 
-java.lang.Throwable: 
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -2492,13 +2032,473 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:71[0;39m - Failed duplication for duplication 
-java.lang.Throwable: 
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
+	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
+	at com.codacy.plugins.metrics.traits.MetricsRunner.$anonfun$run$1(MetricsRunner.scala:46)
+	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
+	at scala.util.Try$.apply(Try.scala:213)
+	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
+	at com.codacy.plugins.metrics.traits.MetricsRunner.usingConfiguration(MetricsRunner.scala:53)
+	at com.codacy.plugins.metrics.traits.MetricsRunner.run(MetricsRunner.scala:38)
+	at com.codacy.analysis.core.tools.MetricsTool.run(MetricsTool.scala:53)
+	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.metrics(CodacyPluginsAnalyser.scala:46)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:87)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
+	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
+	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
+	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
+	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
+	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
+	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
+	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for trivy
+java.lang.Throwable:
+Docker exited with code 125
+stdout:
+stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
+	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$2(ToolRunner.scala:76)
+	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$2(CodacyDocker.scala:45)
+	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
+	at scala.util.Try$.apply(Try.scala:213)
+	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
+	at com.codacy.plugins.results.traits.CodacyDocker$.usingConfigPath(CodacyDocker.scala:57)
+	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$1(CodacyDocker.scala:39)
+	at scala.Option.map(Option.scala:230)
+	at com.codacy.plugins.results.traits.CodacyDocker$.usingDockerConfig(CodacyDocker.scala:38)
+	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$1(ToolRunner.scala:75)
+	at scala.util.Try$.apply(Try.scala:213)
+	at com.codacy.plugins.results.traits.ToolRunner.apply(ToolRunner.scala:60)
+	at com.codacy.plugins.results.traits.ToolRunner.run(ToolRunner.scala:48)
+	at com.codacy.analysis.core.tools.Tool.run(Tool.scala:95)
+	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.analyse(CodacyPluginsAnalyser.scala:25)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$issues$1(AnalyseExecutor.scala:159)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.issues(AnalyseExecutor.scala:151)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:70)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
+	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
+	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
+	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
+	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
+	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
+	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
+	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for semgrep
+java.lang.Throwable:
+Docker exited with code 125
+stdout:
+stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
+	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$2(ToolRunner.scala:76)
+	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$2(CodacyDocker.scala:45)
+	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
+	at scala.util.Try$.apply(Try.scala:213)
+	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
+	at com.codacy.plugins.results.traits.CodacyDocker$.usingConfigPath(CodacyDocker.scala:57)
+	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$1(CodacyDocker.scala:39)
+	at scala.Option.map(Option.scala:230)
+	at com.codacy.plugins.results.traits.CodacyDocker$.usingDockerConfig(CodacyDocker.scala:38)
+	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$1(ToolRunner.scala:75)
+	at scala.util.Try$.apply(Try.scala:213)
+	at com.codacy.plugins.results.traits.ToolRunner.apply(ToolRunner.scala:60)
+	at com.codacy.plugins.results.traits.ToolRunner.run(ToolRunner.scala:48)
+	at com.codacy.analysis.core.tools.Tool.run(Tool.scala:95)
+	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.analyse(CodacyPluginsAnalyser.scala:25)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$issues$1(AnalyseExecutor.scala:159)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.issues(AnalyseExecutor.scala:151)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:70)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
+	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
+	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
+	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
+	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
+	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
+	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
+	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinTask.doJoin(ForkJoinTask.java:389)
+	at java.util.concurrent.ForkJoinTask.join(ForkJoinTask.java:719)
+	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync(Tasks.scala:379)
+	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync$(Tasks.scala:379)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.sync(Tasks.scala:440)
+	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult(Tasks.scala:423)
+	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult$(Tasks.scala:416)
+	at scala.collection.parallel.ForkJoinTaskSupport.executeAndWaitResult(TaskSupport.scala:60)
+	at scala.collection.parallel.ParIterableLike$ResultMapping.leaf(ParIterableLike.scala:968)
+	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
+	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
+	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
+	at scala.collection.parallel.ParIterableLike$ResultMapping.tryLeaf(ParIterableLike.scala:963)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:153)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
+	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for pylintpython3
+java.lang.Throwable:
+Docker exited with code 125
+stdout:
+stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
+	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$2(ToolRunner.scala:76)
+	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$2(CodacyDocker.scala:45)
+	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
+	at scala.util.Try$.apply(Try.scala:213)
+	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
+	at com.codacy.plugins.results.traits.CodacyDocker$.usingConfigPath(CodacyDocker.scala:57)
+	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$1(CodacyDocker.scala:39)
+	at scala.Option.map(Option.scala:230)
+	at com.codacy.plugins.results.traits.CodacyDocker$.usingDockerConfig(CodacyDocker.scala:38)
+	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$1(ToolRunner.scala:75)
+	at scala.util.Try$.apply(Try.scala:213)
+	at com.codacy.plugins.results.traits.ToolRunner.apply(ToolRunner.scala:60)
+	at com.codacy.plugins.results.traits.ToolRunner.run(ToolRunner.scala:48)
+	at com.codacy.analysis.core.tools.Tool.run(Tool.scala:95)
+	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.analyse(CodacyPluginsAnalyser.scala:25)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$issues$1(AnalyseExecutor.scala:159)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.issues(AnalyseExecutor.scala:151)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:70)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
+	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
+	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
+	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
+	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
+	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
+	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
+	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for trivy
+java.lang.Throwable:
+Docker exited with code 125
+stdout:
+stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
+	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$2(ToolRunner.scala:76)
+	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$2(CodacyDocker.scala:45)
+	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
+	at scala.util.Try$.apply(Try.scala:213)
+	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
+	at com.codacy.plugins.results.traits.CodacyDocker$.usingConfigPath(CodacyDocker.scala:57)
+	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$1(CodacyDocker.scala:39)
+	at scala.Option.map(Option.scala:230)
+	at com.codacy.plugins.results.traits.CodacyDocker$.usingDockerConfig(CodacyDocker.scala:38)
+	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$1(ToolRunner.scala:75)
+	at scala.util.Try$.apply(Try.scala:213)
+	at com.codacy.plugins.results.traits.ToolRunner.apply(ToolRunner.scala:60)
+	at com.codacy.plugins.results.traits.ToolRunner.run(ToolRunner.scala:48)
+	at com.codacy.analysis.core.tools.Tool.run(Tool.scala:95)
+	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.analyse(CodacyPluginsAnalyser.scala:25)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$issues$1(AnalyseExecutor.scala:159)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.issues(AnalyseExecutor.scala:151)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:70)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
+	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
+	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
+	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
+	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
+	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
+	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
+	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for semgrep
+java.lang.Throwable:
+Docker exited with code 125
+stdout:
+stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
+	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$2(ToolRunner.scala:76)
+	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$2(CodacyDocker.scala:45)
+	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
+	at scala.util.Try$.apply(Try.scala:213)
+	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
+	at com.codacy.plugins.results.traits.CodacyDocker$.usingConfigPath(CodacyDocker.scala:57)
+	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$1(CodacyDocker.scala:39)
+	at scala.Option.map(Option.scala:230)
+	at com.codacy.plugins.results.traits.CodacyDocker$.usingDockerConfig(CodacyDocker.scala:38)
+	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$1(ToolRunner.scala:75)
+	at scala.util.Try$.apply(Try.scala:213)
+	at com.codacy.plugins.results.traits.ToolRunner.apply(ToolRunner.scala:60)
+	at com.codacy.plugins.results.traits.ToolRunner.run(ToolRunner.scala:48)
+	at com.codacy.analysis.core.tools.Tool.run(Tool.scala:95)
+	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.analyse(CodacyPluginsAnalyser.scala:25)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$issues$1(AnalyseExecutor.scala:159)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.issues(AnalyseExecutor.scala:151)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:70)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
+	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
+	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
+	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
+	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
+	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
+	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
+	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinTask.doJoin(ForkJoinTask.java:389)
+	at java.util.concurrent.ForkJoinTask.join(ForkJoinTask.java:719)
+	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync(Tasks.scala:379)
+	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync$(Tasks.scala:379)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.sync(Tasks.scala:440)
+	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult(Tasks.scala:423)
+	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult$(Tasks.scala:416)
+	at scala.collection.parallel.ForkJoinTaskSupport.executeAndWaitResult(TaskSupport.scala:60)
+	at scala.collection.parallel.ParIterableLike$ResultMapping.leaf(ParIterableLike.scala:968)
+	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
+	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
+	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
+	at scala.collection.parallel.ParIterableLike$ResultMapping.tryLeaf(ParIterableLike.scala:963)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:153)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
+	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for semgrep
+java.lang.Throwable:
+Docker exited with code 125
+stdout:
+stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
+	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$2(ToolRunner.scala:76)
+	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$2(CodacyDocker.scala:45)
+	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
+	at scala.util.Try$.apply(Try.scala:213)
+	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
+	at com.codacy.plugins.results.traits.CodacyDocker$.usingConfigPath(CodacyDocker.scala:57)
+	at com.codacy.plugins.results.traits.CodacyDocker$.$anonfun$usingDockerConfig$1(CodacyDocker.scala:39)
+	at scala.Option.map(Option.scala:230)
+	at com.codacy.plugins.results.traits.CodacyDocker$.usingDockerConfig(CodacyDocker.scala:38)
+	at com.codacy.plugins.results.traits.ToolRunner.$anonfun$apply$1(ToolRunner.scala:75)
+	at scala.util.Try$.apply(Try.scala:213)
+	at com.codacy.plugins.results.traits.ToolRunner.apply(ToolRunner.scala:60)
+	at com.codacy.plugins.results.traits.ToolRunner.run(ToolRunner.scala:48)
+	at com.codacy.analysis.core.tools.Tool.run(Tool.scala:95)
+	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.analyse(CodacyPluginsAnalyser.scala:25)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$issues$1(AnalyseExecutor.scala:159)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.issues(AnalyseExecutor.scala:151)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:70)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
+	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
+	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
+	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
+	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
+	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
+	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
+	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinTask.doJoin(ForkJoinTask.java:389)
+	at java.util.concurrent.ForkJoinTask.join(ForkJoinTask.java:719)
+	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync(Tasks.scala:379)
+	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync$(Tasks.scala:379)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.sync(Tasks.scala:440)
+	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult(Tasks.scala:423)
+	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult$(Tasks.scala:416)
+	at scala.collection.parallel.ForkJoinTaskSupport.executeAndWaitResult(TaskSupport.scala:60)
+	at scala.collection.parallel.ParIterableLike$ResultMapping.leaf(ParIterableLike.scala:968)
+	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
+	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
+	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
+	at scala.collection.parallel.ParIterableLike$ResultMapping.tryLeaf(ParIterableLike.scala:963)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:153)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
+	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:52[0;39m - Failed metrics for metrics
+java.lang.Throwable:
+Docker exited with code 125
+stdout:
+stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
+	at com.codacy.plugins.metrics.traits.MetricsRunner.$anonfun$run$1(MetricsRunner.scala:46)
+	at com.codacy.plugins.utils.FileHelper$.$anonfun$usingNewFile$2(FileHelper.scala:51)
+	at scala.util.Try$.apply(Try.scala:213)
+	at com.codacy.plugins.utils.FileHelper$.usingNewFile(FileHelper.scala:45)
+	at com.codacy.plugins.metrics.traits.MetricsRunner.usingConfiguration(MetricsRunner.scala:53)
+	at com.codacy.plugins.metrics.traits.MetricsRunner.run(MetricsRunner.scala:38)
+	at com.codacy.analysis.core.tools.MetricsTool.run(MetricsTool.scala:53)
+	at com.codacy.analysis.core.analysis.CodacyPluginsAnalyser.metrics(CodacyPluginsAnalyser.scala:46)
+	at com.codacy.analysis.cli.analysis.AnalyseExecutor.$anonfun$run$5(AnalyseExecutor.scala:87)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner(RemainsIterator.scala:116)
+	at scala.collection.parallel.AugmentedIterableIterator.map2combiner$(RemainsIterator.scala:113)
+	at scala.collection.parallel.immutable.ParHashSet$ParHashSetIterator.map2combiner(ParHashSet.scala:81)
+	at scala.collection.parallel.ParIterableLike$Map.leaf(ParIterableLike.scala:1064)
+	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
+	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
+	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
+	at scala.collection.parallel.ParIterableLike$Map.tryLeaf(ParIterableLike.scala:1061)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal(Tasks.scala:170)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.internal$(Tasks.scala:157)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.internal(Tasks.scala:440)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:150)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
+	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinTask.doJoin(ForkJoinTask.java:389)
+	at java.util.concurrent.ForkJoinTask.join(ForkJoinTask.java:719)
+	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync(Tasks.scala:379)
+	at scala.collection.parallel.ForkJoinTasks$WrappedTask.sync$(Tasks.scala:379)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.sync(Tasks.scala:440)
+	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult(Tasks.scala:423)
+	at scala.collection.parallel.ForkJoinTasks.executeAndWaitResult$(Tasks.scala:416)
+	at scala.collection.parallel.ForkJoinTaskSupport.executeAndWaitResult(TaskSupport.scala:60)
+	at scala.collection.parallel.ParIterableLike$ResultMapping.leaf(ParIterableLike.scala:968)
+	at scala.collection.parallel.Task.$anonfun$tryLeaf$1(Tasks.scala:53)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.util.control.Breaks$$anon$1.catchBreak(Breaks.scala:67)
+	at scala.collection.parallel.Task.tryLeaf(Tasks.scala:56)
+	at scala.collection.parallel.Task.tryLeaf$(Tasks.scala:50)
+	at scala.collection.parallel.ParIterableLike$ResultMapping.tryLeaf(ParIterableLike.scala:963)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute(Tasks.scala:153)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask.compute$(Tasks.scala:149)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:440)
+	at java.util.concurrent.RecursiveAction.exec(RecursiveAction.java:189)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:71[0;39m - Failed duplication for duplication
+java.lang.Throwable:
+Docker exited with code 125
+stdout:
+stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)
@@ -2552,13 +2552,13 @@ See 'docker run --help'.
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
-09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for bandit 
-java.lang.Throwable: 
+09/12 04:25:24 [1;31mERROR[0;39m [36mc.c.a.c.a.CodacyPluginsAnalyser:31[0;39m - Failed analysis for bandit
+java.lang.Throwable:
 Docker exited with code 125
-stdout: 
+stdout:
 stderr: docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-           
+
 	at com.codacy.plugins.runners.BinaryDockerRunner.$anonfun$run$4(BinaryDockerRunner.scala:84)
 	at scala.util.Success.flatMap(Try.scala:251)
 	at com.codacy.plugins.runners.BinaryDockerRunner.run(BinaryDockerRunner.scala:69)

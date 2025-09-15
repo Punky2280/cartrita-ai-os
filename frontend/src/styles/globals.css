@@ -1,143 +1,149 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-    :root {
-        /* Cartrita AI OS 2025 Color System - Light Theme */
-        --background: 0 0% 100%;
-        --foreground: 222.2 84% 4.9%;
-        
-    /* Orange Primary */
-        --primary: 18 100% 55%; /* #FF6B1A */
-        --primary-foreground: 0 0% 100%;
-        --primary-hover: 18 100% 45%; /* #FF8A3D */
-        
-        /* Copilot Dark Blue */
-        --copilot-blue: 223 48% 22%; /* #1B2951 */
-        --copilot-blue-light: 223 48% 32%; /* #2A3F73 */
-        --copilot-blue-dark: 223 60% 17%; /* #141E3C */
-        
-        /* ChatGPT Grey Base */
-        --chatgpt-grey: 217 19% 13%; /* #202123 */
-        --chatgpt-grey-light: 0 0% 18%; /* #2D2D2D */
-        --chatgpt-grey-dark: 0 0% 10%; /* #1A1A1A */
-        
-        /* Fuschia Pink Accent */
-        --fuschia-pink: 336 83% 52%; /* #E91E63 */
-        --fuschia-pink-light: 336 77% 67%; /* #F06292 */
-        --fuschia-pink-dark: 336 87% 35%; /* #AD1457 */
-        
-        /* Supporting Colors */
-        --card: 0 0% 100%;
-        --card-foreground: 222.2 84% 4.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 222.2 84% 4.9%;
-        --secondary: 220 14% 96%; /* #F5F5F7 */
-        --secondary-foreground: 222.2 84% 4.9%;
-        --muted: 220 13% 91%; /* #E5E7EB */
-        --muted-foreground: 215 16% 47%; /* #6B7280 */
-        --accent: var(--fuschia-pink);
-        --accent-foreground: 0 0% 100%;
-        
-        /* Status Colors */
-        --success: 142 76% 36%; /* #10B981 */
-        --warning: 38 92% 50%; /* #F59E0B */
-        --destructive: 0 84% 60%; /* #EF4444 */
-        --destructive-foreground: 0 0% 98%;
-        
-        /* UI Elements */
-        --border: 220 13% 91%; /* #E5E7EB */
-        --input: 220 13% 91%;
-        --ring: var(--primary);
-        --radius: 0.75rem;
-        
-        /* Voice & Audio States */
-        --voice-idle: 215 16% 47%; /* #6B7280 */
-        --voice-recording: var(--fuschia-pink);
-        --voice-processing: var(--primary);
-        --voice-speaking: 142 76% 36%; /* #10B981 */
-    }
+  :root {
+    /* Cartrita AI OS 2025 Color System - Light Theme */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
-    .dark {
-        /* Cartrita AI OS 2025 Color System - Dark Theme */
-        --background: var(--chatgpt-grey); /* #202123 */
-        --foreground: 220 13% 91%; /* #E5E7EB */
-        
     /* Orange Primary */
     --primary: 18 100% 55%; /* #FF6B1A */
-        --primary-foreground: 0 0% 100%;
-        --primary-hover: 18 100% 45%;
-        
-        /* Copilot Blue for headers/nav */
-        --copilot-blue: 223 48% 22%; /* #1B2951 */
-        --copilot-blue-light: 223 48% 32%;
-        --copilot-blue-dark: 223 60% 17%;
-        
-        /* ChatGPT Grey surfaces */
-        --card: var(--chatgpt-grey-light); /* #2D2D2D */
-        --card-foreground: 220 13% 91%;
-        --popover: var(--chatgpt-grey);
-        --popover-foreground: 220 13% 91%;
-        
-        /* Adjusted supporting colors for dark theme */
-        --secondary: var(--chatgpt-grey-light); /* #2D2D2D */
-        --secondary-foreground: 220 13% 91%;
-        --muted: 215 16% 25%; /* #374151 */
-        --muted-foreground: 215 16% 65%; /* #9CA3AF */
-        --accent: var(--fuschia-pink);
-        --accent-foreground: 0 0% 100%;
-        
-        /* Status colors adjusted for dark theme */
-        --success: 142 76% 36%;
-        --warning: 38 92% 50%;
-        --destructive: 0 63% 31%;
-        --destructive-foreground: 0 85% 97%;
-        
-        /* UI elements for dark theme */
-        --border: 215 16% 25%; /* #374151 */
-        --input: 215 16% 25%;
-        --ring: var(--primary);
-        
-        /* Glass morphism variables */
-        --glass-bg: rgba(0, 0, 0, 0.15);
-        --glass-border: rgba(255, 255, 255, 0.05);
-        --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 18 100% 45%; /* #FF8A3D */
+
+    /* Copilot Dark Blue */
+    --copilot-blue: 223 48% 22%; /* #1B2951 */
+    --copilot-blue-light: 223 48% 32%; /* #2A3F73 */
+    --copilot-blue-dark: 223 60% 17%; /* #141E3C */
+
+    /* ChatGPT Grey Base */
+    --chatgpt-grey: 217 19% 13%; /* #202123 */
+    --chatgpt-grey-light: 0 0% 18%; /* #2D2D2D */
+    --chatgpt-grey-dark: 0 0% 10%; /* #1A1A1A */
+
+    /* Fuschia Pink Accent */
+    --fuschia-pink: 336 83% 52%; /* #E91E63 */
+    --fuschia-pink-light: 336 77% 67%; /* #F06292 */
+    --fuschia-pink-dark: 336 87% 35%; /* #AD1457 */
+
+    /* Supporting Colors */
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --secondary: 220 14% 96%; /* #F5F5F7 */
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 220 13% 91%; /* #E5E7EB */
+    --muted-foreground: 215 16% 47%; /* #6B7280 */
+    --accent: var(--fuschia-pink);
+    --accent-foreground: 0 0% 100%;
+
+    /* Status Colors */
+    --success: 142 76% 36%; /* #10B981 */
+    --warning: 38 92% 50%; /* #F59E0B */
+    --destructive: 0 84% 60%; /* #EF4444 */
+    --destructive-foreground: 0 0% 98%;
+
+    /* UI Elements */
+    --border: 220 13% 91%; /* #E5E7EB */
+    --input: 220 13% 91%;
+    --ring: var(--primary);
+    --radius: 0.75rem;
+
+    /* Voice & Audio States */
+    --voice-idle: 215 16% 47%; /* #6B7280 */
+    --voice-recording: var(--fuschia-pink);
+    --voice-processing: var(--primary);
+    --voice-speaking: 142 76% 36%; /* #10B981 */
+  }
+
+  .dark {
+    /* Cartrita AI OS 2025 Color System - Dark Theme */
+    --background: var(--chatgpt-grey); /* #202123 */
+    --foreground: 220 13% 91%; /* #E5E7EB */
+
+    /* Orange Primary */
+    --primary: 18 100% 55%; /* #FF6B1A */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 18 100% 45%;
+
+    /* Copilot Blue for headers/nav */
+    --copilot-blue: 223 48% 22%; /* #1B2951 */
+    --copilot-blue-light: 223 48% 32%;
+    --copilot-blue-dark: 223 60% 17%;
+
+    /* ChatGPT Grey surfaces */
+    --card: var(--chatgpt-grey-light); /* #2D2D2D */
+    --card-foreground: 220 13% 91%;
+    --popover: var(--chatgpt-grey);
+    --popover-foreground: 220 13% 91%;
+
+    /* Adjusted supporting colors for dark theme */
+    --secondary: var(--chatgpt-grey-light); /* #2D2D2D */
+    --secondary-foreground: 220 13% 91%;
+    --muted: 215 16% 25%; /* #374151 */
+    --muted-foreground: 215 16% 65%; /* #9CA3AF */
+    --accent: var(--fuschia-pink);
+    --accent-foreground: 0 0% 100%;
+
+    /* Status colors adjusted for dark theme */
+    --success: 142 76% 36%;
+    --warning: 38 92% 50%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 85% 97%;
+
+    /* UI elements for dark theme */
+    --border: 215 16% 25%; /* #374151 */
+    --input: 215 16% 25%;
+    --ring: var(--primary);
+
+    /* Glass morphism variables */
+    --glass-bg: rgba(0, 0, 0, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
 }
 
 @layer base {
-    body {
-        background: hsl(var(--background));
-        color: hsl(var(--foreground));
-    }
+  body {
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
 }
 
 /* Global styles */
 * {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
 
-code, pre {
-  font-family: 'JetBrains Mono', monospace;
+code,
+pre {
+  font-family: "JetBrains Mono", monospace;
 }
 
 /* Cartrita AI OS 2025 - Enhanced Glassmorphism Effects */
 .glass-morphism {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .dark .glass-morphism {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
-    backdrop-filter: blur(12px);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(12px);
 }
 
 /* Glassmorphism utility */
@@ -150,24 +156,36 @@ code, pre {
 /* Responsive breakpoints */
 @media (max-width: 1199px) {
   /* Tablet: collapsible sidebar */
-  .sidebar { width: 280px; }
+  .sidebar {
+    width: 280px;
+  }
 }
 
 @media (max-width: 767px) {
   /* Mobile: drawer navigation */
-  .sidebar { display: none; }
-  .mobile-drawer { display: block; }
+  .sidebar {
+    display: none;
+  }
+  .mobile-drawer {
+    display: block;
+  }
 }
 
 /* Accessibility */
 .focus-orange:focus {
-  outline: 2px solid #FF6B1A;
+  outline: 2px solid #ff6b1a;
 }
 
 /* Animations */
 @keyframes slide-in {
-  from { transform: translateY(20px) scale(0.95); opacity: 0; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
+  from {
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
 }
 
 .message-enter {
@@ -175,145 +193,214 @@ code, pre {
 }
 
 /* Cartrita AI OS Color Utilities */
-.bg-copilot-blue { background: hsl(var(--copilot-blue)); }
-.bg-copilot-blue-light { background: hsl(var(--copilot-blue-light)); }
-.bg-copilot-blue-dark { background: hsl(var(--copilot-blue-dark)); }
-.bg-chatgpt-grey { background: hsl(var(--chatgpt-grey)); }
-.bg-chatgpt-grey-light { background: hsl(var(--chatgpt-grey-light)); }
-.bg-fuschia-pink { background: hsl(var(--fuschia-pink)); }
-.bg-fuschia-pink-light { background: hsl(var(--fuschia-pink-light)); }
+.bg-copilot-blue {
+  background: hsl(var(--copilot-blue));
+}
+.bg-copilot-blue-light {
+  background: hsl(var(--copilot-blue-light));
+}
+.bg-copilot-blue-dark {
+  background: hsl(var(--copilot-blue-dark));
+}
+.bg-chatgpt-grey {
+  background: hsl(var(--chatgpt-grey));
+}
+.bg-chatgpt-grey-light {
+  background: hsl(var(--chatgpt-grey-light));
+}
+.bg-fuschia-pink {
+  background: hsl(var(--fuschia-pink));
+}
+.bg-fuschia-pink-light {
+  background: hsl(var(--fuschia-pink-light));
+}
 
-.text-copilot-blue { color: hsl(var(--copilot-blue)); }
-.text-fuschia-pink { color: hsl(var(--fuschia-pink)); }
+.text-copilot-blue {
+  color: hsl(var(--copilot-blue));
+}
+.text-fuschia-pink {
+  color: hsl(var(--fuschia-pink));
+}
 
-.border-copilot-blue { border-color: hsl(var(--copilot-blue)); }
-.border-fuschia-pink { border-color: hsl(var(--fuschia-pink)); }
+.border-copilot-blue {
+  border-color: hsl(var(--copilot-blue));
+}
+.border-fuschia-pink {
+  border-color: hsl(var(--fuschia-pink));
+}
 
 /* Voice State Utilities */
-.voice-idle { color: hsl(var(--voice-idle)); }
-.voice-recording { 
-    color: hsl(var(--voice-recording));
-    animation: voice-pulse 1.5s infinite ease-in-out;
+.voice-idle {
+  color: hsl(var(--voice-idle));
 }
-.voice-processing { 
-    color: hsl(var(--voice-processing));
-    animation: voice-spin 2s infinite linear;
+.voice-recording {
+  color: hsl(var(--voice-recording));
+  animation: voice-pulse 1.5s infinite ease-in-out;
 }
-.voice-speaking { 
-    color: hsl(var(--voice-speaking));
-    animation: voice-bounce 1s infinite ease-in-out;
+.voice-processing {
+  color: hsl(var(--voice-processing));
+  animation: voice-spin 2s infinite linear;
+}
+.voice-speaking {
+  color: hsl(var(--voice-speaking));
+  animation: voice-bounce 1s infinite ease-in-out;
 }
 
 @keyframes voice-pulse {
-    0%, 100% { opacity: 0.6; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.05); }
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
 }
 
 @keyframes voice-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes voice-bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-4px); }
-    60% { transform: translateY(-2px); }
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-4px);
+  }
+  60% {
+    transform: translateY(-2px);
+  }
 }
 
 /* Fluid UI Hover Effects */
 .fluid-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    transform: translateZ(0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
 }
 
 .fluid-hover:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 /* Cartrita AI OS 2025 - Enhanced Gradient Backgrounds */
 .gradient-primary {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-hover)) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--primary-hover)) 100%
+  );
 }
 
 .gradient-user-message {
-    background: linear-gradient(135deg, #FF6B1A 0%, #FF8A3D 100%);
-    box-shadow: 0 2px 8px rgba(255, 107, 26, 0.2);
+  background: linear-gradient(135deg, #ff6b1a 0%, #ff8a3d 100%);
+  box-shadow: 0 2px 8px rgba(255, 107, 26, 0.2);
 }
 
 .gradient-ai-message {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
 }
 
 .dark .gradient-ai-message {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.05) 100%);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .gradient-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
 }
 
 .dark .gradient-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
 }
 
 /* Header Gradient for Copilot Blue */
 .gradient-header {
-    background: linear-gradient(135deg, hsl(var(--copilot-blue)) 0%, hsl(var(--copilot-blue-light)) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(var(--copilot-blue)) 0%,
+    hsl(var(--copilot-blue-light)) 100%
+  );
 }
 
 /* Enhanced Custom Scrollbar */
 ::-webkit-scrollbar {
-    width: 6px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    @apply bg-transparent;
+  @apply bg-transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    @apply bg-muted-foreground/20 rounded-full;
-    border-radius: 10px;
+  @apply bg-muted-foreground/20 rounded-full;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground/40;
+  @apply bg-muted-foreground/40;
 }
 
 /* ChatGPT-like message styling */
 .message-content {
-    @apply text-sm leading-relaxed;
+  @apply text-sm leading-relaxed;
 }
 
 .message-content p {
-    @apply mb-4 last:mb-0;
+  @apply mb-4 last:mb-0;
 }
 
 .message-content pre {
-    @apply bg-muted p-4 rounded-lg overflow-x-auto my-4;
+  @apply bg-muted p-4 rounded-lg overflow-x-auto my-4;
 }
 
 .message-content code {
-    @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono;
+  @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono;
 }
 
 .message-content pre code {
-    @apply bg-transparent p-0;
+  @apply bg-transparent p-0;
 }
 
 .message-content blockquote {
-    @apply border-l-4 border-primary pl-4 italic my-4;
+  @apply border-l-4 border-primary pl-4 italic my-4;
 }
 
 .message-content ul,
 .message-content ol {
-    @apply ml-6 my-4;
+  @apply ml-6 my-4;
 }
 
 .message-content li {
-    @apply mb-2;
+  @apply mb-2;
 }
 
 .message-content h1,
@@ -322,146 +409,161 @@ code, pre {
 .message-content h4,
 .message-content h5,
 .message-content h6 {
-    @apply font-semibold mb-2 mt-6 first:mt-0;
+  @apply font-semibold mb-2 mt-6 first:mt-0;
 }
 
 .message-content h1 {
-    @apply text-2xl;
+  @apply text-2xl;
 }
 
 .message-content h2 {
-    @apply text-xl;
+  @apply text-xl;
 }
 
 .message-content h3 {
-    @apply text-lg;
+  @apply text-lg;
 }
 
 /* Enhanced 2025 Typing Animation */
 .typing-indicator {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 8px 12px;
-    border-radius: 12px;
-    background: rgba(var(--muted-foreground) / 0.1);
-    backdrop-filter: blur(8px);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(var(--muted-foreground) / 0.1);
+  backdrop-filter: blur(8px);
 }
 
 .typing-indicator span {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.7) 100%);
-    animation: modern-typing 1.6s infinite ease-in-out;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--primary) / 0.7) 100%
+  );
+  animation: modern-typing 1.6s infinite ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .typing-indicator span:nth-child(1) {
-    animation-delay: 0s;
+  animation-delay: 0s;
 }
 
 .typing-indicator span:nth-child(2) {
-    animation-delay: 0.3s;
+  animation-delay: 0.3s;
 }
 
 .typing-indicator span:nth-child(3) {
-    animation-delay: 0.6s;
+  animation-delay: 0.6s;
 }
 
 @keyframes modern-typing {
-    0%, 60%, 100% {
-        opacity: 0.3;
-        transform: scale(0.8) translateY(0px);
-    }
-    30% {
-        opacity: 1;
-        transform: scale(1.2) translateY(-8px);
-    }
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8) translateY(0px);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.2) translateY(-8px);
+  }
 }
 
 /* Modern Message Bubble Animations */
 .message-bubble-enter {
-    animation: message-slide-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: message-slide-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes message-slide-in {
-    0% {
-        opacity: 0;
-        transform: translateY(20px) scale(0.95);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0px) scale(1);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
 }
 
 /* Enhanced AI Response Streaming Effect */
 .streaming-text {
-    position: relative;
+  position: relative;
 }
 
 .streaming-text::after {
-    content: '▎';
-    animation: cursor-blink 1.2s infinite;
-    color: hsl(var(--primary));
-    font-weight: bold;
+  content: "▎";
+  animation: cursor-blink 1.2s infinite;
+  color: hsl(var(--primary));
+  font-weight: bold;
 }
 
 @keyframes cursor-blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 /* Smooth transitions */
 * {
-    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 
 /* Focus styles */
 .focus-visible {
-    @apply outline-none ring-2 ring-ring ring-offset-2;
+  @apply outline-none ring-2 ring-ring ring-offset-2;
 }
 
 /* Custom button styles */
 .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  @apply bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
 }
 
 .btn-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
 }
 
 .btn-ghost {
-    @apply hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  @apply hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
 }
 
 /* Input styles */
 .input-field {
-    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
 }
 
 /* Card styles */
 .card {
-    @apply rounded-lg border bg-card text-card-foreground shadow-sm;
+  @apply rounded-lg border bg-card text-card-foreground shadow-sm;
 }
 
 .card-header {
-    @apply flex flex-col space-y-1.5 p-6;
+  @apply flex flex-col space-y-1.5 p-6;
 }
 
 .card-title {
-    @apply text-2xl font-semibold leading-none tracking-tight;
+  @apply text-2xl font-semibold leading-none tracking-tight;
 }
 
 .card-description {
-    @apply text-sm text-muted-foreground;
+  @apply text-sm text-muted-foreground;
 }
 
 .card-content {
-    @apply p-6 pt-0;
+  @apply p-6 pt-0;
 }
 
 .card-footer {
-    @apply flex items-center p-6 pt-0;
+  @apply flex items-center p-6 pt-0;
 }

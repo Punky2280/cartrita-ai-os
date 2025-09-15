@@ -1,0 +1,40 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/tools/langchain_community.tools.office365.utils.clean_body.html#langchain_community.tools.office365.utils.clean_body",
+  "title": "clean_body#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "p",
+      "content": "Clean body of a message or event."
+    },
+    {
+      "type": "li",
+      "content": "clean_body()"
+    }
+  ],
+  "code_examples": [
+    "tools",
+    "clean_body()"
+  ],
+  "api_signatures": [
+    "langchain_community.tools.office365.utils.clean_body(body:str)→str[source]#",
+    "langchain_community.tools.office365.utils.",
+    "clean_body",
+    "(",
+    "body:str",
+    ")",
+    "→str",
+    "→",
+    "str"
+  ],
+  "parameters": [
+    "body:str"
+  ]
+}

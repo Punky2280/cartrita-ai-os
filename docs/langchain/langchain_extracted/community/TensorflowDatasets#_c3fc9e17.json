@@ -1,0 +1,178 @@
+{
+  "url": "https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.tensorflow_datasets.TensorflowDatasets.html#langchain_community.utilities.tensorflow_datasets.TensorflowDatasets",
+  "title": "TensorflowDatasets#",
+  "sections": [
+    {
+      "type": "li",
+      "content": "LangChain Python API Reference"
+    },
+    {
+      "type": "li",
+      "content": "langchain-community: 0.3.29"
+    },
+    {
+      "type": "li",
+      "content": "TensorflowDatasets"
+    },
+    {
+      "type": "p",
+      "content": "Bases:BaseModel"
+    },
+    {
+      "type": "p",
+      "content": "Access to the TensorFlow Datasets."
+    },
+    {
+      "type": "p",
+      "content": "The Current implementation can work only with datasets that fit in a memory."
+    },
+    {
+      "type": "p",
+      "content": "TensorFlow Datasetsis a collection of datasets ready to use, with TensorFlow\nor other Python ML frameworks, such as Jax. All datasets are exposed\nastf.data.Datasets.\nTo get started see the Guide:https://www.tensorflow.org/datasets/overviewand\nthe list of datasets:https://www.tensorflow.org/datasets/catalog/"
+    },
+    {
+      "type": "p",
+      "content": "overview#all_datasets"
+    },
+    {
+      "type": "p",
+      "content": "a sample from the dataset-specific format to the Document."
+    },
+    {
+      "type": "p",
+      "content": "the name of the dataset to load"
+    },
+    {
+      "type": "p",
+      "content": "the name of the split to load. Defaults to “train”."
+    },
+    {
+      "type": "p",
+      "content": "a limit to the number of loaded documents. Defaults to 100."
+    },
+    {
+      "type": "p",
+      "content": "a function that converts a dataset sample\nto a Document"
+    },
+    {
+      "type": "p",
+      "content": "Create a new model by parsing and validating input data from keyword arguments."
+    },
+    {
+      "type": "p",
+      "content": "Raises [ValidationError][pydantic_core.ValidationError] if the input data cannot be\nvalidated to form a valid model."
+    },
+    {
+      "type": "p",
+      "content": "selfis explicitly positional-only to allowselfas a field name."
+    },
+    {
+      "type": "p",
+      "content": "Download a selected dataset lazily."
+    },
+    {
+      "type": "p",
+      "content": "Returns: an iterator of Documents."
+    },
+    {
+      "type": "p",
+      "content": "Iterator[Document]"
+    },
+    {
+      "type": "p",
+      "content": "Download a selected dataset."
+    },
+    {
+      "type": "p",
+      "content": "Returns: a list of Documents."
+    },
+    {
+      "type": "p",
+      "content": "List[Document]"
+    },
+    {
+      "type": "li",
+      "content": "TensorflowDatasetsdataset_namesplit_nameload_max_docssample_to_document_functiondataset_nameload_max_docssample_to_document_functionsplit_namelazy_load()load()"
+    },
+    {
+      "type": "li",
+      "content": "dataset_name"
+    },
+    {
+      "type": "li",
+      "content": "load_max_docs"
+    },
+    {
+      "type": "li",
+      "content": "sample_to_document_function"
+    },
+    {
+      "type": "li",
+      "content": "dataset_name"
+    },
+    {
+      "type": "li",
+      "content": "load_max_docs"
+    },
+    {
+      "type": "li",
+      "content": "sample_to_document_function"
+    },
+    {
+      "type": "li",
+      "content": "lazy_load()"
+    }
+  ],
+  "code_examples": [
+    "utilities",
+    "BaseModel",
+    "fromlangchain_community.utilitiesimportTensorflowDatasetsdefmlqaen_example_to_document(example:dict)->Document:returnDocument(page_content=decode_to_str(example[\"context\"]),metadata={\"id\":decode_to_str(example[\"id\"]),\"title\":decode_to_str(example[\"title\"]),\"question\":decode_to_str(example[\"question\"]),\"answer\":decode_to_str(example[\"answers\"][\"text\"][0]),},)tsds_client=TensorflowDatasets(dataset_name=\"mlqa/en\",split_name=\"train\",load_max_docs=MAX_DOCS,sample_to_document_function=mlqaen_example_to_document,)",
+    "TensorflowDatasets",
+    "dataset_name",
+    "split_name",
+    "load_max_docs",
+    "sample_to_document_function",
+    "dataset_name",
+    "load_max_docs",
+    "sample_to_document_function",
+    "split_name",
+    "lazy_load()",
+    "load()"
+  ],
+  "api_signatures": [
+    "classlangchain_community.utilities.tensorflow_datasets.TensorflowDatasets[source]#",
+    "langchain_community.utilities.tensorflow_datasets.",
+    "TensorflowDatasets",
+    "dataset_name#",
+    "dataset_name",
+    "split_name#",
+    "split_name",
+    "load_max_docs#",
+    "load_max_docs",
+    "sample_to_document_function#",
+    "sample_to_document_function",
+    "paramdataset_name:str=''#",
+    "dataset_name",
+    "paramload_max_docs:int=100#",
+    "load_max_docs",
+    "paramsample_to_document_function:Callable[[Dict],Document]|None=None#",
+    "sample_to_document_function",
+    "paramsplit_name:str='train'#",
+    "split_name",
+    "lazy_load()→Iterator[Document][source]#",
+    "lazy_load",
+    "(",
+    ")",
+    "→Iterator[Document]",
+    "→",
+    "Iterator[Document]",
+    "load()→List[Document][source]#",
+    "load",
+    "(",
+    ")",
+    "→List[Document]",
+    "→",
+    "List[Document]"
+  ],
+  "parameters": []
+}
