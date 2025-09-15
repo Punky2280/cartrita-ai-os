@@ -81,15 +81,21 @@ class FocusedAnalyzer:
 
             tree = ast.parse(content)
 
-            # Check for common issues
-            async_functions = [node for node in ast.walk(tree) if isinstance(node, ast.AsyncFunctionDef)]
+            # Check for common issues - collect all nodes in single pass to avoid nested walks
+            all_nodes = list(ast.walk(tree))
+            async_functions = [node for node in all_nodes if isinstance(node, ast.AsyncFunctionDef)]
 
-            for node in ast.walk(tree):
+            # Pre-compute try blocks for all functions to optimize lookups
+            try_blocks_by_func = {}
+            for func in async_functions:
+                func_try_blocks = [n for n in all_nodes if isinstance(n, ast.Try) and
+                                 any(ancestor == func for ancestor in ast.walk(func))]
+                try_blocks_by_func[func] = func_try_blocks
+
+            for node in all_nodes:
                 # 1. Missing error handling in async functions
                 if isinstance(node, ast.AsyncFunctionDef):
-                    # Pre-collect try blocks for this function to avoid nested walk
-                    function_nodes = list(ast.walk(node))
-                    has_try_except = any(isinstance(child, ast.Try) for child in function_nodes)
+                    has_try_except = len(try_blocks_by_func.get(node, [])) > 0
                     if not has_try_except and self._is_api_or_db_function(node):
                         self.issues.append(CodeIssue(
                             file_path=str(file_path),

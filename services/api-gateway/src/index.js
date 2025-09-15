@@ -60,14 +60,27 @@ fastify.register(async function (fastify) {
   // API → Orchestrator proxy (retain existing axios logic for flexibility)
   fastify.all('/api/*', async (request, reply) => {
     const axios = require('axios');
-    const path = request.url.replace('/api', '');
-    const url = `${aiOrchestratorUrl}${path}`;
+    const rawPath = request.url.replace('/api', '');
+    // Basic SSRF hardening: disallow absolute/authority-form URLs and ensure same-origin target
+    if (rawPath.includes('://') || rawPath.startsWith('//')) {
+      reply.code(400);
+      return { error: 'Invalid path' };
+    }
+    const base = new URL(aiOrchestratorUrl);
+    const target = new URL(rawPath, base);
+    if (target.origin !== base.origin) {
+      reply.code(400);
+      return { error: 'Disallowed target origin' };
+    }
     try {
       const headers = { ...request.headers };
       delete headers.host;
+      delete headers['x-forwarded-host'];
+      delete headers['x-forwarded-proto'];
+      delete headers['x-forwarded-for'];
       const response = await axios({
         method: request.method,
-        url,
+        url: target.toString(),
         data: request.body,
         headers,
         params: request.query

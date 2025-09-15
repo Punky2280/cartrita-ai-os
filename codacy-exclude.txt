@@ -1,0 +1,8 @@
+.venv
+.venv-*
+.tmp-compile-env
+**/__pycache__
+**/.pytest_cache
+**/.mypy_cache
+frontend/.next
+node_modules
