@@ -90,4 +90,3 @@ async def test_service_manager_idempotent_initialize_and_shutdown(monkeypatch):
     await sm.shutdown_services()
     assert sm.initialized is False
     assert sm.services == {}
-

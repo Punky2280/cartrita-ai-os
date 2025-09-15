@@ -165,4 +165,3 @@ async def test_openai_service_error_path(monkeypatch):
     async for chunk in svc.chat_completion(messages, stream=False):
         emitted.append(chunk)
     assert any(c["type"] == "error" for c in emitted)
-

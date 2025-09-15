@@ -116,4 +116,3 @@ async def test_rate_limiter_pruning_does_not_leak_memory():
     # After cleanup, only recent (within 24h) timestamps + recorded new request should remain
     remaining = len(rl._requests[ident])
     assert remaining <= 4  # 2 old pruned, 2 recent + maybe new
-

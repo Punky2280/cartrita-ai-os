@@ -102,4 +102,3 @@ def test_stream_ordering_sse():
 
     if used_method:
         assert used_method in ("post", "get")
-        
