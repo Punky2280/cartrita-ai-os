@@ -25,7 +25,7 @@ from dotenv import load_dotenv
 
 # Import core components
 from cartrita.orchestrator.agents.cartrita_core.orchestrator import CartritaOrchestrator
-from cartrita.orchestrator.utils.sentry_config import init_sentry, track_ai_errors, capture_ai_error
+from cartrita.orchestrator.utils.sentry_config import init_sentry
 
 # Import models with fallbacks
 try:
@@ -1212,7 +1212,7 @@ async def transcribe_audio(
 
     except Exception as e:
         logger.error("Audio transcription failed", error=str(e), filename=audio.filename if audio else "unknown")
-    raise HTTPException(status_code=500, detail="Audio transcription failed") from e
+        raise HTTPException(status_code=500, detail="Audio transcription failed") from e
 
 
 class SpeechRequest(BaseModel):

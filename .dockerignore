@@ -1,3 +1,47 @@
+# VCS / IDE
+.git
+.gitignore
+.github/
+.vscode/
+.idea/
+
+# Python caches & envs
+.venv/
+**/__pycache__/
+**/.pytest_cache/
+**/*.py[co]
+
+# Node/Next artifacts
+**/node_modules/
+**/.next/
+**/dist/
+**/coverage/
+**/.turbo/
+**/.cache/
+
+# Large or non-essential monorepo paths for ai-orchestrator build
+frontend/
+services/api-gateway/
+infrastructure/
+logs/
+uploads/
+backups/
+home/
+docs/
+tests/
+cartrita_ai_os.egg-info/
+*.log
+
+# Keep orchestrator sources and dependency specs
+!services/ai-orchestrator/**
+!pyproject.toml
+!services/ai-orchestrator/requirements.in
+!services/ai-orchestrator/constraints.txt
+
+# But exclude orchestrator test caches and test suite from image context
+services/ai-orchestrator/tests/
+services/ai-orchestrator/**/__pycache__/
+services/ai-orchestrator/**/.pytest_cache/
 ## Exclude from Docker build context
 
 # Documentation

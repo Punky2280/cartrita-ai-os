@@ -279,7 +279,7 @@ Remember: You're providing professional-grade visual analysis that Cartrita can 
         """Edit image using DALL-E edit capabilities."""
         try:
             from openai import AsyncOpenAI
-            client = AsyncOpenAI(api_key=self.api_key)
+            AsyncOpenAI(api_key=self.api_key)
 
             # Note: DALL-E edit requires image + mask + prompt
             # This is a placeholder for the edit functionality

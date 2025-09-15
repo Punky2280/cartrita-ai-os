@@ -3,24 +3,18 @@ Advanced Tool Agent with LangChain
 Implements sophisticated tool management and execution patterns
 """
 
-import asyncio
-import inspect
-from typing import Any, Callable, Dict, List, Optional, Type, Union
+from typing import Any, Dict, List, Optional
 from enum import Enum
 from datetime import datetime, timedelta
 
-from langchain.tools import BaseTool, StructuredTool, Tool
+from langchain.tools import BaseTool
 from langchain.agents import AgentExecutor, create_openai_tools_agent
-from langchain.schema import AgentAction, AgentFinish
 from langchain.callbacks.manager import CallbackManagerForToolRun, AsyncCallbackManagerForToolRun
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from langchain.memory import ConversationBufferMemory
 from langchain.pydantic_v1 import BaseModel, Field
-from langchain.pydantic_v1 import BaseModel as LangChainBaseModel, Field as LangChainField, validator
-import json
 import time
-from functools import wraps
 
 
 class ToolCategory(str, Enum):
@@ -283,7 +277,6 @@ class FileSystemTool(AdvancedCartritaTool):
 
     def _execute(self, operation: str, path: str, content: Optional[str] = None) -> str:
         """Execute file system operation"""
-        import os
         import tempfile
         from pathlib import Path
 
@@ -575,9 +568,6 @@ class AdvancedToolAgent:
     def execute_with_tools(self, query: str) -> str:
         """Execute query using available tools"""
         try:
-            # Get tool recommendations
-            recommended_tools = self.get_tool_recommendations(query)
-
             # Check cost constraints
             if self.current_session_cost >= self.max_cost_per_session:
                 return "Session cost limit reached. Please start a new session."

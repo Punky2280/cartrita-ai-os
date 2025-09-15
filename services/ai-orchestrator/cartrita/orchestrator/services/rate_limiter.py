@@ -132,7 +132,6 @@ class RateLimiter:
         now = datetime.now(timezone.utc)
         request_times = self._requests[identifier]
 
-        reset_times = {}
 
         if not request_times:
             return {

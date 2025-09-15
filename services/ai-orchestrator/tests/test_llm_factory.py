@@ -13,7 +13,7 @@ def test_create_chat_openai_maps_max_completion_tokens(monkeypatch):
     from langchain_openai import ChatOpenAI
     monkeypatch.setattr(ChatOpenAI, "__init__", fake_init, raising=True)
 
-    llm = create_chat_openai(model="gpt-test", max_completion_tokens=1234, temperature=0.55, openai_api_key="sk-test")
+    create_chat_openai(model="gpt-test", max_completion_tokens=1234, temperature=0.55, openai_api_key="sk-test")
     # Object constructed; attributes may not exist; focus on kwargs capture.
     assert "max_tokens" in captured_kwargs, captured_kwargs
     assert "max_completion_tokens" not in captured_kwargs, captured_kwargs

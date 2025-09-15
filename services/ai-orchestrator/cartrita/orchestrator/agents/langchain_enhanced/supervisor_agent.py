@@ -3,21 +3,16 @@ LangChain-Enhanced Supervisor Agent
 Advanced agent orchestrator using LangChain patterns with tool calling and streaming
 """
 
-import asyncio
-from typing import Any, Dict, List, Optional, Sequence, Union
-from datetime import datetime
+from typing import Any, Dict, List, Optional, Union
 
-from langchain.agents import BaseSingleActionAgent, AgentExecutor, create_openai_tools_agent
+from langchain.agents import BaseSingleActionAgent, AgentExecutor
 from langchain.callbacks.manager import CallbackManagerForChainRun, AsyncCallbackManagerForChainRun
 from langchain.schema import AgentAction, AgentFinish, BaseMessage, HumanMessage, AIMessage
 from langchain.tools import BaseTool, StructuredTool
 from langchain.memory import ConversationSummaryBufferMemory
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.pydantic_v1 import BaseModel, Field
-from langchain.pydantic_v1 import BaseModel as LangChainBaseModel, Field as LangChainField
-import json
 
 
 class SupervisorDecision(BaseModel):

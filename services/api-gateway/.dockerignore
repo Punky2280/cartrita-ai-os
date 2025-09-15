@@ -1,0 +1,22 @@
+# Dependencies and build artifacts
+node_modules/
+.next/
+coverage/
+.cache/
+
+# VCS / IDE
+.git
+.gitignore
+.vscode/
+.idea/
+
+# Tests and local dev
+__tests__/
+*.spec.*
+*.test.*
+dev.log
+
+# Misc
+Dockerfile*
+docker-compose*
+*.log

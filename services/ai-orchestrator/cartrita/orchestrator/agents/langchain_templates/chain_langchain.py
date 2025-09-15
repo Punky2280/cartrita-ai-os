@@ -5,11 +5,10 @@ Implements chain patterns for composable workflows
 
 from typing import Any, Dict, List, Optional
 from langchain.chains import LLMChain
-from langchain.prompts import PromptTemplate
 from langchain.schema import BasePromptTemplate
 from langchain.callbacks.manager import CallbackManagerForChainRun, AsyncCallbackManagerForChainRun
 from langchain.base_language import BaseLanguageModel
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 class CartritaChain(LLMChain):
     """Custom chain for Cartrita following LangChain patterns"""

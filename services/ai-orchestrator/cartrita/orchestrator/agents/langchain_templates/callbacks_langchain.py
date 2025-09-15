@@ -3,7 +3,7 @@ LangChain Callbacks Template for Cartrita
 Implements callback patterns for monitoring and debugging
 """
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union, Callable
 from langchain.callbacks.base import BaseCallbackHandler
 from langchain.schema import AgentAction, AgentFinish, LLMResult
 import logging

@@ -3,25 +3,18 @@ Base Agent Template following LangChain patterns
 Provides standard interface for all Cartrita agents
 """
 
-from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 from abc import ABC, abstractmethod
-import asyncio
-from datetime import datetime
 
 from langchain.agents import BaseSingleActionAgent
 from langchain.callbacks.manager import CallbackManagerForChainRun, AsyncCallbackManagerForChainRun
 from langchain.schema import (
     AgentAction,
-    AgentFinish,
-    BaseMessage,
-    HumanMessage,
-    AIMessage,
-    SystemMessage
+    AgentFinish
 )
 from langchain.tools import BaseTool
 from langchain.memory import ConversationBufferMemory
-from langchain.prompts import PromptTemplate
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 class CartritaBaseAgent(BaseSingleActionAgent, ABC):
     """Base class for all Cartrita agents following LangChain patterns"""

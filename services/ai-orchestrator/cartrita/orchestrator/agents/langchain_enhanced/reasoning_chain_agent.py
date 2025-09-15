@@ -3,6 +3,29 @@ Advanced Reasoning Chain Agent with LangChain
 Implements chain-of-thought reasoning using LangChain patterns
 """
 
+import asyncio
+from typing import Any, Dict, List, Optional
+from enum import Enum
+from dataclasses import dataclass, field
+
+from langchain.chains import LLMChain
+from langchain.prompts import PromptTemplate
+from langchain.schema import BaseOutputParser, OutputParserException
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
+from langchain.memory import ConversationBufferWindowMemory
+from pydantic import BaseModel, Field
+import json
+import re
+
+
+class TaskComplexity(Enum):
+    """Task complexity levels"""
+    SIMPLE = "simple"
+    MODERATE = "moderate"
+    COMPLEX = "complex"
+    EXPERT = "expert"
+
+
 @dataclass
 class TaskRequirements:
     """Requirements for a specific task"""
@@ -13,22 +36,6 @@ class TaskRequirements:
     requires_function_calling: bool = False
     requires_streaming: bool = False
     domain_expertise: List[str] = field(default_factory=list)
-
-
-import asyncio
-from typing import Any, Dict, List, Optional, Sequence, Union
-from enum import Enum
-
-from langchain.chains import LLMChain, SequentialChain
-from langchain.prompts import PromptTemplate, ChatPromptTemplate
-from langchain.schema import BaseOutputParser, OutputParserException
-from langchain.callbacks.manager import CallbackManagerForChainRun
-from cartrita.orchestrator.utils.llm_factory import create_chat_openai
-from langchain.memory import ConversationBufferWindowMemory
-from pydantic import BaseModel, Field
-from langchain.pydantic_v1 import BaseModel as LangChainBaseModel, Field as LangChainField, validator
-import json
-import re
 
 
 class ReasoningStep(BaseModel):
@@ -427,7 +434,7 @@ Validation Result:"""
                 callbacks=callbacks
             )
             return "Valid: Yes" in validation or "valid: yes" in validation.lower()
-        except:
+        except Exception:
             return True  # Default to valid if validation fails
 
     async def _retry_reasoning_step(
@@ -513,7 +520,7 @@ Validation Result:"""
             elif line.startswith("Confidence Score:"):
                 try:
                     confidence = float(re.findall(r'0?\.\d+|[01]\.?\d*', line)[0])
-                except:
+                except (IndexError, ValueError):
                     pass
 
         return final_answer, confidence

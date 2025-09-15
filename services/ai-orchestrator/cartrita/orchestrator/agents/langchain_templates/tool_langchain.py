@@ -3,7 +3,7 @@ LangChain Tool Template for Cartrita
 Standard tool implementation following LangChain patterns
 """
 
-from typing import Any, Optional, Type
+from typing import Any, Optional, Type, Dict, Callable
 from langchain.tools import BaseTool
 from langchain.callbacks.manager import CallbackManagerForToolRun, AsyncCallbackManagerForToolRun
 from pydantic import BaseModel, Field

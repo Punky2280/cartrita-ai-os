@@ -571,7 +571,7 @@ async def test_performance_benchmarks():
 
         # Benchmark key access time
         start_time = time.time()
-        access_info = await orchestrator.api_key_manager.request_key_access(
+        await orchestrator.api_key_manager.request_key_access(
             "benchmark_agent", "web_search"
         )
         access_time = time.time() - start_time

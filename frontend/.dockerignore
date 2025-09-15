@@ -1,3 +1,29 @@
+# Dependencies and caches
+node_modules/
+.next/
+.turbo/
+coverage/
+.cache/
+
+# VCS / IDE
+.git
+.gitignore
+.vscode/
+.idea/
+
+# Tests and local configs not needed for prod build
+__tests__/
+src/**/__tests__/
+vitest.config.*
+*.spec.*
+*.test.*
+pylint-results.json
+dev.log
+
+# Misc
+Dockerfile*
+docker-compose*
+*.log
 .next/
 node_modules/
 npm-debug.log*

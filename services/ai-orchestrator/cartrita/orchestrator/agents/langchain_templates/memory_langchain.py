@@ -3,10 +3,9 @@ LangChain Memory Template for Cartrita
 Implements memory patterns for conversation management
 """
 
-from typing import Any, Dict, List, Optional
-from langchain.memory import ConversationBufferMemory, ConversationSummaryMemory
-from langchain.schema import BaseMessage, HumanMessage, AIMessage
-from pydantic import BaseModel, Field
+from typing import Any, Dict, Optional
+from langchain.memory import ConversationBufferMemory
+from pydantic import Field
 
 class CartritaMemory(ConversationBufferMemory):
     """Custom memory implementation for Cartrita"""
