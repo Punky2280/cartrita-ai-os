@@ -12,18 +12,20 @@ import {
 } from "@/hooks/useSSEChat";
 import type { ChatRequest, ChatResponse } from "@/services/api";
 
-// Mock the API client
-const mockStreamChat = vi.fn();
-const mockPostChat = vi.fn();
-const mockStreamChatSSE = vi.fn();
-const mockStreamChatWebSocket = vi.fn();
+// Mock the API client using factory-scoped fns to avoid hoist issues
+const apiMocks = vi.hoisted(() => ({
+  mockStreamChat: vi.fn(),
+  mockPostChat: vi.fn(),
+  mockStreamChatSSE: vi.fn(),
+  mockStreamChatWebSocket: vi.fn(),
+}));
 
 vi.mock("@/services/api", () => ({
   apiClient: {
-    streamChat: mockStreamChat,
-    postChat: mockPostChat,
-    streamChatSSE: mockStreamChatSSE,
-    streamChatWebSocket: mockStreamChatWebSocket,
+    streamChat: apiMocks.mockStreamChat,
+    postChat: apiMocks.mockPostChat,
+    streamChatSSE: apiMocks.mockStreamChatSSE,
+    streamChatWebSocket: apiMocks.mockStreamChatWebSocket,
   },
 }));
 
@@ -106,7 +108,7 @@ describe("useSSEChat", () => {
         },
       };
 
-      mockPostChat.mockResolvedValue({
+      apiMocks.mockPostChat.mockResolvedValue({
         success: true,
         data: mockResponse,
       });
@@ -133,7 +135,7 @@ describe("useSSEChat", () => {
         await result.current.sendMessageNonStreaming(request);
       });
 
-      expect(mockPostChat).toHaveBeenCalledWith({
+      expect(apiMocks.mockPostChat).toHaveBeenCalledWith({
         ...request,
         stream: false,
       });
@@ -143,8 +145,8 @@ describe("useSSEChat", () => {
     });
 
     it("should handle non-streaming errors", async () => {
-      const mockError = new Error("API Error");
-      mockPostChat.mockRejectedValue(mockError);
+    const mockError = new Error("API Error");
+    apiMocks.mockPostChat.mockRejectedValue(mockError);
 
       const mockOnComplete = vi.fn();
       const mockOnError = vi.fn();
@@ -184,7 +186,7 @@ describe("useSSEChat", () => {
         conversationId: "conv_streaming_123",
       };
 
-      mockStreamChat.mockResolvedValue(mockStream);
+      apiMocks.mockStreamChat.mockResolvedValue(mockStream);
 
       const mockCallbacks = {
         onToken: vi.fn(),
@@ -211,14 +213,17 @@ describe("useSSEChat", () => {
         await result.current.sendMessage(request);
       });
 
-      expect(mockStreamChat).toHaveBeenCalledWith(request, expect.any(Object));
+      expect(apiMocks.mockStreamChat).toHaveBeenCalledWith(
+        request,
+        expect.any(Object),
+      );
       expect(result.current.currentStream).toBe(mockStream);
     });
 
     it("should handle streaming token events", async () => {
       let capturedCallbacks: StreamCallbacksShape = {};
 
-      mockStreamChat.mockImplementation((request, callbacks) => {
+      apiMocks.mockStreamChat.mockImplementation((request, callbacks) => {
         capturedCallbacks = callbacks;
         return Promise.resolve({
           close: vi.fn(),
@@ -254,7 +259,7 @@ describe("useSSEChat", () => {
     it("should handle streaming completion", async () => {
       let capturedCallbacks: StreamCallbacksShape = {};
 
-      mockStreamChat.mockImplementation((request, callbacks) => {
+      apiMocks.mockStreamChat.mockImplementation((request, callbacks) => {
         capturedCallbacks = callbacks;
         return Promise.resolve({
           close: vi.fn(),
@@ -305,7 +310,7 @@ describe("useSSEChat", () => {
     it("should handle agent task events", async () => {
       let capturedCallbacks: StreamCallbacksShape = {};
 
-      mockStreamChat.mockImplementation((request, callbacks) => {
+      apiMocks.mockStreamChat.mockImplementation((request, callbacks) => {
         capturedCallbacks = callbacks;
         return Promise.resolve({
           close: vi.fn(),
@@ -360,7 +365,7 @@ describe("useSSEChat", () => {
         conversationId: "conv_123",
       };
 
-      mockStreamChat.mockResolvedValue(mockStream);
+      apiMocks.mockStreamChat.mockResolvedValue(mockStream);
 
       const { result } = renderHook(
         () => useSSEChat({ enableStreaming: true }),
@@ -388,8 +393,8 @@ describe("useSSEChat", () => {
 
   describe("Error handling", () => {
     it("should handle streaming errors gracefully", async () => {
-      const mockError = new Error("Streaming failed");
-      mockStreamChat.mockRejectedValue(mockError);
+    const mockError = new Error("Streaming failed");
+    apiMocks.mockStreamChat.mockRejectedValue(mockError);
 
       const mockOnError = vi.fn();
 
@@ -419,18 +424,23 @@ describe("useSSEChat", () => {
     it("should clear errors on new requests", async () => {
       const { result } = renderHook(
         () => useSSEChat({ enableStreaming: false }),
-        {
-          wrapper,
-        },
+        { wrapper },
       );
 
-      // Set initial error
-      act(() => {
-        (result.current as any).setError(new Error("Previous error"));
+      // First request fails to set an error
+      const mockErr = new Error("Previous error");
+      apiMocks.mockPostChat.mockRejectedValueOnce(mockErr);
+
+      await act(async () => {
+        try {
+          await result.current.sendMessageNonStreaming({ message: "will fail" });
+        } catch {}
       });
 
-      // Mock successful response
-      mockPostChat.mockResolvedValue({
+      expect(result.current.error).toBe(mockErr);
+
+      // Next request succeeds; error should clear before send
+      apiMocks.mockPostChat.mockResolvedValueOnce({
         success: true,
         data: {
           response: "Success",
@@ -440,9 +450,7 @@ describe("useSSEChat", () => {
       });
 
       await act(async () => {
-        await result.current.sendMessageNonStreaming({
-          message: "New request",
-        });
+        await result.current.sendMessageNonStreaming({ message: "recover" });
       });
 
       expect(result.current.error).toBeNull();
@@ -466,7 +474,7 @@ describe("useSimpleChat", () => {
       agent_type: "supervisor",
     };
 
-    mockPostChat.mockResolvedValue({
+    apiMocks.mockPostChat.mockResolvedValue({
       success: true,
       data: mockResponse,
     });
@@ -478,7 +486,7 @@ describe("useSimpleChat", () => {
       expect(response).toEqual(mockResponse);
     });
 
-    expect(mockPostChat).toHaveBeenCalledWith({
+    expect(apiMocks.mockPostChat).toHaveBeenCalledWith({
       message: "Hello",
       agent_override: "research",
       stream: false,
@@ -488,7 +496,7 @@ describe("useSimpleChat", () => {
 
   it("should handle simple chat errors", async () => {
     const mockError = new Error("Simple chat error");
-    mockPostChat.mockRejectedValue(mockError);
+  apiMocks.mockPostChat.mockRejectedValue(mockError);
 
     const { result } = renderHook(() => useSimpleChat(), { wrapper });
 
@@ -516,7 +524,7 @@ describe("useStreamingChat", () => {
   it("should track task progress during streaming", async () => {
     let capturedCallbacks: StreamCallbacksShape | undefined;
 
-    mockStreamChat.mockImplementation((request, callbacks) => {
+    apiMocks.mockStreamChat.mockImplementation((request, callbacks) => {
       capturedCallbacks = callbacks;
       return Promise.resolve({
         close: vi.fn(),
@@ -565,7 +573,7 @@ describe("useStreamingChat", () => {
   it("should handle multiple concurrent tasks", async () => {
     let capturedCallbacks: StreamCallbacksShape | undefined;
 
-    mockStreamChat.mockImplementation((request, callbacks) => {
+    apiMocks.mockStreamChat.mockImplementation((request, callbacks) => {
       capturedCallbacks = callbacks;
       return Promise.resolve({
         close: vi.fn(),

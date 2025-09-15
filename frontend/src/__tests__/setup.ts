@@ -60,7 +60,7 @@ Object.defineProperty(MockWebSocket, "CLOSED", { value: 3 });
 
 global.WebSocket = MockWebSocket as any;
 
-// Mock MediaDevices
+// Mock MediaDevices (configurable so individual tests can override)
 Object.defineProperty(navigator, "mediaDevices", {
   value: {
     getUserMedia: vi.fn().mockResolvedValue({
@@ -70,6 +70,7 @@ Object.defineProperty(navigator, "mediaDevices", {
     }),
   },
   writable: true,
+  configurable: true,
 });
 
 // Mock AudioContext
@@ -104,6 +105,22 @@ Object.defineProperty(MockMediaRecorder, "isTypeSupported", {
 });
 
 global.MediaRecorder = MockMediaRecorder as any;
+
+// Mock MediaStream (needed by some integration tests)
+class MockMediaStream {
+  private tracks: any[];
+  constructor() {
+    this.tracks = [{ stop: vi.fn(), kind: "audio" }];
+  }
+  addTrack = vi.fn();
+  removeTrack = vi.fn();
+  getTracks = () => this.tracks;
+  getAudioTracks = () => this.tracks.filter((t) => t.kind === "audio");
+  getVideoTracks = () => this.tracks.filter((t) => t.kind === "video");
+}
+
+// @ts-expect-error jsdom env
+global.MediaStream = MockMediaStream as any;
 
 // Global test utilities
 global.testUtils = {

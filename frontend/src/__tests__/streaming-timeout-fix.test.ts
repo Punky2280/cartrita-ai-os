@@ -17,46 +17,60 @@ describe("Streaming Service Timeout Fix", () => {
     streamingService.cancelRequest();
   });
 
-  it("should handle timeout errors gracefully without Promise.race issues", async () => {
+  it("should return fallback on timeout and not call onError", async () => {
     const request: ChatRequest = {
       message: "Test timeout handling",
       conversation_id: "timeout-test",
     };
 
-    let timeoutError: Error | null = null;
     let onErrorCalled = false;
+    let onCompleteCalled = false;
+    let onCompletePayload: any = null;
 
     const options = {
       timeout: 100, // Very short timeout to trigger timeout
-      onError: (error: Error) => {
-        timeoutError = error;
+      onError: (_error: Error) => {
         onErrorCalled = true;
       },
       onChunk: vi.fn(),
-      onComplete: vi.fn(),
+      onComplete: (payload: any) => {
+        onCompleteCalled = true;
+        onCompletePayload = payload;
+      },
     };
 
-    // Mock fetch to simulate a slow response
-    global.fetch = vi.fn().mockImplementation(
-      () =>
-        new Promise((resolve) =>
-          setTimeout(
-            () =>
-              resolve({
-                ok: true,
-                body: new ReadableStream(),
-              }),
-            200,
-          ),
-        ), // Slower than timeout
-    );
+    // Mock fetch to simulate a slow response that respects AbortController
+    global.fetch = vi.fn().mockImplementation((input: RequestInfo, init?: RequestInit) => {
+      const signal = init?.signal as AbortSignal | undefined;
+      return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => {
+          resolve({ ok: true, body: new ReadableStream() } as any);
+        }, 200);
+
+        if (signal) {
+          const onAbort = () => {
+            clearTimeout(timer);
+            const err = new Error("The operation was aborted.");
+            (err as any).name = "AbortError";
+            reject(err);
+          };
+          if (signal.aborted) {
+            onAbort();
+          } else {
+            signal.addEventListener("abort", onAbort, { once: true });
+          }
+        }
+      });
+    });
 
     await streamingService.streamChat(request, options);
 
-    // Verify timeout was handled correctly
-    expect(onErrorCalled).toBe(true);
-    expect(timeoutError).toBeTruthy();
-    expect(timeoutError?.message).toContain("timeout");
+    // Verify timeout produced fallback via onComplete (not onError)
+    expect(onErrorCalled).toBe(false);
+    expect(onCompleteCalled).toBe(true);
+    expect(onCompletePayload).toBeTruthy();
+    expect(onCompletePayload.agent_type).toBe("fallback");
+    expect(onCompletePayload?.metadata?.fallback_used).toBe(true);
   });
 
   it("should handle successful requests without timeout", async () => {
@@ -109,24 +123,35 @@ describe("Streaming Service Timeout Fix", () => {
       conversation_id: "cancel-test",
     };
 
-    let cancelledGracefully = false;
+    const onError = vi.fn();
+    const onComplete = vi.fn();
 
     const options = {
-      onError: (error: Error) => {
-        if (error.name === "AbortError") {
-          cancelledGracefully = true;
-        }
-      },
+      onError,
       onChunk: vi.fn(),
-      onComplete: vi.fn(),
+      onComplete,
     };
 
-    // Mock fetch that takes a while
-    global.fetch = vi
-      .fn()
-      .mockImplementation(
-        () => new Promise((resolve) => setTimeout(resolve, 1000)),
-      );
+    // Mock fetch that takes a while and supports AbortController
+    global.fetch = vi.fn().mockImplementation((input: RequestInfo, init?: RequestInit) => {
+      const signal = init?.signal as AbortSignal | undefined;
+      return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => resolve({ ok: true, body: new ReadableStream() } as any), 1000);
+        if (signal) {
+          const onAbort = () => {
+            clearTimeout(timer);
+            const err = new Error("The operation was aborted.");
+            (err as any).name = "AbortError";
+            reject(err);
+          };
+          if (signal.aborted) {
+            onAbort();
+          } else {
+            signal.addEventListener("abort", onAbort, { once: true });
+          }
+        }
+      });
+    });
 
     // Start request
     const requestPromise = streamingService.streamChat(request, options);
@@ -134,8 +159,10 @@ describe("Streaming Service Timeout Fix", () => {
     // Cancel immediately
     streamingService.cancelRequest();
 
-    await requestPromise;
+  await requestPromise;
 
-    expect(cancelledGracefully || true).toBe(true); // Should handle cancellation gracefully
+    // Should handle cancellation gracefully without invoking callbacks
+    expect(onError).not.toHaveBeenCalled();
+    expect(onComplete).not.toHaveBeenCalled();
   });
 });

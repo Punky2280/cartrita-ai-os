@@ -5,23 +5,13 @@ Leverages both OpenAI and Hugging Face APIs for optimal performance and cost
 
 import asyncio
 import os
-from typing import Any, Dict, List, Optional, Union, Callable
+from typing import Any, Dict, List, Optional
 from enum import Enum
 from datetime import datetime
-import json
 from dataclasses import dataclass, field
 
-from langchain.agents import AgentExecutor, create_openai_tools_agent
-from langchain.callbacks.manager import CallbackManagerForChainRun
-from langchain.schema import BaseMessage, HumanMessage, AIMessage, SystemMessage
+from langchain.schema import BaseMessage, HumanMessage, SystemMessage
 from langchain.memory import ConversationSummaryBufferMemory
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.tools import BaseTool, StructuredTool
-from langchain_openai import OpenAIEmbeddings
-from langchain_community.llms import HuggingFacePipeline
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain.pydantic_v1 import BaseModel, Field
-from langchain.pydantic_v1 import BaseModel as LangChainBaseModel, Field as LangChainField
 import tiktoken
 
 
@@ -103,8 +93,8 @@ class MultiProviderOrchestrator:
             try:
                 from cartrita.orchestrator.utils.llm_factory import create_chat_openai
                 basic_llm = create_chat_openai(api_key=self.openai_api_key, model="gpt-3.5-turbo")
-            except:
-                pass
+            except ImportError:
+                basic_llm = None
 
         # Memory for context
         if basic_llm:
@@ -166,16 +156,6 @@ class MultiProviderOrchestrator:
         # Hugging Face Models
         if self.huggingface_api_key:
             configs.update({
-                "llama-3.1-8b": ModelConfig(
-                    name="meta-llama/Meta-Llama-3.1-8B-Instruct",
-                    provider=ModelProvider.HUGGINGFACE,
-                    cost_per_1k_tokens=0.0005,  # Much cheaper
-                    max_tokens=8192,
-                    supports_streaming=True,
-                    supports_function_calling=False,
-                    expertise_areas=["coding", "reasoning", "general"],
-                    quality_score=0.90
-                ),
                 "llama-3.1-8b": ModelConfig(
                     name="meta-llama/Meta-Llama-3.1-8B-Instruct",
                     provider=ModelProvider.HUGGINGFACE,
@@ -363,6 +343,64 @@ class MultiProviderOrchestrator:
 
         return max(0.0, min(1.0, score))
 
+    async def _invoke_model(self, model: Any, messages: List[BaseMessage], callbacks: Optional[Any]) -> Any:
+        if hasattr(model, 'ainvoke'):
+            return await model.ainvoke(messages, callbacks=callbacks)
+        return model.invoke(messages, callbacks=callbacks)
+
+    def _compute_cost(self, config: ModelConfig, response_text: str) -> float:
+        estimated_tokens = self._estimate_response_tokens(response_text)
+        return (estimated_tokens / 1000) * config.cost_per_1k_tokens
+
+    def _record_success(self, model_id: str, start_time: datetime, cost: float):
+        execution_time = (datetime.now() - start_time).total_seconds()
+        self.current_session_cost += cost
+        self._record_performance(model_id, execution_time, cost, True)
+        return execution_time
+
+    def _update_memory(self, query: str, response_text: str):
+        self.memory.save_context({"input": query}, {"output": response_text})
+
+    async def _attempt_fallback(
+        self,
+        query: str,
+        context: Optional[str],
+        start_time: datetime,
+        execution_time: float,
+        original_error: str
+    ) -> Optional[Dict[str, Any]]:
+        fallback_model = self._get_fallback_model()
+        if not (fallback_model and fallback_model in self.model_instances):
+            return None
+        try:
+            model = self.model_instances[fallback_model]
+            messages = self._prepare_messages(query, context)
+            response = await self._invoke_model(model, messages, callbacks=None)
+
+            cfg = self.available_models[fallback_model]
+            response_text = response.content if hasattr(response, 'content') else str(response)
+            cost = self._compute_cost(cfg, response_text)
+
+            # record success with full duration since start
+            fallback_time = (datetime.now() - start_time).total_seconds()
+            self.current_session_cost += cost
+            self._record_performance(fallback_model, fallback_time - execution_time, cost, True)
+            self._update_memory(query, response_text)
+
+            return {
+                "success": True,
+                "response": response_text,
+                "selected_model": fallback_model,
+                "provider": cfg.provider.value,
+                "execution_time": fallback_time,
+                "cost": cost,
+                "session_total_cost": self.current_session_cost,
+                "used_fallback": True,
+                "original_error": original_error
+            }
+        except (RuntimeError, ValueError, TimeoutError) as _:
+            return None
+
     async def execute_with_optimal_model(
         self,
         query: str,
@@ -405,39 +443,19 @@ class MultiProviderOrchestrator:
                 }
 
         try:
-            # Get model instance
             model = self.model_instances[selected_model]
             config = self.available_models[selected_model]
-
-            # Prepare messages
             messages = self._prepare_messages(query, context)
+            response = await self._invoke_model(model, messages, callbacks)
 
-            # Execute with model
-            if hasattr(model, 'ainvoke'):
-                response = await model.ainvoke(messages, callbacks=callbacks)
-            else:
-                response = model.invoke(messages, callbacks=callbacks)
-
-            # Calculate execution time and cost
-            execution_time = (datetime.now() - start_time).total_seconds()
-            estimated_tokens = self._estimate_response_tokens(response.content if hasattr(response, 'content') else str(response))
-            cost = (estimated_tokens / 1000) * config.cost_per_1k_tokens
-
-            # Update session cost
-            self.current_session_cost += cost
-
-            # Record performance
-            self._record_performance(selected_model, execution_time, cost, True)
-
-            # Update memory
-            self.memory.save_context(
-                {"input": query},
-                {"output": response.content if hasattr(response, 'content') else str(response)}
-            )
+            response_text = response.content if hasattr(response, 'content') else str(response)
+            cost = self._compute_cost(config, response_text)
+            execution_time = self._record_success(selected_model, start_time, cost)
+            self._update_memory(query, response_text)
 
             return {
                 "success": True,
-                "response": response.content if hasattr(response, 'content') else str(response),
+                "response": response_text,
                 "selected_model": selected_model,
                 "provider": config.provider.value,
                 "execution_time": execution_time,
@@ -450,36 +468,11 @@ class MultiProviderOrchestrator:
             execution_time = (datetime.now() - start_time).total_seconds()
             self._record_performance(selected_model, execution_time, 0.0, False)
 
-            # Try fallback if enabled
             if self.fallback_strategy and selected_model != self._get_fallback_model():
-                fallback_model = self._get_fallback_model()
-                if fallback_model and fallback_model in self.model_instances:
-                    try:
-                        model = self.model_instances[fallback_model]
-                        messages = self._prepare_messages(query, context)
-                        response = await model.ainvoke(messages) if hasattr(model, 'ainvoke') else model.invoke(messages)
-
-                        fallback_time = (datetime.now() - start_time).total_seconds()
-                        config = self.available_models[fallback_model]
-                        estimated_tokens = self._estimate_response_tokens(response.content if hasattr(response, 'content') else str(response))
-                        cost = (estimated_tokens / 1000) * config.cost_per_1k_tokens
-
-                        self.current_session_cost += cost
-                        self._record_performance(fallback_model, fallback_time - execution_time, cost, True)
-
-                        return {
-                            "success": True,
-                            "response": response.content if hasattr(response, 'content') else str(response),
-                            "selected_model": fallback_model,
-                            "provider": config.provider.value,
-                            "execution_time": fallback_time,
-                            "cost": cost,
-                            "session_total_cost": self.current_session_cost,
-                            "used_fallback": True,
-                            "original_error": str(e)
-                        }
-                    except Exception:
-                                pass
+                last_error = str(e)
+                fb = await self._attempt_fallback(query, context, start_time, execution_time, last_error)
+                if fb is not None:
+                    return fb
 
             return {
                 "success": False,
@@ -544,7 +537,7 @@ class MultiProviderOrchestrator:
                         text += f"\n{msg.content}"
 
             return len(encoding.encode(text))
-        except Exception:
+        except (LookupError, ValueError, ImportError, TypeError):
             # Fallback estimation (4 characters per token average)
             total_length = len(query)
             if context:
@@ -556,7 +549,7 @@ class MultiProviderOrchestrator:
         try:
             encoding = tiktoken.get_encoding("cl100k_base")
             return len(encoding.encode(response))
-        except Exception:
+        except (LookupError, ValueError, ImportError, TypeError):
             return len(response) // 4
 
     def _record_performance(self, model_id: str, execution_time: float, cost: float, success: bool):

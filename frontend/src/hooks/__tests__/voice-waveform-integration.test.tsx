@@ -1,26 +1,36 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { useDeepgramVoice } from "../useDeepgramVoice";
-import WaveformVisualizer from "../../components/WaveformVisualizer";
 
-// Mock the Deepgram service
+// Hoist all mocks before importing the hook/component under test
+const deepgramMocks = vi.hoisted(() => ({
+  startVoiceRecording: vi.fn(),
+  stopVoiceRecording: vi.fn(),
+  getConnectionState: vi.fn(() => "connected"),
+  getTranscript: vi.fn(() => ""),
+  getAnalytics: vi.fn(() => ({})),
+  onConnectionStateChange: vi.fn(),
+  onTranscript: vi.fn(),
+  onError: vi.fn(),
+  connect: vi.fn(),
+  disconnect: vi.fn(),
+}));
+
 vi.mock("../../services/deepgram", () => ({
   deepgramService: {
-    startVoiceRecording: vi.fn(),
-    stopVoiceRecording: vi.fn(),
-    getConnectionState: vi.fn(() => "connected"),
-    getTranscript: vi.fn(() => ""),
-    getAnalytics: vi.fn(() => ({})),
-    onConnectionStateChange: vi.fn(),
-    onTranscript: vi.fn(),
-    onError: vi.fn(),
-    connect: vi.fn(),
-    disconnect: vi.fn(),
+    startVoiceRecording: deepgramMocks.startVoiceRecording,
+    stopVoiceRecording: deepgramMocks.stopVoiceRecording,
+    getConnectionState: deepgramMocks.getConnectionState,
+    getTranscript: deepgramMocks.getTranscript,
+    getAnalytics: deepgramMocks.getAnalytics,
+    onConnectionStateChange: deepgramMocks.onConnectionStateChange,
+    onTranscript: deepgramMocks.onTranscript,
+    onError: deepgramMocks.onError,
+    connect: deepgramMocks.connect,
+    disconnect: deepgramMocks.disconnect,
   },
 }));
 
-// Mock the audio analysis hook
 vi.mock("../useAudioAnalysis", () => ({
   useAudioAnalysis: vi.fn(() => ({
     audioAnalysisData: {
@@ -36,39 +46,34 @@ vi.mock("../useAudioAnalysis", () => ({
   })),
 }));
 
-// Mock the WaveformVisualizer component to avoid Canvas issues with proper typing
-interface MockWaveformProps {
-  analysisData?: any;
-  width?: number;
-  height?: number;
-  className?: string;
-}
+vi.mock("../../components/WaveformVisualizer", () => {
+  const React = require("react");
+  const Mock = React.forwardRef(function WaveformVisualizerMock(
+    { analysisData, width, height, className }: any,
+    ref: any,
+  ) {
+    return React.createElement(
+      "div",
+      {
+        ref,
+        className: `waveform-visualizer ${className || ""}`,
+        "data-testid": "waveform-visualizer",
+        style: { width, height },
+      },
+      React.createElement("canvas", {
+        "aria-label": "Audio waveform visualization",
+        className: "waveform-canvas",
+        width,
+        height,
+        "data-points": analysisData?.frequencyData?.length,
+      }),
+    );
+  });
+  return { default: Mock };
+});
 
-const MockWaveformVisualizer = React.forwardRef<
-  HTMLDivElement,
-  MockWaveformProps
->(({ analysisData, width, height, className }, ref) => (
-  <div
-    ref={ref}
-    className={`waveform-visualizer ${className || ""}`}
-    data-testid="waveform-visualizer"
-    style={{ width, height }}
-  >
-    <canvas
-      aria-label="Audio waveform visualization"
-      className="waveform-canvas"
-      width={width}
-      height={height}
-      data-points={analysisData?.frequencyData?.length}
-    />
-  </div>
-));
-
-MockWaveformVisualizer.displayName = "WaveformVisualizerMock";
-
-vi.mock("../../components/WaveformVisualizer", () => ({
-  default: MockWaveformVisualizer,
-}));
+import { useDeepgramVoice } from "../useDeepgramVoice";
+import WaveformVisualizer from "../../components/WaveformVisualizer";
 
 const TestComponent: React.FC = () => {
   const voiceHook = useDeepgramVoice();

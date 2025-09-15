@@ -1,0 +1,10 @@
+.venv
+.venv-*
+.tmp-compile-env
+.venv-clean
+.venv-repro
+.venv-lock
+**/__pycache__
+**/.pytest_cache
+node_modules
+frontend/.next
