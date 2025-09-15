@@ -257,7 +257,7 @@ addopts = [
     "--strict-config",
     "--cov=cartrita",
     "--cov-report=term-missing",
-    "--cov-fail-under=30",
+    "--cov-fail-under=35",
 ]
 testpaths = ["tests", "services/ai-orchestrator/tests"]
 python_files = ["test_*.py", "*_test.py"]
