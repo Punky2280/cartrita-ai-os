@@ -1,7 +1,7 @@
 # Cartrita AI OS - AI Orchestrator Service
-# Deterministic dependency build (pip-tools constraints) - Python 3.13
+# Deterministic dependency build (pip-tools constraints) - Python 3.12
 
-FROM python:3.13-slim
+FROM python:3.12-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
@@ -30,18 +30,15 @@ RUN groupadd -r cartrita && useradd -r -g cartrita cartrita
 # Set work directory
 WORKDIR /app
 
-# Copy dependency specification (top-level + initial constraints seed)
-COPY pyproject.toml ./
-COPY services/ai-orchestrator/requirements.in ./
-COPY services/ai-orchestrator/constraints.txt ./
+# Copy locked dependency constraints (hash-locked)
+COPY constraints.txt ./
 
-# Install & lock Python dependencies deterministically
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel pip-tools --root-user-action=ignore && \
-    pip-compile --quiet --no-emit-options --no-annotate --generate-hashes --output-file requirements.txt requirements.in && \
-    pip install --no-cache-dir -r requirements.txt --root-user-action=ignore && \
+# Install dependencies deterministically using constraints with hashes
+RUN python -m pip install --no-cache-dir --upgrade pip wheel --root-user-action=ignore && \
+    pip install --no-cache-dir --require-hashes -r constraints.txt --root-user-action=ignore && \
     pip check
 
-# Copy source code
+# Copy source code (service context)
 COPY . .
 
 # Create necessary directories

@@ -83,8 +83,8 @@ services:
   # ============================================
   ai-orchestrator:
     build:
-      context: .
-      dockerfile: ./services/ai-orchestrator/Dockerfile
+      context: ./services/ai-orchestrator
+      dockerfile: Dockerfile
     container_name: cartrita-ai-orchestrator
     restart: unless-stopped
     ports:
