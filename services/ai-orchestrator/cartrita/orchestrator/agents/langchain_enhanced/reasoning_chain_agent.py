@@ -7,13 +7,67 @@ import asyncio
 from typing import Any, Dict, List, Optional
 from enum import Enum
 from dataclasses import dataclass, field
-
-from langchain.chains import LLMChain
-from langchain.prompts import PromptTemplate
-from langchain.schema import BaseOutputParser, OutputParserException
 from cartrita.orchestrator.utils.llm_factory import create_chat_openai
-from langchain.memory import ConversationBufferWindowMemory
-from pydantic import BaseModel, Field
+
+# Optional LangChain + Pydantic imports with safe fallbacks
+try:
+    from langchain.chains import LLMChain  # type: ignore
+    from langchain.prompts import PromptTemplate  # type: ignore
+    from langchain.schema import BaseOutputParser, OutputParserException  # type: ignore
+    from langchain.memory import ConversationBufferWindowMemory  # type: ignore
+    LANGCHAIN_AVAILABLE = True
+except Exception:
+    LANGCHAIN_AVAILABLE = False
+
+    class BaseOutputParser:  # type: ignore
+        def parse(self, text: str):  # noqa: D401
+            raise NotImplementedError
+
+    class OutputParserException(Exception):  # type: ignore
+        pass
+
+    class LLMChain:  # type: ignore
+        def __init__(self, llm=None, prompt=None, output_key: str | None = None, output_parser=None):
+            self.llm = llm
+            self.prompt = prompt
+            self.output_key = output_key
+            self.output_parser = output_parser
+
+        async def arun(self, **kwargs):
+            # Minimal degraded behavior when LangChain is unavailable
+            # Construct a deterministic, simple string using provided kwargs
+            keys = [f"{k}: {v}" for k, v in kwargs.items()]
+            return "\n".join(keys)
+
+    class PromptTemplate:  # type: ignore
+        def __init__(self, input_variables: list[str], template: str):
+            self.input_variables = input_variables
+            self.template = template
+
+    class ConversationBufferWindowMemory:  # type: ignore
+        def __init__(self, k: int = 5, memory_key: str = "chat_history", return_messages: bool = True):
+            self.k = k
+            self.memory_key = memory_key
+            self.return_messages = return_messages
+            self.chat_memory = type("_M", (), {"messages": []})()
+
+        def save_context(self, inputs: dict, outputs: dict):
+            self.chat_memory.messages.append({"in": inputs, "out": outputs})
+
+try:
+    from pydantic import BaseModel, Field  # type: ignore
+except Exception:
+    try:
+        from pydantic.v1 import BaseModel, Field  # type: ignore
+    except Exception:  # pragma: no cover
+        # Last-resort minimal shim
+        class BaseModel:  # type: ignore
+            def model_dump_json(self):
+                import json as _json
+                return _json.dumps(self.__dict__)
+
+        def Field(*args, **kwargs):  # type: ignore
+            return None
 import json
 import re
 
@@ -404,8 +458,10 @@ Validation Result:"""
                 previous_steps_text += f"\nStep {step_num}: {step_result.conclusion}"
 
                 # Check if we should continue
-                if (step_result.confidence >= self.confidence_threshold and
-                    "final" in step_result.conclusion.lower()):
+                if (
+                    step_result.confidence >= self.confidence_threshold
+                    and "final" in step_result.conclusion.lower()
+                ):
                     break
 
                 # Check for natural stopping points
@@ -446,8 +502,9 @@ Validation Result:"""
     ) -> ReasoningStep:
         """Retry reasoning step with alternative approach"""
         # Use a different reasoning type for retry
-        alternative_types = [t for t in self.reasoning_types
-                           if t != ReasoningType.DEDUCTIVE]
+        alternative_types = [
+            t for t in self.reasoning_types if t != ReasoningType.DEDUCTIVE
+        ]
         retry_type = alternative_types[0] if alternative_types else ReasoningType.ABDUCTIVE
 
         return await self.reasoning_step_chain.arun(
@@ -465,9 +522,13 @@ Validation Result:"""
 
         # Stop if last step has high confidence and conclusion indicates completion
         last_step = steps[-1]
-        if (last_step.confidence >= 0.9 and
-            any(word in last_step.conclusion.lower()
-                for word in ["therefore", "thus", "final", "conclude"])):
+        if (
+            last_step.confidence >= 0.9
+            and any(
+                word in last_step.conclusion.lower()
+                for word in ["therefore", "thus", "final", "conclude"]
+            )
+        ):
             return True
 
         # Stop if we're going in circles (repeated conclusions)
