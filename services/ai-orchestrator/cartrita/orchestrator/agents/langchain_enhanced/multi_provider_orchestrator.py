@@ -10,7 +10,7 @@ from enum import Enum
 from datetime import datetime
 from dataclasses import dataclass, field
 
-from langchain.schema import BaseMessage, HumanMessage, SystemMessage
+from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
 from langchain.memory import ConversationSummaryBufferMemory
 import tiktoken
 

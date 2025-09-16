@@ -37,7 +37,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       req,
       res,
       {
-        target: process.env.BACKEND_BASE_URL || "http://localhost:8000",
+        target:
+          process.env.BACKEND_BASE_URL ||
+          process.env.NEXT_PUBLIC_API_URL ||
+          "http://localhost:3001",
         changeOrigin: true,
         selfHandleResponse: false,
         timeout: 70000,

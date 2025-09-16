@@ -6,17 +6,13 @@ Provides standard interface for all Cartrita agents
 from typing import Any, Dict, List, Optional, Tuple, Union
 from abc import ABC, abstractmethod
 
-from langchain.agents import BaseSingleActionAgent
-from langchain.callbacks.manager import CallbackManagerForChainRun, AsyncCallbackManagerForChainRun
-from langchain.schema import (
-    AgentAction,
-    AgentFinish
-)
-from langchain.tools import BaseTool
+from langchain_core.callbacks import CallbackManagerForChainRun, AsyncCallbackManagerForChainRun
+from langchain_core.agents import AgentAction, AgentFinish
+from langchain_core.tools import BaseTool
 from langchain.memory import ConversationBufferMemory
 from pydantic import Field
 
-class CartritaBaseAgent(BaseSingleActionAgent, ABC):
+class CartritaBaseAgent(ABC):
     """Base class for all Cartrita agents following LangChain patterns"""
 
     name: str = Field(..., description="Agent name")

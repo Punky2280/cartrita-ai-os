@@ -130,9 +130,10 @@ export default function AboutPage({ initialBio }: Props) {
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   const base = (
+    process.env.NEXT_PUBLIC_API_URL ||
     process.env.BACKEND_BASE_URL ||
     process.env.NEXT_PUBLIC_BACKEND_BASE_URL ||
-    "http://localhost:8000"
+    "http://localhost:3001"
   ).replace(/\/$/, "");
   const apiKey = process.env.CARTRITA_API_KEY || "dev-api-key-2025";
 

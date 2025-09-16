@@ -25,10 +25,7 @@ except ImportError:
 
 try:
     from cartrita.orchestrator.utils.llm_factory import create_chat_openai
-    from langchain_core.language_models import BaseChatModel
     from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
-    from langchain_core.output_parsers import StrOutputParser
-    from langchain_core.runnables import RunnablePassthrough
     LANGCHAIN_AVAILABLE = True
 except ImportError:
     LANGCHAIN_AVAILABLE = False

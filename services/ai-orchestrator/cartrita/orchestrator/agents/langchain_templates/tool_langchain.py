@@ -4,8 +4,8 @@ Standard tool implementation following LangChain patterns
 """
 
 from typing import Any, Optional, Type, Dict, Callable
-from langchain.tools import BaseTool
-from langchain.callbacks.manager import CallbackManagerForToolRun, AsyncCallbackManagerForToolRun
+from langchain_core.tools import BaseTool
+from langchain_core.callbacks import CallbackManagerForToolRun, AsyncCallbackManagerForToolRun
 from pydantic import BaseModel, Field
 
 class CartritaToolInput(BaseModel):

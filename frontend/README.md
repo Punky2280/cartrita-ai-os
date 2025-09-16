@@ -40,7 +40,7 @@ A modern, ChatGPT-like frontend for the Cartrita AI Operating System built with 
    pnpm install
    ```
 
-2. **Environment Setup**
+1. **Environment Setup**
 
    ```bash
    cp .env.example .env.local
@@ -49,13 +49,13 @@ A modern, ChatGPT-like frontend for the Cartrita AI Operating System built with 
    Configure your environment variables:
 
    ```env
-   NEXT_PUBLIC_API_URL=http://localhost:8000
-   NEXT_PUBLIC_WS_URL=ws://localhost:8000
+   NEXT_PUBLIC_API_URL=http://localhost:3001
+   NEXT_PUBLIC_WS_URL=ws://localhost:3001
    NEXT_PUBLIC_APP_NAME=Cartrita AI OS
    NEXT_PUBLIC_APP_VERSION=2.0.0
    ```
 
-3. **Start Development Server**
+1. **Start Development Server**
 
    ```bash
    npm run dev
@@ -65,7 +65,7 @@ A modern, ChatGPT-like frontend for the Cartrita AI Operating System built with 
    pnpm dev
    ```
 
-4. **Open Browser**
+1. **Open Browser**
 
    Navigate to [http://localhost:3000](http://localhost:3000)
 
@@ -266,10 +266,10 @@ NEXT_PUBLIC_APP_VERSION=2.0.0
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests and linting
-5. Submit a pull request
+1. Create a feature branch
+1. Make your changes
+1. Run tests and linting
+1. Submit a pull request
 
 ## 📄 License
 

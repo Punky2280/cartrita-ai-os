@@ -4,8 +4,9 @@ Implements callback patterns for monitoring and debugging
 """
 
 from typing import Any, Dict, List, Optional, Union, Callable
-from langchain.callbacks.base import BaseCallbackHandler
-from langchain.schema import AgentAction, AgentFinish, LLMResult
+from langchain_core.callbacks import BaseCallbackHandler
+from langchain_core.agents import AgentAction, AgentFinish
+from langchain_core.outputs import LLMResult
 import logging
 from datetime import datetime
 

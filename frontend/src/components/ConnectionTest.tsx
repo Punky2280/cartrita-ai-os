@@ -23,8 +23,8 @@ export default function ConnectionTest() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
-      // Use HTTPS in production, HTTP only for localhost
-      const defaultUrl = isLocalhost ? "http://localhost:8000" : "https://api.cartrita.ai";
+  // Use HTTPS in production, HTTP only for localhost. Default to API Gateway on 3001 locally.
+  const defaultUrl = isLocalhost ? "http://localhost:3001" : "https://api.cartrita.ai";
       const baseUrl =
         process.env.NEXT_PUBLIC_API_URL ||
         process.env.BACKEND_BASE_URL ||
@@ -84,8 +84,8 @@ export default function ConnectionTest() {
           err.name === "AbortError"
         ) {
           errorMessage =
-            "Backend service is not running. Please start the Python backend service at " +
-            (isLocalhost ? "http://localhost:8000" : "your backend URL");
+            "Backend service is not running. Please start the stack and access the API Gateway at " +
+            (isLocalhost ? "http://localhost:3001" : "your backend URL");
         } else {
           errorMessage = err.message;
         }

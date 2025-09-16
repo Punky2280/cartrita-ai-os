@@ -8,12 +8,14 @@ Handles OpenAI API interactions with streaming, tool use, and error handling.
 
 import asyncio
 from typing import Any, AsyncGenerator, Dict, List, Optional
+from uuid import UUID, uuid4
 
 import structlog
 from openai import AsyncOpenAI
 from openai.types.chat import ChatCompletionMessageParam
 
 from cartrita.orchestrator.models.schemas import (
+    AgentType,
     ChatRequest,
     ChatResponse,
     Message,
@@ -189,8 +191,9 @@ class OpenAIService:
             ChatResponse with AI response and metadata
         """
         try:
-            # Convert internal messages to OpenAI format
-            openai_messages = self._convert_messages(request.messages or [])
+            # Start with an empty message list; ChatRequest does not carry prior messages
+            # System and user messages are appended below.
+            openai_messages: List[Dict[str, Any]] = []
 
             # Add system message if not present
             if not openai_messages or openai_messages[0].get("role") != "system":
@@ -266,10 +269,18 @@ class OpenAIService:
                         )
                     )
 
+            # Ensure conversation_id and agent_type conform to schema
+            resolved_conversation_id: UUID = (
+                request.conversation_id if request.conversation_id is not None else uuid4()
+            )
+            resolved_agent_type: AgentType = (
+                request.agent_override if isinstance(request.agent_override, AgentType) else AgentType.SUPERVISOR
+            )
+
             return ChatResponse(
                 response=response_content,
-                conversation_id=request.conversation_id or "new",
-                agent_type="openai",
+                conversation_id=resolved_conversation_id,
+                agent_type=resolved_agent_type,
                 messages=response_messages,
                 context=request.context,
                 task_result=None,

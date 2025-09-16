@@ -1,6 +1,7 @@
+# pyright: reportMissingImports=false
 import importlib.util
 import os
-import pytest
+import pytest  # type: ignore
 
 MODULE_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__),

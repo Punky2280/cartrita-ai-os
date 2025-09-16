@@ -1,13 +1,41 @@
-const fastify = require('fastify')({ logger: true });
+const fastify = require('fastify')({
+  logger: true,
+  trustProxy: true,
+  requestIdHeader: 'x-request-id',
+  requestIdLogLabel: 'reqId',
+  bodyLimit: 1048576 // 1MB limit
+});
 require('dotenv').config();
 const proxy = require('@fastify/http-proxy');
 const promClient = require('prom-client');
+const {
+  schemas,
+  securityHeaders,
+  rateLimitConfig,
+  jwtConfig,
+  validateApiKey,
+  corsConfig
+} = require('./middleware/security');
 
 const PORT = process.env.API_GATEWAY_PORT || 3000;
 const HOST = '0.0.0.0';
 
-// Register CORS
-fastify.register(require('@fastify/cors'), { origin: true });
+// Register CORS with strict configuration
+fastify.register(require('@fastify/cors'), corsConfig);
+
+// Register rate limiting
+fastify.register(require('@fastify/rate-limit'), rateLimitConfig);
+
+// Register JWT
+fastify.register(require('@fastify/jwt'), jwtConfig);
+
+// Add security headers to all responses
+fastify.addHook('onSend', (request, reply, payload, done) => {
+  Object.entries(securityHeaders).forEach(([key, value]) => {
+    reply.header(key, value);
+  });
+  done();
+});
 
 // Register Helmet for security (will be registered in start function)
 
@@ -57,14 +85,44 @@ fastify.register(async function (fastify) {
   const aiOrchestratorUrl = process.env.AI_ORCHESTRATOR_URL || 'http://ai-orchestrator:8000';
   const frontendInternal = process.env.FRONTEND_INTERNAL_URL || 'http://frontend:3000';
 
-  // API → Orchestrator proxy (retain existing axios logic for flexibility)
-  fastify.all('/api/*', async (request, reply) => {
+  // API → Orchestrator proxy with authentication and validation
+  fastify.all('/api/*', {
+    preHandler: async (request, reply) => {
+      // Validate API key for protected endpoints
+      if (!request.url.includes('/health') && !request.url.includes('/metrics')) {
+        const apiKey = request.headers['x-api-key'];
+        if (!apiKey || !process.env.DEV_API_KEY || apiKey !== process.env.DEV_API_KEY) {
+          reply.code(401);
+          reply.send({ error: 'Unauthorized' });
+          return;
+        }
+      }
+    }
+  }, async (request, reply) => {
     const axios = require('axios');
     const rawPath = request.url.replace('/api', '');
-    // Basic SSRF hardening: disallow absolute/authority-form URLs and ensure same-origin target
-    if (rawPath.includes('://') || rawPath.startsWith('//')) {
+    // Enhanced SSRF protection and input validation
+    if (rawPath.includes('://') || rawPath.startsWith('//') || rawPath.includes('..')) {
       reply.code(400);
       return { error: 'Invalid path' };
+    }
+
+    // Validate request body for POST/PUT requests
+    if (['POST', 'PUT', 'PATCH'].includes(request.method) && request.body) {
+      // Size check
+      const bodySize = JSON.stringify(request.body).length;
+      if (bodySize > 1048576) { // 1MB limit
+        reply.code(413);
+        return { error: 'Request body too large' };
+      }
+
+      // Content validation for chat endpoints
+      if (request.url.includes('/chat') && request.body.message) {
+        if (request.body.message.length > 10000) {
+          reply.code(400);
+          return { error: 'Message too long' };
+        }
+      }
     }
     const base = new URL(aiOrchestratorUrl);
     const target = new URL(rawPath, base);
@@ -88,17 +146,33 @@ fastify.register(async function (fastify) {
         url: pathOnly,
         data: request.body,
         headers,
-        params: request.query
+        params: request.query,
+        timeout: 30000, // 30 second timeout
+        maxContentLength: 10485760, // 10MB response limit
+        validateStatus: (status) => status < 500 // Don't throw on 4xx
       });
       reply.code(response.status);
       return response.data;
     } catch (error) {
+      // Enhanced error handling with logging
+      fastify.log.error({
+        error: error.message,
+        path: rawPath,
+        method: request.method
+      });
+
       if (error.response) {
         reply.code(error.response.status);
         return error.response.data;
       }
-      reply.code(500);
-      return { error: 'Proxy error', message: error.message };
+
+      if (error.code === 'ECONNABORTED') {
+        reply.code(504);
+        return { error: 'Gateway timeout' };
+      }
+
+      reply.code(502);
+      return { error: 'Service unavailable' };
     }
   });
 

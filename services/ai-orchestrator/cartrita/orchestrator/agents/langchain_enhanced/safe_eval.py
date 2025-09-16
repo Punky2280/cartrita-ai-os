@@ -27,52 +27,122 @@ def safe_eval_expression(code: str, allowed_names: Dict[str, Any]) -> Any:
 
     SafeVisitor().visit(parsed)
 
-    def ev(node):
-        if isinstance(node, ast.Expression):
-            return ev(node.body)
-        if isinstance(node, ast.Constant):
-            return node.value
-        if isinstance(node, ast.Num):
-            return node.n
-        if isinstance(node, ast.Str):
-            return node.s
-        if isinstance(node, ast.BinOp):
-            a, b = ev(node.left), ev(node.right)
-            ops = {ast.Add: a + b, ast.Sub: a - b, ast.Mult: a * b,
-                   ast.Div: a / b, ast.Mod: a % b, ast.Pow: a ** b,
-                   ast.BitXor: a ^ b}
-            return ops[type(node.op)]
-        if isinstance(node, ast.UnaryOp):
-            v = ev(node.operand)
-            return {ast.UAdd: +v, ast.USub: -v}[type(node.op)]
-        if isinstance(node, ast.Name):
-            if node.id in allowed_names:
-                return allowed_names[node.id]
-            raise ValueError(f"Name '{node.id}' is not allowed")
-        if isinstance(node, ast.Call):
-            func = ev(node.func)
-            args = [ev(a) for a in node.args]
-            return func(*args)
-        if isinstance(node, (ast.Tuple, ast.List)):
-            return [ev(e) for e in node.elts]
-        if isinstance(node, ast.Dict):
-            return {ev(k): ev(v) for k, v in zip(node.keys, node.values)}
-        if isinstance(node, ast.BoolOp):
-            vals = [ev(v) for v in node.values]
-            return all(vals) if isinstance(node.op, ast.And) else any(vals)
-        if isinstance(node, ast.Compare):
-            left = ev(node.left)
-            for op, comp in zip(node.ops, node.comparators):
-                right = ev(comp)
-                checks = {
-                    ast.Eq: left == right, ast.NotEq: left != right,
-                    ast.Lt: left < right, ast.LtE: left <= right,
-                    ast.Gt: left > right, ast.GtE: left >= right,
-                }
-                if not checks[type(op)]:
+    # Handlers to reduce ev() complexity and avoid eager evaluation
+    def _handle_expression(node):
+        return ev(node.body)
+
+    def _handle_constant(node):
+        return node.value
+
+    def _handle_num(node):
+        return node.n
+
+    def _handle_str(node):
+        return node.s
+
+    def _handle_bytes(node):
+        return node.s
+
+    def _handle_binop(node):
+        a, b = ev(node.left), ev(node.right)
+        op = node.op
+        if isinstance(op, ast.Add):
+            return a + b
+        elif isinstance(op, ast.Sub):
+            return a - b
+        elif isinstance(op, ast.Mult):
+            return a * b
+        elif isinstance(op, ast.Div):
+            return a / b
+        elif isinstance(op, ast.Mod):
+            return a % b
+        elif isinstance(op, ast.Pow):
+            return a ** b
+        elif isinstance(op, ast.BitXor):
+            return a ^ b
+        raise ValueError("Unsupported binary operator")
+
+    def _handle_unaryop(node):
+        v = ev(node.operand)
+        if isinstance(node.op, ast.UAdd):
+            return +v
+        elif isinstance(node.op, ast.USub):
+            return -v
+        raise ValueError("Unsupported unary operator")
+
+    def _handle_name(node):
+        if node.id in allowed_names:
+            return allowed_names[node.id]
+        raise ValueError(f"Name '{node.id}' is not allowed")
+
+    def _handle_call(node):
+        func = ev(node.func)
+        args = [ev(a) for a in node.args]
+        return func(*args)
+
+    def _handle_sequence(node):
+        return [ev(e) for e in node.elts]
+
+    def _handle_dict(node):
+        return {ev(k): ev(v) for k, v in zip(node.keys, node.values)}
+
+    def _handle_boolop(node):
+        if isinstance(node.op, ast.And):
+            for v in node.values:
+                if not ev(v):
                     return False
-                left = right
             return True
+        # ast.Or
+        for v in node.values:
+            if ev(v):
+                return True
+        return False
+
+    def _handle_compare(node):
+        left = ev(node.left)
+        for op, comp in zip(node.ops, node.comparators):
+            right = ev(comp)
+            if isinstance(op, ast.Eq):
+                ok = left == right
+            elif isinstance(op, ast.NotEq):
+                ok = left != right
+            elif isinstance(op, ast.Lt):
+                ok = left < right
+            elif isinstance(op, ast.LtE):
+                ok = left <= right
+            elif isinstance(op, ast.Gt):
+                ok = left > right
+            elif isinstance(op, ast.GtE):
+                ok = left >= right
+            else:
+                raise ValueError("Unsupported comparison operator")
+            if not ok:
+                return False
+            left = right
+        return True
+
+    def ev(node):
+        node_type = type(node)
+        handler = direct_handlers.get(node_type)
+        if handler is not None:
+            return handler(node)
+        if isinstance(node, (ast.Tuple, ast.List)):
+            return _handle_sequence(node)
         raise ValueError("Unsupported expression")
+
+    direct_handlers = {
+        ast.Expression: _handle_expression,
+        ast.Constant: _handle_constant,
+        ast.Num: _handle_num,
+        ast.Str: _handle_str,
+        ast.Bytes: _handle_bytes,
+        ast.BinOp: _handle_binop,
+        ast.UnaryOp: _handle_unaryop,
+        ast.Name: _handle_name,
+        ast.Call: _handle_call,
+        ast.Dict: _handle_dict,
+        ast.BoolOp: _handle_boolop,
+        ast.Compare: _handle_compare,
+    }
 
     return ev(parsed)

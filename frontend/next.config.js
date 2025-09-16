@@ -1,4 +1,8 @@
-/* eslint-env node */
+/* eslint-env node, commonjs */
+/* global module */
+// Use globalThis.process.env to avoid analyzer complaining about 'process' not defined in this context
+/* eslint-disable no-undef */
+const env = (typeof globalThis !== 'undefined' && globalThis.process && globalThis.process.env) ? globalThis.process.env : {};
 /** @type {import('next').NextConfig} */
 const ContentSecurityPolicy = `
   default-src 'self';
@@ -9,6 +13,7 @@ const ContentSecurityPolicy = `
     ws://localhost:8000 http://localhost:8000 https://localhost:8000
     ws://127.0.0.1:8000 http://127.0.0.1:8000
     ws://localhost:3001 http://localhost:3001
+    ws://localhost:3003 http://localhost:3003
     https://fonts.googleapis.com https://fonts.gstatic.com;
   font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;
   object-src 'none';
@@ -21,14 +26,14 @@ const nextConfig = {
   output: 'standalone',
   images: {
     domains: ['localhost'],
-    unoptimized: process.env.NODE_ENV === 'development',
+    unoptimized: env.NODE_ENV === 'development',
   },
   // Note: API routes handle authentication automatically
   // No rewrites needed as we use Next.js API routes for proxying
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
-    NEXT_PUBLIC_WS_URL: process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8000',
-    NEXT_PUBLIC_CARTRITA_API_KEY: process.env.NEXT_PUBLIC_CARTRITA_API_KEY || 'dev-api-key-2025',
+    NEXT_PUBLIC_API_URL: env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
+    NEXT_PUBLIC_WS_URL: env.NEXT_PUBLIC_WS_URL || 'ws://localhost:3001',
+    NEXT_PUBLIC_CARTRITA_API_KEY: env.NEXT_PUBLIC_CARTRITA_API_KEY || 'dev-api-key-2025',
   },
 }
 
@@ -70,4 +75,7 @@ const withSecurityHeaders = {
   },
 }
 
-module.exports = withSecurityHeaders
+// Replace direct export with a guarded assignment to avoid non-Node analyzers error
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = withSecurityHeaders
+}

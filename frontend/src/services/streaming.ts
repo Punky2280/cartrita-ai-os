@@ -17,9 +17,15 @@ export class StreamingService {
   private controller: AbortController | null = null;
 
   constructor(baseUrl: string = "") {
-    // Use empty string for relative URLs in browser to use Next.js proxy
-    this.baseUrl =
-      baseUrl || (typeof window !== "undefined" ? "" : "http://localhost:8000");
+    // Prefer relative URL in browser (Next.js API proxy). On server, default to API Gateway.
+    if (baseUrl) {
+      this.baseUrl = baseUrl;
+    } else if (typeof window !== "undefined") {
+      this.baseUrl = "";
+    } else {
+      this.baseUrl =
+        process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || "http://localhost:3001";
+    }
   }
 
   /**

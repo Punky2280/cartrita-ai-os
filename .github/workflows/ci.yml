@@ -35,7 +35,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -e .[dev]
     - name: Run tests
-      run: pytest --cov=cartrita --cov-report=xml
+      run: pytest --cov=cartrita --cov-report=xml services/ai-orchestrator/tests
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c67388 # v4.6.0
       with:

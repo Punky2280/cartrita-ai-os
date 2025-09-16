@@ -1,7 +1,7 @@
 # Cartrita AI OS - AI Orchestrator Service
-# Deterministic dependency build (pip-tools constraints) - Python 3.12
+# Deterministic dependency build (pip-tools constraints) - Python 3.13
 
-FROM python:3.12-slim
+FROM python:3.13-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \

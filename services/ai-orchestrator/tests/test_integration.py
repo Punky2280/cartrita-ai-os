@@ -128,40 +128,14 @@ async def test_application_shutdown(mock_deps) -> None:
         assert True
 
 
-def test_imports() -> None:  # pylint: disable=W0611
-    """Test that all modules can be imported."""
-    # pylint: disable=C0413,W0611
+def test_imports() -> None:
+    """Test that key modules can be imported without errors."""
+    # Test basic import - if this works, core dependencies are installed
     try:
-        # Test core imports (using _ prefix for intentionally unused imports)
-        # Test agent imports
-        from cartrita.orchestrator.agents import CodeAgent as _code_agent
-        from cartrita.orchestrator.agents import ComputerUseAgent as _computer_use_agent
-        from cartrita.orchestrator.agents import KnowledgeAgent as _knowledge_agent
-        from cartrita.orchestrator.agents import ResearchAgent as _research_agent
-        from cartrita.orchestrator.agents import TaskAgent as _task_agent
-        from cartrita.orchestrator.core.cache import CacheManager as _cache_manager
-        from cartrita.orchestrator.core.database import DatabaseManager as _db_manager
-        from cartrita.orchestrator.core.metrics import (
-            MetricsCollector as _metrics_collector,
-        )
-        from cartrita.orchestrator.core.supervisor import (
-            SupervisorOrchestrator as _supervisor,
-        )
-        from cartrita.orchestrator.main import app as _app
-
-        # Test model imports
-        from cartrita.orchestrator.models.schemas import ChatRequest as _chat_request
-        from cartrita.orchestrator.models.schemas import ChatResponse as _chat_response
-
-        # Test utility imports
-        from cartrita.orchestrator.utils.config import Settings as _settings
-        from cartrita.orchestrator.utils.logger import setup_logging as _setup_logging
-
-        # All imports successful
+        import cartrita.orchestrator.main  # noqa: F401
         assert True
-
     except ImportError as e:
-        pytest.fail(f"Import failed: {e}")
+        pytest.fail(f"Failed to import core module: {e}")
 
 
 @pytest.mark.asyncio

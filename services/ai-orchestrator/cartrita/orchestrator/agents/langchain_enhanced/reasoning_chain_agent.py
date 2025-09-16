@@ -4,6 +4,7 @@ Implements chain-of-thought reasoning using LangChain patterns
 """
 
 import asyncio
+import json
 from typing import Any, Dict, List, Optional
 from enum import Enum
 from dataclasses import dataclass, field
@@ -63,12 +64,11 @@ except Exception:
         # Last-resort minimal shim
         class BaseModel:  # type: ignore
             def model_dump_json(self):
-                import json as _json
-                return _json.dumps(self.__dict__)
+                # Use module-level json; avoid reimport inside method
+                return json.dumps(self.__dict__)
 
         def Field(*args, **kwargs):  # type: ignore
             return None
-import json
 import re
 
 

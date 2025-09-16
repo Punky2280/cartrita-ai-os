@@ -73,7 +73,7 @@ opentelemetry-instrumentation-sqlalchemy>=0.47b0
 opentelemetry-exporter-otlp>=1.26.0
 opentelemetry-exporter-jaeger>=1.21.0
 structlog>=24.1.0
-sentry-sdk>=2.10.0
+sentry-sdk>=2.37.1
 
 # ============================================
 # Security & Authentication
@@ -105,6 +105,12 @@ rich>=13.7.0
 typer>=0.12.0
 loguru>=0.7.0
 pydantic-extra-types>=2.8.0
+
+# ============================================
+# Testing & Automation Tools (Python 3.13)
+# ============================================
+playwright>=1.55.0
+pytest-playwright>=0.7.1
 
 # ============================================
 # Performance & Async
