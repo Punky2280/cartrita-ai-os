@@ -1,0 +1,160 @@
+{
+  "summary": {
+    "total_tests": 10,
+    "passed_tests": 1,
+    "failed_tests": 9,
+    "security_score": 10.0,
+    "critical_issues": 4,
+    "warnings": 5
+  },
+  "validation_results": [
+    {
+      "test": "admin_users_configured",
+      "passed": false,
+      "message": "No admin users configured in ADMIN_USERS environment variable",
+      "severity": "critical",
+      "timestamp": "2025-09-17T05:26:37.776819+00:00"
+    },
+    {
+      "test": "super_admin_configured",
+      "passed": false,
+      "message": "No super admin configured in SUPER_ADMIN_USER",
+      "severity": "warning",
+      "timestamp": "2025-09-17T05:26:37.777298+00:00"
+    },
+    {
+      "test": "admin_api_key_configured",
+      "passed": false,
+      "message": "No admin API key configured (relying on JWT only)",
+      "severity": "info",
+      "timestamp": "2025-09-17T05:26:37.777332+00:00"
+    },
+    {
+      "test": "https_required",
+      "passed": false,
+      "message": "HTTPS not required - ensure this is intended for your environment",
+      "severity": "warning",
+      "timestamp": "2025-09-17T05:26:37.777358+00:00"
+    },
+    {
+      "test": "audit_logging_enabled",
+      "passed": true,
+      "message": "Admin audit logging enabled",
+      "severity": "info",
+      "timestamp": "2025-09-17T05:26:37.777396+00:00"
+    },
+    {
+      "test": "admin_auth_module",
+      "passed": false,
+      "message": "Admin authentication module not available",
+      "severity": "critical",
+      "timestamp": "2025-09-17T05:26:37.777439+00:00"
+    },
+    {
+      "test": "secure_default_admin_require_https",
+      "passed": false,
+      "message": "HTTPS requirement not enabled - security risk",
+      "severity": "warning",
+      "timestamp": "2025-09-17T05:26:37.777499+00:00"
+    },
+    {
+      "test": "secure_default_admin_audit_logging_enabled",
+      "passed": false,
+      "message": "Audit logging not enabled - security risk",
+      "severity": "critical",
+      "timestamp": "2025-09-17T05:26:37.777535+00:00"
+    },
+    {
+      "test": "secure_default_admin_rate_limit_enabled",
+      "passed": false,
+      "message": "Rate limiting not enabled - security risk",
+      "severity": "critical",
+      "timestamp": "2025-09-17T05:26:37.777561+00:00"
+    },
+    {
+      "test": "ip_restrictions",
+      "passed": false,
+      "message": "No IP restrictions for admin access - consider limiting access",
+      "severity": "warning",
+      "timestamp": "2025-09-17T05:26:37.777591+00:00"
+    }
+  ],
+  "security_issues": [
+    {
+      "test": "admin_users_configured",
+      "passed": false,
+      "message": "No admin users configured in ADMIN_USERS environment variable",
+      "severity": "critical",
+      "timestamp": "2025-09-17T05:26:37.776819+00:00"
+    },
+    {
+      "test": "admin_auth_module",
+      "passed": false,
+      "message": "Admin authentication module not available",
+      "severity": "critical",
+      "timestamp": "2025-09-17T05:26:37.777439+00:00"
+    },
+    {
+      "test": "secure_default_admin_audit_logging_enabled",
+      "passed": false,
+      "message": "Audit logging not enabled - security risk",
+      "severity": "critical",
+      "timestamp": "2025-09-17T05:26:37.777535+00:00"
+    },
+    {
+      "test": "secure_default_admin_rate_limit_enabled",
+      "passed": false,
+      "message": "Rate limiting not enabled - security risk",
+      "severity": "critical",
+      "timestamp": "2025-09-17T05:26:37.777561+00:00"
+    }
+  ],
+  "warnings": [
+    {
+      "test": "super_admin_configured",
+      "passed": false,
+      "message": "No super admin configured in SUPER_ADMIN_USER",
+      "severity": "warning",
+      "timestamp": "2025-09-17T05:26:37.777298+00:00"
+    },
+    {
+      "test": "admin_api_key_configured",
+      "passed": false,
+      "message": "No admin API key configured (relying on JWT only)",
+      "severity": "info",
+      "timestamp": "2025-09-17T05:26:37.777332+00:00"
+    },
+    {
+      "test": "https_required",
+      "passed": false,
+      "message": "HTTPS not required - ensure this is intended for your environment",
+      "severity": "warning",
+      "timestamp": "2025-09-17T05:26:37.777358+00:00"
+    },
+    {
+      "test": "secure_default_admin_require_https",
+      "passed": false,
+      "message": "HTTPS requirement not enabled - security risk",
+      "severity": "warning",
+      "timestamp": "2025-09-17T05:26:37.777499+00:00"
+    },
+    {
+      "test": "ip_restrictions",
+      "passed": false,
+      "message": "No IP restrictions for admin access - consider limiting access",
+      "severity": "warning",
+      "timestamp": "2025-09-17T05:26:37.777591+00:00"
+    }
+  ],
+  "recommendations": [
+    "\ud83d\udea8 Address all critical security issues immediately",
+    "\ud83d\udcdd Configure ADMIN_USERS environment variable",
+    "\ud83d\udd11 Set strong ADMIN_API_KEY (\u226532 characters)",
+    "\ud83d\udd12 Enable HTTPS requirement for production",
+    "\ud83c\udf10 Configure IP restrictions for admin access",
+    "\ud83d\udcca Regularly review admin audit logs",
+    "\ud83d\udd04 Rotate admin credentials regularly",
+    "\ud83d\udc65 Use principle of least privilege for admin roles",
+    "\ud83d\udee1\ufe0f  Consider implementing MFA for admin accounts"
+  ]
+}

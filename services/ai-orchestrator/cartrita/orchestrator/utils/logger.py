@@ -37,6 +37,7 @@ def setup_logging(
     if level is None:
         try:
             from cartrita.orchestrator.utils.config import get_settings
+
             _settings = get_settings()
             level = getattr(_settings.monitoring, "log_level", "INFO")
         except Exception:
@@ -44,6 +45,7 @@ def setup_logging(
     if format_type is None:
         try:
             from cartrita.orchestrator.utils.config import get_settings
+
             _settings = get_settings()
             format_type = getattr(_settings.monitoring, "log_format", "json")
         except Exception:
@@ -51,6 +53,7 @@ def setup_logging(
     if log_file is None:
         try:
             from cartrita.orchestrator.utils.config import get_settings
+
             _settings = get_settings()
             log_file = getattr(_settings.monitoring, "log_file", None)
         except Exception:
@@ -76,18 +79,22 @@ def setup_logging(
         if have_processors and have_configure:
             shared_processors = []
             if have_stdlib:
-                shared_processors.extend([
-                    structlog.stdlib.filter_by_level,
-                    structlog.stdlib.add_logger_name,
-                    structlog.stdlib.add_log_level,
-                    structlog.stdlib.PositionalArgumentsFormatter(),
-                ])
-            shared_processors.extend([
-                structlog.processors.TimeStamper(fmt="iso"),
-                structlog.processors.StackInfoRenderer(),
-                structlog.processors.format_exc_info,
-                structlog.processors.UnicodeDecoder(),
-            ])
+                shared_processors.extend(
+                    [
+                        structlog.stdlib.filter_by_level,
+                        structlog.stdlib.add_logger_name,
+                        structlog.stdlib.add_log_level,
+                        structlog.stdlib.PositionalArgumentsFormatter(),
+                    ]
+                )
+            shared_processors.extend(
+                [
+                    structlog.processors.TimeStamper(fmt="iso"),
+                    structlog.processors.StackInfoRenderer(),
+                    structlog.processors.format_exc_info,
+                    structlog.processors.UnicodeDecoder(),
+                ]
+            )
             if format_type == "json" and hasattr(structlog.processors, "JSONRenderer"):
                 shared_processors.append(structlog.processors.JSONRenderer())
             elif hasattr(structlog, "dev"):
@@ -95,8 +102,16 @@ def setup_logging(
             structlog.configure(
                 processors=shared_processors,
                 context_class=dict,
-                logger_factory=structlog.stdlib.LoggerFactory() if have_stdlib else structlog.PrintLoggerFactory(),
-                wrapper_class=structlog.stdlib.BoundLogger if have_stdlib else structlog.PrintLogger,
+                logger_factory=(
+                    structlog.stdlib.LoggerFactory()
+                    if have_stdlib
+                    else structlog.PrintLoggerFactory()
+                ),
+                wrapper_class=(
+                    structlog.stdlib.BoundLogger
+                    if have_stdlib
+                    else structlog.PrintLogger
+                ),
                 cache_logger_on_first_use=True,
             )
         else:
@@ -105,11 +120,15 @@ def setup_logging(
                 def bind(self, **kw):  # simple passthrough for structlog-like API
                     return self
 
-            logging.getLogger(__name__).debug("Structlog minimal mode - processors unavailable")
+            logging.getLogger(__name__).debug(
+                "Structlog minimal mode - processors unavailable"
+            )
             structlog.get_logger = lambda name=None: logging.getLogger(name or __name__)  # type: ignore
     except Exception:
         # Last resort: leave standard logging only
-        logging.getLogger(__name__).debug("Structlog configuration failed; continuing with stdlib logging only")
+        logging.getLogger(__name__).debug(
+            "Structlog configuration failed; continuing with stdlib logging only"
+        )
 
     # Configure loguru for application logging
     from loguru import logger as loguru_logger

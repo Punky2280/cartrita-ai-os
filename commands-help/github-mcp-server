@@ -1,0 +1,67 @@
+ 📂 Basic Operations Aliases (bin/basic/):
+    gstatus         → Check repository status
+    gadd            → Add all modified files
+    gcommit         → Commit staged changes (gcommit "message")
+    gpush           → Push to remote repository
+    gpull           → Pull from remote repository
+    gbranch         → List or create branches (gbranch [name])
+    gcheckout       → Switch branches (gcheckout <name>)
+    glog            → Show commit history (glog [count])
+    gdiff           → Show differences (gdiff [target])
+    gstash          → Stash current changes (gstash [message])
+    gpop            → Apply most recent stash
+    greset          → Reset repository state (greset [mode] [target])
+    gclone          → Clone repository (gclone <url> [dir])
+    ginit           → Initialize Git repository
+    gremote         → Manage remote repositories (gremote [add|remove|set-url] [args])
+
+  � Advanced Workflow Aliases (bin/advanced/):
+    gflow           → Complete workflow: add→commit→push (gflow "message")
+    gquick          → Quick commit with auto message (gquick "message")
+    gsync           → Sync with remote (pull→push)
+    gdev            → Development session management (gdev [feature-name])
+    gworkflow       → Professional workflow combinations (gworkflow <action> [args])
+    gfix            → Smart fix and patch workflows (gfix "message")
+    gfresh          → Fresh start workflows (gfresh [options])
+    gbackup         → Backup and safety operations (gbackup [options])
+    gclean          → Repository cleanup and optimization (gclean [options])
+    gsave           → Save and preserve workflows (gsave "description")
+    glist           → Tool discovery and help system (glist [category])
+    grelease        → Release management workflows (grelease [version])
+
+  🔧 Specialized Git Operations (MCP server only):
+    gtag            → Manage Git tags (gtag [action] [name] [message])
+    gmerge          → Merge branch into current (gmerge <branch> [strategy])
+    grebase         → Rebase current branch (grebase [target] [--interactive])
+    gcherry         → Apply specific commit (gcherry <commit>)
+    gblame          → Show line-by-line authorship (gblame <file> [range])
+    gbisect         → Binary search for bugs (gbisect <action> [commit])
+
+🔥 Usage Examples:
+  📁 Basic Operations (bin/basic/):
+    gstatus                                 # Check repository status
+    gadd && gcommit "fix bug"              # Add and commit
+    gpush                                   # Push to remote
+    gbranch feature-auth                    # Create feature branch
+    glog 5                                  # Show last 5 commits
+
+  🚀 Advanced Workflows (bin/advanced/):
+    gflow "implement feature"               # Complete workflow (add→commit→push)
+    gquick "fix typo"                      # Quick commit without push
+    gsync                                   # Sync with remote (pull→push)
+    gdev feature-auth                       # Start development session
+    gbackup --emergency                     # Create comprehensive backup
+    gclean --optimize                       # Clean and optimize repository
+
+  � Specialized Git Operations (MCP server):
+    gtag create v1.0.0 "Release version"   # Create annotated tag
+    gmerge feature-branch                   # Merge branch with conflict detection
+    grebase main                            # Rebase current branch on main
+    gcherry abc1234                         # Cherry-pick specific commit
+    gblame src/app.js                       # Show line-by-line authorship
+
+  �📖 Learn More:
+    📚 Basic operations:    bin/basic/README.md
+    🚀 Advanced workflows:  bin/advanced/README.md
+    📋 Quick reference:     QUICK_REFERENCES.md
+    🖥️  CLI help:            node mcp-cli.js list

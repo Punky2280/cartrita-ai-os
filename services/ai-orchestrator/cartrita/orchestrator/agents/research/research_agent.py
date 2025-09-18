@@ -5,13 +5,13 @@ tasks using GPT-5.
 """
 
 import time
-from typing import Any
+from typing import Any, Optional
 
 import structlog
 from langchain_core.messages import HumanMessage, SystemMessage
-from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from pydantic import BaseModel, Field
 
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 
 # Configure logger
 logger = structlog.get_logger(__name__)
@@ -56,6 +56,7 @@ class ResearchResult(BaseModel):
 
 class ResearchAgent:
     """Research agent for information gathering and analysis."""
+
     def __init__(
         self,
         model: str | None = None,
@@ -65,6 +66,7 @@ class ResearchAgent:
         """Initialize the research agent with optimal GPT-4o model."""
         # Get settings with proper initialization
         from cartrita.orchestrator.utils.config import get_settings
+
         _settings = get_settings()
         self.model = model or _settings.ai.research_model
         self.api_key = api_key or _settings.ai.openai_api_key
@@ -91,7 +93,7 @@ class ResearchAgent:
         logger.info("Research agent stopped", agent_id=self.agent_id)
 
     async def process_messages(
-        self, messages: list[dict[str, Any]], context: dict[str, Any] = None
+        self, messages: list[dict[str, Any]], context: Optional[dict[str, Any]] = None
     ) -> dict[str, Any]:
         """Process messages using research capabilities."""
         if context is None:
@@ -108,7 +110,10 @@ class ResearchAgent:
                 }
 
             # Add real-time context for time-related queries
-            if any(word in query.lower() for word in ["time", "date", "today", "now", "current"]):
+            if any(
+                word in query.lower()
+                for word in ["time", "date", "today", "now", "current"]
+            ):
                 return await self._handle_time_query(query, context)
 
             # Perform research
@@ -116,7 +121,9 @@ class ResearchAgent:
 
             # Format response for orchestrator
             return {
-                "response": result.get("summary", "Research completed but no summary available."),
+                "response": result.get(
+                    "summary", "Research completed but no summary available."
+                ),
                 "success": True,
                 "metadata": {
                     "agent": "research_agent",
@@ -137,22 +144,25 @@ class ResearchAgent:
                 "metadata": {"agent": "research_agent", "error": str(e)},
             }
 
-    async def _handle_time_query(self, query: str, context: dict[str, Any]) -> dict[str, Any]:
+    async def _handle_time_query(
+        self, query: str, context: dict[str, Any]
+    ) -> dict[str, Any]:
         """Handle time and date queries with real-time information."""
         # Mark unused parameters for linter; kept for interface stability
         _ = (query, context)
         try:
             from datetime import datetime
+
             import pytz
 
             # Get current time in Miami timezone
-            miami_tz = pytz.timezone('America/New_York')
+            miami_tz = pytz.timezone("America/New_York")
             current_time = datetime.now(miami_tz)
 
             # Format comprehensive time information
-            formatted_time = current_time.strftime('%I:%M %p')
-            formatted_date = current_time.strftime('%A, %B %d, %Y')
-            timezone_name = current_time.strftime('%Z')
+            formatted_time = current_time.strftime("%I:%M %p")
+            formatted_date = current_time.strftime("%A, %B %d, %Y")
+            timezone_name = current_time.strftime("%Z")
 
             response = f"""🕐 **Current Time & Date in Miami**
 
@@ -178,8 +188,8 @@ class ResearchAgent:
                     "query_type": "time_date",
                     "current_time": current_time.isoformat(),
                     "timezone": str(miami_tz),
-                    "real_time_data": True
-                }
+                    "real_time_data": True,
+                },
             }
 
         except Exception as e:
@@ -187,7 +197,7 @@ class ResearchAgent:
             return {
                 "response": "Had trouble getting the exact time - you can check your device's clock or search 'Miami time' online.",
                 "success": False,
-                "metadata": {"agent": "research_agent", "error": str(e)}
+                "metadata": {"agent": "research_agent", "error": str(e)},
             }
 
     async def get_status(self) -> dict[str, Any]:
@@ -276,10 +286,11 @@ class ResearchAgent:
         _ = context
         # Time awareness
         from datetime import datetime
+
         import pytz
 
-        miami_tz = pytz.timezone('America/New_York')
-        current_time = datetime.now(miami_tz).strftime('%A, %B %d, %Y at %I:%M %p %Z')
+        miami_tz = pytz.timezone("America/New_York")
+        current_time = datetime.now(miami_tz).strftime("%A, %B %d, %Y at %I:%M %p %Z")
 
         # Build prompts using helpers to reduce method size
         system_prompt = self._build_system_prompt(current_time)
@@ -414,6 +425,5 @@ class ResearchAgent:
         response += (
             "*This research was conducted using advanced AI analysis and "
             "web search capabilities.*"
-
         )
         return response

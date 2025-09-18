@@ -3,15 +3,17 @@ Tests for the secure communication utilities.
 """
 
 import asyncio
-import pytest
 import time
 from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
+
 from cartrita.orchestrator.utils.secure_communication import (
-    SecureMessage,
-    SecureCommunicator,
-    MessageQueue,
     CircuitBreaker,
-    optimized_agent_communication
+    MessageQueue,
+    SecureCommunicator,
+    SecureMessage,
+    optimized_agent_communication,
 )
 
 
@@ -54,6 +56,7 @@ class TestSecureCommunicator:
         """Test SecureCommunicator with encryption key."""
         # Generate a valid Fernet key (32 bytes base64-encoded)
         from cryptography.fernet import Fernet
+
         key = Fernet.generate_key()
 
         communicator = SecureCommunicator("test_secret", key.decode())
@@ -77,6 +80,7 @@ class TestSecureCommunicator:
     def test_encryption_decryption(self):
         """Test payload encryption and decryption."""
         from cryptography.fernet import Fernet
+
         key = Fernet.generate_key()
 
         communicator = SecureCommunicator("test_secret", key.decode())
@@ -101,6 +105,7 @@ class TestSecureCommunicator:
     def test_create_secure_message_with_encryption(self):
         """Test creating encrypted secure messages."""
         from cryptography.fernet import Fernet
+
         key = Fernet.generate_key()
 
         communicator = SecureCommunicator("test_secret", key.decode())
@@ -195,15 +200,14 @@ class TestSecureCommunicator:
         mock_cm_200.__aexit__ = AsyncMock(return_value=None)
 
         mock_session = AsyncMock()
-        mock_session.request = MagicMock(side_effect=[
-            mock_cm_429,
-            mock_cm_200
-        ])
+        mock_session.request = MagicMock(side_effect=[mock_cm_429, mock_cm_200])
 
         communicator.session = mock_session
 
-        with patch('asyncio.sleep') as mock_sleep:
-            result = await communicator.send_secure_request("http://test.com", {"test": "data"})
+        with patch("asyncio.sleep") as mock_sleep:
+            result = await communicator.send_secure_request(
+                "http://test.com", {"test": "data"}
+            )
 
         assert result == {"success": True}
         mock_sleep.assert_called_once_with(1)
@@ -336,17 +340,20 @@ class TestOptimizedAgentCommunication:
     @pytest.mark.asyncio
     async def test_successful_agent_communication(self):
         """Test successful agent communication."""
-        with patch('cartrita.orchestrator.utils.secure_communication.SecureCommunicator') as mock_comm_class:
+        with patch(
+            "cartrita.orchestrator.utils.secure_communication.SecureCommunicator"
+        ) as mock_comm_class:
             mock_communicator = AsyncMock()
             mock_communicator.send_secure_request = AsyncMock(
                 return_value={"response": "success", "agent": "research"}
             )
-            mock_comm_class.return_value.__aenter__ = AsyncMock(return_value=mock_communicator)
+            mock_comm_class.return_value.__aenter__ = AsyncMock(
+                return_value=mock_communicator
+            )
             mock_comm_class.return_value.__aexit__ = AsyncMock(return_value=None)
 
             result = await optimized_agent_communication(
-                "research",
-                {"query": "test query"}
+                "research", {"query": "test query"}
             )
 
             assert result["response"] == "success"
@@ -355,17 +362,20 @@ class TestOptimizedAgentCommunication:
     @pytest.mark.asyncio
     async def test_agent_communication_fallback(self):
         """Test agent communication fallback on failure."""
-        with patch('cartrita.orchestrator.utils.secure_communication.SecureCommunicator') as mock_comm_class:
+        with patch(
+            "cartrita.orchestrator.utils.secure_communication.SecureCommunicator"
+        ) as mock_comm_class:
             mock_communicator = AsyncMock()
             mock_communicator.send_secure_request = AsyncMock(
                 side_effect=Exception("Connection failed")
             )
-            mock_comm_class.return_value.__aenter__ = AsyncMock(return_value=mock_communicator)
+            mock_comm_class.return_value.__aenter__ = AsyncMock(
+                return_value=mock_communicator
+            )
             mock_comm_class.return_value.__aexit__ = AsyncMock(return_value=None)
 
             result = await optimized_agent_communication(
-                "code",
-                {"query": "test query"}
+                "code", {"query": "test query"}
             )
 
             assert result["error"] == "Service temporarily unavailable"
@@ -378,6 +388,7 @@ async def test_integration_secure_workflow():
     """Integration test for complete secure communication workflow."""
     # Test the full workflow with encryption, signing, and verification
     from cryptography.fernet import Fernet
+
     key = Fernet.generate_key()
 
     sender = SecureCommunicator("shared_secret", key.decode())

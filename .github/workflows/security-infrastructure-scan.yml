@@ -1,0 +1,183 @@
+name: Infrastructure Security Scan
+
+on:
+  workflow_call:
+    outputs:
+      scan-result:
+        description: "Infrastructure scan completion status"
+        value: ${{ jobs.infrastructure-scan.outputs.status }}
+      findings-count:
+        description: "Number of infrastructure security findings"
+        value: ${{ jobs.infrastructure-scan.outputs.findings }}
+
+jobs:
+  infrastructure-scan:
+    name: Infrastructure as Code Security Analysis
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.scan-complete.outputs.status }}
+      findings: ${{ steps.count-findings.outputs.count }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install infrastructure security tools
+        run: |
+          # Install Checkov for IaC scanning
+          pip install checkov
+
+          # Install TfSec for Terraform security
+          curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
+          sudo mv tfsec /usr/local/bin/
+
+          # Install kubectl-score for Kubernetes manifest scoring
+          wget https://github.com/zegl/kube-score/releases/download/v1.16.1/kube-score_1.16.1_linux_amd64.tar.gz
+          tar -xzf kube-score_1.16.1_linux_amd64.tar.gz
+          sudo mv kube-score /usr/local/bin/
+
+      - name: Create reports directory
+        run: mkdir -p infrastructure-reports
+
+      - name: Scan for Infrastructure as Code files
+        run: |
+          echo "# Infrastructure Security Assessment" > infrastructure-reports/summary.md
+          echo "" >> infrastructure-reports/summary.md
+
+          # Check for various IaC file types
+          TERRAFORM_COUNT=$(find . -name "*.tf" -o -name "*.tfvars" | wc -l || echo 0)
+          K8S_COUNT=$(find . -name "*.yaml" -o -name "*.yml" | grep -E "(k8s|kubernetes|deployment|service|ingress)" | wc -l || echo 0)
+          DOCKER_COUNT=$(find . -name "Dockerfile*" -o -name "docker-compose*" | wc -l || echo 0)
+
+          echo "## Infrastructure Files Discovered" >> infrastructure-reports/summary.md
+          echo "- Terraform files: $TERRAFORM_COUNT" >> infrastructure-reports/summary.md
+          echo "- Kubernetes manifests: $K8S_COUNT" >> infrastructure-reports/summary.md
+          echo "- Docker files: $DOCKER_COUNT" >> infrastructure-reports/summary.md
+
+      - name: Checkov IaC Security Scan
+        run: |
+          # Scan all infrastructure files with Checkov
+          checkov --directory . --output json --output-file infrastructure-reports/checkov-report.json || true
+          checkov --directory . --output cli --output-file infrastructure-reports/checkov-report.txt || true
+
+      - name: Terraform Security Scan
+        run: |
+          # Scan Terraform files if they exist
+          if find . -name "*.tf" -type f | head -1 > /dev/null 2>&1; then
+            echo "Scanning Terraform files with TfSec"
+            tfsec . --format json --out infrastructure-reports/tfsec-report.json || true
+            tfsec . --out infrastructure-reports/tfsec-report.txt || true
+          else
+            echo "No Terraform files found" > infrastructure-reports/tfsec-report.txt
+            echo '{"results": []}' > infrastructure-reports/tfsec-report.json
+          fi
+
+      - name: Kubernetes Security Analysis
+        run: |
+          # Scan Kubernetes manifests if they exist
+          if find . -name "*.yaml" -o -name "*.yml" | grep -E "(k8s|kubernetes|deployment|service|ingress)" | head -1 > /dev/null 2>&1; then
+            echo "Scanning Kubernetes manifests"
+            for file in $(find . -name "*.yaml" -o -name "*.yml" | grep -E "(k8s|kubernetes|deployment|service|ingress)"); do
+              echo "Scanning $file"
+              kube-score score "$file" >> infrastructure-reports/kubernetes-score.txt 2>&1 || true
+            done
+          else
+            echo "No Kubernetes manifests found" > infrastructure-reports/kubernetes-score.txt
+          fi
+
+      - name: GitHub Actions Security Analysis
+        run: |
+          # Analyze GitHub Actions workflows for security issues
+          echo "## GitHub Actions Security Analysis" > infrastructure-reports/github-actions-analysis.md
+
+          # Check for common security issues in workflows
+          SECRET_USAGE=$(grep -r "secrets\." .github/workflows/ | wc -l || echo 0)
+          PULL_REQUEST_TARGET=$(grep -r "pull_request_target" .github/workflows/ | wc -l || echo 0)
+          SHELL_INJECTION=$(grep -r '\${{' .github/workflows/ | grep -E "(github\.event|github\.head_ref)" | wc -l || echo 0)
+
+          echo "- Secret usage instances: $SECRET_USAGE" >> infrastructure-reports/github-actions-analysis.md
+          echo "- Pull request target usage: $PULL_REQUEST_TARGET" >> infrastructure-reports/github-actions-analysis.md
+          echo "- Potential shell injection vectors: $SHELL_INJECTION" >> infrastructure-reports/github-actions-analysis.md
+
+          # Check for security best practices
+          echo "" >> infrastructure-reports/github-actions-analysis.md
+          echo "### Security Best Practices Check" >> infrastructure-reports/github-actions-analysis.md
+          echo "- [x] Actions pinned to commit hashes: $(grep -r "uses:.*@v" .github/workflows/ | grep -v "@[a-f0-9]\{7,\}" | wc -l || echo 0) violations" >> infrastructure-reports/github-actions-analysis.md
+          echo "- [x] Minimal permissions used: $(grep -r "permissions:" .github/workflows/ | wc -l || echo 0) files with explicit permissions" >> infrastructure-reports/github-actions-analysis.md
+
+      - name: Cloud Security Configuration Check
+        run: |
+          # Check for cloud configuration files and security
+          echo "## Cloud Security Configuration" > infrastructure-reports/cloud-security.md
+
+          # Check for common cloud configuration files
+          AWS_CONFIG=$(find . -name ".aws" -o -name "aws*" -o -name "*aws*" | grep -v node_modules | wc -l || echo 0)
+          AZURE_CONFIG=$(find . -name ".azure" -o -name "azure*" -o -name "*azure*" | grep -v node_modules | wc -l || echo 0)
+          GCP_CONFIG=$(find . -name ".gcp" -o -name "gcp*" -o -name "*gcp*" | grep -v node_modules | wc -l || echo 0)
+
+          echo "- AWS configuration files: $AWS_CONFIG" >> infrastructure-reports/cloud-security.md
+          echo "- Azure configuration files: $AZURE_CONFIG" >> infrastructure-reports/cloud-security.md
+          echo "- GCP configuration files: $GCP_CONFIG" >> infrastructure-reports/cloud-security.md
+
+          # Check for potential credential files
+          POTENTIAL_CREDS=$(find . -name "*.pem" -o -name "*.key" -o -name "*.crt" -o -name "credentials*" | grep -v node_modules | wc -l || echo 0)
+          echo "- Potential credential files: $POTENTIAL_CREDS" >> infrastructure-reports/cloud-security.md
+
+      - name: Count security findings
+        id: count-findings
+        run: |
+          CHECKOV_COUNT=0
+          TFSEC_COUNT=0
+          GITHUB_ACTIONS_COUNT=0
+
+          # Count Checkov findings
+          if [[ -f infrastructure-reports/checkov-report.json ]]; then
+            CHECKOV_COUNT=$(jq '[.results.failed_checks[]?] | length' infrastructure-reports/checkov-report.json 2>/dev/null || echo 0)
+          fi
+
+          # Count TfSec findings
+          if [[ -f infrastructure-reports/tfsec-report.json ]]; then
+            TFSEC_COUNT=$(jq '[.results[]?] | length' infrastructure-reports/tfsec-report.json 2>/dev/null || echo 0)
+          fi
+
+          # Count GitHub Actions issues
+          if [[ -f infrastructure-reports/github-actions-analysis.md ]]; then
+            GITHUB_ACTIONS_COUNT=$(grep -o "violations\|instances" infrastructure-reports/github-actions-analysis.md | wc -l || echo 0)
+          fi
+
+          TOTAL=$((CHECKOV_COUNT + TFSEC_COUNT + GITHUB_ACTIONS_COUNT))
+          echo "count=$TOTAL" >> $GITHUB_OUTPUT
+          echo "Found $TOTAL infrastructure security issues (Checkov: $CHECKOV_COUNT, TfSec: $TFSEC_COUNT, GitHub Actions: $GITHUB_ACTIONS_COUNT)"
+
+      - name: Generate infrastructure security summary
+        run: |
+          echo "## Infrastructure Security Summary" >> infrastructure-reports/summary.md
+          echo "- IaC security issues (Checkov): $(jq '[.results.failed_checks[]?] | length' infrastructure-reports/checkov-report.json 2>/dev/null || echo 0)" >> infrastructure-reports/summary.md
+          echo "- Terraform security issues (TfSec): $(jq '[.results[]?] | length' infrastructure-reports/tfsec-report.json 2>/dev/null || echo 0)" >> infrastructure-reports/summary.md
+          echo "- GitHub Actions security concerns: $(grep -c "violations\|instances" infrastructure-reports/github-actions-analysis.md 2>/dev/null || echo 0)" >> infrastructure-reports/summary.md
+          echo "" >> infrastructure-reports/summary.md
+          echo "## Recommendations" >> infrastructure-reports/summary.md
+          echo "- Implement Infrastructure as Code security scanning in CI/CD" >> infrastructure-reports/summary.md
+          echo "- Use policy-as-code for compliance enforcement" >> infrastructure-reports/summary.md
+          echo "- Enable cloud security posture management" >> infrastructure-reports/summary.md
+          echo "- Implement secure secret management" >> infrastructure-reports/summary.md
+
+      - name: Mark scan complete
+        id: scan-complete
+        run: |
+          echo "status=completed" >> $GITHUB_OUTPUT
+
+      - name: Upload infrastructure reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: infrastructure-security-reports
+          path: infrastructure-reports/
+          retention-days: 30
+
+      - name: Create step summary
+        run: |
+          echo "## 🏗️ Infrastructure Security Scan Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          cat infrastructure-reports/summary.md >> $GITHUB_STEP_SUMMARY

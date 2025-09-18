@@ -6,27 +6,38 @@ High-performance hierarchical multi-agent system with GPT-4.1 orchestration.
 import asyncio
 import json
 import os
+import sys
 import shutil
+import time  # Added for timestamp in /health response
 from contextlib import asynccontextmanager
 from typing import Any, Dict, List, Optional
 
 import structlog
 import uvicorn
-from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile, WebSocket
+from fastapi import (
+    Depends,
+    FastAPI,
+    File,
+    HTTPException,
+    Request,
+    UploadFile,
+    WebSocket,
+)
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
-import time  # Added for timestamp in /health response
 
 # Conditional imports with graceful fallbacks
 try:
     from dotenv import load_dotenv
+
     load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
 except ImportError:
     pass
 
 import sys
+
 _repo_root = os.path.dirname(os.path.abspath(__file__))
 _ai_path = os.path.join(_repo_root, "services", "ai-orchestrator")
 if os.path.isdir(os.path.join(_ai_path, "cartrita")) and _ai_path not in sys.path:
@@ -38,9 +49,15 @@ from cartrita.orchestrator.core.database import DatabaseManager  # noqa: E402
 from cartrita.orchestrator.core.cache import CacheManager  # noqa: E402
 from cartrita.orchestrator.core.metrics import MetricsCollector  # noqa: E402
 from cartrita.orchestrator.services.auth import verify_api_key  # noqa: E402
-from cartrita.orchestrator.services.jwt_auth import verify_api_key_or_jwt, jwt_manager  # noqa: E402
+from cartrita.orchestrator.services.jwt_auth import (
+    verify_api_key_or_jwt,
+    jwt_manager,
+)  # noqa: E402
 from jose import jwt  # noqa: E402
-from cartrita.orchestrator.services.rate_limiter import check_api_rate_limit, check_auth_rate_limit  # noqa: E402
+from cartrita.orchestrator.services.rate_limiter import (
+    check_api_rate_limit,
+    check_auth_rate_limit,
+)  # noqa: E402
 from cartrita.orchestrator.services.openai_service import OpenAIService  # noqa: E402
 from cartrita.orchestrator.utils.config import Settings  # noqa: E402
 from cartrita.orchestrator.utils.logger import setup_logging  # noqa: E402
@@ -105,6 +122,7 @@ services: dict[str, Optional[Any]] = {
 
 class VoiceChatRequest(BaseModel):
     """Voice conversation request model."""
+
     conversationId: str = Field(..., description="Unique conversation identifier")
     transcribedText: str = Field(..., description="Transcribed speech text")
     conversationHistory: Optional[List[Dict[str, Any]]] = Field(
@@ -115,6 +133,7 @@ class VoiceChatRequest(BaseModel):
 
 class ErrorResponse(BaseModel):
     """Standardized error response."""
+
     error: str = Field(..., description="Error message")
     code: str = Field(..., description="Error code")
     details: Optional[Dict[str, Any]] = Field(None, description="Additional details")
@@ -157,7 +176,7 @@ async def lifespan(_: FastAPI):
 
         # Graceful shutdown
         for service_name, service in services.items():
-            if service and hasattr(service, 'disconnect'):
+            if service and hasattr(service, "disconnect"):
                 try:
                     await service.disconnect()
                 except Exception as e:
@@ -177,13 +196,49 @@ app = FastAPI(
     openapi_url="/openapi.json",
 )
 
+
+def get_secure_streaming_headers(request: Request = None) -> Dict[str, str]:
+    """Generate secure headers for streaming responses with origin validation."""
+    headers = {
+        "Cache-Control": "no-cache",
+        "Connection": "keep-alive",
+        "Access-Control-Max-Age": "86400",
+        "Vary": "Origin",
+    }
+
+    # Get allowed origins from environment or use defaults
+    allowed_origins = [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:3003",  # Turbopack dev server
+        "https://cartrita.ai",
+        "https://cartrita-ai-os.com",
+    ]
+
+    # Add environment-based origins
+    if os.getenv("ALLOWED_ORIGINS"):
+        env_origins = [o.strip() for o in os.getenv("ALLOWED_ORIGINS").split(",")]
+        allowed_origins.extend(env_origins)
+
+    # Validate request origin if available
+    request_origin = request.headers.get("origin") if request else None
+    if request_origin and request_origin in allowed_origins:
+        headers["Access-Control-Allow-Origin"] = request_origin
+        headers["Access-Control-Allow-Credentials"] = "true"
+    else:
+        headers["Access-Control-Allow-Origin"] = "null"
+        headers["Access-Control-Allow-Credentials"] = "false"
+
+    return headers
+
+
 # Middleware configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
         "http://localhost:3001",
-        "https://cartrita-ai-os.com"
+        "https://cartrita-ai-os.com",
     ],
     allow_credentials=True,
     allow_headers=["*"],
@@ -194,8 +249,8 @@ app.add_middleware(
     allowed_hosts=[
         "localhost",
         "127.0.0.1",
-        "cartrita-ai-os.com"
-    ]  # Restrict to known hosts for production
+        "cartrita-ai-os.com",
+    ],  # Restrict to known hosts for production
 )
 
 
@@ -260,11 +315,21 @@ async def root():
             "primary_transport": "SSE (Server-Sent Events)",
             "fallback_transport": "WebSocket",
             "events": [
-                "token", "function_call", "tool_result", "metrics", "done",
-                "agent_task_started", "agent_task_progress", "agent_task_complete",
-                "orchestration_decision", "safety_flag", "evaluation_metric",
-                "audio_interim", "audio_final", "file_attach_progress"
-            ]
+                "token",
+                "function_call",
+                "tool_result",
+                "metrics",
+                "done",
+                "agent_task_started",
+                "agent_task_progress",
+                "agent_task_complete",
+                "orchestration_decision",
+                "safety_flag",
+                "evaluation_metric",
+                "audio_interim",
+                "audio_final",
+                "file_attach_progress",
+            ],
         },
         "endpoints": {
             "health": "/health",
@@ -275,9 +340,9 @@ async def root():
             "voice_chat_stream": "/api/chat/voice/stream",
             "agents": "/api/agents",
             "websocket": "/ws/chat",
-            "docs": "/docs"
+            "docs": "/docs",
         },
-        "frontend": "http://localhost:3001"
+        "frontend": "http://localhost:3001",
     }
 
 
@@ -288,10 +353,7 @@ async def socket_io_compatibility():
         "status": "Socket.IO endpoint available",
         "transport": "polling fallback",
         "message": "Full Socket.IO support disabled for compatibility",
-        "alternatives": {
-            "websocket": "/ws/chat",
-            "sse": "/api/chat/stream"
-        }
+        "alternatives": {"websocket": "/ws/chat", "sse": "/api/chat/stream"},
     }
 
 
@@ -305,8 +367,7 @@ async def health_check():
     db_healthy = await services["db_manager"].health_check()
     cache_healthy = await services["cache_manager"].health_check()
     supervisor_healthy = bool(
-        services["supervisor"]
-        and await services["supervisor"].health_check()
+        services["supervisor"] and await services["supervisor"].health_check()
     )
 
     overall_healthy = all([db_healthy, cache_healthy])
@@ -334,40 +395,40 @@ async def metrics():
 
 # Authentication Endpoints
 
+
 @app.post("/api/auth/login", response_model=TokenResponse)
 async def login(
-    request: Request,
-    login_data: LoginRequest,
-    _: None = Depends(check_auth_rate_limit)
+    request: Request, login_data: LoginRequest, _: None = Depends(check_auth_rate_limit)
 ):
     """User login endpoint with JWT token generation."""
     # Simple demo implementation - in production, verify against database
     demo_users = {
         "admin@cartrita.com": {
             "password_hash": jwt_manager.hash_password("admin123"),
-            "permissions": ["admin", "chat", "upload", "metrics"]
+            "permissions": ["admin", "chat", "upload", "metrics"],
         },
         "user@cartrita.com": {
             "password_hash": jwt_manager.hash_password("user123"),
-            "permissions": ["chat", "upload"]
-        }
+            "permissions": ["chat", "upload"],
+        },
     }
 
     user = demo_users.get(login_data.email)
-    if not user or not jwt_manager.verify_password(login_data.password, user["password_hash"]):
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid email or password"
-        )
+    if not user or not jwt_manager.verify_password(
+        login_data.password, user["password_hash"]
+    ):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
 
     # Generate tokens
-    access_token = jwt_manager.create_access_token(login_data.email, user["permissions"])
+    access_token = jwt_manager.create_access_token(
+        login_data.email, user["permissions"]
+    )
     refresh_token = jwt_manager.create_refresh_token(login_data.email)
 
     return TokenResponse(
         access_token=access_token,
         refresh_token=refresh_token,
-        expires_in=jwt_manager.access_token_expire_minutes * 60
+        expires_in=jwt_manager.access_token_expire_minutes * 60,
     )
 
 
@@ -375,7 +436,7 @@ async def login(
 async def refresh_token(
     request: Request,
     refresh_data: RefreshTokenRequest,
-    _: None = Depends(check_auth_rate_limit)
+    _: None = Depends(check_auth_rate_limit),
 ):
     """Refresh access token using refresh token."""
     try:
@@ -386,19 +447,16 @@ async def refresh_token(
         payload = jwt.decode(
             refresh_data.refresh_token,
             jwt_manager.secret_key,
-            algorithms=[jwt_manager.algorithm]
+            algorithms=[jwt_manager.algorithm],
         )
 
         if payload.get("type") != "refresh":
-            raise HTTPException(
-                status_code=401,
-                detail="Invalid token type"
-            )
+            raise HTTPException(status_code=401, detail="Invalid token type")
 
         # Generate new tokens
         demo_users = {
             "admin@cartrita.com": ["admin", "chat", "upload", "metrics"],
-            "user@cartrita.com": ["chat", "upload"]
+            "user@cartrita.com": ["chat", "upload"],
         }
 
         permissions = demo_users.get(token_data.user_id, [])
@@ -408,21 +466,17 @@ async def refresh_token(
         return TokenResponse(
             access_token=access_token,
             refresh_token=new_refresh_token,
-            expires_in=jwt_manager.access_token_expire_minutes * 60
+            expires_in=jwt_manager.access_token_expire_minutes * 60,
         )
 
     except Exception as e:
         logger.warning(f"Token refresh failed: {str(e)}")
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid or expired refresh token"
-        )
+        raise HTTPException(status_code=401, detail="Invalid or expired refresh token")
 
 
 @app.get("/api/auth/status", response_model=AuthStatusResponse)
 async def auth_status(
-    request: Request,
-    current_user: Optional[str] = Depends(verify_api_key_or_jwt)
+    request: Request, current_user: Optional[str] = Depends(verify_api_key_or_jwt)
 ):
     """Get current authentication status."""
     # Check if authenticated via JWT
@@ -436,7 +490,7 @@ async def auth_status(
                 user_id=token_data.user_id,
                 permissions=token_data.permissions,
                 token_expires_at=token_data.expires_at,
-                auth_method="jwt"
+                auth_method="jwt",
             )
         except Exception:
             pass
@@ -448,13 +502,10 @@ async def auth_status(
             authenticated=True,
             user_id="api_key_user",
             permissions=["api_access"],
-            auth_method="api_key"
+            auth_method="api_key",
         )
 
-    return AuthStatusResponse(
-        authenticated=False,
-        auth_method="none"
-    )
+    return AuthStatusResponse(authenticated=False, auth_method="none")
 
 
 @app.post("/api/chat", response_model=ChatResponse)
@@ -462,7 +513,7 @@ async def chat(
     request_body: ChatRequest,
     request: Request,
     api_key: str = Depends(verify_api_key_or_jwt),
-    _: None = Depends(check_api_rate_limit)
+    _: None = Depends(check_api_rate_limit),
 ):
     """Main chat endpoint with GPT-4.1 orchestration."""
     if not services["supervisor"]:
@@ -503,7 +554,7 @@ async def voice_chat(request: VoiceChatRequest, api_key: str = Depends(verify_ap
         logger.info(
             "Processing voice conversation",
             conversation_id=request.conversationId,
-            api_key=api_key[:8] + "..."
+            api_key=api_key[:8] + "...",
         )
 
         # Process voice conversation
@@ -511,7 +562,7 @@ async def voice_chat(request: VoiceChatRequest, api_key: str = Depends(verify_ap
         async for chunk in services["openai_service"].process_voice_conversation(
             conversation_id=request.conversationId,
             transcribed_text=request.transcribedText,
-            conversation_history=request.conversationHistory
+            conversation_history=request.conversationHistory,
         ):
             if chunk["type"] == "content":
                 response_content += chunk["content"]
@@ -526,10 +577,10 @@ async def voice_chat(request: VoiceChatRequest, api_key: str = Depends(verify_ap
             context=request.conversationHistory,
             metadata={
                 "voice_mode": request.voiceMode,
-                "transcription_length": len(request.transcribedText)
+                "transcription_length": len(request.transcribedText),
             },
             processing_time=0.0,
-            token_usage=None
+            token_usage=None,
         )
 
     except Exception as e:
@@ -537,9 +588,11 @@ async def voice_chat(request: VoiceChatRequest, api_key: str = Depends(verify_ap
             "Voice chat failed",
             error=str(e),
             conversation_id=request.conversationId,
-            api_key=api_key[:8] + "..."
+            api_key=api_key[:8] + "...",
         )
-        raise HTTPException(status_code=500, detail="Voice chat processing failed") from e
+        raise HTTPException(
+            status_code=500, detail="Voice chat processing failed"
+        ) from e
 
 
 @app.get("/api/agents")
@@ -572,7 +625,9 @@ async def get_agent_status(agent_id: str, api_key: str = Depends(verify_api_key)
         raise
     except Exception as e:
         logger.error("Failed to get agent status", error=str(e), agent_id=agent_id)
-        raise HTTPException(status_code=500, detail="Failed to retrieve agent status") from e
+        raise HTTPException(
+            status_code=500, detail="Failed to retrieve agent status"
+        ) from e
 
 
 @app.get("/api/chat/stream")
@@ -580,7 +635,7 @@ async def chat_stream(
     message: str,
     context: Optional[str] = None,
     agent_override: Optional[str] = None,
-    api_key: str = Depends(verify_api_key)
+    api_key: str = Depends(verify_api_key),
 ):
     """SSE endpoint for streaming chat responses."""
     if not services["supervisor"]:
@@ -607,15 +662,21 @@ async def chat_stream(
 
             # Send response as SSE
             try:
-                response_dict = response.model_dump() if hasattr(response, 'model_dump') else response.dict()
+                response_dict = (
+                    response.model_dump()
+                    if hasattr(response, "model_dump")
+                    else response.dict()
+                )
                 yield f"data: {json.dumps(response_dict, default=str, ensure_ascii=False)}\n\n"
             except Exception as serialize_error:
                 logger.error("Failed to serialize response", error=str(serialize_error))
                 simple_response = {
-                    "response": str(getattr(response, 'response', response)),
-                    "conversation_id": str(getattr(response, 'conversation_id', 'unknown')),
-                    "agent_type": str(getattr(response, 'agent_type', 'supervisor')),
-                    "status": "completed"
+                    "response": str(getattr(response, "response", response)),
+                    "conversation_id": str(
+                        getattr(response, "conversation_id", "unknown")
+                    ),
+                    "agent_type": str(getattr(response, "agent_type", "supervisor")),
+                    "status": "completed",
                 }
                 yield f"data: {json.dumps(simple_response)}\n\n"
 
@@ -628,11 +689,7 @@ async def chat_stream(
     return StreamingResponse(
         generate(),
         media_type="text/event-stream",
-        headers={
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-            "Access-Control-Allow-Origin": "*",
-        }
+        headers=get_secure_streaming_headers(request),
     )
 
 
@@ -641,7 +698,7 @@ async def voice_chat_stream(
     conversationId: str,
     transcribedText: str,
     conversationHistory: Optional[str] = None,
-    api_key: str = Depends(verify_api_key)
+    api_key: str = Depends(verify_api_key),
 ):
     """SSE endpoint for streaming voice conversations."""
     if not services["supervisor"]:
@@ -662,19 +719,23 @@ async def voice_chat_stream(
                 context={
                     "conversation_id": conversationId,
                     "conversation_history": history,
-                    "voice_mode": True
+                    "voice_mode": True,
                 },
                 stream=False,
                 api_key=api_key,
             )
 
             # Send voice-specific response
-            response_dict = response.model_dump() if hasattr(response, 'model_dump') else response.dict()
+            response_dict = (
+                response.model_dump()
+                if hasattr(response, "model_dump")
+                else response.dict()
+            )
             event_data = {
                 **response_dict,
                 "conversationId": conversationId,
                 "timestamp": asyncio.get_event_loop().time(),
-                "voiceMode": True
+                "voiceMode": True,
             }
             yield f"data: {json.dumps(event_data, default=str)}\n\n"
             yield "data: [DONE]\n\n"
@@ -686,11 +747,7 @@ async def voice_chat_stream(
     return StreamingResponse(
         generate(),
         media_type="text/event-stream",
-        headers={
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-            "Access-Control-Allow-Origin": "*",
-        }
+        headers=get_secure_streaming_headers(request),
     )
 
 
@@ -698,12 +755,14 @@ async def voice_chat_stream(
 async def upload_multiple_files(
     files: List[UploadFile] = File(...),
     conversationId: Optional[str] = None,
-    api_key: str = Depends(verify_api_key)
+    api_key: str = Depends(verify_api_key),
 ):
     """Upload multiple files endpoint."""
     _ = api_key  # noqa: F841
     try:
-        logger.info(f"Processing {len(files)} file uploads", conversation_id=conversationId)
+        logger.info(
+            f"Processing {len(files)} file uploads", conversation_id=conversationId
+        )
 
         upload_dir = "/tmp/uploads"
         os.makedirs(upload_dir, exist_ok=True)
@@ -715,19 +774,21 @@ async def upload_multiple_files(
                 with open(file_path, "wb") as buffer:
                     shutil.copyfileobj(file.file, buffer)
 
-                uploaded_files.append({
-                    "filename": file.filename,
-                    "size": os.path.getsize(file_path),
-                    "path": file_path,
-                    "content_type": file.content_type,
-                    "url": f"/files/{file.filename}"
-                })
+                uploaded_files.append(
+                    {
+                        "filename": file.filename,
+                        "size": os.path.getsize(file_path),
+                        "path": file_path,
+                        "content_type": file.content_type,
+                        "url": f"/files/{file.filename}",
+                    }
+                )
 
         return {
             "success": True,
             "data": uploaded_files,
             "message": f"Successfully uploaded {len(uploaded_files)} files",
-            "conversationId": conversationId
+            "conversationId": conversationId,
         }
 
     except Exception as e:
@@ -739,7 +800,7 @@ async def upload_multiple_files(
 async def upload_single_file(
     file: UploadFile = File(...),
     conversationId: Optional[str] = None,
-    api_key: str = Depends(verify_api_key)
+    api_key: str = Depends(verify_api_key),
 ):
     """Upload single file endpoint."""
     _ = api_key  # noqa: F841
@@ -747,7 +808,9 @@ async def upload_single_file(
         if not file.filename:
             raise HTTPException(status_code=400, detail="No filename provided")
 
-        logger.info(f"Processing file upload: {file.filename}", conversation_id=conversationId)
+        logger.info(
+            f"Processing file upload: {file.filename}", conversation_id=conversationId
+        )
 
         upload_dir = "/tmp/uploads"
         os.makedirs(upload_dir, exist_ok=True)
@@ -761,14 +824,14 @@ async def upload_single_file(
             "size": os.path.getsize(file_path),
             "path": file_path,
             "content_type": file.content_type,
-            "url": f"/files/{file.filename}"
+            "url": f"/files/{file.filename}",
         }
 
         return {
             "success": True,
             "data": file_info,
             "message": f"Successfully uploaded {file.filename}",
-            "conversationId": conversationId
+            "conversationId": conversationId,
         }
 
     except Exception as e:
@@ -814,20 +877,19 @@ async def websocket_chat(websocket: WebSocket):
 
             # Process through supervisor
             response = await services["supervisor"].process_chat_request(
-                message=message,
-                context=context,
-                stream=False,
-                api_key=api_key
+                message=message, context=context, stream=False, api_key=api_key
             )
 
             # Send response
-            await websocket.send_json({
-                "response": response.response,
-                "conversation_id": response.conversation_id,
-                "agent_type": response.agent_type,
-                "processing_time": response.processing_time,
-                "done": True,
-            })
+            await websocket.send_json(
+                {
+                    "response": response.response,
+                    "conversation_id": response.conversation_id,
+                    "agent_type": response.agent_type,
+                    "processing_time": response.processing_time,
+                    "done": True,
+                }
+            )
 
     except Exception as e:
         logger.error("WebSocket error", error=str(e))
@@ -868,7 +930,9 @@ async def get_system_stats(api_key: str = Depends(verify_api_key)):
         return await services["metrics_collector"].get_metrics_summary()
     except Exception as e:
         logger.error("Failed to get system stats", error=str(e))
-        raise HTTPException(status_code=500, detail="Failed to retrieve system stats") from e
+        raise HTTPException(
+            status_code=500, detail="Failed to retrieve system stats"
+        ) from e
 
 
 if __name__ == "__main__":

@@ -21,7 +21,6 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from pydantic import BaseModel, Field
 
-
 logger = structlog.get_logger(__name__)
 
 
@@ -255,6 +254,7 @@ class APIKeyManager:
         """Load API keys from environment variables."""
         # Get settings with proper initialization
         from cartrita.orchestrator.utils.config import get_settings
+
         _settings = get_settings()
 
         key_mappings = {

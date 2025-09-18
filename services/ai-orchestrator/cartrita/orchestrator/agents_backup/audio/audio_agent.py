@@ -4,11 +4,12 @@ Handles real-time audio, transcription, TTS, and audio analysis using GPT-Audio 
 """
 
 import time
-from typing import Any, Dict, AsyncGenerator
+from typing import Any, AsyncGenerator, Dict
 
 import structlog
-from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from pydantic import BaseModel, Field
+
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 
 logger = structlog.get_logger(__name__)
 
@@ -16,6 +17,7 @@ logger = structlog.get_logger(__name__)
 # ============================================
 # Audio Models
 # ============================================
+
 
 class AudioRequest(BaseModel):
     """Audio processing request model."""
@@ -34,13 +36,16 @@ class AudioResponse(BaseModel):
     result: str | bytes = Field(..., description="Processing result")
     task_type: str = Field(..., description="Type of task performed")
     processing_time: float = Field(..., description="Processing duration")
-    metadata: Dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
+    metadata: Dict[str, Any] = Field(
+        default_factory=dict, description="Additional metadata"
+    )
     confidence: float | None = Field(None, description="Confidence score")
 
 
 # ============================================
 # Audio Agent
 # ============================================
+
 
 class AudioAgent:
     """
@@ -65,10 +70,13 @@ class AudioAgent:
         """Initialize the audio agent with optimal models."""
         # Get settings with proper initialization
         from cartrita.orchestrator.utils.config import get_settings
+
         _settings = get_settings()
 
         self.model = model or _settings.ai.audio_model  # gpt-audio
-        self.realtime_model = realtime_model or _settings.ai.realtime_model  # gpt-realtime
+        self.realtime_model = (
+            realtime_model or _settings.ai.realtime_model
+        )  # gpt-realtime
         self.tts_model = tts_model or _settings.ai.tts_model  # tts-1-hd
         self.api_key = api_key or _settings.ai.openai_api_key.get_secret_value()
 
@@ -92,10 +100,12 @@ class AudioAgent:
         self.is_active = False
         self.active_sessions: Dict[str, Dict[str, Any]] = {}
 
-        logger.info("Audio Agent initialized",
-                    model=self.model,
-                    realtime_model=self.realtime_model,
-                    tts_model=self.tts_model)
+        logger.info(
+            "Audio Agent initialized",
+            model=self.model,
+            realtime_model=self.realtime_model,
+            tts_model=self.tts_model,
+        )
 
     async def start(self) -> None:
         """Start the audio agent."""
@@ -115,9 +125,7 @@ class AudioAgent:
         return self.is_active and self.audio_llm is not None
 
     async def process_audio(
-        self,
-        request: AudioRequest,
-        session_id: str | None = None
+        self, request: AudioRequest, session_id: str | None = None
     ) -> AudioResponse:
         """Process audio request with appropriate model selection."""
         start_time = time.time()
@@ -147,22 +155,23 @@ class AudioAgent:
                     "model_used": self.model,
                     "session_id": session_id,
                     "language": request.language,
-                    "real_time": request.real_time
-                }
+                    "real_time": request.real_time,
+                },
             )
 
         except Exception as e:
-            logger.error("Audio processing failed", error=str(e), task_type=request.task_type)
+            logger.error(
+                "Audio processing failed", error=str(e), task_type=request.task_type
+            )
             raise
 
     async def _transcribe_audio(
-        self,
-        request: AudioRequest,
-        session_id: str | None = None
+        self, request: AudioRequest, session_id: str | None = None
     ) -> str:
         """Transcribe audio using Whisper or GPT-Audio."""
         try:
             from openai import AsyncOpenAI
+
             client = AsyncOpenAI(api_key=self.api_key)
 
             if request.audio_data:
@@ -171,7 +180,7 @@ class AudioAgent:
                     model="whisper-1",
                     file=request.audio_data,
                     language=request.language,
-                    response_format="text"
+                    response_format="text",
                 )
                 return response
             else:
@@ -185,14 +194,15 @@ class AudioAgent:
         """Synthesize speech using TTS models."""
         try:
             from openai import AsyncOpenAI
+
             client = AsyncOpenAI(api_key=self.api_key)
 
             # Use high-quality TTS model
             response = await client.audio.speech.create(
                 model=self.tts_model,  # tts-1-hd
                 voice=request.voice_id or "nova",
-                input=request.result if hasattr(request, 'result') else "",
-                response_format="mp3"
+                input=request.result if hasattr(request, "result") else "",
+                response_format="mp3",
             )
 
             return response.content
@@ -216,17 +226,17 @@ class AudioAgent:
         - Audio quality assessment
         """
 
-        response = await self.audio_llm.ainvoke([
-            {"role": "system", "content": "You are an expert audio analyst."},
-            {"role": "user", "content": analysis_prompt}
-        ])
+        response = await self.audio_llm.ainvoke(
+            [
+                {"role": "system", "content": "You are an expert audio analyst."},
+                {"role": "user", "content": analysis_prompt},
+            ]
+        )
 
         return response.content
 
     async def _handle_conversation(
-        self,
-        request: AudioRequest,
-        session_id: str | None = None
+        self, request: AudioRequest, session_id: str | None = None
     ) -> str:
         """Handle conversational audio processing."""
         if not session_id:
@@ -237,7 +247,7 @@ class AudioAgent:
             self.active_sessions[session_id] = {
                 "messages": [],
                 "start_time": time.time(),
-                "language": request.language
+                "language": request.language,
             }
 
         session = self.active_sessions[session_id]
@@ -253,32 +263,31 @@ class AudioAgent:
         return response.content
 
     async def _process_realtime(
-        self,
-        request: AudioRequest,
-        session_id: str | None = None
+        self, request: AudioRequest, session_id: str | None = None
     ) -> str:
         """Process real-time audio with low latency."""
         # Use realtime model for immediate responses
-        response = await self.realtime_llm.ainvoke([
-            {"role": "system", "content": "Provide immediate, concise responses for real-time interaction."},
-            {"role": "user", "content": "Real-time audio input processing"}
-        ])
+        response = await self.realtime_llm.ainvoke(
+            [
+                {
+                    "role": "system",
+                    "content": "Provide immediate, concise responses for real-time interaction.",
+                },
+                {"role": "user", "content": "Real-time audio input processing"},
+            ]
+        )
 
         return response.content
 
     async def stream_conversation(
-        self,
-        session_id: str,
-        audio_stream: AsyncGenerator[bytes, None]
+        self, session_id: str, audio_stream: AsyncGenerator[bytes, None]
     ) -> AsyncGenerator[str, None]:
         """Handle streaming audio conversation."""
         try:
             async for audio_chunk in audio_stream:
                 # Process audio chunk in real-time
                 request = AudioRequest(
-                    audio_data=audio_chunk,
-                    task_type="real_time",
-                    real_time=True
+                    audio_data=audio_chunk, task_type="real_time", real_time=True
                 )
 
                 response = await self.process_audio(request, session_id)
@@ -295,7 +304,7 @@ class AudioAgent:
             "config": session_config,
             "start_time": time.time(),
             "messages": [],
-            "status": "active"
+            "status": "active",
         }
 
         logger.info("Started audio session", session_id=session_id)
@@ -319,13 +328,13 @@ class AudioAgent:
             "models": {
                 "audio": self.model,
                 "realtime": self.realtime_model,
-                "tts": self.tts_model
+                "tts": self.tts_model,
             },
             "rate_limits": {
                 "gpt_audio": "250K TPM, 3K RPM",
                 "gpt_realtime": "250K TPM, 3K RPM",
                 "tts_1_hd": "500 RPM",
-                "whisper_1": "500 RPM"
+                "whisper_1": "500 RPM",
             },
             "capabilities": [
                 "real_time_transcription",
@@ -333,9 +342,7 @@ class AudioAgent:
                 "audio_analysis",
                 "conversation_handling",
                 "multi_language_support",
-                "streaming_audio"
+                "streaming_audio",
             ],
-            "formats_supported": [
-                "mp3", "wav", "flac", "m4a", "ogg", "webm"
-            ]
+            "formats_supported": ["mp3", "wav", "flac", "m4a", "ogg", "webm"],
         }

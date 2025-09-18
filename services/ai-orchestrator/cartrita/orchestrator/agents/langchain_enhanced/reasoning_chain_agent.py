@@ -5,17 +5,19 @@ Implements chain-of-thought reasoning using LangChain patterns
 
 import asyncio
 import json
-from typing import Any, Dict, List, Optional
-from enum import Enum
 from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Dict, List, Optional
+
 from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 
 # Optional LangChain + Pydantic imports with safe fallbacks
 try:
     from langchain.chains import LLMChain  # type: ignore
+    from langchain.memory import ConversationBufferWindowMemory  # type: ignore
     from langchain.prompts import PromptTemplate  # type: ignore
     from langchain.schema import BaseOutputParser, OutputParserException  # type: ignore
-    from langchain.memory import ConversationBufferWindowMemory  # type: ignore
+
     LANGCHAIN_AVAILABLE = True
 except Exception:
     LANGCHAIN_AVAILABLE = False
@@ -28,7 +30,13 @@ except Exception:
         pass
 
     class LLMChain:  # type: ignore
-        def __init__(self, llm=None, prompt=None, output_key: str | None = None, output_parser=None):
+        def __init__(
+            self,
+            llm=None,
+            prompt=None,
+            output_key: str | None = None,
+            output_parser=None,
+        ):
             self.llm = llm
             self.prompt = prompt
             self.output_key = output_key
@@ -46,7 +54,12 @@ except Exception:
             self.template = template
 
     class ConversationBufferWindowMemory:  # type: ignore
-        def __init__(self, k: int = 5, memory_key: str = "chat_history", return_messages: bool = True):
+        def __init__(
+            self,
+            k: int = 5,
+            memory_key: str = "chat_history",
+            return_messages: bool = True,
+        ):
             self.k = k
             self.memory_key = memory_key
             self.return_messages = return_messages
@@ -54,6 +67,7 @@ except Exception:
 
         def save_context(self, inputs: dict, outputs: dict):
             self.chat_memory.messages.append({"in": inputs, "out": outputs})
+
 
 try:
     from pydantic import BaseModel, Field  # type: ignore
@@ -69,11 +83,14 @@ except Exception:
 
         def Field(*args, **kwargs):  # type: ignore
             return None
+
+
 import re
 
 
 class TaskComplexity(Enum):
     """Task complexity levels"""
+
     SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
@@ -83,6 +100,7 @@ class TaskComplexity(Enum):
 @dataclass
 class TaskRequirements:
     """Requirements for a specific task"""
+
     complexity: TaskComplexity
     max_cost: float
     max_latency: float  # seconds
@@ -94,27 +112,34 @@ class TaskRequirements:
 
 class ReasoningStep(BaseModel):
     """Individual reasoning step"""
+
     step_number: int = Field(description="Step number in reasoning chain")
     question: str = Field(description="Question or problem to address")
     approach: str = Field(description="Reasoning approach")
     analysis: str = Field(description="Detailed analysis")
     conclusion: str = Field(description="Step conclusion")
     confidence: float = Field(ge=0.0, le=1.0, description="Confidence level")
-    dependencies: List[int] = Field(default_factory=list, description="Dependent step numbers")
+    dependencies: List[int] = Field(
+        default_factory=list, description="Dependent step numbers"
+    )
 
 
 class ReasoningResult(BaseModel):
     """Complete reasoning result"""
+
     query: str = Field(description="Original query")
     reasoning_chain: List[ReasoningStep] = Field(description="Chain of reasoning steps")
     final_answer: str = Field(description="Final synthesized answer")
     confidence_score: float = Field(ge=0.0, le=1.0, description="Overall confidence")
     reasoning_time: float = Field(description="Time taken for reasoning")
-    token_usage: Dict[str, int] = Field(default_factory=dict, description="Token usage stats")
+    token_usage: Dict[str, int] = Field(
+        default_factory=dict, description="Token usage stats"
+    )
 
 
 class ReasoningType(str, Enum):
     """Types of reasoning approaches"""
+
     DEDUCTIVE = "deductive"
     INDUCTIVE = "inductive"
     ABDUCTIVE = "abductive"
@@ -130,26 +155,26 @@ class ReasoningOutputParser(BaseOutputParser[ReasoningStep]):
         """Parse LLM output into ReasoningStep"""
         try:
             # Try to parse as JSON first
-            if text.strip().startswith('{'):
+            if text.strip().startswith("{"):
                 data = json.loads(text)
                 return ReasoningStep(**data)
 
             # Parse structured text format
-            lines = text.strip().split('\n')
+            lines = text.strip().split("\n")
             parsed_data = {
                 "step_number": 1,
                 "question": "",
                 "approach": "",
                 "analysis": "",
                 "conclusion": "",
-                "confidence": 0.8
+                "confidence": 0.8,
             }
 
             current_field = None
             for line in lines:
                 line = line.strip()
                 if line.startswith("Step:"):
-                    parsed_data["step_number"] = int(re.findall(r'\d+', line)[0])
+                    parsed_data["step_number"] = int(re.findall(r"\d+", line)[0])
                 elif line.startswith("Question:"):
                     current_field = "question"
                     parsed_data["question"] = line.replace("Question:", "").strip()
@@ -163,7 +188,7 @@ class ReasoningOutputParser(BaseOutputParser[ReasoningStep]):
                     current_field = "conclusion"
                     parsed_data["conclusion"] = line.replace("Conclusion:", "").strip()
                 elif line.startswith("Confidence:"):
-                    conf_match = re.findall(r'0?\.\d+|[01]\.?\d*', line)
+                    conf_match = re.findall(r"0?\.\d+|[01]\.?\d*", line)
                     if conf_match:
                         parsed_data["confidence"] = float(conf_match[0])
                 elif current_field and line:
@@ -198,13 +223,11 @@ class ReasoningChainAgent:
         confidence_threshold: float = 0.7,
         enable_backtracking: bool = True,
         reasoning_types: Optional[List[ReasoningType]] = None,
-        **kwargs
+        **kwargs,
     ):
         # Initialize LLM
         self.llm = llm or create_chat_openai(
-            model="gpt-4o",
-            temperature=0.2,
-            max_tokens=2048
+            model="gpt-4o", temperature=0.2, max_tokens=2048
         )
 
         # Configuration
@@ -214,14 +237,12 @@ class ReasoningChainAgent:
         self.reasoning_types = reasoning_types or [
             ReasoningType.DEDUCTIVE,
             ReasoningType.INDUCTIVE,
-            ReasoningType.CAUSAL
+            ReasoningType.CAUSAL,
         ]
 
         # Memory for conversation context
         self.memory = ConversationBufferWindowMemory(
-            k=5,
-            memory_key="chat_history",
-            return_messages=True
+            k=5, memory_key="chat_history", return_messages=True
         )
 
         # Initialize reasoning chains
@@ -247,16 +268,21 @@ Provide:
 4. Potential challenges
 5. Success criteria
 
-Analysis:"""
+Analysis:""",
             ),
-            output_key="problem_analysis"
+            output_key="problem_analysis",
         )
 
         # Reasoning step chain
         self.reasoning_step_chain = LLMChain(
             llm=self.llm,
             prompt=PromptTemplate(
-                input_variables=["query", "previous_steps", "step_number", "reasoning_type"],
+                input_variables=[
+                    "query",
+                    "previous_steps",
+                    "step_number",
+                    "reasoning_type",
+                ],
                 template="""Perform reasoning step {step_number} using {reasoning_type} reasoning:
 
 Original Query: {query}
@@ -271,10 +297,10 @@ Analysis: [Detailed step-by-step analysis]
 Conclusion: [What can you conclude from this step?]
 Confidence: [Your confidence level 0.0-1.0]
 
-Step Analysis:"""
+Step Analysis:""",
             ),
             output_key="reasoning_step",
-            output_parser=ReasoningOutputParser()
+            output_parser=ReasoningOutputParser(),
         )
 
         # Synthesis chain
@@ -298,9 +324,9 @@ Provide:
 3. Key Supporting Evidence: [Main evidence from reasoning chain]
 4. Limitations: [Any limitations or uncertainties]
 
-Final Synthesis:"""
+Final Synthesis:""",
             ),
-            output_key="final_synthesis"
+            output_key="final_synthesis",
         )
 
         # Validation chain
@@ -326,9 +352,9 @@ Provide:
 - Issues: [List any logical issues found]
 - Suggestions: [Improvements or corrections]
 
-Validation Result:"""
+Validation Result:""",
             ),
-            output_key="validation_result"
+            output_key="validation_result",
         )
 
     async def reason(
@@ -336,7 +362,7 @@ Validation Result:"""
         query: str,
         context: Optional[str] = None,
         reasoning_type: Optional[ReasoningType] = None,
-        callbacks: Optional[Any] = None
+        callbacks: Optional[Any] = None,
     ) -> ReasoningResult:
         """
         Perform comprehensive reasoning on a query
@@ -351,6 +377,7 @@ Validation Result:"""
             Complete reasoning result with chain of thought
         """
         import time
+
         start_time = time.time()
 
         # Initialize result
@@ -359,12 +386,14 @@ Validation Result:"""
             reasoning_chain=[],
             final_answer="",
             confidence_score=0.0,
-            reasoning_time=0.0
+            reasoning_time=0.0,
         )
 
         try:
             # Step 1: Analyze the problem
-            problem_analysis = await self._analyze_problem(query, context or "", callbacks)
+            problem_analysis = await self._analyze_problem(
+                query, context or "", callbacks
+            )
 
             # Step 2: Determine reasoning approach
             if not reasoning_type:
@@ -398,33 +427,40 @@ Validation Result:"""
     ) -> str:
         """Analyze the problem structure"""
         return await self.problem_analysis_chain.arun(
-            query=query,
-            context=context,
-            callbacks=callbacks
+            query=query, context=context, callbacks=callbacks
         )
 
     def _select_reasoning_type(self, analysis: str) -> ReasoningType:
         """Select appropriate reasoning type based on analysis"""
         analysis_lower = analysis.lower()
 
-        if any(word in analysis_lower for word in ["cause", "effect", "because", "leads to"]):
+        if any(
+            word in analysis_lower
+            for word in ["cause", "effect", "because", "leads to"]
+        ):
             return ReasoningType.CAUSAL
-        elif any(word in analysis_lower for word in ["pattern", "trend", "examples", "observe"]):
+        elif any(
+            word in analysis_lower
+            for word in ["pattern", "trend", "examples", "observe"]
+        ):
             return ReasoningType.INDUCTIVE
-        elif any(word in analysis_lower for word in ["rule", "principle", "logic", "follows"]):
+        elif any(
+            word in analysis_lower for word in ["rule", "principle", "logic", "follows"]
+        ):
             return ReasoningType.DEDUCTIVE
-        elif any(word in analysis_lower for word in ["similar", "like", "compare", "analogy"]):
+        elif any(
+            word in analysis_lower for word in ["similar", "like", "compare", "analogy"]
+        ):
             return ReasoningType.ANALOGICAL
-        elif any(word in analysis_lower for word in ["probable", "likely", "chance", "odds"]):
+        elif any(
+            word in analysis_lower for word in ["probable", "likely", "chance", "odds"]
+        ):
             return ReasoningType.PROBABILISTIC
         else:
             return ReasoningType.ABDUCTIVE  # Best explanation
 
     async def _perform_reasoning_chain(
-        self,
-        query: str,
-        reasoning_type: ReasoningType,
-        callbacks: Optional[Any] = None
+        self, query: str, reasoning_type: ReasoningType, callbacks: Optional[Any] = None
     ) -> List[ReasoningStep]:
         """Perform iterative reasoning steps"""
         reasoning_steps = []
@@ -438,7 +474,7 @@ Validation Result:"""
                     previous_steps=previous_steps_text,
                     step_number=step_num,
                     reasoning_type=reasoning_type.value,
-                    callbacks=callbacks
+                    callbacks=callbacks,
                 )
 
                 # Validate step if enabled
@@ -479,7 +515,7 @@ Validation Result:"""
         query: str,
         step: ReasoningStep,
         context: str,
-        callbacks: Optional[Any] = None
+        callbacks: Optional[Any] = None,
     ) -> bool:
         """Validate a reasoning step"""
         try:
@@ -487,32 +523,31 @@ Validation Result:"""
                 query=query,
                 reasoning_step=step.model_dump_json(),
                 previous_context=context,
-                callbacks=callbacks
+                callbacks=callbacks,
             )
             return "Valid: Yes" in validation or "valid: yes" in validation.lower()
         except Exception:
             return True  # Default to valid if validation fails
 
     async def _retry_reasoning_step(
-        self,
-        query: str,
-        context: str,
-        step_num: int,
-        callbacks: Optional[Any] = None
+        self, query: str, context: str, step_num: int, callbacks: Optional[Any] = None
     ) -> ReasoningStep:
         """Retry reasoning step with alternative approach"""
         # Use a different reasoning type for retry
         alternative_types = [
             t for t in self.reasoning_types if t != ReasoningType.DEDUCTIVE
         ]
-        retry_type = alternative_types[0] if alternative_types else ReasoningType.ABDUCTIVE
+        retry_type = (
+            alternative_types[0] if alternative_types else ReasoningType.ABDUCTIVE
+        )
 
         return await self.reasoning_step_chain.arun(
             query=query,
-            previous_steps=context + "\n[Previous attempt had issues, trying alternative approach]",
+            previous_steps=context
+            + "\n[Previous attempt had issues, trying alternative approach]",
             step_number=step_num,
             reasoning_type=retry_type.value,
-            callbacks=callbacks
+            callbacks=callbacks,
         )
 
     def _should_stop_reasoning(self, steps: List[ReasoningStep]) -> bool:
@@ -522,12 +557,9 @@ Validation Result:"""
 
         # Stop if last step has high confidence and conclusion indicates completion
         last_step = steps[-1]
-        if (
-            last_step.confidence >= 0.9
-            and any(
-                word in last_step.conclusion.lower()
-                for word in ["therefore", "thus", "final", "conclude"]
-            )
+        if last_step.confidence >= 0.9 and any(
+            word in last_step.conclusion.lower()
+            for word in ["therefore", "thus", "final", "conclude"]
         ):
             return True
 
@@ -540,37 +572,35 @@ Validation Result:"""
         return False
 
     async def _synthesize_answer(
-        self,
-        query: str,
-        steps: List[ReasoningStep],
-        callbacks: Optional[Any] = None
+        self, query: str, steps: List[ReasoningStep], callbacks: Optional[Any] = None
     ) -> tuple[str, float]:
         """Synthesize final answer from reasoning steps"""
         if not steps:
             return "No reasoning steps completed", 0.0
 
         # Format reasoning steps
-        steps_text = "\n".join([
-            f"Step {step.step_number}: {step.conclusion}"
-            for step in steps
-        ])
+        steps_text = "\n".join(
+            [f"Step {step.step_number}: {step.conclusion}" for step in steps]
+        )
 
         # Format step conclusions
-        conclusions_text = "\n".join([
-            f"- {step.conclusion} (confidence: {step.confidence:.2f})"
-            for step in steps
-        ])
+        conclusions_text = "\n".join(
+            [
+                f"- {step.conclusion} (confidence: {step.confidence:.2f})"
+                for step in steps
+            ]
+        )
 
         # Generate synthesis
         synthesis = await self.synthesis_chain.arun(
             query=query,
             reasoning_steps=steps_text,
             step_conclusions=conclusions_text,
-            callbacks=callbacks
+            callbacks=callbacks,
         )
 
         # Extract final answer and confidence
-        lines = synthesis.split('\n')
+        lines = synthesis.split("\n")
         final_answer = synthesis
         confidence = sum(step.confidence for step in steps) / len(steps)
 
@@ -580,7 +610,7 @@ Validation Result:"""
                 final_answer = line.replace("Final Answer:", "").strip()
             elif line.startswith("Confidence Score:"):
                 try:
-                    confidence = float(re.findall(r'0?\.\d+|[01]\.?\d*', line)[0])
+                    confidence = float(re.findall(r"0?\.\d+|[01]\.?\d*", line)[0])
                 except (IndexError, ValueError):
                     pass
 
@@ -588,10 +618,7 @@ Validation Result:"""
 
     def _update_memory(self, query: str, result: ReasoningResult):
         """Update conversation memory"""
-        self.memory.save_context(
-            {"input": query},
-            {"output": result.final_answer}
-        )
+        self.memory.save_context({"input": query}, {"output": result.final_answer})
 
     # Synchronous interface
     def reason_sync(self, query: str, **kwargs) -> ReasoningResult:
@@ -605,5 +632,7 @@ Validation Result:"""
             "confidence_threshold": self.confidence_threshold,
             "backtracking_enabled": self.enable_backtracking,
             "supported_reasoning_types": [t.value for t in self.reasoning_types],
-            "memory_length": len(self.memory.chat_memory.messages) if self.memory else 0
+            "memory_length": (
+                len(self.memory.chat_memory.messages) if self.memory else 0
+            ),
         }

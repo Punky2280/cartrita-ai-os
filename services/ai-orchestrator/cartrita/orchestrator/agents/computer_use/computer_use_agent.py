@@ -12,9 +12,9 @@ from typing import Any
 
 import structlog
 from langchain_core.messages import HumanMessage, SystemMessage
-from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from pydantic import BaseModel, Field, field_validator
 
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 
 # Configure logger
 logger = structlog.get_logger(__name__)
@@ -90,10 +90,28 @@ class ComputerUseRequest(BaseModel):
         if isinstance(v, str):
             s = v.strip().lower()
             # Treat strict/moderate/on/true/yes/1/enabled as True
-            if s in {"true", "1", "yes", "on", "strict", "moderate", "enabled", "enable"}:
+            if s in {
+                "true",
+                "1",
+                "yes",
+                "on",
+                "strict",
+                "moderate",
+                "enabled",
+                "enable",
+            }:
                 return True
             # Treat relaxed/permissive/off/false/no/0/disabled as False
-            if s in {"false", "0", "no", "off", "relaxed", "permissive", "disabled", "disable"}:
+            if s in {
+                "false",
+                "0",
+                "no",
+                "off",
+                "relaxed",
+                "permissive",
+                "disabled",
+                "disable",
+            }:
                 return False
         raise ValueError(
             "safety_mode must be a boolean or one of: 'strict','relaxed','on','off','true','false'"
@@ -146,6 +164,7 @@ class ComputerUseAgent:
     ):
         # Get settings with proper initialization
         from cartrita.orchestrator.utils.config import get_settings
+
         _settings = get_settings()
 
         self.model = model or _settings.ai.computer_use_model
@@ -293,7 +312,9 @@ class ComputerUseAgent:
             },
         }
 
-    def _log_completion_info(self, result: ComputerUseResponse, start_time: float) -> None:
+    def _log_completion_info(
+        self, result: ComputerUseResponse, start_time: float
+    ) -> None:
         """Log information about completed computer task."""
         operations_count = len(result.file_results) + len(result.command_results)
         execution_time = time.time() - start_time
@@ -306,7 +327,11 @@ class ComputerUseAgent:
         )
 
     def _build_error_response(
-        self, error: Exception, start_time: float, metadata: dict[str, Any], local_vars: dict[str, Any]
+        self,
+        error: Exception,
+        start_time: float,
+        metadata: dict[str, Any],
+        local_vars: dict[str, Any],
     ) -> dict[str, Any]:
         """Build error response when computer task execution fails."""
         execution_time = time.time() - start_time
@@ -356,8 +381,12 @@ class ComputerUseAgent:
         )
 
         return self._build_computer_response(
-            result_summary, screenshot, file_results, command_results,
-            safety_warnings, request
+            result_summary,
+            screenshot,
+            file_results,
+            command_results,
+            safety_warnings,
+            request,
         )
 
     def _perform_initial_safety_check(self, request: ComputerUseRequest) -> list[str]:
@@ -366,7 +395,9 @@ class ComputerUseAgent:
             return self._check_safety(request)
         return []
 
-    async def _capture_screenshot_if_needed(self, request: ComputerUseRequest) -> str | None:
+    async def _capture_screenshot_if_needed(
+        self, request: ComputerUseRequest
+    ) -> str | None:
         """Capture screenshot if requested."""
         if request.screenshot_needed:
             return await self._take_screenshot()
@@ -386,7 +417,10 @@ class ComputerUseAgent:
         return file_results
 
     def _should_block_file_operation(
-        self, request: ComputerUseRequest, operation: FileOperation, safety_warnings: list[str]
+        self,
+        request: ComputerUseRequest,
+        operation: FileOperation,
+        safety_warnings: list[str],
     ) -> bool:
         """Check if file operation should be blocked for safety."""
         if request.safety_mode and not self._is_safe_file_operation(operation):
@@ -410,7 +444,10 @@ class ComputerUseAgent:
         return command_results
 
     def _should_block_system_command(
-        self, request: ComputerUseRequest, command: SystemCommand, safety_warnings: list[str]
+        self,
+        request: ComputerUseRequest,
+        command: SystemCommand,
+        safety_warnings: list[str],
     ) -> bool:
         """Check if system command should be blocked for safety."""
         if request.safety_mode and not self._is_safe_command(command):
@@ -419,9 +456,13 @@ class ComputerUseAgent:
         return False
 
     def _build_computer_response(
-        self, result_summary: str, screenshot: str | None,
-        file_results: list[dict[str, Any]], command_results: list[dict[str, Any]],
-        safety_warnings: list[str], request: ComputerUseRequest
+        self,
+        result_summary: str,
+        screenshot: str | None,
+        file_results: list[dict[str, Any]],
+        command_results: list[dict[str, Any]],
+        safety_warnings: list[str],
+        request: ComputerUseRequest,
     ) -> ComputerUseResponse:
         """Build the computer use response object."""
         return ComputerUseResponse(
@@ -616,7 +657,16 @@ Provide a clear, concise summary of what was accomplished and any important note
         s = str(value).strip().lower()
         if s in {"true", "1", "yes", "on", "strict", "moderate", "enabled", "enable"}:
             return True
-        if s in {"false", "0", "no", "off", "relaxed", "permissive", "disabled", "disable"}:
+        if s in {
+            "false",
+            "0",
+            "no",
+            "off",
+            "relaxed",
+            "permissive",
+            "disabled",
+            "disable",
+        }:
             return False
         # Default to safest behavior
         return True

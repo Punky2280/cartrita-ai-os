@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Cartrita AI OS v2 Global Styles */
+@layer base {
+  :root {
+    /* Legacy shadcn/ui CSS variables for compatibility */
+    --background: 220 10% 9%;
+    --foreground: 210 40% 98%;
+    --card: 220 10% 9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 220 10% 9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 84% 5%;
+    --secondary: 217 19% 27%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 215 27% 17%;
+    --muted-foreground: 217 10% 65%;
+    --accent: 215 27% 17%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 215 27% 17%;
+    --input: 215 27% 17%;
+    --ring: 217 91% 60%;
+    --radius: 0.75rem;
+
+    /* Cartrita v2 Design System Variables */
+    --focus-ring: 0 0 0 2px rgba(110, 129, 255, 0.5);
+  }
+
+  /* Base Styles */
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    @apply bg-gray-900 text-gray-100 font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-800 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-600 rounded-full hover:bg-gray-500;
+  }
+
+  /* Focus States */
+  :focus-visible {
+    outline: 2px solid #6e81ff;
+    outline-offset: 2px;
+    border-radius: 0.125rem;
+  }
+}
+
+@layer components {
+  /* Typography Hierarchy */
+  .text-hero {
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 0.95;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    @apply bg-gradient-to-r from-copilot-blue via-copilot-pink to-anthropic-orange bg-clip-text text-transparent;
+  }
+
+  .text-heading-1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    @apply text-gray-100;
+  }
+
+  .text-body-large {
+    @apply text-lg text-gray-200 leading-relaxed;
+  }
+
+  .text-body {
+    @apply text-base text-gray-300 leading-normal;
+  }
+
+  .text-caption {
+    @apply text-xs text-gray-500 leading-tight uppercase tracking-wide;
+  }
+
+  /* Button Base Styles */
+  .btn-base {
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copilot-blue focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn-base bg-gradient-to-r from-copilot-blue to-copilot-pink text-white hover:from-blue-600 hover:to-pink-600 active:scale-95 shadow-lg;
+  }
+
+  .btn-secondary {
+    @apply btn-base bg-gray-800 text-gray-200 hover:bg-gray-700 border border-gray-700 hover:border-gray-600;
+  }
+
+  .btn-ghost {
+    @apply btn-base text-gray-300 hover:bg-gray-800 hover:text-gray-100;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply bg-gray-800/50 border border-gray-700 rounded-lg backdrop-blur-sm;
+  }
+
+  /* Input Styles */
+  .input-base {
+    @apply flex h-10 w-full rounded-lg border border-gray-700 bg-gray-800/50 px-3 py-2 text-sm text-gray-200 placeholder:text-gray-500 focus:border-copilot-blue focus:ring-2 focus:ring-copilot-blue/20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 transition-colors backdrop-blur-sm;
+  }
+
+  /* Message Bubble Styles */
+  .bubble-user {
+    @apply bg-gradient-to-r from-copilot-blue to-copilot-pink text-white;
+  }
+
+  .bubble-assistant {
+    @apply bg-gray-800 text-gray-100 border border-gray-700;
+  }
+
+  .bubble-system {
+    @apply bg-gray-700 text-gray-300 border border-gray-600;
+  }
+
+  .bubble-agent {
+    @apply bg-gradient-to-r from-anthropic-orange to-yellow-600 text-white;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Custom focus ring */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copilot-blue focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900;
+  }
+}

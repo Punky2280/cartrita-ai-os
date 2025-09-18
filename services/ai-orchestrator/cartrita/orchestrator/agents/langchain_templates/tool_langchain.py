@@ -3,15 +3,24 @@ LangChain Tool Template for Cartrita
 Standard tool implementation following LangChain patterns
 """
 
-from typing import Any, Optional, Type, Dict, Callable
+from typing import Any, Callable, Dict, Optional, Type
+
+from langchain_core.callbacks import (
+    AsyncCallbackManagerForToolRun,
+    CallbackManagerForToolRun,
+)
 from langchain_core.tools import BaseTool
-from langchain_core.callbacks import CallbackManagerForToolRun, AsyncCallbackManagerForToolRun
 from pydantic import BaseModel, Field
+
 
 class CartritaToolInput(BaseModel):
     """Input schema for Cartrita tools"""
+
     query: str = Field(..., description="Input query or command")
-    parameters: Optional[Dict[str, Any]] = Field(default=None, description="Additional parameters")
+    parameters: Optional[Dict[str, Any]] = Field(
+        default=None, description="Additional parameters"
+    )
+
 
 class CartritaBaseTool(BaseTool):
     """Base tool class for Cartrita following LangChain patterns"""
@@ -25,7 +34,7 @@ class CartritaBaseTool(BaseTool):
         self,
         query: str,
         run_manager: Optional[CallbackManagerForToolRun] = None,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> str:
         """
         Execute the tool synchronously
@@ -62,7 +71,7 @@ class CartritaBaseTool(BaseTool):
         self,
         query: str,
         run_manager: Optional[AsyncCallbackManagerForToolRun] = None,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> str:
         """
         Execute the tool asynchronously
@@ -77,7 +86,9 @@ class CartritaBaseTool(BaseTool):
         """
         try:
             if run_manager:
-                await run_manager.on_text(f"Executing {self.name} with query: {query}\n")
+                await run_manager.on_text(
+                    f"Executing {self.name} with query: {query}\n"
+                )
 
             result = await self._aexecute(query, **kwargs)
 
@@ -108,9 +119,10 @@ class CartritaBaseTool(BaseTool):
         name: str,
         description: str,
         args_schema: Optional[Type[BaseModel]] = None,
-        return_direct: bool = False
+        return_direct: bool = False,
     ) -> "CartritaBaseTool":
         """Create tool from a function"""
+
         class FunctionTool(cls):
             def _execute(self, query: str, **kwargs: Any) -> str:
                 return str(func(query, **kwargs))
@@ -119,5 +131,5 @@ class CartritaBaseTool(BaseTool):
             name=name,
             description=description,
             args_schema=args_schema or CartritaToolInput,
-            return_direct=return_direct
+            return_direct=return_direct,
         )

@@ -22,7 +22,8 @@ from cartrita.orchestrator.models.schemas import (
     MessageContent,
     MessageRole,
 )
-from cartrita.orchestrator.utils.config import settings as global_settings, get_settings
+from cartrita.orchestrator.utils.config import get_settings
+from cartrita.orchestrator.utils.config import settings as global_settings
 
 try:
     # Prefer LangChain helper when present to ensure correct OpenAI tool schema
@@ -65,7 +66,7 @@ class OpenAIService:
         messages: List[ChatCompletionMessageParam],
         stream: bool = False,
         tools: Optional[List[Dict[str, Any]]] = None,
-        **kwargs
+        **kwargs,
     ) -> AsyncGenerator[Dict[str, Any], None]:
         """
         Generate chat completion with optional streaming and tool support.
@@ -90,7 +91,7 @@ class OpenAIService:
                 "frequency_penalty": self.frequency_penalty,
                 "presence_penalty": self.presence_penalty,
                 "stream": stream,
-                **kwargs
+                **kwargs,
             }
 
             if tools:
@@ -102,17 +103,19 @@ class OpenAIService:
                 model=self.model,
                 message_count=len(messages),
                 stream=stream,
-                has_tools=bool(tools)
+                has_tools=bool(tools),
             )
 
             if stream:
                 # Handle streaming response
-                async for chunk in await self.client.chat.completions.create(**request_params):
+                async for chunk in await self.client.chat.completions.create(
+                    **request_params
+                ):
                     if chunk.choices and chunk.choices[0].delta:
                         delta = chunk.choices[0].delta
 
                         # Handle tool calls in streaming
-                        if hasattr(delta, 'tool_calls') and delta.tool_calls:
+                        if hasattr(delta, "tool_calls") and delta.tool_calls:
                             for tool_call in delta.tool_calls:
                                 yield {
                                     "type": "tool_call",
@@ -120,23 +123,20 @@ class OpenAIService:
                                         "id": tool_call.id,
                                         "function": {
                                             "name": tool_call.function.name,
-                                            "arguments": tool_call.function.arguments
-                                        }
-                                    }
+                                            "arguments": tool_call.function.arguments,
+                                        },
+                                    },
                                 }
 
                         # Handle content
-                        if hasattr(delta, 'content') and delta.content:
-                            yield {
-                                "type": "content",
-                                "content": delta.content
-                            }
+                        if hasattr(delta, "content") and delta.content:
+                            yield {"type": "content", "content": delta.content}
 
                     # Check if this is the final chunk
                     if chunk.choices and chunk.choices[0].finish_reason:
                         yield {
                             "type": "done",
-                            "finish_reason": chunk.choices[0].finish_reason
+                            "finish_reason": chunk.choices[0].finish_reason,
                         }
                         break
             else:
@@ -147,7 +147,7 @@ class OpenAIService:
                     message = response.choices[0].message
 
                     # Handle tool calls
-                    if hasattr(message, 'tool_calls') and message.tool_calls:
+                    if hasattr(message, "tool_calls") and message.tool_calls:
                         for tool_call in message.tool_calls:
                             yield {
                                 "type": "tool_call",
@@ -155,30 +155,25 @@ class OpenAIService:
                                     "id": tool_call.id,
                                     "function": {
                                         "name": tool_call.function.name,
-                                        "arguments": tool_call.function.arguments
-                                    }
-                                }
+                                        "arguments": tool_call.function.arguments,
+                                    },
+                                },
                             }
 
                     # Handle content
-                    if hasattr(message, 'content') and message.content:
-                        yield {
-                            "type": "content",
-                            "content": message.content
-                        }
+                    if hasattr(message, "content") and message.content:
+                        yield {"type": "content", "content": message.content}
 
                 yield {
                     "type": "done",
-                    "finish_reason": response.choices[0].finish_reason if response.choices else None
+                    "finish_reason": (
+                        response.choices[0].finish_reason if response.choices else None
+                    ),
                 }
 
         except Exception as e:
             logger.error("OpenAI API error", error=str(e), error_type=type(e).__name__)
-            yield {
-                "type": "error",
-                "error": str(e),
-                "error_type": type(e).__name__
-            }
+            yield {"type": "error", "error": str(e), "error_type": type(e).__name__}
 
     async def process_chat_request(self, request: ChatRequest) -> ChatResponse:
         """
@@ -199,16 +194,13 @@ class OpenAIService:
             if not openai_messages or openai_messages[0].get("role") != "system":
                 system_message = {
                     "role": "system",
-                    "content": "You are Cartrita, an advanced AI assistant with access to various tools and capabilities. Be helpful, accurate, and efficient in your responses."
+                    "content": "You are Cartrita, an advanced AI assistant with access to various tools and capabilities. Be helpful, accurate, and efficient in your responses.",
                 }
                 openai_messages.insert(0, system_message)
 
             # Add user message
             if request.message:
-                user_message = {
-                    "role": "user",
-                    "content": request.message
-                }
+                user_message = {"role": "user", "content": request.message}
                 openai_messages.append(user_message)
 
             # Prepare tools if requested
@@ -220,7 +212,7 @@ class OpenAIService:
                 "Processing chat request",
                 conversation_id=request.conversation_id,
                 message_count=len(openai_messages),
-                has_tools=bool(tools)
+                has_tools=bool(tools),
             )
 
             # Collect response
@@ -233,7 +225,7 @@ class OpenAIService:
                 stream=request.stream,
                 tools=tools,
                 temperature=request.temperature or self.temperature,
-                max_tokens=request.max_tokens or self.max_tokens
+                max_tokens=request.max_tokens or self.max_tokens,
             ):
                 if chunk["type"] == "content":
                     response_content += chunk["content"]
@@ -247,10 +239,9 @@ class OpenAIService:
             # Create response messages
             response_messages = []
             if response_content:
-                response_messages.append(Message(
-                    role=MessageRole.ASSISTANT,
-                    content=response_content
-                ))
+                response_messages.append(
+                    Message(role=MessageRole.ASSISTANT, content=response_content)
+                )
 
             # Handle tool calls
             if tool_calls:
@@ -271,10 +262,14 @@ class OpenAIService:
 
             # Ensure conversation_id and agent_type conform to schema
             resolved_conversation_id: UUID = (
-                request.conversation_id if request.conversation_id is not None else uuid4()
+                request.conversation_id
+                if request.conversation_id is not None
+                else uuid4()
             )
             resolved_agent_type: AgentType = (
-                request.agent_override if isinstance(request.agent_override, AgentType) else AgentType.SUPERVISOR
+                request.agent_override
+                if isinstance(request.agent_override, AgentType)
+                else AgentType.SUPERVISOR
             )
 
             return ChatResponse(
@@ -286,11 +281,11 @@ class OpenAIService:
                 task_result=None,
                 metadata={
                     "model": self.model,
-                    "tool_calls": tool_calls if tool_calls else None
+                    "tool_calls": tool_calls if tool_calls else None,
                 },
                 processing_time=processing_time,
                 # Token usage extraction can be added when upstream surfaces usage consistently.
-                token_usage=None
+                token_usage=None,
             )
 
         except Exception as e:
@@ -374,10 +369,12 @@ class OpenAIService:
                 if convert_to_openai_tool:
                     tools.append(convert_to_openai_tool(schema, strict=True))
                 else:
-                    tools.append({
-                        "type": "function",
-                        "function": schema,
-                    })
+                    tools.append(
+                        {
+                            "type": "function",
+                            "function": schema,
+                        }
+                    )
             elif tool_name == "file_op":
                 schema = {
                     "name": "file_op",
@@ -385,9 +382,18 @@ class OpenAIService:
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "operation": {"type": "string", "enum": ["read", "write", "list"]},
-                            "path": {"type": "string", "description": "Relative path in sandbox"},
-                            "content": {"type": ["string", "null"], "description": "UTF-8 content for write"}
+                            "operation": {
+                                "type": "string",
+                                "enum": ["read", "write", "list"],
+                            },
+                            "path": {
+                                "type": "string",
+                                "description": "Relative path in sandbox",
+                            },
+                            "content": {
+                                "type": ["string", "null"],
+                                "description": "UTF-8 content for write",
+                            },
                         },
                         "required": ["operation", "path"],
                     },
@@ -404,7 +410,12 @@ class OpenAIService:
                         "type": "object",
                         "properties": {
                             "query": {"type": "string"},
-                            "max_results": {"type": "integer", "minimum": 1, "maximum": 20, "default": 5}
+                            "max_results": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 20,
+                                "default": 5,
+                            },
                         },
                         "required": ["query"],
                     },
@@ -422,7 +433,9 @@ class OpenAIService:
         try:
             # Simple health check by making a minimal request
             messages = [{"role": "user", "content": "Hello"}]
-            async for chunk in self.chat_completion(messages, stream=False, max_tokens=1):
+            async for chunk in self.chat_completion(
+                messages, stream=False, max_tokens=1
+            ):
                 if chunk["type"] == "error":
                     return {"status": "unhealthy", "error": chunk["error"]}
                 break
@@ -430,7 +443,7 @@ class OpenAIService:
             return {
                 "status": "healthy",
                 "model": self.model,
-                "temperature": self.temperature
+                "temperature": self.temperature,
             }
         except Exception as e:
             return {"status": "unhealthy", "error": str(e)}
@@ -441,7 +454,7 @@ class OpenAIService:
         user_message: str,
         conversation_history: Optional[List[Dict[str, Any]]] = None,
         voice_mode: bool = False,
-        **kwargs
+        **kwargs,
     ) -> AsyncGenerator[Dict[str, Any], None]:
         """
         Handle conversational chat with context management.
@@ -466,14 +479,12 @@ class OpenAIService:
                 "Processing conversational request",
                 conversation_id=conversation_id,
                 message_count=len(messages),
-                voice_mode=voice_mode
+                voice_mode=voice_mode,
             )
 
             # Generate response with conversation context
             async for chunk in self.chat_completion(
-                messages=messages,
-                stream=True,
-                **kwargs
+                messages=messages, stream=True, **kwargs
             ):
                 yield chunk
 
@@ -481,19 +492,15 @@ class OpenAIService:
             logger.error(
                 "Conversational chat failed",
                 conversation_id=conversation_id,
-                error=str(e)
+                error=str(e),
             )
-            yield {
-                "type": "error",
-                "error": str(e),
-                "conversation_id": conversation_id
-            }
+            yield {"type": "error", "error": str(e), "conversation_id": conversation_id}
 
     def _prepare_conversation_messages(
         self,
         user_message: str,
         conversation_history: Optional[List[Dict[str, Any]]] = None,
-        voice_mode: bool = False
+        voice_mode: bool = False,
     ) -> List[Dict[str, Any]]:
         """
         Prepare messages for conversational context.
@@ -510,10 +517,7 @@ class OpenAIService:
 
         # Add system message for conversational AI
         system_content = self._get_conversation_system_prompt(voice_mode)
-        messages.append({
-            "role": "system",
-            "content": system_content
-        })
+        messages.append({"role": "system", "content": system_content})
 
         # Add conversation history (limit to prevent context overflow)
         if conversation_history:
@@ -526,10 +530,7 @@ class OpenAIService:
         if voice_mode:
             user_content = f"[Voice Input] {user_message}"
 
-        messages.append({
-            "role": "user",
-            "content": user_content
-        })
+        messages.append({"role": "user", "content": user_content})
 
         return messages
 
@@ -552,7 +553,7 @@ Since this is a voice conversation:
     def _prune_conversation_history(
         self,
         history: List[Dict[str, Any]],
-        max_tokens: int = 100000  # Leave room for response
+        max_tokens: int = 100000,  # Leave room for response
     ) -> List[Dict[str, Any]]:
         """
         Prune conversation history to fit within context limits.
@@ -575,7 +576,7 @@ Since this is a voice conversation:
         self,
         conversation_id: str,
         transcribed_text: str,
-        conversation_history: Optional[List[Dict[str, Any]]] = None
+        conversation_history: Optional[List[Dict[str, Any]]] = None,
     ) -> AsyncGenerator[Dict[str, Any], None]:
         """
         Process voice-based conversation with Deepgram integration.
@@ -596,7 +597,7 @@ Since this is a voice conversation:
                 conversation_history=conversation_history,
                 voice_mode=True,
                 temperature=0.7,  # Slightly creative for natural conversation
-                max_tokens=150    # Shorter responses for voice
+                max_tokens=150,  # Shorter responses for voice
             ):
                 yield chunk
 
@@ -604,10 +605,10 @@ Since this is a voice conversation:
             logger.error(
                 "Voice conversation processing failed",
                 conversation_id=conversation_id,
-                error=str(e)
+                error=str(e),
             )
             yield {
                 "type": "error",
                 "error": f"Voice conversation failed: {str(e)}",
-                "conversation_id": conversation_id
+                "conversation_id": conversation_id,
             }

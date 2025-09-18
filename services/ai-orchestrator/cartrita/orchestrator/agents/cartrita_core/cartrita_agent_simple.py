@@ -2,6 +2,7 @@
 Simple CartritaAgent for backward compatibility
 """
 
+
 class CartritaAgent:
     """Simple Cartrita agent for backward compatibility"""
 

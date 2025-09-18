@@ -7,12 +7,38 @@ def safe_eval_expression(code: str, allowed_names: Dict[str, Any]) -> Any:
 
     class SafeVisitor(ast.NodeVisitor):
         allowed = (
-            ast.Expression, ast.Constant, ast.Num, ast.Str, ast.Bytes,
-            ast.BinOp, ast.UnaryOp, ast.BoolOp, ast.Compare,
-            ast.Add, ast.Sub, ast.Mult, ast.Div, ast.Mod, ast.Pow,
-            ast.BitXor, ast.USub, ast.UAdd, ast.And, ast.Or,
-            ast.Eq, ast.NotEq, ast.Lt, ast.LtE, ast.Gt, ast.GtE,
-            ast.Call, ast.Load, ast.Name, ast.Tuple, ast.List, ast.Dict,
+            ast.Expression,
+            ast.Constant,
+            ast.Num,
+            ast.Str,
+            ast.Bytes,
+            ast.BinOp,
+            ast.UnaryOp,
+            ast.BoolOp,
+            ast.Compare,
+            ast.Add,
+            ast.Sub,
+            ast.Mult,
+            ast.Div,
+            ast.Mod,
+            ast.Pow,
+            ast.BitXor,
+            ast.USub,
+            ast.UAdd,
+            ast.And,
+            ast.Or,
+            ast.Eq,
+            ast.NotEq,
+            ast.Lt,
+            ast.LtE,
+            ast.Gt,
+            ast.GtE,
+            ast.Call,
+            ast.Load,
+            ast.Name,
+            ast.Tuple,
+            ast.List,
+            ast.Dict,
         )
 
         def visit(self, node):
@@ -57,7 +83,7 @@ def safe_eval_expression(code: str, allowed_names: Dict[str, Any]) -> Any:
         elif isinstance(op, ast.Mod):
             return a % b
         elif isinstance(op, ast.Pow):
-            return a ** b
+            return a**b
         elif isinstance(op, ast.BitXor):
             return a ^ b
         raise ValueError("Unsupported binary operator")

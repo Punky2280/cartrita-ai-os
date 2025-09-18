@@ -11,9 +11,9 @@ from typing import Any
 
 import structlog
 from langchain_core.messages import HumanMessage, SystemMessage
-from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from pydantic import BaseModel, Field
 
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 
 # Configure logger
 logger = structlog.get_logger(__name__)

@@ -1,0 +1,165 @@
+name: Container Security Scan
+
+on:
+  workflow_call:
+    outputs:
+      scan-result:
+        description: "Container scan completion status"
+        value: ${{ jobs.container-scan.outputs.status }}
+      findings-count:
+        description: "Number of container security findings"
+        value: ${{ jobs.container-scan.outputs.findings }}
+
+jobs:
+  container-scan:
+    name: Container Security Analysis
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.scan-complete.outputs.status }}
+      findings: ${{ steps.count-findings.outputs.count }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install wget apt-transport-https gnupg lsb-release
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install trivy
+
+      - name: Create reports directory
+        run: mkdir -p container-reports
+
+      - name: Scan filesystem for vulnerabilities
+        run: |
+          # Scan the entire filesystem for vulnerabilities
+          trivy fs --format json --output container-reports/filesystem-scan.json . || true
+          trivy fs --format table --output container-reports/filesystem-scan.txt . || true
+
+      - name: Scan for secrets in filesystem
+        run: |
+          # Scan for hardcoded secrets and sensitive information
+          trivy fs --scanners secret --format json --output container-reports/secrets-scan.json . || true
+          trivy fs --scanners secret --format table --output container-reports/secrets-scan.txt . || true
+
+      - name: Scan for misconfigurations
+        run: |
+          # Scan for configuration issues
+          trivy fs --scanners config --format json --output container-reports/config-scan.json . || true
+          trivy fs --scanners config --format table --output container-reports/config-scan.txt . || true
+
+      - name: Docker image security scan (if Dockerfiles exist)
+        run: |
+          # Look for Dockerfiles and scan any built images
+          if find . -name "Dockerfile*" -type f | head -1 > /dev/null 2>&1; then
+            echo "Found Dockerfiles - scanning container security"
+
+            # Build a test image for scanning
+            if [[ -f Dockerfile ]]; then
+              docker build -t cartrita-test-image .
+              trivy image --format json --output container-reports/docker-image-scan.json cartrita-test-image || true
+              trivy image --format table --output container-reports/docker-image-scan.txt cartrita-test-image || true
+            fi
+
+            # Scan Python base images commonly used
+            trivy image --format json --output container-reports/python-base-scan.json python:3.11-slim || true
+            trivy image --format json --output container-reports/node-base-scan.json node:18-alpine || true
+          else
+            echo "No Dockerfiles found - creating placeholder reports"
+            echo '{"Results": []}' > container-reports/docker-image-scan.json
+            echo "No Docker images to scan" > container-reports/docker-image-scan.txt
+          fi
+
+      - name: Container best practices check
+        run: |
+          # Check for container security best practices
+          cat > container-reports/best-practices.md << 'EOF'
+          # Container Security Best Practices Check
+
+          ## Dockerfile Security Analysis
+          - [ ] Non-root user configuration
+          - [ ] Minimal base image usage
+          - [ ] Multi-stage builds
+          - [ ] Proper secret management
+          - [ ] Network security configuration
+          - [ ] Resource limits
+          - [ ] Health checks implementation
+
+          ## Runtime Security
+          - [ ] Container registry scanning
+          - [ ] Image signing verification
+          - [ ] Runtime monitoring
+          - [ ] Network policies
+          - [ ] Security contexts
+          EOF
+
+          # Check for common security issues in code
+          echo "## Code Security Issues" >> container-reports/best-practices.md
+          echo "- Hardcoded credentials: $(grep -r "password\|secret\|key" --include="*.py" --include="*.js" --include="*.ts" . | wc -l || echo 0) potential instances" >> container-reports/best-practices.md
+          echo "- Insecure HTTP usage: $(grep -r "http://" --include="*.py" --include="*.js" --include="*.ts" . | wc -l || echo 0) instances" >> container-reports/best-practices.md
+
+      - name: Count security findings
+        id: count-findings
+        run: |
+          FS_COUNT=0
+          SECRET_COUNT=0
+          CONFIG_COUNT=0
+          IMAGE_COUNT=0
+
+          # Count filesystem vulnerabilities
+          if [[ -f container-reports/filesystem-scan.json ]]; then
+            FS_COUNT=$(jq '[.Results[]?.Vulnerabilities[]?] | length' container-reports/filesystem-scan.json 2>/dev/null || echo 0)
+          fi
+
+          # Count secrets
+          if [[ -f container-reports/secrets-scan.json ]]; then
+            SECRET_COUNT=$(jq '[.Results[]?.Secrets[]?] | length' container-reports/secrets-scan.json 2>/dev/null || echo 0)
+          fi
+
+          # Count misconfigurations
+          if [[ -f container-reports/config-scan.json ]]; then
+            CONFIG_COUNT=$(jq '[.Results[]?.Misconfigurations[]?] | length' container-reports/config-scan.json 2>/dev/null || echo 0)
+          fi
+
+          # Count Docker image vulnerabilities
+          if [[ -f container-reports/docker-image-scan.json ]]; then
+            IMAGE_COUNT=$(jq '[.Results[]?.Vulnerabilities[]?] | length' container-reports/docker-image-scan.json 2>/dev/null || echo 0)
+          fi
+
+          TOTAL=$((FS_COUNT + SECRET_COUNT + CONFIG_COUNT + IMAGE_COUNT))
+          echo "count=$TOTAL" >> $GITHUB_OUTPUT
+          echo "Found $TOTAL container security issues (FS: $FS_COUNT, Secrets: $SECRET_COUNT, Config: $CONFIG_COUNT, Images: $IMAGE_COUNT)"
+
+      - name: Generate container security summary
+        run: |
+          echo "# Container Security Scan Results" > container-reports/summary.md
+          echo "" >> container-reports/summary.md
+          echo "## Scan Results Overview" >> container-reports/summary.md
+          echo "- Filesystem vulnerabilities: $(jq '[.Results[]?.Vulnerabilities[]?] | length' container-reports/filesystem-scan.json 2>/dev/null || echo 0)" >> container-reports/summary.md
+          echo "- Hardcoded secrets: $(jq '[.Results[]?.Secrets[]?] | length' container-reports/secrets-scan.json 2>/dev/null || echo 0)" >> container-reports/summary.md
+          echo "- Configuration issues: $(jq '[.Results[]?.Misconfigurations[]?] | length' container-reports/config-scan.json 2>/dev/null || echo 0)" >> container-reports/summary.md
+          echo "- Container image vulnerabilities: $(jq '[.Results[]?.Vulnerabilities[]?] | length' container-reports/docker-image-scan.json 2>/dev/null || echo 0)" >> container-reports/summary.md
+
+      - name: Mark scan complete
+        id: scan-complete
+        run: |
+          echo "status=completed" >> $GITHUB_OUTPUT
+
+      - name: Upload container reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: container-security-reports
+          path: container-reports/
+          retention-days: 30
+
+      - name: Create step summary
+        run: |
+          echo "## 🐳 Container Security Scan Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          cat container-reports/summary.md >> $GITHUB_STEP_SUMMARY

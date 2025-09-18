@@ -1,74 +1,78 @@
 {
-    "compilerOptions": {
-        "target": "es2017",
-        "lib": [
-            "dom",
-            "dom.iterable",
-            "es2017"
-        ],
-        "types": [
-            "vitest/globals",
-            "node"
-        ],
-        "allowJs": true,
-        "skipLibCheck": true,
-        "strict": false,
-        "noEmit": true,
-        "esModuleInterop": true,
-        "module": "esnext",
-        "moduleResolution": "bundler",
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "jsx": "preserve",
-        "incremental": true,
-        "plugins": [
-            {
-                "name": "next"
-            }
-        ],
-        "baseUrl": ".",
-        "paths": {
-            "@/*": [
-                "./src/*"
-            ],
-            "@/components/*": [
-                "./src/components/*"
-            ],
-            "@/pages/*": [
-                "./src/pages/*"
-            ],
-            "@/hooks/*": [
-                "./src/hooks/*"
-            ],
-            "@/utils/*": [
-                "./src/utils/*"
-            ],
-            "@/types/*": [
-                "./src/types/*"
-            ],
-            "@/services/*": [
-                "./src/services/*"
-            ],
-            "@/contexts/*": [
-                "./src/contexts/*"
-            ],
-            "@/styles/*": [
-                "./src/styles/*"
-            ]
-        },
-        "typeRoots": [
-            "./node_modules",
-            "./node_modules/@types",
-            "./src/types"
-        ]
-    },
-    "include": [
-        "next-env.d.ts",
-        "**/*.ts",
-        "**/*.tsx",
-        ".next/types/**/*.ts"
+  "compilerOptions": {
+    "target": "es2017",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es2017"
     ],
-    "exclude": [
-        "node_modules"
-    ]
+    "types": [
+      "vitest/globals",
+      "node"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@/components/*": [
+        "./src/components/*"
+      ],
+      "@/pages/*": [
+        "./src/pages/*"
+      ],
+      "@/lib/*": [
+        "./src/lib/*"
+      ],
+      "@/hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@/utils/*": [
+        "./src/utils/*"
+      ],
+      "@/types/*": [
+        "./src/types/*"
+      ],
+      "@/services/*": [
+        "./src/services/*"
+      ],
+      "@/contexts/*": [
+        "./src/contexts/*"
+      ],
+      "@/styles/*": [
+        "./src/styles/*"
+      ]
+    },
+    "typeRoots": [
+      "./node_modules",
+      "./node_modules/@types",
+      "./src/types"
+    ],
+    "strictNullChecks": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -211,7 +211,7 @@ Raise sequence: add targeted tests → validate stable > threshold + buffer (≥
 
 ### Runtime Policy
 
-All services target Python `>=3.13,<3.14`. Local development should use the pinned patch in `.python-version`. CI and Docker images are aligned to `python:3.13-slim` for determinism. Earlier versions (3.11/3.12) are no longer tested.
+All services target Python `>=3.13.3,<3.14`. Local development should use the pinned patch in `.python-version`. CI and Docker images are aligned to `python:3.13.3-slim` for determinism. Earlier versions (3.11/3.12) are no longer tested.
 
 ### Test Categories
 

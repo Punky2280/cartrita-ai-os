@@ -20,9 +20,9 @@ except ImportError as e:
     _import_error = e  # store for later
     HumanMessage = None  # type: ignore
     SystemMessage = None  # type: ignore
-from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from pydantic import BaseModel, Field
 
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 
 # Configure logger
 logger = structlog.get_logger(__name__)
@@ -31,7 +31,7 @@ logger = structlog.get_logger(__name__)
 _tmp_err = globals().get("_import_error")
 if _tmp_err is not None:
     logger.error("Failed to import langchain_core.messages", error=str(_tmp_err))
-    _import_error = None
+    del _import_error  # Remove the variable instead of assigning None
 
 
 # ============================================
@@ -136,6 +136,7 @@ class CodeAgent:
     ):
         # Get settings with proper initialization
         from cartrita.orchestrator.utils.config import get_settings
+
         _settings = get_settings()
 
         self.model = model or _settings.ai.code_model
@@ -240,7 +241,9 @@ class CodeAgent:
             result = await self._execute_code_task(code_task, task_type, context)
 
             # Build and return response
-            response = self._build_code_success_response(result, task_type, start_time, context, metadata)
+            response = self._build_code_success_response(
+                result, task_type, start_time, context, metadata
+            )
             self._log_code_completion(task_type, context, start_time)
 
             return response
@@ -264,8 +267,12 @@ class CodeAgent:
         return await handler(code_task, context)
 
     def _build_code_success_response(
-        self, result: dict[str, Any], task_type: str, start_time: float,
-        context: dict[str, Any], metadata: dict[str, Any]
+        self,
+        result: dict[str, Any],
+        task_type: str,
+        start_time: float,
+        context: dict[str, Any],
+        metadata: dict[str, Any],
     ) -> dict[str, Any]:
         """Build success response from code task result."""
         execution_time = time.time() - start_time
@@ -283,7 +290,9 @@ class CodeAgent:
             },
         }
 
-    def _log_code_completion(self, task_type: str, context: dict[str, Any], start_time: float) -> None:
+    def _log_code_completion(
+        self, task_type: str, context: dict[str, Any], start_time: float
+    ) -> None:
         """Log information about completed code task."""
         execution_time = time.time() - start_time
 
@@ -295,7 +304,11 @@ class CodeAgent:
         )
 
     def _build_code_error_response(
-        self, error: Exception, start_time: float, metadata: dict[str, Any], local_vars: dict[str, Any]
+        self,
+        error: Exception,
+        start_time: float,
+        metadata: dict[str, Any],
+        local_vars: dict[str, Any],
     ) -> dict[str, Any]:
         """Build error response when code execution fails."""
         execution_time = time.time() - start_time
@@ -337,9 +350,13 @@ class CodeAgent:
 
         # Generate code via LLM
         try:
-            return await self._execute_code_generation(generation_prompt, generation_params)
+            return await self._execute_code_generation(
+                generation_prompt, generation_params
+            )
         except Exception as e:
-            return self._create_generation_error_response(e, generation_params["language"])
+            return self._create_generation_error_response(
+                e, generation_params["language"]
+            )
 
     def _extract_generation_parameters(self, context: dict[str, Any]) -> dict[str, Any]:
         """Extract code generation parameters from context."""
@@ -428,7 +445,9 @@ class CodeAgent:
         )
         return result.dict()
 
-    def _create_generation_error_response(self, error: Exception, language: str) -> dict[str, Any]:
+    def _create_generation_error_response(
+        self, error: Exception, language: str
+    ) -> dict[str, Any]:
         """Create error response for failed code generation."""
         logger.error("Code generation failed", error=str(error), language=language)
 
@@ -483,7 +502,9 @@ Format your response as JSON:
     "security_concerns": ["concern1", "concern2"]
 }}"""
 
-    async def _execute_code_analysis(self, analysis_prompt: str, language: str) -> dict[str, Any]:
+    async def _execute_code_analysis(
+        self, analysis_prompt: str, language: str
+    ) -> dict[str, Any]:
         """Execute code analysis via LLM."""
         messages = [
             SystemMessage(
@@ -506,7 +527,9 @@ Format your response as JSON:
         )
         return result.dict()
 
-    def _create_analysis_error_response(self, error: Exception, language: str) -> dict[str, Any]:
+    def _create_analysis_error_response(
+        self, error: Exception, language: str
+    ) -> dict[str, Any]:
         """Create error response for failed code analysis."""
         logger.error("Code analysis failed", error=str(error))
 

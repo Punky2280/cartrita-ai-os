@@ -26,7 +26,7 @@ class GitHubService:
         self.headers = {
             "Authorization": f"token {self.api_key}",
             "Accept": "application/vnd.github.v3+json",
-            "User-Agent": "Cartrita-AI-OS/1.0"
+            "User-Agent": "Cartrita-AI-OS/1.0",
         }
 
         logger.info("GitHub service initialized")
@@ -36,7 +36,7 @@ class GitHubService:
         method: str,
         endpoint: str,
         params: Optional[Dict[str, Any]] = None,
-        data: Optional[Dict[str, Any]] = None
+        data: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         """Make HTTP request to GitHub API."""
         url = f"{self.base_url}{endpoint}"
@@ -49,12 +49,16 @@ class GitHubService:
                     headers=self.headers,
                     params=params,
                     json=data,
-                    timeout=30.0
+                    timeout=30.0,
                 )
                 response.raise_for_status()
                 return response.json()
             except httpx.HTTPStatusError as e:
-                logger.error("GitHub API error", status_code=e.response.status_code, response=e.response.text)
+                logger.error(
+                    "GitHub API error",
+                    status_code=e.response.status_code,
+                    response=e.response.text,
+                )
                 raise
             except Exception as e:
                 logger.error("GitHub request failed", error=str(e))
@@ -66,7 +70,7 @@ class GitHubService:
         language: Optional[str] = None,
         sort: str = "stars",
         order: str = "desc",
-        max_results: int = 20
+        max_results: int = 20,
     ) -> List[Dict[str, Any]]:
         """
         Search for repositories on GitHub.
@@ -91,37 +95,47 @@ class GitHubService:
                 "q": search_query,
                 "sort": sort,
                 "order": order,
-                "per_page": min(max_results, 100)
+                "per_page": min(max_results, 100),
             }
 
-            logger.info("Searching repositories", query=search_query, sort=sort, order=order)
+            logger.info(
+                "Searching repositories", query=search_query, sort=sort, order=order
+            )
 
-            response = await self._make_request("GET", "/search/repositories", params=params)
+            response = await self._make_request(
+                "GET", "/search/repositories", params=params
+            )
 
             results = []
             for repo in response.get("items", [])[:max_results]:
-                results.append({
-                    "id": repo["id"],
-                    "name": repo["name"],
-                    "full_name": repo["full_name"],
-                    "description": repo["description"],
-                    "url": repo["html_url"],
-                    "clone_url": repo["clone_url"],
-                    "language": repo["language"],
-                    "stars": repo["stargazers_count"],
-                    "forks": repo["forks_count"],
-                    "issues": repo["open_issues_count"],
-                    "created_at": repo["created_at"],
-                    "updated_at": repo["updated_at"],
-                    "owner": {
-                        "login": repo["owner"]["login"],
-                        "url": repo["owner"]["html_url"],
-                        "type": repo["owner"]["type"]
-                    },
-                    "topics": repo.get("topics", [])
-                })
+                results.append(
+                    {
+                        "id": repo["id"],
+                        "name": repo["name"],
+                        "full_name": repo["full_name"],
+                        "description": repo["description"],
+                        "url": repo["html_url"],
+                        "clone_url": repo["clone_url"],
+                        "language": repo["language"],
+                        "stars": repo["stargazers_count"],
+                        "forks": repo["forks_count"],
+                        "issues": repo["open_issues_count"],
+                        "created_at": repo["created_at"],
+                        "updated_at": repo["updated_at"],
+                        "owner": {
+                            "login": repo["owner"]["login"],
+                            "url": repo["owner"]["html_url"],
+                            "type": repo["owner"]["type"],
+                        },
+                        "topics": repo.get("topics", []),
+                    }
+                )
 
-            logger.info("Repository search completed", query=search_query, results_count=len(results))
+            logger.info(
+                "Repository search completed",
+                query=search_query,
+                results_count=len(results),
+            )
             return results
 
         except Exception as e:
@@ -134,7 +148,7 @@ class GitHubService:
         language: Optional[str] = None,
         repo: Optional[str] = None,
         filename: Optional[str] = None,
-        max_results: int = 20
+        max_results: int = 20,
     ) -> List[Dict[str, Any]]:
         """
         Search for code on GitHub.
@@ -159,10 +173,7 @@ class GitHubService:
             if filename:
                 search_query += f" filename:{filename}"
 
-            params = {
-                "q": search_query,
-                "per_page": min(max_results, 100)
-            }
+            params = {"q": search_query, "per_page": min(max_results, 100)}
 
             logger.info("Searching code", query=search_query)
 
@@ -170,21 +181,25 @@ class GitHubService:
 
             results = []
             for result in response.get("items", [])[:max_results]:
-                results.append({
-                    "name": result["name"],
-                    "path": result["path"],
-                    "url": result["html_url"],
-                    "repository": {
-                        "name": result["repository"]["name"],
-                        "full_name": result["repository"]["full_name"],
-                        "url": result["repository"]["html_url"],
-                        "owner": result["repository"]["owner"]["login"]
-                    },
-                    "score": result.get("score", 0),
-                    "text_matches": result.get("text_matches", [])
-                })
+                results.append(
+                    {
+                        "name": result["name"],
+                        "path": result["path"],
+                        "url": result["html_url"],
+                        "repository": {
+                            "name": result["repository"]["name"],
+                            "full_name": result["repository"]["full_name"],
+                            "url": result["repository"]["html_url"],
+                            "owner": result["repository"]["owner"]["login"],
+                        },
+                        "score": result.get("score", 0),
+                        "text_matches": result.get("text_matches", []),
+                    }
+                )
 
-            logger.info("Code search completed", query=search_query, results_count=len(results))
+            logger.info(
+                "Code search completed", query=search_query, results_count=len(results)
+            )
             return results
 
         except Exception as e:
@@ -221,24 +236,26 @@ class GitHubService:
                 "pushed_at": response["pushed_at"],
                 "size": response["size"],
                 "topics": response.get("topics", []),
-                "license": response.get("license", {}).get("name") if response.get("license") else None,
+                "license": (
+                    response.get("license", {}).get("name")
+                    if response.get("license")
+                    else None
+                ),
                 "owner": {
                     "login": response["owner"]["login"],
                     "url": response["owner"]["html_url"],
-                    "type": response["owner"]["type"]
-                }
+                    "type": response["owner"]["type"],
+                },
             }
 
         except Exception as e:
-            logger.error("Failed to get repository info", owner=owner, repo=repo, error=str(e))
+            logger.error(
+                "Failed to get repository info", owner=owner, repo=repo, error=str(e)
+            )
             raise
 
     async def get_repository_contents(
-        self,
-        owner: str,
-        repo: str,
-        path: str = "",
-        ref: str = "main"
+        self, owner: str, repo: str, path: str = "", ref: str = "main"
     ) -> List[Dict[str, Any]]:
         """
         Get contents of a repository path.
@@ -254,46 +271,60 @@ class GitHubService:
         """
         try:
             params = {"ref": ref} if ref != "main" else None
-            response = await self._make_request("GET", f"/repos/{owner}/{repo}/contents/{path}", params=params)
+            response = await self._make_request(
+                "GET", f"/repos/{owner}/{repo}/contents/{path}", params=params
+            )
 
             results = []
             # Handle both single file and directory listing
             if isinstance(response, list):
                 for item in response:
-                    results.append({
-                        "name": item["name"],
-                        "path": item["path"],
-                        "type": item["type"],
-                        "size": item["size"],
-                        "url": item["html_url"],
-                        "download_url": item["download_url"],
-                        "sha": item["sha"]
-                    })
+                    results.append(
+                        {
+                            "name": item["name"],
+                            "path": item["path"],
+                            "type": item["type"],
+                            "size": item["size"],
+                            "url": item["html_url"],
+                            "download_url": item["download_url"],
+                            "sha": item["sha"],
+                        }
+                    )
             else:
                 # Single file
-                results.append({
-                    "name": response["name"],
-                    "path": response["path"],
-                    "type": response["type"],
-                    "size": response["size"],
-                    "url": response["html_url"],
-                    "download_url": response["download_url"],
-                    "sha": response["sha"]
-                })
+                results.append(
+                    {
+                        "name": response["name"],
+                        "path": response["path"],
+                        "type": response["type"],
+                        "size": response["size"],
+                        "url": response["html_url"],
+                        "download_url": response["download_url"],
+                        "sha": response["sha"],
+                    }
+                )
 
-            logger.info("Repository contents retrieved", owner=owner, repo=repo, path=path, items=len(results))
+            logger.info(
+                "Repository contents retrieved",
+                owner=owner,
+                repo=repo,
+                path=path,
+                items=len(results),
+            )
             return results
 
         except Exception as e:
-            logger.error("Failed to get repository contents", owner=owner, repo=repo, path=path, error=str(e))
+            logger.error(
+                "Failed to get repository contents",
+                owner=owner,
+                repo=repo,
+                path=path,
+                error=str(e),
+            )
             return []
 
     async def get_file_content(
-        self,
-        owner: str,
-        repo: str,
-        path: str,
-        ref: str = "main"
+        self, owner: str, repo: str, path: str, ref: str = "main"
     ) -> Dict[str, Any]:
         """
         Get content of a specific file.
@@ -309,13 +340,16 @@ class GitHubService:
         """
         try:
             params = {"ref": ref} if ref != "main" else None
-            response = await self._make_request("GET", f"/repos/{owner}/{repo}/contents/{path}", params=params)
+            response = await self._make_request(
+                "GET", f"/repos/{owner}/{repo}/contents/{path}", params=params
+            )
 
             # Decode content if it's base64 encoded
             import base64
+
             content = response.get("content", "")
             if response.get("encoding") == "base64":
-                content = base64.b64decode(content).decode('utf-8')
+                content = base64.b64decode(content).decode("utf-8")
 
             return {
                 "name": response["name"],
@@ -326,11 +360,17 @@ class GitHubService:
                 "download_url": response["download_url"],
                 "sha": response["sha"],
                 "content": content,
-                "encoding": response.get("encoding", "utf-8")
+                "encoding": response.get("encoding", "utf-8"),
             }
 
         except Exception as e:
-            logger.error("Failed to get file content", owner=owner, repo=repo, path=path, error=str(e))
+            logger.error(
+                "Failed to get file content",
+                owner=owner,
+                repo=repo,
+                path=path,
+                error=str(e),
+            )
             raise
 
     async def get_repository_issues(
@@ -339,7 +379,7 @@ class GitHubService:
         repo: str,
         state: str = "open",
         labels: Optional[List[str]] = None,
-        max_results: int = 20
+        max_results: int = 20,
     ) -> List[Dict[str, Any]]:
         """
         Get issues from a repository.
@@ -355,43 +395,59 @@ class GitHubService:
             List of issues
         """
         try:
-            params = {
-                "state": state,
-                "per_page": min(max_results, 100)
-            }
+            params = {"state": state, "per_page": min(max_results, 100)}
             if labels:
                 params["labels"] = ",".join(labels)
 
-            response = await self._make_request("GET", f"/repos/{owner}/{repo}/issues", params=params)
+            response = await self._make_request(
+                "GET", f"/repos/{owner}/{repo}/issues", params=params
+            )
 
             results = []
             for issue in response[:max_results]:
-                results.append({
-                    "id": issue["id"],
-                    "number": issue["number"],
-                    "title": issue["title"],
-                    "body": issue["body"],
-                    "url": issue["html_url"],
-                    "state": issue["state"],
-                    "labels": [{"name": label["name"], "color": label["color"]} for label in issue.get("labels", [])],
-                    "assignee": {
-                        "login": issue["assignee"]["login"],
-                        "url": issue["assignee"]["html_url"]
-                    } if issue.get("assignee") else None,
-                    "created_at": issue["created_at"],
-                    "updated_at": issue["updated_at"],
-                    "comments": issue["comments"],
-                    "author": {
-                        "login": issue["user"]["login"],
-                        "url": issue["user"]["html_url"]
+                results.append(
+                    {
+                        "id": issue["id"],
+                        "number": issue["number"],
+                        "title": issue["title"],
+                        "body": issue["body"],
+                        "url": issue["html_url"],
+                        "state": issue["state"],
+                        "labels": [
+                            {"name": label["name"], "color": label["color"]}
+                            for label in issue.get("labels", [])
+                        ],
+                        "assignee": (
+                            {
+                                "login": issue["assignee"]["login"],
+                                "url": issue["assignee"]["html_url"],
+                            }
+                            if issue.get("assignee")
+                            else None
+                        ),
+                        "created_at": issue["created_at"],
+                        "updated_at": issue["updated_at"],
+                        "comments": issue["comments"],
+                        "author": {
+                            "login": issue["user"]["login"],
+                            "url": issue["user"]["html_url"],
+                        },
                     }
-                })
+                )
 
-            logger.info("Repository issues retrieved", owner=owner, repo=repo, state=state, issues_count=len(results))
+            logger.info(
+                "Repository issues retrieved",
+                owner=owner,
+                repo=repo,
+                state=state,
+                issues_count=len(results),
+            )
             return results
 
         except Exception as e:
-            logger.error("Failed to get repository issues", owner=owner, repo=repo, error=str(e))
+            logger.error(
+                "Failed to get repository issues", owner=owner, repo=repo, error=str(e)
+            )
             return []
 
     async def create_issue(
@@ -400,7 +456,7 @@ class GitHubService:
         repo: str,
         title: str,
         body: str,
-        labels: Optional[List[str]] = None
+        labels: Optional[List[str]] = None,
     ) -> Dict[str, Any]:
         """
         Create a new issue in a repository.
@@ -416,14 +472,13 @@ class GitHubService:
             Created issue information
         """
         try:
-            data = {
-                "title": title,
-                "body": body
-            }
+            data = {"title": title, "body": body}
             if labels:
                 data["labels"] = labels
 
-            response = await self._make_request("POST", f"/repos/{owner}/{repo}/issues", data=data)
+            response = await self._make_request(
+                "POST", f"/repos/{owner}/{repo}/issues", data=data
+            )
 
             return {
                 "id": response["id"],
@@ -431,11 +486,17 @@ class GitHubService:
                 "title": response["title"],
                 "url": response["html_url"],
                 "state": response["state"],
-                "created_at": response["created_at"]
+                "created_at": response["created_at"],
             }
 
         except Exception as e:
-            logger.error("Failed to create issue", owner=owner, repo=repo, title=title, error=str(e))
+            logger.error(
+                "Failed to create issue",
+                owner=owner,
+                repo=repo,
+                title=title,
+                error=str(e),
+            )
             raise
 
     async def health_check(self) -> Dict[str, Any]:
@@ -448,11 +509,8 @@ class GitHubService:
                 "rate_limit": {
                     "limit": response["rate"]["limit"],
                     "remaining": response["rate"]["remaining"],
-                    "reset": response["rate"]["reset"]
-                }
+                    "reset": response["rate"]["reset"],
+                },
             }
         except Exception as e:
-            return {
-                "status": "unhealthy",
-                "error": str(e)
-            }
+            return {"status": "unhealthy", "error": str(e)}

@@ -1,10 +1,14 @@
-import asyncio
 from typing import Any, AsyncGenerator, Dict, List
 from unittest.mock import patch
 
 import pytest
 
-from cartrita.orchestrator.models.schemas import ChatRequest, Message, MessageContent, MessageRole
+from cartrita.orchestrator.models.schemas import (
+    ChatRequest,
+    Message,
+    MessageContent,
+    MessageRole,
+)
 from cartrita.orchestrator.services.openai_service import OpenAIService
 
 
@@ -65,7 +69,9 @@ def test_convert_messages_preserves_tool_role_and_id(service: OpenAIService) -> 
     assert converted[1]["content"][0]["type"] == "tool_result"
 
 
-def test_convert_messages_handles_list_content_tool_result(service: OpenAIService) -> None:
+def test_convert_messages_handles_list_content_tool_result(
+    service: OpenAIService,
+) -> None:
     content: List[MessageContent] = [
         MessageContent(type="text", text="irrelevant preface"),
         MessageContent(type="tool_result", text="computed", data={"value": 7}),
@@ -93,14 +99,16 @@ async def test_process_chat_request_collects_tool_calls(service: OpenAIService) 
             "type": "tool_call",
             "tool_call": {
                 "id": "tc_1",
-                "function": {"name": "web_search", "arguments": "{\"query\":\"x\"}"},
+                "function": {"name": "web_search", "arguments": '{"query":"x"}'},
             },
         }
         yield {"type": "content", "content": "Processing..."}
         yield {"type": "done", "finish_reason": "stop"}
 
     with patch.object(service, "chat_completion", side_effect=fake_chat_completion):
-        req = ChatRequest(message="hello", conversation_id=None, tools=["web_search"], stream=True)
+        req = ChatRequest(
+            message="hello", conversation_id=None, tools=["web_search"], stream=True
+        )
         resp = await service.process_chat_request(req)
 
     # Response should include content and a tool message capturing the call metadata

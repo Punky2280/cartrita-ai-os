@@ -132,7 +132,6 @@ class RateLimiter:
         now = datetime.now(timezone.utc)
         request_times = self._requests[identifier]
 
-
         if not request_times:
             return {
                 "minute_reset": now,
@@ -211,10 +210,7 @@ async def check_rate_limit(
     client_id = get_client_identifier(request)
 
     is_allowed, current_counts = rate_limiter.check_rate_limit(
-        client_id,
-        requests_per_minute,
-        requests_per_hour,
-        requests_per_day
+        client_id, requests_per_minute, requests_per_hour, requests_per_day
     )
 
     if not is_allowed:
@@ -233,11 +229,19 @@ async def check_rate_limit(
         retry_after = 60  # Default to 1 minute
 
         if current_counts["requests_per_minute"] >= limits["requests_per_minute"]:
-            retry_after = int((reset_times["minute_reset"] - datetime.now(timezone.utc)).total_seconds())
+            retry_after = int(
+                (
+                    reset_times["minute_reset"] - datetime.now(timezone.utc)
+                ).total_seconds()
+            )
         elif current_counts["requests_per_hour"] >= limits["requests_per_hour"]:
-            retry_after = int((reset_times["hour_reset"] - datetime.now(timezone.utc)).total_seconds())
+            retry_after = int(
+                (reset_times["hour_reset"] - datetime.now(timezone.utc)).total_seconds()
+            )
         elif current_counts["requests_per_day"] >= limits["requests_per_day"]:
-            retry_after = int((reset_times["day_reset"] - datetime.now(timezone.utc)).total_seconds())
+            retry_after = int(
+                (reset_times["day_reset"] - datetime.now(timezone.utc)).total_seconds()
+            )
 
         retry_after = max(retry_after, 1)  # Ensure positive value
 
@@ -251,27 +255,64 @@ async def check_rate_limit(
                     "minute_reset": reset_times["minute_reset"].isoformat(),
                     "hour_reset": reset_times["hour_reset"].isoformat(),
                     "day_reset": reset_times["day_reset"].isoformat(),
-                }
+                },
             },
             headers={
                 "Retry-After": str(retry_after),
                 "X-RateLimit-Limit-Minute": str(limits["requests_per_minute"]),
                 "X-RateLimit-Limit-Hour": str(limits["requests_per_hour"]),
                 "X-RateLimit-Limit-Day": str(limits["requests_per_day"]),
-                "X-RateLimit-Remaining-Minute": str(max(0, limits["requests_per_minute"] - current_counts["requests_per_minute"])),
-                "X-RateLimit-Remaining-Hour": str(max(0, limits["requests_per_hour"] - current_counts["requests_per_hour"])),
-                "X-RateLimit-Remaining-Day": str(max(0, limits["requests_per_day"] - current_counts["requests_per_day"])),
-            }
+                "X-RateLimit-Remaining-Minute": str(
+                    max(
+                        0,
+                        limits["requests_per_minute"]
+                        - current_counts["requests_per_minute"],
+                    )
+                ),
+                "X-RateLimit-Remaining-Hour": str(
+                    max(
+                        0,
+                        limits["requests_per_hour"]
+                        - current_counts["requests_per_hour"],
+                    )
+                ),
+                "X-RateLimit-Remaining-Day": str(
+                    max(
+                        0,
+                        limits["requests_per_day"] - current_counts["requests_per_day"],
+                    )
+                ),
+            },
         )
 
     # Add rate limit headers to successful responses
     request.state.rate_limit_headers = {
-        "X-RateLimit-Limit-Minute": str(rate_limiter.default_limits["requests_per_minute"]),
+        "X-RateLimit-Limit-Minute": str(
+            rate_limiter.default_limits["requests_per_minute"]
+        ),
         "X-RateLimit-Limit-Hour": str(rate_limiter.default_limits["requests_per_hour"]),
         "X-RateLimit-Limit-Day": str(rate_limiter.default_limits["requests_per_day"]),
-        "X-RateLimit-Remaining-Minute": str(max(0, rate_limiter.default_limits["requests_per_minute"] - current_counts["requests_per_minute"])),
-        "X-RateLimit-Remaining-Hour": str(max(0, rate_limiter.default_limits["requests_per_hour"] - current_counts["requests_per_hour"])),
-        "X-RateLimit-Remaining-Day": str(max(0, rate_limiter.default_limits["requests_per_day"] - current_counts["requests_per_day"])),
+        "X-RateLimit-Remaining-Minute": str(
+            max(
+                0,
+                rate_limiter.default_limits["requests_per_minute"]
+                - current_counts["requests_per_minute"],
+            )
+        ),
+        "X-RateLimit-Remaining-Hour": str(
+            max(
+                0,
+                rate_limiter.default_limits["requests_per_hour"]
+                - current_counts["requests_per_hour"],
+            )
+        ),
+        "X-RateLimit-Remaining-Day": str(
+            max(
+                0,
+                rate_limiter.default_limits["requests_per_day"]
+                - current_counts["requests_per_day"],
+            )
+        ),
     }
 
 
@@ -280,9 +321,9 @@ async def check_auth_rate_limit(request: Request):
     """Stricter rate limiting for authentication endpoints."""
     return await check_rate_limit(
         request,
-        requests_per_minute=5,   # Only 5 auth attempts per minute
-        requests_per_hour=20,    # 20 per hour
-        requests_per_day=100     # 100 per day
+        requests_per_minute=5,  # Only 5 auth attempts per minute
+        requests_per_hour=20,  # 20 per hour
+        requests_per_day=100,  # 100 per day
     )
 
 
@@ -295,7 +336,7 @@ async def check_heavy_rate_limit(request: Request):
     """More restrictive rate limiting for resource-intensive endpoints."""
     return await check_rate_limit(
         request,
-        requests_per_minute=10,   # Only 10 requests per minute
-        requests_per_hour=100,    # 100 per hour
-        requests_per_day=500      # 500 per day
+        requests_per_minute=10,  # Only 10 requests per minute
+        requests_per_hour=100,  # 100 per hour
+        requests_per_day=500,  # 500 per day
     )

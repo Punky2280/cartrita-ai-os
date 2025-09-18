@@ -1,0 +1,3285 @@
+{
+  "timestamp": "2025-09-17T04:00:00.000000",
+  "total_findings": 363,
+  "severity_breakdown": {
+    "low": 0,
+    "medium": 64,
+    "high": 222,
+    "critical": 77
+  },
+  "issue_type_breakdown": {
+    "hardcoded_secret": 285,
+    "dangerous_function": 14,
+    "insecure_config": 62,
+    "file_permissions": 2
+  },
+  "findings": [
+    {
+      "file": "test_task12_standalone.py",
+      "line": 533,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "malformed_token = \"invalid.jwt.token\""
+    },
+    {
+      "file": "test_task12_api_security.py",
+      "line": 483,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "test_jwt_secret = \"test-secret-key-at-least-32-characters\""
+    },
+    {
+      "file": "config_security_audit.py",
+      "line": 220,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of eval() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "(r'eval\\s*\\(', \"Use of eval() function\"),"
+    },
+    {
+      "file": "config_security_audit.py",
+      "line": 221,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of exec() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "(r'exec\\s*\\(', \"Use of exec() function\"),"
+    },
+    {
+      "file": "config_security_audit.py",
+      "line": 222,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of os.system()",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "(r'os\\.system\\s*\\(', \"Use of os.system()\"),"
+    },
+    {
+      "file": "config_security_audit.py",
+      "line": 245,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of eval() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "(r'eval\\s*\\(', \"Use of eval() function\"),"
+    },
+    {
+      "file": "test_task11_database_security.py",
+      "line": 79,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "query = f\"SELECT * FROM users WHERE id = 1 -- AND password = '{test_secret_pattern}'\""
+    },
+    {
+      "file": "test_task11_database_security.py",
+      "line": 101,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of exec() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "query = \"SELECT exec('rm -rf /') FROM users\""
+    },
+    {
+      "file": "scripts/test_final_integration.py",
+      "line": 176,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of eval() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "def safe_eval(node):"
+    },
+    {
+      "file": "scripts/test_final_integration.py",
+      "line": 180,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of eval() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "return ops[type(node.op)](safe_eval(node.left), safe_eval(node.right))"
+    },
+    {
+      "file": "scripts/test_final_integration.py",
+      "line": 182,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of eval() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "return ops[type(node.op)](safe_eval(node.operand))"
+    },
+    {
+      "file": "scripts/test_final_integration.py",
+      "line": 194,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of eval() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "return str(safe_eval(ast.parse(expression, mode='eval').body))"
+    },
+    {
+      "file": "services/ai-orchestrator/tests/test_cartrita_core.py",
+      "line": 63,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of eval() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "def test_key_storage_and_retrieval(self, api_key_manager):"
+    },
+    {
+      "file": "services/api-gateway/src/middleware/__tests__/security.test.js",
+      "line": 23,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';"
+    },
+    {
+      "file": "services/api-gateway/src/middleware/__tests__/security.test.js",
+      "line": 24,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "process.env.PROD_API_KEY = 'prod-key-12345678901234567890123456';"
+    },
+    {
+      "file": "services/api-gateway/src/middleware/__tests__/security.test.js",
+      "line": 355,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 78,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"query = f\\\"SELECT * FROM users WHERE id = 1 -- AND password = '{test_secret_pattern}'\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 141,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid format\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 150,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 159,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"process.env.PROD_API_KEY = 'prod-key-12345678901234567890123456';\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 168,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 177,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"query = f\\\\\\\"SELECT * FROM users WHERE id = 1 -- AND password = '{test_secret_p"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 186,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid format\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 195,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 204,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"process.env.PROD_API_KEY = 'prod-key-12345678901234567890123456';\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 213,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 222,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"query = f\\\\\\\\\\\\\\\"SELECT * FROM users WHERE id = 1 -- AND pass"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 231,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 240,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 249,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.PROD_API_KEY = 'prod-key-123456789012345678901234"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 258,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 276,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 285,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 294,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 303,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 312,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 384,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 393,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 402,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 411,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 474,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 483,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: let $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 492,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: const $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 501,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: var $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 519,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 528,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 537,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 546,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 555,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 627,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 636,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 645,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 654,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 717,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"original\\\\\\\": \\\\\\\"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 726,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: let $PASSWORD = '$VALUE'\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 735,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: const $PASSWORD = '$VALUE'\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 744,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: var $PASSWORD = '$VALUE'\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 753,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"query = f\\\\\\\\\\\\\\\"SELECT * FROM users WHERE id = 1 -- AND pass"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 762,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 771,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 780,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.PROD_API_KEY = 'prod-key-123456789012345678901234"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 789,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 807,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 816,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 825,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 834,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 843,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 915,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 924,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 933,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 942,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1005,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1014,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: let $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1023,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: const $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1032,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: var $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1050,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1059,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1068,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1077,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1086,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1158,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1167,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1176,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1185,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1518,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"original\\\": \\\"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'\\\",\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1572,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"- pattern: let $PASSWORD = '$VALUE'\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1581,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"- pattern: const $PASSWORD = '$VALUE'\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1590,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"- pattern: var $PASSWORD = '$VALUE'\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1617,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"query = f\\\\\\\"SELECT * FROM users WHERE id = 1 -- AND password = '{test_secret_p"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1626,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid format\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1635,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1644,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"process.env.PROD_API_KEY = 'prod-key-12345678901234567890123456';\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1653,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1662,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"query = f\\\\\\\\\\\\\\\"SELECT * FROM users WHERE id = 1 -- AND pass"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1671,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1680,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1689,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.PROD_API_KEY = 'prod-key-123456789012345678901234"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1698,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1716,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1725,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1734,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1743,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1752,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1824,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1833,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1842,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1851,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1914,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1923,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: let $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1932,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: const $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1941,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: var $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1959,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1968,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1977,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1986,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1995,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2067,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2076,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2085,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2094,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2157,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"original\\\\\\\": \\\\\\\"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2166,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: let $PASSWORD = '$VALUE'\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2175,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: const $PASSWORD = '$VALUE'\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2184,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: var $PASSWORD = '$VALUE'\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2193,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"query = f\\\\\\\\\\\\\\\"SELECT * FROM users WHERE id = 1 -- AND pass"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2202,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2211,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2220,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.PROD_API_KEY = 'prod-key-123456789012345678901234"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2229,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2247,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2256,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2265,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2274,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2283,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2355,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2364,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2373,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2382,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2445,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2454,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: let $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2463,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: const $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2472,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: var $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2490,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2499,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2508,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2517,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2526,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2598,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2607,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2616,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2625,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1266,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1275,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1302,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"message: Detected Flask app with debug=True. Do not deploy to"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1311,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: $APP.run(..., debug=True, ...)\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1338,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1347,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1374,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"message: Detected Flask app with debug=True. Do not deploy to production with t"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1383,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: $APP.run(..., debug=True, ...)\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1410,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1419,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1446,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"message: Detected Flask app with debug=True. Do not deploy to"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1455,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: $APP.run(..., debug=True, ...)\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1482,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1491,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1599,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"message: Detected Flask app with debug=True. Do not deploy to production with this flag ena"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1608,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"- pattern: $APP.run(..., debug=True, ...)\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2706,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2715,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2742,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"message: Detected Flask app with debug=True. Do not deploy to"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2751,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: $APP.run(..., debug=True, ...)\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2778,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2787,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2814,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"message: Detected Flask app with debug=True. Do not deploy to production with t"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2823,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: $APP.run(..., debug=True, ...)\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2850,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2859,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2886,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"message: Detected Flask app with debug=True. Do not deploy to"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2895,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: $APP.run(..., debug=True, ...)\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2922,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2931,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "generated_patches.json",
+      "line": 91,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"original\": \"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'\","
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34298,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: String $PASSWORD = \"$VALUE\";"
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34318,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: var $PASSWORD = \"$VALUE\";"
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34339,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: let $PASSWORD = \"$VALUE\""
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34340,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: const $PASSWORD = \"$VALUE\""
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34341,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: var $PASSWORD = \"$VALUE\""
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34342,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: let $PASSWORD = '$VALUE'"
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34343,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: const $PASSWORD = '$VALUE'"
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34344,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: var $PASSWORD = '$VALUE'"
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 20074,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "message: Detected Flask app with debug=True. Do not deploy to production with this flag enabled as i"
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 20093,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "- pattern: $APP.run(..., debug=True, ...)"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 78,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"query = f\\\"SELECT * FROM users WHERE id = 1 -- AND password = '{test_secret_pattern}'\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 141,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid format\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 150,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 159,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"process.env.PROD_API_KEY = 'prod-key-12345678901234567890123456';\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 168,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 177,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"query = f\\\\\\\"SELECT * FROM users WHERE id = 1 -- AND password = '{test_secret_p"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 186,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid format\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 195,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 204,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"process.env.PROD_API_KEY = 'prod-key-12345678901234567890123456';\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 213,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 222,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"query = f\\\\\\\\\\\\\\\"SELECT * FROM users WHERE id = 1 -- AND pass"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 231,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 240,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 249,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.PROD_API_KEY = 'prod-key-123456789012345678901234"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 258,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 276,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 285,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 294,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 303,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 312,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 384,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 393,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 402,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 411,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 474,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 483,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: let $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 492,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: const $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 501,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: var $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 519,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 528,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 537,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 546,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 555,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 627,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 636,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 645,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 654,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 717,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"original\\\\\\\": \\\\\\\"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 726,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: let $PASSWORD = '$VALUE'\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 735,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: const $PASSWORD = '$VALUE'\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 744,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: var $PASSWORD = '$VALUE'\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 753,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"query = f\\\\\\\\\\\\\\\"SELECT * FROM users WHERE id = 1 -- AND pass"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 762,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 771,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 780,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.PROD_API_KEY = 'prod-key-123456789012345678901234"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 789,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 807,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 816,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 825,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 834,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 843,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 915,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 924,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 933,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 942,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1005,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1014,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: let $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1023,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: const $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1032,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: var $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1050,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1059,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1068,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1077,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1086,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1158,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1167,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1176,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1185,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1518,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"original\\\": \\\"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'\\\",\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1572,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"- pattern: let $PASSWORD = '$VALUE'\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1581,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"- pattern: const $PASSWORD = '$VALUE'\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1590,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"- pattern: var $PASSWORD = '$VALUE'\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1617,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"query = f\\\\\\\"SELECT * FROM users WHERE id = 1 -- AND password = '{test_secret_p"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1626,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid format\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1635,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1644,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"process.env.PROD_API_KEY = 'prod-key-12345678901234567890123456';\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1653,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1662,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"query = f\\\\\\\\\\\\\\\"SELECT * FROM users WHERE id = 1 -- AND pass"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1671,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1680,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1689,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.PROD_API_KEY = 'prod-key-123456789012345678901234"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1698,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1716,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1725,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1734,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1743,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1752,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1824,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1833,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1842,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1851,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1914,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1923,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: let $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1932,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: const $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1941,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: var $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1959,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1968,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1977,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1986,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1995,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2067,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2076,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2085,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2094,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2157,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"original\\\\\\\": \\\\\\\"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2166,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: let $PASSWORD = '$VALUE'\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2175,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: const $PASSWORD = '$VALUE'\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2184,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: var $PASSWORD = '$VALUE'\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2193,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"query = f\\\\\\\\\\\\\\\"SELECT * FROM users WHERE id = 1 -- AND pass"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2202,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2211,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2220,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.PROD_API_KEY = 'prod-key-123456789012345678901234"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2229,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2247,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2256,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2265,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2274,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2283,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2355,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2364,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2373,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2382,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2445,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2454,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: let $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2463,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: const $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2472,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: var $PASSWORD = '$VALUE'\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2490,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2499,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2508,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.PROD_API_KEY = 'pro"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2517,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"process.env.DEV_API_KEY = 'dev-"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2526,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2598,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: let $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2607,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: const $PASSWORD = '$"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2616,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: var $PASSWORD = '$VA"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2625,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1266,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1275,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1302,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"message: Detected Flask app with debug=True. Do not deploy to"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1311,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: $APP.run(..., debug=True, ...)\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1338,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1347,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1374,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"message: Detected Flask app with debug=True. Do not deploy to production with t"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1383,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: $APP.run(..., debug=True, ...)\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1410,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1419,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1446,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"message: Detected Flask app with debug=True. Do not deploy to"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1455,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: $APP.run(..., debug=True, ...)\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1482,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1491,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1599,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"message: Detected Flask app with debug=True. Do not deploy to production with this flag ena"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 1608,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"- pattern: $APP.run(..., debug=True, ...)\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2706,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2715,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2742,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"message: Detected Flask app with debug=True. Do not deploy to"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2751,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: $APP.run(..., debug=True, ...)\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2778,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2787,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2814,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"message: Detected Flask app with debug=True. Do not deploy to production with t"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2823,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"- pattern: $APP.run(..., debug=True, ...)\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2850,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2859,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2886,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"message: Detected Flask app with debug=True. Do not deploy to"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2895,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"- pattern: $APP.run(..., debug=True, ...)\\\\\\\"\\\"\""
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2922,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"message: Detected Flask app wit"
+    },
+    {
+      "file": "config_security_audit.json",
+      "line": 2931,
+      "type": "insecure_config",
+      "severity": "medium",
+      "description": "Insecure configuration detected",
+      "recommendation": "Review and secure configuration setting",
+      "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"- pattern: $APP.run(..., debug="
+    },
+    {
+      "file": "config_security_audit.py",
+      "line": 220,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of eval() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "(r'eval\\s*\\(', \"Use of eval() function\"),"
+    },
+    {
+      "file": "config_security_audit.py",
+      "line": 221,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of exec() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "(r'exec\\s*\\(', \"Use of exec() function\"),"
+    },
+    {
+      "file": "config_security_audit.py",
+      "line": 222,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of os.system()",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "(r'os\\.system\\s*\\(', \"Use of os.system()\"),"
+    },
+    {
+      "file": "config_security_audit.py",
+      "line": 245,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of eval() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "(r'eval\\s*\\(', \"Use of eval() function\"),"
+    },
+    {
+      "file": ".env",
+      "line": 0,
+      "type": "file_permissions",
+      "severity": "medium",
+      "description": "Environment file has permissions 644, should be 600",
+      "recommendation": "Run: chmod 600 .env",
+      "code": null
+    },
+    {
+      "file": ".env.production",
+      "line": 0,
+      "type": "file_permissions",
+      "severity": "medium",
+      "description": "Environment file has permissions 644, should be 600",
+      "recommendation": "Run: chmod 600 .env.production",
+      "code": null
+    }
+  ]
+}

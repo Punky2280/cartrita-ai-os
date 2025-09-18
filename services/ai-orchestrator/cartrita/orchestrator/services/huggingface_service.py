@@ -36,7 +36,7 @@ class HuggingFaceService:
         query: str,
         task: Optional[str] = None,
         author: Optional[str] = None,
-        limit: int = 20
+        limit: int = 20,
     ) -> List[Dict[str, Any]]:
         """
         Search for models on HuggingFace Hub.
@@ -62,24 +62,28 @@ class HuggingFaceService:
                 filter=filters,
                 limit=limit,
                 sort="downloads",
-                direction=-1
+                direction=-1,
             )
 
             results = []
             for model in models:
-                results.append({
-                    "id": model.id,
-                    "author": model.author,
-                    "name": model.modelId.split("/")[-1],
-                    "task": getattr(model, "pipeline_tag", None),
-                    "downloads": getattr(model, "downloads", 0),
-                    "likes": getattr(model, "likes", 0),
-                    "tags": getattr(model, "tags", []),
-                    "url": f"https://huggingface.co/{model.id}",
-                    "last_modified": getattr(model, "lastModified", None)
-                })
+                results.append(
+                    {
+                        "id": model.id,
+                        "author": model.author,
+                        "name": model.modelId.split("/")[-1],
+                        "task": getattr(model, "pipeline_tag", None),
+                        "downloads": getattr(model, "downloads", 0),
+                        "likes": getattr(model, "likes", 0),
+                        "tags": getattr(model, "tags", []),
+                        "url": f"https://huggingface.co/{model.id}",
+                        "last_modified": getattr(model, "lastModified", None),
+                    }
+                )
 
-            logger.info("Model search completed", query=query, results_count=len(results))
+            logger.info(
+                "Model search completed", query=query, results_count=len(results)
+            )
             return results
 
         except Exception as e:
@@ -87,10 +91,7 @@ class HuggingFaceService:
             raise
 
     async def search_datasets(
-        self,
-        query: str,
-        author: Optional[str] = None,
-        limit: int = 20
+        self, query: str, author: Optional[str] = None, limit: int = 20
     ) -> List[Dict[str, Any]]:
         """
         Search for datasets on HuggingFace Hub.
@@ -113,23 +114,27 @@ class HuggingFaceService:
                 filter=filters,
                 limit=limit,
                 sort="downloads",
-                direction=-1
+                direction=-1,
             )
 
             results = []
             for dataset in datasets:
-                results.append({
-                    "id": dataset.id,
-                    "author": dataset.author,
-                    "name": dataset.id.split("/")[-1],
-                    "downloads": getattr(dataset, "downloads", 0),
-                    "likes": getattr(dataset, "likes", 0),
-                    "tags": getattr(dataset, "tags", []),
-                    "url": f"https://huggingface.co/datasets/{dataset.id}",
-                    "description": getattr(dataset, "description", "")
-                })
+                results.append(
+                    {
+                        "id": dataset.id,
+                        "author": dataset.author,
+                        "name": dataset.id.split("/")[-1],
+                        "downloads": getattr(dataset, "downloads", 0),
+                        "likes": getattr(dataset, "likes", 0),
+                        "tags": getattr(dataset, "tags", []),
+                        "url": f"https://huggingface.co/datasets/{dataset.id}",
+                        "description": getattr(dataset, "description", ""),
+                    }
+                )
 
-            logger.info("Dataset search completed", query=query, results_count=len(results))
+            logger.info(
+                "Dataset search completed", query=query, results_count=len(results)
+            )
             return results
 
         except Exception as e:
@@ -162,23 +167,16 @@ class HuggingFaceService:
                 "card_data": getattr(model_info, "cardData", {}),
                 "last_modified": getattr(model_info, "lastModified", None),
                 "siblings": [
-                    {
-                        "filename": sibling.rfilename,
-                        "size": getattr(sibling, "size", 0)
-                    }
+                    {"filename": sibling.rfilename, "size": getattr(sibling, "size", 0)}
                     for sibling in getattr(model_info, "siblings", [])
-                ]
+                ],
             }
 
         except Exception as e:
             logger.error("Failed to get model info", model_id=model_id, error=str(e))
             raise
 
-    async def search_papers(
-        self,
-        query: str,
-        limit: int = 12
-    ) -> List[Dict[str, Any]]:
+    async def search_papers(self, query: str, limit: int = 12) -> List[Dict[str, Any]]:
         """
         Search for research papers on HuggingFace.
 
@@ -190,24 +188,25 @@ class HuggingFaceService:
             List of paper information
         """
         try:
-            papers = self.api.list_papers(
-                query=query,
-                limit=limit
-            )
+            papers = self.api.list_papers(query=query, limit=limit)
 
             results = []
             for paper in papers:
-                results.append({
-                    "id": paper.paperId,
-                    "title": paper.title,
-                    "authors": paper.authors,
-                    "abstract": paper.abstract,
-                    "url": f"https://huggingface.co/papers/{paper.paperId}",
-                    "published": getattr(paper, "publishedAt", None),
-                    "likes": getattr(paper, "upvotes", 0)
-                })
+                results.append(
+                    {
+                        "id": paper.paperId,
+                        "title": paper.title,
+                        "authors": paper.authors,
+                        "abstract": paper.abstract,
+                        "url": f"https://huggingface.co/papers/{paper.paperId}",
+                        "published": getattr(paper, "publishedAt", None),
+                        "likes": getattr(paper, "upvotes", 0),
+                    }
+                )
 
-            logger.info("Paper search completed", query=query, results_count=len(results))
+            logger.info(
+                "Paper search completed", query=query, results_count=len(results)
+            )
             return results
 
         except Exception as e:
@@ -236,7 +235,7 @@ class HuggingFaceService:
                 "tags": getattr(space_info, "tags", []),
                 "likes": getattr(space_info, "likes", 0),
                 "last_modified": getattr(space_info, "lastModified", None),
-                "private": getattr(space_info, "private", False)
+                "private": getattr(space_info, "private", False),
             }
 
         except Exception as e:
@@ -248,13 +247,6 @@ class HuggingFaceService:
         try:
             # Test API connectivity
             self.api.whoami()
-            return {
-                "status": "healthy",
-                "api_available": True
-            }
+            return {"status": "healthy", "api_available": True}
         except Exception as e:
-            return {
-                "status": "unhealthy",
-                "error": str(e),
-                "api_available": False
-            }
+            return {"status": "unhealthy", "error": str(e), "api_available": False}

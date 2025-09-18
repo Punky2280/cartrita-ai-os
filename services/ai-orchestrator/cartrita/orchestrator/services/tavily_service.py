@@ -37,7 +37,7 @@ class TavilyService:
         include_answer: Optional[bool] = None,
         include_images: Optional[bool] = None,
         max_results: Optional[int] = None,
-        **kwargs
+        **kwargs,
     ) -> Dict[str, Any]:
         """
         Perform web search using Tavily.
@@ -58,10 +58,18 @@ class TavilyService:
             search_params = {
                 "query": query,
                 "search_depth": search_depth,
-                "include_answer": include_answer if include_answer is not None else self.include_answer,
-                "include_images": include_images if include_images is not None else self.include_images,
+                "include_answer": (
+                    include_answer
+                    if include_answer is not None
+                    else self.include_answer
+                ),
+                "include_images": (
+                    include_images
+                    if include_images is not None
+                    else self.include_images
+                ),
                 "max_results": max_results or self.max_results,
-                **kwargs
+                **kwargs,
             }
 
             logger.info("Performing web search", query=query, search_depth=search_depth)
@@ -75,7 +83,7 @@ class TavilyService:
                 "answer": response.get("answer", ""),
                 "results": [],
                 "images": response.get("images", []),
-                "query_time": response.get("response_time", 0)
+                "query_time": response.get("response_time", 0),
             }
 
             # Process individual results
@@ -87,7 +95,7 @@ class TavilyService:
                     "score": result.get("score", 0),
                     "published_date": result.get("published_date"),
                     "author": result.get("author"),
-                    "source": self._extract_domain(result.get("url", ""))
+                    "source": self._extract_domain(result.get("url", "")),
                 }
                 results["results"].append(processed_result)
 
@@ -95,24 +103,17 @@ class TavilyService:
                 "Search completed",
                 query=query,
                 results_count=len(results["results"]),
-                has_answer=bool(results["answer"])
+                has_answer=bool(results["answer"]),
             )
 
             return results
 
         except Exception as e:
             logger.error("Web search failed", query=query, error=str(e))
-            return {
-                "query": query,
-                "error": str(e),
-                "results": [],
-                "answer": ""
-            }
+            return {"query": query, "error": str(e), "results": [], "answer": ""}
 
     async def extract_content(
-        self,
-        urls: List[str],
-        include_images: Optional[bool] = None
+        self, urls: List[str], include_images: Optional[bool] = None
     ) -> List[Dict[str, Any]]:
         """
         Extract content from specific URLs.
@@ -132,7 +133,11 @@ class TavilyService:
                 try:
                     response = self.client.extract(
                         url=url,
-                        include_images=include_images if include_images is not None else self.include_images
+                        include_images=(
+                            include_images
+                            if include_images is not None
+                            else self.include_images
+                        ),
                     )
 
                     extracted = {
@@ -143,20 +148,21 @@ class TavilyService:
                         "author": response.get("author"),
                         "published_date": response.get("published_date"),
                         "domain": self._extract_domain(url),
-                        "success": True
+                        "success": True,
                     }
 
                     results.append(extracted)
 
                 except Exception as e:
-                    logger.warning("Failed to extract content from URL", url=url, error=str(e))
-                    results.append({
-                        "url": url,
-                        "error": str(e),
-                        "success": False
-                    })
+                    logger.warning(
+                        "Failed to extract content from URL", url=url, error=str(e)
+                    )
+                    results.append({"url": url, "error": str(e), "success": False})
 
-            logger.info("Content extraction completed", success_count=sum(1 for r in results if r.get("success")))
+            logger.info(
+                "Content extraction completed",
+                success_count=sum(1 for r in results if r.get("success")),
+            )
             return results
 
         except Exception as e:
@@ -164,10 +170,7 @@ class TavilyService:
             return [{"error": str(e), "success": False}]
 
     async def search_and_extract(
-        self,
-        query: str,
-        max_results: int = 5,
-        extract_content: bool = True
+        self, query: str, max_results: int = 5, extract_content: bool = True
     ) -> Dict[str, Any]:
         """
         Search and optionally extract content from top results.
@@ -196,8 +199,16 @@ class TavilyService:
             for i, result in enumerate(search_results["results"][:max_results]):
                 combined = {
                     **result,
-                    "extracted_content": extracted_content[i].get("content", "") if i < len(extracted_content) else "",
-                    "extraction_success": extracted_content[i].get("success", False) if i < len(extracted_content) else False
+                    "extracted_content": (
+                        extracted_content[i].get("content", "")
+                        if i < len(extracted_content)
+                        else ""
+                    ),
+                    "extraction_success": (
+                        extracted_content[i].get("success", False)
+                        if i < len(extracted_content)
+                        else False
+                    ),
                 }
                 combined_results.append(combined)
 
@@ -207,23 +218,22 @@ class TavilyService:
                 "Search and extract completed",
                 query=query,
                 results_count=len(combined_results),
-                extraction_success_count=sum(1 for r in combined_results if r.get("extraction_success"))
+                extraction_success_count=sum(
+                    1 for r in combined_results if r.get("extraction_success")
+                ),
             )
 
             return search_results
 
         except Exception as e:
             logger.error("Search and extract failed", query=query, error=str(e))
-            return {
-                "query": query,
-                "error": str(e),
-                "results": []
-            }
+            return {"query": query, "error": str(e), "results": []}
 
     def _extract_domain(self, url: str) -> str:
         """Extract domain from URL."""
         try:
             from urllib.parse import urlparse
+
             parsed = urlparse(url)
             return parsed.netloc
         except Exception:
@@ -247,7 +257,7 @@ class TavilyService:
                 f"{query} documentation",
                 f"{query} examples",
                 f"{query} best practices",
-                f"{query} vs alternatives"
+                f"{query} vs alternatives",
             ]
 
             return suggestions
@@ -264,10 +274,7 @@ class TavilyService:
             return {
                 "status": "healthy",
                 "response_time": response.get("response_time", 0),
-                "results_available": len(response.get("results", [])) > 0
+                "results_available": len(response.get("results", [])) > 0,
             }
         except Exception as e:
-            return {
-                "status": "unhealthy",
-                "error": str(e)
-            }
+            return {"status": "unhealthy", "error": str(e)}

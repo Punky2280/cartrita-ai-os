@@ -2,7 +2,7 @@
 // Removed redeclaration of Vitest globals (test, expect) which are provided automatically
 let playwrightTest: any, playwrightExpect: any
 try {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+
   ({ test: playwrightTest, expect: playwrightExpect } = require('@playwright/test'))
 } catch {}
 

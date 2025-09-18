@@ -137,24 +137,29 @@ class CartritaOrchestrator:
 
             # Add current time context for all requests
             from datetime import datetime
+
             import pytz
 
-            miami_tz = pytz.timezone('America/New_York')
+            miami_tz = pytz.timezone("America/New_York")
             current_time = datetime.now(miami_tz)
-            context.update({
-                "current_time": current_time.isoformat(),
-                "current_time_formatted": current_time.strftime('%A, %B %d, %Y at %I:%M %p %Z'),
-                "timezone": "America/New_York"
-            })
+            context.update(
+                {
+                    "current_time": current_time.isoformat(),
+                    "current_time_formatted": current_time.strftime(
+                        "%A, %B %d, %Y at %I:%M %p %Z"
+                    ),
+                    "timezone": "America/New_York",
+                }
+            )
 
             # Handle agent override for direct agent routing
             if agent_override:
-                response = await self._route_to_agent(
-                    agent_override, message, context
-                )
+                response = await self._route_to_agent(agent_override, message, context)
                 # Add Cartrita's personality overlay to agent responses
                 if response and agent_override != "supervisor":
-                    response = await self._add_cartrita_personality_overlay(response, message, agent_override)
+                    response = await self._add_cartrita_personality_overlay(
+                        response, message, agent_override
+                    )
             else:
                 # Process through Cartrita's intelligence and delegation
                 response = await self.cartrita_agent.process_request(
@@ -308,7 +313,10 @@ class CartritaOrchestrator:
                     "response": f"Oye, mi amor, I don't have a '{agent_type}' specialist on my team yet. Let me handle this personally!",
                     "agent_type": "cartrita_core",
                     "processing_time": 0.1,
-                    "metadata": {"agent_override_failed": True, "requested_agent": agent_type}
+                    "metadata": {
+                        "agent_override_failed": True,
+                        "requested_agent": agent_type,
+                    },
                 }
         except Exception as e:
             logger.error(f"Agent routing failed for {agent_type}: {e}")
@@ -316,7 +324,7 @@ class CartritaOrchestrator:
                 "response": f"Ay, something went wrong trying to reach my {agent_type} specialist. Let me help you directly instead!",
                 "agent_type": "cartrita_core",
                 "processing_time": 0.1,
-                "metadata": {"routing_error": True, "error": str(e)}
+                "metadata": {"routing_error": True, "error": str(e)},
             }
 
     async def _add_cartrita_personality_overlay(
@@ -328,11 +336,31 @@ class CartritaOrchestrator:
 
             # Cartrita's personality intros based on agent type
             personality_intros = {
-                "research": ["Oye, let me tell you what mi research bloodhound found:", "Dale, my investigative team came back with this:", "Mira, here's what we discovered:"],
-                "knowledge": ["Bueno, here's what's in our knowledge vault:", "Let me share what we have on file:", "From our records, mi amor:"],
-                "task": ["¡Perfecto! My planning specialist put together this for you:", "Dale, here's the organized breakdown:", "My task expert came up with this plan:"],
-                "code": ["Ay, my code wizard worked their magic:", "Here's what our programming expert cooked up:", "Dale, the technical breakdown:"],
-                "image": ["¡Wepa! Our visual specialist analyzed this:", "My artistic expert had some insights:", "Here's what caught their eye:"]
+                "research": [
+                    "Oye, let me tell you what mi research bloodhound found:",
+                    "Dale, my investigative team came back with this:",
+                    "Mira, here's what we discovered:",
+                ],
+                "knowledge": [
+                    "Bueno, here's what's in our knowledge vault:",
+                    "Let me share what we have on file:",
+                    "From our records, mi amor:",
+                ],
+                "task": [
+                    "¡Perfecto! My planning specialist put together this for you:",
+                    "Dale, here's the organized breakdown:",
+                    "My task expert came up with this plan:",
+                ],
+                "code": [
+                    "Ay, my code wizard worked their magic:",
+                    "Here's what our programming expert cooked up:",
+                    "Dale, the technical breakdown:",
+                ],
+                "image": [
+                    "¡Wepa! Our visual specialist analyzed this:",
+                    "My artistic expert had some insights:",
+                    "Here's what caught their eye:",
+                ],
             }
 
             # Personality outros
@@ -340,11 +368,14 @@ class CartritaOrchestrator:
                 "¿Necesitas algo más?",
                 "Let me know if you want me to dig deeper!",
                 "Dale, anything else I can help with?",
-                ""  # Sometimes no outro
+                "",  # Sometimes no outro
             ]
 
             import random
-            intro = random.choice(personality_intros.get(agent_type, ["Here's what I found out:"]))
+
+            intro = random.choice(
+                personality_intros.get(agent_type, ["Here's what I found out:"])
+            )
             outro = random.choice(personality_outros)
 
             # Create Cartrita's enhanced response
@@ -365,11 +396,16 @@ class CartritaOrchestrator:
             # Return original response if overlay fails
             return agent_response
 
-    async def _call_research_agent(self, message: str, context: Dict[str, Any]) -> Dict[str, Any]:
+    async def _call_research_agent(
+        self, message: str, context: Dict[str, Any]
+    ) -> Dict[str, Any]:
         """Call research agent with proper structure."""
         try:
             # Import and initialize research agent
-            from cartrita.orchestrator.agents.research.research_agent import ResearchAgent
+            from cartrita.orchestrator.agents.research.research_agent import (
+                ResearchAgent,
+            )
+
             research_agent = ResearchAgent()
 
             # Format message for research agent
@@ -383,13 +419,18 @@ class CartritaOrchestrator:
                 "response": f"Mi research team is having technical difficulties right now, but I can still help! The question was about: {message[:100]}...",
                 "agent_type": "research_fallback",
                 "processing_time": 0.1,
-                "metadata": {"agent_error": str(e)}
+                "metadata": {"agent_error": str(e)},
             }
 
-    async def _call_knowledge_agent(self, message: str, context: Dict[str, Any]) -> Dict[str, Any]:
+    async def _call_knowledge_agent(
+        self, message: str, context: Dict[str, Any]
+    ) -> Dict[str, Any]:
         """Call knowledge agent with proper structure."""
         try:
-            from cartrita.orchestrator.agents.knowledge.knowledge_agent import KnowledgeAgent
+            from cartrita.orchestrator.agents.knowledge.knowledge_agent import (
+                KnowledgeAgent,
+            )
+
             knowledge_agent = KnowledgeAgent()
 
             messages = [{"role": "user", "content": message}]
@@ -401,13 +442,16 @@ class CartritaOrchestrator:
                 "response": f"My knowledge vault is having some issues, pero I can still share what I know about: {message[:100]}...",
                 "agent_type": "knowledge_fallback",
                 "processing_time": 0.1,
-                "metadata": {"agent_error": str(e)}
+                "metadata": {"agent_error": str(e)},
             }
 
-    async def _call_task_agent(self, message: str, context: Dict[str, Any]) -> Dict[str, Any]:
+    async def _call_task_agent(
+        self, message: str, context: Dict[str, Any]
+    ) -> Dict[str, Any]:
         """Call task agent with proper structure."""
         try:
             from cartrita.orchestrator.agents.task.task_agent import TaskAgent
+
             task_agent = TaskAgent()
 
             messages = [{"role": "user", "content": message}]
@@ -419,13 +463,16 @@ class CartritaOrchestrator:
                 "response": f"My planning specialist is offline, but let me break this down for you: {message[:100]}...",
                 "agent_type": "task_fallback",
                 "processing_time": 0.1,
-                "metadata": {"agent_error": str(e)}
+                "metadata": {"agent_error": str(e)},
             }
 
-    async def _call_code_agent(self, message: str, context: Dict[str, Any]) -> Dict[str, Any]:
+    async def _call_code_agent(
+        self, message: str, context: Dict[str, Any]
+    ) -> Dict[str, Any]:
         """Call code agent with proper structure."""
         try:
             from cartrita.orchestrator.agents.code.code_agent import CodeAgent
+
             code_agent = CodeAgent()
 
             messages = [{"role": "user", "content": message}]
@@ -437,13 +484,16 @@ class CartritaOrchestrator:
                 "response": f"My code wizard is taking a coffee break, but I can help with the programming question: {message[:100]}...",
                 "agent_type": "code_fallback",
                 "processing_time": 0.1,
-                "metadata": {"agent_error": str(e)}
+                "metadata": {"agent_error": str(e)},
             }
 
-    async def _call_image_agent(self, message: str, context: Dict[str, Any]) -> Dict[str, Any]:
+    async def _call_image_agent(
+        self, message: str, context: Dict[str, Any]
+    ) -> Dict[str, Any]:
         """Call image agent with proper structure."""
         try:
             from cartrita.orchestrator.agents.image.image_agent import ImageAgent
+
             _ = ImageAgent()
 
             # For image requests, we'd need to determine if it's generation or analysis
@@ -452,7 +502,7 @@ class CartritaOrchestrator:
                 "response": f"¡Wepa! Image processing capabilities are ready, but I need more details about what kind of visual work you want me to do with: {message[:100]}...",
                 "agent_type": "image_ready",
                 "processing_time": 0.1,
-                "metadata": {"dalle_available": True, "vision_available": True}
+                "metadata": {"dalle_available": True, "vision_available": True},
             }
         except Exception as e:
             logger.error(f"Image agent call failed: {e}")
@@ -460,7 +510,7 @@ class CartritaOrchestrator:
                 "response": f"My visual specialist is having some issues, but I'm ready to help with image tasks: {message[:100]}...",
                 "agent_type": "image_fallback",
                 "processing_time": 0.1,
-                "metadata": {"agent_error": str(e)}
+                "metadata": {"agent_error": str(e)},
             }
 
     async def get_agent_status(self, agent_id: str) -> Optional[Dict[str, Any]]:

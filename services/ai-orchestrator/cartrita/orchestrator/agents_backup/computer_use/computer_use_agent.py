@@ -12,9 +12,9 @@ from typing import Any
 
 import structlog
 from langchain_core.messages import HumanMessage, SystemMessage
-from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from pydantic import BaseModel, Field, field_validator
 
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 
 # Configure logger
 logger = structlog.get_logger(__name__)
@@ -90,10 +90,28 @@ class ComputerUseRequest(BaseModel):
         if isinstance(v, str):
             s = v.strip().lower()
             # Treat strict/moderate/on/true/yes/1/enabled as True
-            if s in {"true", "1", "yes", "on", "strict", "moderate", "enabled", "enable"}:
+            if s in {
+                "true",
+                "1",
+                "yes",
+                "on",
+                "strict",
+                "moderate",
+                "enabled",
+                "enable",
+            }:
                 return True
             # Treat relaxed/permissive/off/false/no/0/disabled as False
-            if s in {"false", "0", "no", "off", "relaxed", "permissive", "disabled", "disable"}:
+            if s in {
+                "false",
+                "0",
+                "no",
+                "off",
+                "relaxed",
+                "permissive",
+                "disabled",
+                "disable",
+            }:
                 return False
         raise ValueError(
             "safety_mode must be a boolean or one of: 'strict','relaxed','on','off','true','false'"
@@ -146,6 +164,7 @@ class ComputerUseAgent:
     ):
         # Get settings with proper initialization
         from cartrita.orchestrator.utils.config import get_settings
+
         _settings = get_settings()
 
         self.model = model or _settings.ai.computer_use_model
@@ -536,7 +555,16 @@ Provide a clear, concise summary of what was accomplished and any important note
         s = str(value).strip().lower()
         if s in {"true", "1", "yes", "on", "strict", "moderate", "enabled", "enable"}:
             return True
-        if s in {"false", "0", "no", "off", "relaxed", "permissive", "disabled", "disable"}:
+        if s in {
+            "false",
+            "0",
+            "no",
+            "off",
+            "relaxed",
+            "permissive",
+            "disabled",
+            "disable",
+        }:
             return False
         # Default to safest behavior
         return True

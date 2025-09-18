@@ -2,22 +2,23 @@
 
 import logging
 import os
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
 
 import sentry_sdk
-from sentry_sdk.integrations.fastapi import FastApiIntegration
-from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
-from sentry_sdk.integrations.logging import LoggingIntegration
-from sentry_sdk.integrations.asyncio import AsyncioIntegration
 from pydantic import SecretStr
+from sentry_sdk.integrations.asyncio import AsyncioIntegration
+from sentry_sdk.integrations.fastapi import FastApiIntegration
+from sentry_sdk.integrations.logging import LoggingIntegration
+from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
 logger = logging.getLogger(__name__)
+
 
 def init_sentry(
     dsn: Optional[SecretStr] = None,
     environment: str = "production",
     traces_sample_rate: float = 1.0,
-    debug: bool = False
+    debug: bool = False,
 ) -> None:
     """Initialize Sentry with comprehensive integrations for AI OS monitoring."""
 
@@ -30,8 +31,8 @@ def init_sentry(
         FastApiIntegration(auto_enabling_integrations=True),
         SqlalchemyIntegration(),
         LoggingIntegration(
-            level=logging.INFO,        # Capture info and above as breadcrumbs
-            event_level=logging.ERROR  # Send errors as events
+            level=logging.INFO,  # Capture info and above as breadcrumbs
+            event_level=logging.ERROR,  # Send errors as events
         ),
         AsyncioIntegration(),
     ]
@@ -40,14 +41,16 @@ def init_sentry(
     def before_send(event, hint):
         """Custom event processing for AI OS specific context."""
         # Add AI OS specific tags
-        event.setdefault('tags', {}).update({
-            'component': 'ai-orchestrator',
-            'system': 'cartrita-ai-os',
-        })
+        event.setdefault("tags", {}).update(
+            {
+                "component": "ai-orchestrator",
+                "system": "cartrita-ai-os",
+            }
+        )
 
         # Add user context if available
-        if 'user' in event.get('contexts', {}):
-            event['user'].setdefault('segment', 'ai-user')
+        if "user" in event.get("contexts", {}):
+            event["user"].setdefault("segment", "ai-user")
 
         return event
 
@@ -68,12 +71,15 @@ def init_sentry(
         )
 
         # Set custom context
-        sentry_sdk.set_context("ai_system", {
-            "orchestrator_version": "2.0.0",
-            "multi_agent": True,
-            "voice_enabled": True,
-            "neural_architecture": True
-        })
+        sentry_sdk.set_context(
+            "ai_system",
+            {
+                "orchestrator_version": "2.0.0",
+                "multi_agent": True,
+                "voice_enabled": True,
+                "neural_architecture": True,
+            },
+        )
 
         logger.info(f"Sentry initialized successfully for environment: {environment}")
 
@@ -86,7 +92,7 @@ def capture_ai_error(
     error: Exception,
     context: Optional[Dict[str, Any]] = None,
     level: str = "error",
-    tags: Optional[Dict[str, str]] = None
+    tags: Optional[Dict[str, str]] = None,
 ) -> Optional[str]:
     """Capture AI-specific errors with enhanced context."""
 
@@ -112,7 +118,7 @@ def capture_agent_performance(
     operation: str,
     duration_ms: float,
     success: bool = True,
-    metadata: Optional[Dict[str, Any]] = None
+    metadata: Optional[Dict[str, Any]] = None,
 ) -> None:
     """Capture agent performance metrics."""
 
@@ -123,8 +129,7 @@ def capture_agent_performance(
 
         # Create custom transaction for performance monitoring
         with sentry_sdk.start_transaction(
-            op="ai.agent.operation",
-            name=f"{agent_type}.{operation}"
+            op="ai.agent.operation", name=f"{agent_type}.{operation}"
         ) as transaction:
             transaction.set_data("duration_ms", duration_ms)
             transaction.set_data("agent_metadata", metadata or {})
@@ -136,17 +141,14 @@ def capture_agent_performance(
                 tags={
                     "agent_type": agent_type,
                     "operation": operation,
-                    "success": str(success)
-                }
+                    "success": str(success),
+                },
             )
 
             sentry_sdk.metrics.timing(
                 key="ai.agent.duration",
                 value=duration_ms,
-                tags={
-                    "agent_type": agent_type,
-                    "operation": operation
-                }
+                tags={"agent_type": agent_type, "operation": operation},
             )
 
 
@@ -155,18 +157,21 @@ def capture_conversation_metrics(
     message_count: int,
     tokens_used: int,
     agents_involved: list[str],
-    duration_seconds: float
+    duration_seconds: float,
 ) -> None:
     """Capture conversation-level metrics."""
 
     with sentry_sdk.configure_scope() as scope:
         scope.set_tag("conversation_id", conversation_id)
-        scope.set_context("conversation", {
-            "message_count": message_count,
-            "tokens_used": tokens_used,
-            "agents_involved": agents_involved,
-            "duration_seconds": duration_seconds
-        })
+        scope.set_context(
+            "conversation",
+            {
+                "message_count": message_count,
+                "tokens_used": tokens_used,
+                "agents_involved": agents_involved,
+                "duration_seconds": duration_seconds,
+            },
+        )
 
         # Record metrics
         sentry_sdk.metrics.incr("ai.conversations.completed", 1)
@@ -179,7 +184,7 @@ def add_breadcrumb_ai_event(
     message: str,
     category: str = "ai",
     level: str = "info",
-    data: Optional[Dict[str, Any]] = None
+    data: Optional[Dict[str, Any]] = None,
 ) -> None:
     """Add AI-specific breadcrumb for debugging."""
 
@@ -188,23 +193,19 @@ def add_breadcrumb_ai_event(
         category=category,
         level=level,
         type=event_type,
-        data=data or {}
+        data=data or {},
     )
 
 
 # Decorator for automatic error tracking
-def track_ai_errors(
-    component: str,
-    operation: str = None
-):
+def track_ai_errors(component: str, operation: Optional[str] = None):
     """Decorator to automatically track AI component errors."""
 
     def decorator(func):
         def wrapper(*args, **kwargs):
             try:
                 with sentry_sdk.start_transaction(
-                    op=f"ai.{component}",
-                    name=operation or func.__name__
+                    op=f"ai.{component}", name=operation or func.__name__
                 ):
                     return func(*args, **kwargs)
             except Exception as e:
@@ -214,13 +215,12 @@ def track_ai_errors(
                         "component": component,
                         "operation": operation or func.__name__,
                         "args": str(args)[:500],  # Limit args size
-                        "kwargs": str(kwargs)[:500]
+                        "kwargs": str(kwargs)[:500],
                     },
-                    tags={
-                        "component": component,
-                        "function": func.__name__
-                    }
+                    tags={"component": component, "function": func.__name__},
                 )
                 raise
+
         return wrapper
+
     return decorator

@@ -3,12 +3,14 @@ LangChain Callbacks Template for Cartrita
 Implements callback patterns for monitoring and debugging
 """
 
-from typing import Any, Dict, List, Optional, Union, Callable
-from langchain_core.callbacks import BaseCallbackHandler
-from langchain_core.agents import AgentAction, AgentFinish
-from langchain_core.outputs import LLMResult
 import logging
 from datetime import datetime
+from typing import Any, Callable, Dict, List, Optional, Union
+
+from langchain_core.agents import AgentAction, AgentFinish
+from langchain_core.callbacks import BaseCallbackHandler
+from langchain_core.outputs import LLMResult
+
 
 class CartritaCallbackHandler(BaseCallbackHandler):
     """Custom callback handler for Cartrita agents"""
@@ -16,12 +18,7 @@ class CartritaCallbackHandler(BaseCallbackHandler):
     def __init__(self, logger: Optional[logging.Logger] = None):
         self.logger = logger or logging.getLogger(__name__)
         self.start_time = None
-        self.metrics = {
-            "llm_calls": 0,
-            "tool_calls": 0,
-            "errors": 0,
-            "tokens_used": 0
-        }
+        self.metrics = {"llm_calls": 0, "tool_calls": 0, "errors": 0, "tokens_used": 0}
 
     def on_llm_start(
         self, serialized: Dict[str, Any], prompts: List[str], **kwargs: Any
@@ -35,7 +32,9 @@ class CartritaCallbackHandler(BaseCallbackHandler):
         # Track tokens if available
         if hasattr(response, "llm_output") and response.llm_output:
             if "token_usage" in response.llm_output:
-                self.metrics["tokens_used"] += response.llm_output["token_usage"].get("total_tokens", 0)
+                self.metrics["tokens_used"] += response.llm_output["token_usage"].get(
+                    "total_tokens", 0
+                )
 
         self.logger.debug("LLM completed successfully")
 
@@ -100,12 +99,8 @@ class CartritaCallbackHandler(BaseCallbackHandler):
 
     def reset_metrics(self) -> None:
         """Reset metrics"""
-        self.metrics = {
-            "llm_calls": 0,
-            "tool_calls": 0,
-            "errors": 0,
-            "tokens_used": 0
-        }
+        self.metrics = {"llm_calls": 0, "tool_calls": 0, "errors": 0, "tokens_used": 0}
+
 
 class CartritaStreamingCallbackHandler(BaseCallbackHandler):
     """Callback handler for streaming responses"""

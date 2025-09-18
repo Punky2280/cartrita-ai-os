@@ -4,11 +4,16 @@ Implements chain patterns for composable workflows
 """
 
 from typing import Any, Dict, List, Optional
+
 from langchain.chains import LLMChain
-from langchain_core.prompts import BasePromptTemplate
-from langchain_core.callbacks import CallbackManagerForChainRun, AsyncCallbackManagerForChainRun
+from langchain_core.callbacks import (
+    AsyncCallbackManagerForChainRun,
+    CallbackManagerForChainRun,
+)
 from langchain_core.language_models import BaseLanguageModel
+from langchain_core.prompts import BasePromptTemplate
 from pydantic import Field
+
 
 class CartritaChain(LLMChain):
     """Custom chain for Cartrita following LangChain patterns"""
@@ -17,10 +22,7 @@ class CartritaChain(LLMChain):
 
     @classmethod
     def from_prompt(
-        cls,
-        llm: BaseLanguageModel,
-        prompt: BasePromptTemplate,
-        **kwargs: Any
+        cls, llm: BaseLanguageModel, prompt: BasePromptTemplate, **kwargs: Any
     ) -> "CartritaChain":
         """Create chain from prompt template"""
         return cls(llm=llm, prompt=prompt, **kwargs)
@@ -28,7 +30,7 @@ class CartritaChain(LLMChain):
     def _call(
         self,
         inputs: Dict[str, Any],
-        run_manager: Optional[CallbackManagerForChainRun] = None
+        run_manager: Optional[CallbackManagerForChainRun] = None,
     ) -> Dict[str, Any]:
         """Execute the chain"""
         # Log chain execution
@@ -41,8 +43,7 @@ class CartritaChain(LLMChain):
         # Execute LLM
         if run_manager:
             response = self.llm.generate_prompt(
-                [prompt_value],
-                callbacks=run_manager.get_child()
+                [prompt_value], callbacks=run_manager.get_child()
             )
         else:
             response = self.llm.generate_prompt([prompt_value])
@@ -59,7 +60,7 @@ class CartritaChain(LLMChain):
     async def _acall(
         self,
         inputs: Dict[str, Any],
-        run_manager: Optional[AsyncCallbackManagerForChainRun] = None
+        run_manager: Optional[AsyncCallbackManagerForChainRun] = None,
     ) -> Dict[str, Any]:
         """Async execute the chain"""
         if run_manager:
@@ -69,8 +70,7 @@ class CartritaChain(LLMChain):
 
         if run_manager:
             response = await self.llm.agenerate_prompt(
-                [prompt_value],
-                callbacks=run_manager.get_child()
+                [prompt_value], callbacks=run_manager.get_child()
             )
         else:
             response = await self.llm.agenerate_prompt([prompt_value])
@@ -86,6 +86,7 @@ class CartritaChain(LLMChain):
     def _chain_type(self) -> str:
         """Return chain type"""
         return self.chain_type
+
 
 class CartritaSequentialChain:
     """Sequential chain for multi-step workflows"""

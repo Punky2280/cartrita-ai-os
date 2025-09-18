@@ -4,7 +4,6 @@ Tests the core functionality without external dependencies.
 """
 
 import os
-
 import sys
 from collections.abc import Generator
 from typing import Any
@@ -20,17 +19,24 @@ os.environ.setdefault("CARTRITA_DISABLE_DB", "1")
 def mock_dependencies() -> Generator[dict[str, Any]]:
     """Mock all external dependencies."""
     with (
-            patch("cartrita.orchestrator.core.database.DatabaseManager") as mock_db,
-            patch("cartrita.orchestrator.core.cache.CacheManager") as mock_cache,
-            patch("cartrita.orchestrator.core.metrics.MetricsCollector") as mock_metrics,
-            patch("cartrita.orchestrator.core.supervisor.SupervisorOrchestrator") as mock_supervisor,
-            patch("cartrita.orchestrator.agents.research.research_agent.ResearchAgent") as mock_research,
-            patch("cartrita.orchestrator.agents.code.code_agent.CodeAgent") as mock_code,
-            patch("cartrita.orchestrator.agents.computer_use.computer_use_agent.ComputerUseAgent") as mock_computer,
-            patch("cartrita.orchestrator.agents.knowledge.knowledge_agent.KnowledgeAgent") as mock_knowledge,
-            patch("cartrita.orchestrator.agents.task.task_agent.TaskAgent") as mock_task,
+        patch("cartrita.orchestrator.core.database.DatabaseManager") as mock_db,
+        patch("cartrita.orchestrator.core.cache.CacheManager") as mock_cache,
+        patch("cartrita.orchestrator.core.metrics.MetricsCollector") as mock_metrics,
+        patch(
+            "cartrita.orchestrator.core.supervisor.SupervisorOrchestrator"
+        ) as mock_supervisor,
+        patch(
+            "cartrita.orchestrator.agents.research.research_agent.ResearchAgent"
+        ) as mock_research,
+        patch("cartrita.orchestrator.agents.code.code_agent.CodeAgent") as mock_code,
+        patch(
+            "cartrita.orchestrator.agents.computer_use.computer_use_agent.ComputerUseAgent"
+        ) as mock_computer,
+        patch(
+            "cartrita.orchestrator.agents.knowledge.knowledge_agent.KnowledgeAgent"
+        ) as mock_knowledge,
+        patch("cartrita.orchestrator.agents.task.task_agent.TaskAgent") as mock_task,
     ):
-
         # Configure mocks
         mock_db_instance = AsyncMock()
         mock_db.return_value = mock_db_instance
@@ -133,6 +139,7 @@ def test_imports() -> None:
     # Test basic import - if this works, core dependencies are installed
     try:
         import cartrita.orchestrator.main  # noqa: F401
+
         assert True
     except ImportError as e:
         pytest.fail(f"Failed to import core module: {e}")
@@ -153,7 +160,9 @@ async def test_voice_conversation_flow():
                 yield {"type": "done"}
 
             # Replace the streaming method directly for deterministic output
-            with patch.object(service, "process_voice_conversation", side_effect=_mock_stream):
+            with patch.object(
+                service, "process_voice_conversation", side_effect=_mock_stream
+            ):
                 conversation_id = "test-voice-conversation"
                 transcribed_text = "Hello, can you help me?"
                 chunks = []

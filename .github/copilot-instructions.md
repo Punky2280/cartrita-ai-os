@@ -1,11 +1,108 @@
-You are Cartrita AI OS Core Engineering Copilot (GPT-5 tier). Your role: accelerate development across the hierarchical multi-agent system (Supervisor + specialized agents: research, code, computer_use, knowledge, task) while preserving stability, architectural integrity, observability, and safety constraints. You MUST:
+# Cartrita AI OS - Distributed AI Instructions
 
-Produce minimal, high-leverage changes.
-Conform to existing conventions (LangGraph state helpers, fallback provider v2, structured logging).
-Maintain or improve reliability, test coverage, performance, and security posture.
-Refuse speculative rewrites; iterate surgically.
-Provide explicit reasoning only in designated scratch sections—never in final code blocks.
-PRIMARY OBJECTIVES (PRIORITIZED)
+You are working with the Cartrita AI OS, a hierarchical multi-agent AI orchestration system.
+
+**CRITICAL: This project uses DISTRIBUTED AI INSTRUCTIONS for maximum productivity.**
+
+## 🎯 Quick Reference
+
+**Context-Specific Instructions Located At:**
+
+- **Backend Development:** `services/ai-orchestrator/AI_INSTRUCTIONS.md`
+
+  - Agent patterns, fallback providers, structured logging, dependencies
+  - LangGraph state management, streaming responses, security
+
+- **Frontend Development:** `frontend/AI_INSTRUCTIONS.md`
+
+  - Next.js 15 patterns, Jotai state management, TanStack Query
+  - SSE streaming, component patterns, testing
+
+- **Agent Creation:** `services/ai-orchestrator/cartrita/orchestrator/agents/AI_INSTRUCTIONS.md`
+
+  - Agent architecture, base classes, tool integration
+  - Registration patterns, error handling, performance guidelines
+
+- **Docker & Deployment:** `AI_DEPLOYMENT.md`
+
+  - Multi-service architecture, container security, environment config
+  - Health checks, scaling, troubleshooting
+
+- **Testing Patterns:** `tests/AI_TESTING.md`
+  - pytest fixtures, agent testing, API testing, integration tests
+  - Performance testing, mocking, quality thresholds
+
+## 🚀 Essential Quick Commands
+
+**After Backend Changes:**
+
+```bash
+pytest -m "not slow" -q
+```
+
+**Quality Checks:**
+
+```bash
+# Backend
+ruff check . --fix && mypy .
+
+# Frontend
+npm run lint:fix && npm run type-check
+```
+
+**Development Setup:**
+
+```bash
+# Start services
+docker-compose up -d postgres redis
+
+# Backend
+cd services/ai-orchestrator && python enhanced_main.py
+
+# Frontend
+cd frontend && npm run dev
+```
+
+## 🔒 Security Reminder
+
+**Before ANY commit:**
+
+```bash
+grep -r "sk-" . --exclude-dir=node_modules --exclude-dir=.git
+```
+
+## 📂 Project Structure Quick Map
+
+```
+cartrita-ai-os/
+├── services/ai-orchestrator/          # Python backend + agents
+│   ├── AI_INSTRUCTIONS.md            # 👈 Backend development guide
+│   └── cartrita/orchestrator/agents/ # Agent implementations
+│       └── AI_INSTRUCTIONS.md        # 👈 Agent creation guide
+├── frontend/                         # Next.js frontend
+│   └── AI_INSTRUCTIONS.md           # 👈 Frontend development guide
+├── tests/                           # Test suite
+│   └── AI_TESTING.md               # 👈 Testing patterns guide
+├── AI_DEPLOYMENT.md                # 👈 Docker & deployment guide
+└── docker-compose.yml              # Multi-service orchestration
+```
+
+## 🎮 AI Agent Productivity Rules
+
+1. **ALWAYS read the context-specific instructions** for the area you're working in
+2. **Use the distributed instruction files** - they contain the exact patterns for each domain
+3. **Follow the established patterns** - don't reinvent, extend existing base classes
+4. **Test immediately** after changes using the quick test commands
+5. **Check security** before commits with the grep command above
+
+**The distributed instruction system ensures you have the right context at the right time, exactly where you need it in the codebase.**
+
+## Docker & Deployment
+
+- Multi-service architecture: `docker-compose up -d postgres redis` for development
+- Backend runs on port 8000, frontend on 3000
+- PostgreSQL with pgvector for embeddings, Redis for caching
+- All containers use non-root users and read-only filesystems for security
 
 Correctness & Safety: No broken flows; no unauthorized file or API surface changes.
 Architectural Consistency: Conform to existing patterns in services/ai-orchestrator and frontend; reuse utility modules.
@@ -29,7 +126,7 @@ Industry best practices (Python 3.13, FastAPI async, LangGraph patterns, modern 
 General LLM capabilities last.
 NON-NEGOTIABLE CONSTRAINTS
 
-Never mutate LangGraph state directly: use _safe_get_messages, _safe_append_message, _safe_set_messages, _normalize_state.
+Never mutate LangGraph state directly: use \_safe_get_messages, \_safe_append_message, \_safe_set_messages, \_normalize_state.
 Use max_completion_tokens (not max_tokens) when invoking OpenAI chat models.
 Use fallback_provider_v2.get_fallback_provider() for fallback; async call returns plain string.
 Respect iteration limits: max_total_iterations, max_attempts_per_agent, agent_attempts (supervisor loop guard).
@@ -45,9 +142,9 @@ PLACEHOLDER VARIABLES (USE VERBATIM—DO NOT EXPAND INTERNALLY)
 {TARGET_FILE}
 {RELATED_FILES}
 {SERVICE_NAME}
-{IMPACT_LEVEL}               # low | moderate | high
+{IMPACT_LEVEL} # low | moderate | high
 {RISK_NOTES}
-{TEST_COMMAND}               # e.g. pytest -q
+{TEST_COMMAND} # e.g. pytest -q
 {BRANCH_NAME}
 {ISSUE_REFERENCE}
 {ACCEPTANCE_CRITERIA}
@@ -125,6 +222,7 @@ If tool failure:
 Use fallback provider with purpose="error_recovery" context and note in metadata.
 
 DEPENDENCY DETERMINISM WORKFLOW
+
 1. Edit direct pins only in `requirements.in` (and GPU extras in `requirements-gpu.in`).
 2. Run: `pip-compile --generate-hashes --allow-unsafe --output-file services/ai-orchestrator/constraints.txt services/ai-orchestrator/requirements.in`.
 3. Ensure `setuptools` pinned; if warning appears, add/update pin.
@@ -136,21 +234,25 @@ QUALITY RESTORATION PHASES (GUARDRAIL)
 Lock validation → Observability integrity → Lint/type tightening → Security & SCA → Streaming performance → Fallback resilience → Drift automation → Runbook completion. Do not regress completed phases without mitigation rationale.
 
 DRIFT & UPGRADE POLICY
+
 - Nightly job generates diff PR; never auto-merge.
 - Each upgrade: link changelog, classify risk (low/moderate/high), scan for breaking changes.
 - Reject if increases vulnerabilities or introduces conflicting version ranges.
 
 CODACY INTEGRATION
+
 - Run Codacy CLI after each material file edit (code, docs with guidance) before finalizing.
 - Fix or document rationale for any new issues (no silent acceptance).
 - Do not disable rules globally unless policy-approved; prefer localized fixes.
 
 SECURITY & SUPPLY CHAIN
+
 - Maintain hash integrity; no local editable installs in production images.
 - Plan SBOM (CycloneDX) generation on dependency change PRs (future integration—do not fabricate output).
 - Secret scanning must pass before merge if new env var surfaces.
 
 DOCUMENTATION SYNC AUGMENTED
+
 - Update `SETUP-STATUS.md` and relevant `/docs` sections when: dependency workflow changes, new quality phase completes, or drift policy adjusted.
 - Include Delta Summary: Motivation | Change | Impact | Rollback steps.
 

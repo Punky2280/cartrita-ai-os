@@ -10,11 +10,12 @@ import time
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from typing import Any, Dict, List, Optional
+
+from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
-from dotenv import load_dotenv
 
 load_dotenv("/app/.env")
 
@@ -54,7 +55,9 @@ class ChatResponse(BaseModel):
 class VoiceChatRequest(BaseModel):
     conversationId: str = Field(..., description="Unique conversation identifier")
     transcribedText: str = Field(..., description="Text transcribed from user's speech")
-    conversationHistory: Optional[List[Dict[str, Any]]] = Field(None, description="Previous conversation messages")
+    conversationHistory: Optional[List[Dict[str, Any]]] = Field(
+        None, description="Previous conversation messages"
+    )
     voiceMode: bool = Field(True, description="Whether this is a voice conversation")
 
 
@@ -83,7 +86,7 @@ app.add_middleware(
         "http://localhost:3000",
         "http://localhost:3001",
         "http://localhost:3003",  # For Turbopack dev server
-        "https://cartrita-ai-os.com"
+        "https://cartrita-ai-os.com",
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -106,7 +109,7 @@ async def root():
             "chat_stream": "/api/chat/stream",
             "voice_chat": "/api/chat/voice",
             "docs": "/docs",
-        }
+        },
     }
 
 
@@ -117,11 +120,7 @@ async def health_check():
         status="healthy",
         version="2.0.0",
         timestamp=time.time(),
-        services={
-            "api": "healthy",
-            "cors": "configured",
-            "simplified": True
-        }
+        services={"api": "healthy", "cors": "configured", "simplified": True},
     )
 
 
@@ -137,7 +136,7 @@ async def chat(request: ChatRequest, api_key: str = Depends(verify_api_key)):
         response=response_text,
         conversation_id=request.conversation_id or f"conv-{int(time.time())}",
         agent_type="echo-agent",
-        processing_time=time.time() - start_time
+        processing_time=time.time() - start_time,
     )
 
 
@@ -152,17 +151,16 @@ async def voice_chat(request: VoiceChatRequest, api_key: str = Depends(verify_ap
         response=response_text,
         conversation_id=request.conversationId,
         agent_type="voice-echo-agent",
-        processing_time=time.time() - start_time
+        processing_time=time.time() - start_time,
     )
 
 
 @app.get("/api/chat/stream")
 async def chat_stream(
-    message: str,
-    context: Optional[str] = None,
-    api_key: str = Depends(verify_api_key)
+    message: str, context: Optional[str] = None, api_key: str = Depends(verify_api_key)
 ):
     """SSE endpoint for streaming chat responses."""
+
     async def generate():
         try:
             # Simple streaming response
@@ -170,22 +168,22 @@ async def chat_stream(
                 "response": f"Streaming echo: {message}",
                 "conversation_id": f"stream-{int(time.time())}",
                 "agent_type": "streaming-echo",
-                "timestamp": time.time()
+                "timestamp": time.time(),
             }
             yield f"data: {json.dumps(response_data)}\n\n"
             yield "data: [DONE]\n\n"
         except Exception as e:
             yield f"data: {json.dumps({'error': str(e)})}\n\n"
 
-    return StreamingResponse(
-        generate(),
-        media_type="text/event-stream",
-        headers={
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-            "Access-Control-Allow-Origin": "*",
-        }
-    )
+        return StreamingResponse(
+            generate(),
+            media_type="text/event-stream",
+            headers={
+                "Cache-Control": "no-cache",
+                "Connection": "keep-alive",
+                "Access-Control-Allow-Origin": "null",  # Secure default
+            },
+        )
 
 
 @app.exception_handler(HTTPException)
@@ -196,13 +194,14 @@ async def http_exception_handler(request: Request, exc: HTTPException):
         content={
             "error": exc.detail,
             "code": f"HTTP_{exc.status_code}",
-            "path": request.url.path
-        }
+            "path": request.url.path,
+        },
     )
 
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(
         app,
         host="127.0.0.1",

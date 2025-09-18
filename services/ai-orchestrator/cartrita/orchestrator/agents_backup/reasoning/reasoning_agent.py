@@ -4,12 +4,13 @@ Handles complex problem-solving, mathematical reasoning, and deep analysis using
 """
 
 import time
-from typing import Any, Dict, List, Tuple
 from enum import Enum
+from typing import Any, Dict, List, Tuple
 
 import structlog
-from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from pydantic import BaseModel, Field
+
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 
 logger = structlog.get_logger(__name__)
 
@@ -18,8 +19,10 @@ logger = structlog.get_logger(__name__)
 # Reasoning Models
 # ============================================
 
+
 class ReasoningMode(str, Enum):
     """Reasoning modes for different problem types."""
+
     MATHEMATICAL = "mathematical"
     LOGICAL = "logical"
     SCIENTIFIC = "scientific"
@@ -31,6 +34,7 @@ class ReasoningMode(str, Enum):
 
 class ComplexityLevel(str, Enum):
     """Problem complexity levels."""
+
     SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
@@ -42,9 +46,15 @@ class ReasoningRequest(BaseModel):
 
     problem: str = Field(..., description="Problem statement or question")
     mode: ReasoningMode = Field(ReasoningMode.ANALYTICAL, description="Reasoning mode")
-    complexity: ComplexityLevel = Field(ComplexityLevel.MODERATE, description="Problem complexity")
-    context: Dict[str, Any] = Field(default_factory=dict, description="Additional context")
-    constraints: List[str] = Field(default_factory=list, description="Problem constraints")
+    complexity: ComplexityLevel = Field(
+        ComplexityLevel.MODERATE, description="Problem complexity"
+    )
+    context: Dict[str, Any] = Field(
+        default_factory=dict, description="Additional context"
+    )
+    constraints: List[str] = Field(
+        default_factory=list, description="Problem constraints"
+    )
     time_limit: int | None = Field(None, description="Time limit in minutes")
     step_by_step: bool = Field(True, description="Show reasoning steps")
 
@@ -75,6 +85,7 @@ class ReasoningResponse(BaseModel):
 # Reasoning Agent
 # ============================================
 
+
 class ReasoningAgent:
     """
     Advanced Reasoning Agent using O-series models for complex problem-solving.
@@ -96,10 +107,13 @@ class ReasoningAgent:
         """Initialize the reasoning agent with optimal models."""
         # Get settings with proper initialization
         from cartrita.orchestrator.utils.config import get_settings
+
         _settings = get_settings()
 
         self.default_model = default_model or _settings.ai.reasoning_model  # o3-mini
-        self.research_model = research_model or _settings.ai.deep_research_model  # o4-mini-deep-research
+        self.research_model = (
+            research_model or _settings.ai.deep_research_model
+        )  # o4-mini-deep-research
         self.pro_model = pro_model or "o1-pro"  # For highest complexity tasks
         self.api_key = api_key or _settings.ai.openai_api_key.get_secret_value()
 
@@ -136,14 +150,16 @@ class ReasoningAgent:
                 "simple": 0,
                 "moderate": 0,
                 "complex": 0,
-                "expert": 0
-            }
+                "expert": 0,
+            },
         }
 
-        logger.info("Reasoning Agent initialized",
-                    default_model=self.default_model,
-                    research_model=self.research_model,
-                    pro_model=self.pro_model)
+        logger.info(
+            "Reasoning Agent initialized",
+            default_model=self.default_model,
+            research_model=self.research_model,
+            pro_model=self.pro_model,
+        )
 
     async def start(self) -> None:
         """Start the reasoning agent."""
@@ -176,7 +192,7 @@ class ReasoningAgent:
             # Execute reasoning
             messages = [
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": reasoning_prompt}
+                {"role": "user", "content": reasoning_prompt},
             ]
 
             response = await llm.ainvoke(messages)
@@ -206,34 +222,43 @@ class ReasoningAgent:
                     "mode": request.mode,
                     "original_complexity": request.complexity,
                     "constraints": request.constraints,
-                    "time_limit": request.time_limit
-                }
+                    "time_limit": request.time_limit,
+                },
             )
 
             # Store in reasoning history
-            self.reasoning_history.append({
-                "timestamp": time.time(),
-                "request": request.dict(),
-                "response": reasoning_response.dict()
-            })
+            self.reasoning_history.append(
+                {
+                    "timestamp": time.time(),
+                    "request": request.dict(),
+                    "response": reasoning_response.dict(),
+                }
+            )
 
             return reasoning_response
 
         except Exception as e:
-            logger.error("Problem solving failed", error=str(e), problem=request.problem[:100])
+            logger.error(
+                "Problem solving failed", error=str(e), problem=request.problem[:100]
+            )
             raise
 
     def _select_model(self, request: ReasoningRequest) -> Tuple[str, Any]:
         """Select appropriate model based on request parameters."""
 
         # Use research model for research mode or high complexity
-        if request.mode == ReasoningMode.RESEARCH or request.complexity == ComplexityLevel.EXPERT:
+        if (
+            request.mode == ReasoningMode.RESEARCH
+            or request.complexity == ComplexityLevel.EXPERT
+        ):
             if "research" in request.problem.lower():
                 return self.research_model, self.research_llm
 
         # Use pro model for most complex problems
         if request.complexity == ComplexityLevel.EXPERT and request.mode in [
-            ReasoningMode.MATHEMATICAL, ReasoningMode.SCIENTIFIC, ReasoningMode.STRATEGIC
+            ReasoningMode.MATHEMATICAL,
+            ReasoningMode.SCIENTIFIC,
+            ReasoningMode.STRATEGIC,
         ]:
             return self.pro_model, self.pro_llm
 
@@ -252,14 +277,14 @@ class ReasoningAgent:
             ReasoningMode.STRATEGIC: "Think strategically about goals, constraints, and trade-offs. Consider multiple scenarios and outcomes.",
             ReasoningMode.CREATIVE: "Explore innovative solutions while maintaining logical coherence. Think outside conventional approaches.",
             ReasoningMode.ANALYTICAL: "Break down complex problems into components. Analyze relationships and synthesize insights.",
-            ReasoningMode.RESEARCH: "Conduct thorough analysis of available information. Cite sources and identify knowledge gaps."
+            ReasoningMode.RESEARCH: "Conduct thorough analysis of available information. Cite sources and identify knowledge gaps.",
         }
 
         complexity_guidance = {
             ComplexityLevel.SIMPLE: "Provide clear, concise explanations suitable for general audiences.",
             ComplexityLevel.MODERATE: "Include sufficient detail and reasoning steps for informed audiences.",
             ComplexityLevel.COMPLEX: "Provide comprehensive analysis with advanced concepts and detailed reasoning.",
-            ComplexityLevel.EXPERT: "Use expert-level analysis with full technical depth and sophisticated reasoning."
+            ComplexityLevel.EXPERT: "Use expert-level analysis with full technical depth and sophisticated reasoning.",
         }
 
         return f"{base_prompt} {mode_prompts[request.mode]} {complexity_guidance[request.complexity]}"
@@ -294,20 +319,25 @@ class ReasoningAgent:
         """Extract reasoning steps from response."""
         # Simple implementation - could be enhanced with better parsing
         steps = []
-        lines = response.split('\n')
+        lines = response.split("\n")
 
         step_num = 1
         current_step = ""
 
         for line in lines:
-            if any(marker in line.lower() for marker in ['step', 'phase', 'stage', '1.', '2.', '3.']):
+            if any(
+                marker in line.lower()
+                for marker in ["step", "phase", "stage", "1.", "2.", "3."]
+            ):
                 if current_step:
-                    steps.append(ReasoningStep(
-                        step_number=step_num,
-                        description=f"Step {step_num}",
-                        reasoning=current_step.strip(),
-                        confidence=0.8  # Default confidence
-                    ))
+                    steps.append(
+                        ReasoningStep(
+                            step_number=step_num,
+                            description=f"Step {step_num}",
+                            reasoning=current_step.strip(),
+                            confidence=0.8,  # Default confidence
+                        )
+                    )
                     step_num += 1
                 current_step = line
             else:
@@ -315,12 +345,14 @@ class ReasoningAgent:
 
         # Add final step
         if current_step:
-            steps.append(ReasoningStep(
-                step_number=step_num,
-                description=f"Step {step_num}",
-                reasoning=current_step.strip(),
-                confidence=0.8
-            ))
+            steps.append(
+                ReasoningStep(
+                    step_number=step_num,
+                    description=f"Step {step_num}",
+                    reasoning=current_step.strip(),
+                    confidence=0.8,
+                )
+            )
 
         return steps
 
@@ -329,13 +361,33 @@ class ReasoningAgent:
 
         # Factors that increase confidence
         confidence_factors = {
-            "has_verification": 0.1 if "verify" in response.lower() or "check" in response.lower() else 0,
-            "shows_steps": 0.1 if request.step_by_step and len(response.split('\n')) > 5 else 0,
-            "acknowledges_limitations": 0.1 if "limitation" in response.lower() or "assumption" in response.lower() else 0,
-            "uses_examples": 0.1 if "example" in response.lower() or "instance" in response.lower() else 0,
-            "mathematical_rigor": 0.1 if request.mode == ReasoningMode.MATHEMATICAL and any(
-                symbol in response for symbol in ['=', '+', '-', '*', '/', '^', '∫', '∑', '∏']
-            ) else 0
+            "has_verification": (
+                0.1
+                if "verify" in response.lower() or "check" in response.lower()
+                else 0
+            ),
+            "shows_steps": (
+                0.1 if request.step_by_step and len(response.split("\n")) > 5 else 0
+            ),
+            "acknowledges_limitations": (
+                0.1
+                if "limitation" in response.lower() or "assumption" in response.lower()
+                else 0
+            ),
+            "uses_examples": (
+                0.1
+                if "example" in response.lower() or "instance" in response.lower()
+                else 0
+            ),
+            "mathematical_rigor": (
+                0.1
+                if request.mode == ReasoningMode.MATHEMATICAL
+                and any(
+                    symbol in response
+                    for symbol in ["=", "+", "-", "*", "/", "^", "∫", "∑", "∏"]
+                )
+                else 0
+            ),
         }
 
         # Base confidence by complexity
@@ -343,7 +395,7 @@ class ReasoningAgent:
             ComplexityLevel.SIMPLE: 0.8,
             ComplexityLevel.MODERATE: 0.7,
             ComplexityLevel.COMPLEX: 0.6,
-            ComplexityLevel.EXPERT: 0.5
+            ComplexityLevel.EXPERT: 0.5,
         }[request.complexity]
 
         # Calculate final confidence
@@ -355,11 +407,21 @@ class ReasoningAgent:
 
         # Analyze response characteristics
         response_length = len(response.split())
-        has_math = any(symbol in response for symbol in ['=', '∫', '∑', '∏', '∂'])
-        has_advanced_concepts = any(term in response.lower() for term in [
-            'algorithm', 'optimization', 'probability', 'statistics', 'differential',
-            'hypothesis', 'methodology', 'framework', 'paradigm'
-        ])
+        has_math = any(symbol in response for symbol in ["=", "∫", "∑", "∏", "∂"])
+        has_advanced_concepts = any(
+            term in response.lower()
+            for term in [
+                "algorithm",
+                "optimization",
+                "probability",
+                "statistics",
+                "differential",
+                "hypothesis",
+                "methodology",
+                "framework",
+                "paradigm",
+            ]
+        )
 
         if response_length > 1000 or has_advanced_concepts:
             assessed = "Expert level - requires specialized knowledge and deep analysis"
@@ -372,7 +434,9 @@ class ReasoningAgent:
 
         return assessed
 
-    def _update_stats(self, request: ReasoningRequest, confidence: float, processing_time: float) -> None:
+    def _update_stats(
+        self, request: ReasoningRequest, confidence: float, processing_time: float
+    ) -> None:
         """Update performance statistics."""
 
         self.performance_stats["problems_solved"] += 1
@@ -383,8 +447,8 @@ class ReasoningAgent:
         current_avg = self.performance_stats["average_confidence"]
         total_problems = self.performance_stats["problems_solved"]
         self.performance_stats["average_confidence"] = (
-            (current_avg * (total_problems - 1) + confidence) / total_problems
-        )
+            current_avg * (total_problems - 1) + confidence
+        ) / total_problems
 
     async def analyze_reasoning_patterns(self) -> Dict[str, Any]:
         """Analyze patterns in reasoning history."""
@@ -416,7 +480,7 @@ class ReasoningAgent:
             "total_problems_solved": len(self.reasoning_history),
             "mode_distribution": mode_distribution,
             "average_processing_time_by_complexity": avg_time_by_complexity,
-            "performance_stats": self.performance_stats
+            "performance_stats": self.performance_stats,
         }
 
     def get_capabilities(self) -> Dict[str, Any]:
@@ -425,13 +489,13 @@ class ReasoningAgent:
             "models": {
                 "default": self.default_model,
                 "research": self.research_model,
-                "professional": self.pro_model
+                "professional": self.pro_model,
             },
             "rate_limits": {
                 "o3_mini": "200K TPM, 500 RPM, 2M TPD",
                 "o4_mini": "200K TPM, 500 RPM, 2M TPD",
                 "o4_mini_deep_research": "200K TPM, 500 RPM, 200K TPD",
-                "o1_pro": "30K TPM, 500 RPM, 90K TPD"
+                "o1_pro": "30K TPM, 500 RPM, 90K TPD",
             },
             "reasoning_modes": [mode.value for mode in ReasoningMode],
             "complexity_levels": [level.value for level in ComplexityLevel],
@@ -444,7 +508,7 @@ class ReasoningAgent:
                 "deep_research_analysis",
                 "step_by_step_reasoning",
                 "confidence_assessment",
-                "pattern_analysis"
+                "pattern_analysis",
             ],
-            "statistics": self.performance_stats
+            "statistics": self.performance_stats,
         }

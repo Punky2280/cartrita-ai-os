@@ -1,7 +1,7 @@
 # Cartrita AI OS - AI Orchestrator Service
-# Deterministic dependency build (pip-tools constraints) - Python 3.13
+# Deterministic dependency build (pip-tools constraints) - Python 3.13.3
 
-FROM python:3.13-slim
+FROM python:3.13.3-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
@@ -43,7 +43,8 @@ COPY . .
 
 # Create necessary directories
 RUN mkdir -p /app/logs /app/uploads /app/temp && \
-    chown -R cartrita:cartrita /app
+    chown -R cartrita:cartrita /app && \
+    chmod 755 /app/logs /app/uploads /app/temp
 
 # Switch to non-root user
 USER cartrita
@@ -51,6 +52,12 @@ USER cartrita
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1
+
+# Security labels
+LABEL security.non-root=true \
+    security.read-only=true \
+    maintainer="Cartrita AI Team" \
+    version="2.0.0"
 
 # Expose port
 EXPOSE 8000

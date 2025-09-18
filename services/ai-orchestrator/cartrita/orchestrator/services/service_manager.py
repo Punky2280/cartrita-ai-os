@@ -6,7 +6,7 @@ Service manager for Cartrita AI OS.
 Handles initialization and lifecycle management of all provider services.
 """
 
-from typing import Dict, Any
+from typing import Any, Dict
 
 import structlog
 
@@ -15,7 +15,7 @@ from cartrita.orchestrator.services import (
     GitHubService,
     HuggingFaceService,
     OpenAIService,
-    TavilyService
+    TavilyService,
 )
 from cartrita.orchestrator.utils.config import settings
 
@@ -91,7 +91,9 @@ class ServiceManager:
 
         if service_name not in self.services:
             available_services = list(self.services.keys())
-            raise ValueError(f"Service '{service_name}' not found. Available services: {available_services}")
+            raise ValueError(
+                f"Service '{service_name}' not found. Available services: {available_services}"
+            )
 
         return self.services[service_name]
 
@@ -110,21 +112,26 @@ class ServiceManager:
 
         for service_name, service in self.services.items():
             try:
-                if hasattr(service, 'health_check'):
+                if hasattr(service, "health_check"):
                     health_result = await service.health_check()
                     health_results[service_name] = health_result
                     if health_result.get("status") == "healthy":
                         healthy_count += 1
                 else:
-                    health_results[service_name] = {"status": "unknown", "error": "No health check method"}
+                    health_results[service_name] = {
+                        "status": "unknown",
+                        "error": "No health check method",
+                    }
             except Exception as e:
                 health_results[service_name] = {"status": "error", "error": str(e)}
 
         return {
-            "overall_status": "healthy" if healthy_count == len(self.services) else "degraded",
+            "overall_status": (
+                "healthy" if healthy_count == len(self.services) else "degraded"
+            ),
             "total_services": len(self.services),
             "healthy_services": healthy_count,
-            "service_health": health_results
+            "service_health": health_results,
         }
 
     async def shutdown_services(self) -> None:
@@ -133,11 +140,13 @@ class ServiceManager:
 
         for service_name, service in self.services.items():
             try:
-                if hasattr(service, 'shutdown'):
+                if hasattr(service, "shutdown"):
                     await service.shutdown()
                 logger.info("Service shut down", service=service_name)
             except Exception as e:
-                logger.error("Error shutting down service", service=service_name, error=str(e))
+                logger.error(
+                    "Error shutting down service", service=service_name, error=str(e)
+                )
 
         self.services.clear()
         self.initialized = False
@@ -150,10 +159,7 @@ class ServiceManager:
         Returns:
             Dictionary mapping service names to their class names
         """
-        return {
-            name: type(service).__name__
-            for name, service in self.services.items()
-        }
+        return {name: type(service).__name__ for name, service in self.services.items()}
 
 
 # Global service manager instance

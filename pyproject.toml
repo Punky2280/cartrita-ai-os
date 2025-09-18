@@ -9,12 +9,10 @@ build-backend = "setuptools.build_meta"
 name = "cartrita-ai-os"
 version = "2.0.0"
 description = "Hierarchical Multi-Agent AI Operating System with LangGraph Orchestration"
-authors = [
-    {name = "Cartrita AI Team", email = "team@cartrita.ai"}
-]
+authors = [{ name = "Cartrita AI Team", email = "team@cartrita.ai" }]
 readme = "README.md"
-license = {text = "MIT"}
-requires-python = ">=3.13,<3.14"
+license = { text = "MIT" }
+requires-python = ">=3.13.3,<3.14"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -29,7 +27,7 @@ classifiers = [
 dependencies = [
     # Core AI/ML Libraries
     "openai>=1.40.0",
-     "langchain>=0.3.27",
+    "langchain>=0.3.27",
     "langchain-openai>=0.2.10",
     "langchain-community>=0.3.27",
     "langchain-core>=0.3.76",
@@ -280,7 +278,14 @@ filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::PendingDeprecationWarning",
 ]
-norecursedirs = [".git", "dist", "build", "htmlcov", "__pycache__", ".pytest_cache"]
+norecursedirs = [
+    ".git",
+    "dist",
+    "build",
+    "htmlcov",
+    "__pycache__",
+    ".pytest_cache",
+]
 
 # ============================================
 # coverage - Test Coverage
@@ -321,18 +326,18 @@ exclude_lines = [
 [tool.pre-commit]
 ci = ["github-actions"]
 repos = [
-    {repo = "https://github.com/pre-commit/pre-commit-hooks", rev = "v4.6.0", hooks = [
-        {id = "trailing-whitespace"},
-        {id = "end-of-file-fixer"},
-        {id = "check-yaml"},
-        {id = "check-added-large-files"},
-        {id = "check-merge-conflict"},
-        {id = "debug-statements"},
-        {id = "check-ast"},
-    ]},
-    {repo = "https://github.com/pycqa/pylint", rev = "v3.2.2", hooks = [
-        {id = "pylint"},
-    ]},
+    { repo = "https://github.com/pre-commit/pre-commit-hooks", rev = "v4.6.0", hooks = [
+        { id = "trailing-whitespace" },
+        { id = "end-of-file-fixer" },
+        { id = "check-yaml" },
+        { id = "check-added-large-files" },
+        { id = "check-merge-conflict" },
+        { id = "debug-statements" },
+        { id = "check-ast" },
+    ] },
+    { repo = "https://github.com/pycqa/pylint", rev = "v3.2.2", hooks = [
+        { id = "pylint" },
+    ] },
 ]
 
 # ============================================
@@ -349,17 +354,14 @@ theme = "material"
 palette = "slate"
 
 nav = [
-    {Home = "index.md"},
-    {Architecture = "architecture.md"},
-    {API = "api.md"},
-    {Deployment = "deployment.md"},
-    {Contributing = "contributing.md"},
+    { Home = "index.md" },
+    { Architecture = "architecture.md" },
+    { API = "api.md" },
+    { Deployment = "deployment.md" },
+    { Contributing = "contributing.md" },
 ]
 
-plugins = [
-    "search",
-    "mkdocstrings",
-]
+plugins = ["search", "mkdocstrings"]
 
 markdown_extensions = [
     "toc",

@@ -3,14 +3,18 @@ Base Agent Template following LangChain patterns
 Provides standard interface for all Cartrita agents
 """
 
-from typing import Any, Dict, List, Optional, Tuple, Union
 from abc import ABC, abstractmethod
+from typing import Any, Dict, List, Optional, Tuple, Union
 
-from langchain_core.callbacks import CallbackManagerForChainRun, AsyncCallbackManagerForChainRun
-from langchain_core.agents import AgentAction, AgentFinish
-from langchain_core.tools import BaseTool
 from langchain.memory import ConversationBufferMemory
-from pydantic import Field
+from langchain_core.agents import AgentAction, AgentFinish
+from langchain_core.callbacks import (
+    AsyncCallbackManagerForChainRun,
+    CallbackManagerForChainRun,
+)
+from langchain_core.tools import BaseTool
+from pydantic import ConfigDict, Field
+
 
 class CartritaBaseAgent(ABC):
     """Base class for all Cartrita agents following LangChain patterns"""
@@ -18,12 +22,12 @@ class CartritaBaseAgent(ABC):
     name: str = Field(..., description="Agent name")
     description: str = Field(..., description="Agent description")
     tools: List[BaseTool] = Field(default_factory=list, description="Available tools")
-    memory: Optional[ConversationBufferMemory] = Field(default=None, description="Conversation memory")
+    memory: Optional[ConversationBufferMemory] = Field(
+        default=None, description="Conversation memory"
+    )
     max_iterations: int = Field(default=10, description="Maximum iterations")
     verbose: bool = Field(default=False, description="Verbose output")
-
-    class Config:
-        arbitrary_types_allowed = True
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
     @property
     def input_keys(self) -> List[str]:
@@ -39,7 +43,7 @@ class CartritaBaseAgent(ABC):
         self,
         intermediate_steps: List[Tuple[AgentAction, str]],
         callbacks: Optional[CallbackManagerForChainRun] = None,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> Union[AgentAction, AgentFinish]:
         """
         Plan the next action based on intermediate steps
@@ -67,7 +71,7 @@ class CartritaBaseAgent(ABC):
         self,
         intermediate_steps: List[Tuple[AgentAction, str]],
         callbacks: Optional[AsyncCallbackManagerForChainRun] = None,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> Union[AgentAction, AgentFinish]:
         """
         Async version of plan
@@ -85,7 +89,9 @@ class CartritaBaseAgent(ABC):
         if self._should_finish(intermediate_steps):
             return self._create_finish(intermediate_steps, input_text)
 
-        action = await self._aplan_next_action(intermediate_steps, input_text, callbacks)
+        action = await self._aplan_next_action(
+            intermediate_steps, input_text, callbacks
+        )
         return action
 
     @abstractmethod
@@ -93,7 +99,7 @@ class CartritaBaseAgent(ABC):
         self,
         intermediate_steps: List[Tuple[AgentAction, str]],
         input_text: str,
-        callbacks: Optional[CallbackManagerForChainRun] = None
+        callbacks: Optional[CallbackManagerForChainRun] = None,
     ) -> AgentAction:
         """Plan the next action - must be implemented by subclasses"""
         pass
@@ -103,7 +109,7 @@ class CartritaBaseAgent(ABC):
         self,
         intermediate_steps: List[Tuple[AgentAction, str]],
         input_text: str,
-        callbacks: Optional[AsyncCallbackManagerForChainRun] = None
+        callbacks: Optional[AsyncCallbackManagerForChainRun] = None,
     ) -> AgentAction:
         """Async plan next action - must be implemented by subclasses"""
         pass
@@ -123,9 +129,7 @@ class CartritaBaseAgent(ABC):
         return False
 
     def _create_finish(
-        self,
-        intermediate_steps: List[Tuple[AgentAction, str]],
-        input_text: str
+        self, intermediate_steps: List[Tuple[AgentAction, str]], input_text: str
     ) -> AgentFinish:
         """Create final answer"""
         if intermediate_steps:
@@ -135,8 +139,7 @@ class CartritaBaseAgent(ABC):
             final_answer = f"No answer found for: {input_text}"
 
         return AgentFinish(
-            return_values={"output": final_answer},
-            log=f"Agent {self.name} finished"
+            return_values={"output": final_answer}, log=f"Agent {self.name} finished"
         )
 
     def get_tools(self) -> List[BaseTool]:
@@ -178,5 +181,5 @@ class CartritaBaseAgent(ABC):
             "name": self.name,
             "description": self.description,
             "max_iterations": self.max_iterations,
-            "verbose": self.verbose
+            "verbose": self.verbose,
         }

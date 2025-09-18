@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 /* eslint-env node */
-/* eslint-disable no-console */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 // Function to recursively find TypeScript/JavaScript files
 function findFiles(dir, extensions = ['.ts', '.tsx', '.js', '.jsx']) {

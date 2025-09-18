@@ -5,16 +5,18 @@ import importlib.util
 import os
 
 # Dynamically load openai_service.py to avoid package import resolution issues
-MODULE_PATH = os.path.abspath(os.path.join(
-    os.path.dirname(__file__),
-    "..",
-    "services",
-    "ai-orchestrator",
-    "cartrita",
-    "orchestrator",
-    "services",
-    "openai_service.py",
-))
+MODULE_PATH = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        "services",
+        "ai-orchestrator",
+        "cartrita",
+        "orchestrator",
+        "services",
+        "openai_service.py",
+    )
+)
 spec = importlib.util.spec_from_file_location("_openai_service_isolated", MODULE_PATH)
 openai_service_module = importlib.util.module_from_spec(spec)
 assert spec and spec.loader
@@ -29,7 +31,7 @@ async def test_openai_service_streaming_content_and_tool(monkeypatch):
 
     class DummySecret:
         def get_secret_value(self):
-            return "sk-test"
+            return "test_api_key"
 
     class DummyAI:
         openai_api_key = DummySecret()
@@ -51,16 +53,33 @@ async def test_openai_service_streaming_content_and_tool(monkeypatch):
     # Streaming: content, then tool_call, then done
     tool_call = types.SimpleNamespace(
         id="tc1",
-        function=types.SimpleNamespace(name="web_search", arguments='{"query": "python"}'),
+        function=types.SimpleNamespace(
+            name="web_search", arguments='{"query": "python"}'
+        ),
     )
     chunk1 = types.SimpleNamespace(
-        choices=[types.SimpleNamespace(delta=types.SimpleNamespace(content="Partial", tool_calls=None), finish_reason=None)]
+        choices=[
+            types.SimpleNamespace(
+                delta=types.SimpleNamespace(content="Partial", tool_calls=None),
+                finish_reason=None,
+            )
+        ]
     )
     chunk2 = types.SimpleNamespace(
-        choices=[types.SimpleNamespace(delta=types.SimpleNamespace(content=None, tool_calls=[tool_call]), finish_reason=None)]
+        choices=[
+            types.SimpleNamespace(
+                delta=types.SimpleNamespace(content=None, tool_calls=[tool_call]),
+                finish_reason=None,
+            )
+        ]
     )
     chunk3 = types.SimpleNamespace(
-        choices=[types.SimpleNamespace(delta=types.SimpleNamespace(content=None, tool_calls=None), finish_reason="stop")]
+        choices=[
+            types.SimpleNamespace(
+                delta=types.SimpleNamespace(content=None, tool_calls=None),
+                finish_reason="stop",
+            )
+        ]
     )
 
     class MockStreamingIterator:
@@ -83,12 +102,16 @@ async def test_openai_service_streaming_content_and_tool(monkeypatch):
         async def _create(self, **_):
             return MockStreamingIterator([chunk1, chunk2, chunk3])
 
-    monkeypatch.setattr(openai_service_module, "AsyncOpenAI", lambda **_: MockAsyncClient())
+    monkeypatch.setattr(
+        openai_service_module, "AsyncOpenAI", lambda **_: MockAsyncClient()
+    )
 
     svc = OpenAIService()
     messages = [{"role": "user", "content": "Hi"}]
     emitted = []
-    async for chunk in svc.chat_completion(messages, stream=True, tools=[{"name": "web_search"}]):
+    async for chunk in svc.chat_completion(
+        messages, stream=True, tools=[{"name": "web_search"}]
+    ):
         emitted.append(chunk)
 
     assert any(c["type"] == "content" for c in emitted)

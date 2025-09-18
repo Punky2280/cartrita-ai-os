@@ -11,9 +11,9 @@ from typing import Any
 
 import structlog
 from langchain_core.messages import HumanMessage, SystemMessage
-from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from pydantic import BaseModel, Field
 
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 
 # Configure logger
 logger = structlog.get_logger(__name__)
@@ -93,6 +93,7 @@ class KnowledgeAgent:
     ):
         # Get settings with proper initialization
         from cartrita.orchestrator.utils.config import get_settings
+
         _settings = get_settings()
 
         self.model = model or _settings.ai.knowledge_model
@@ -108,12 +109,17 @@ class KnowledgeAgent:
                 openai_api_key=self.api_key,
             )
         except Exception as e:
-            logger.warning("Failed to initialize OpenAI client, will use fallback", error=str(e))
+            logger.warning(
+                "Failed to initialize OpenAI client, will use fallback", error=str(e)
+            )
             self.knowledge_llm = None
 
         # Import fallback provider
         try:
-            from cartrita.orchestrator.providers.fallback_provider import get_fallback_provider
+            from cartrita.orchestrator.providers.fallback_provider import (
+                get_fallback_provider,
+            )
+
             self.fallback_provider = get_fallback_provider()
             logger.info("Fallback provider initialized for knowledge agent")
         except Exception as e:
@@ -265,7 +271,9 @@ class KnowledgeAgent:
                 raw_results = await self._db_manager_search(query)
 
             if not raw_results:
-                logger.info("No search backend or results; returning empty", query=query.query)
+                logger.info(
+                    "No search backend or results; returning empty", query=query.query
+                )
                 return []
 
             sources = self._convert_raw_results(raw_results)
@@ -283,10 +291,19 @@ class KnowledgeAgent:
     async def _db_manager_search(self, query: KnowledgeQuery) -> list[dict[str, Any]]:
         """Select and execute the appropriate db_manager search method."""
         try:
-            semantic_ok = query.semantic_search and hasattr(self.db_manager, "semantic_search")
-            method_name = "semantic_search" if semantic_ok else ("search" if hasattr(self.db_manager, "search") else None)
+            semantic_ok = query.semantic_search and hasattr(
+                self.db_manager, "semantic_search"
+            )
+            method_name = (
+                "semantic_search"
+                if semantic_ok
+                else ("search" if hasattr(self.db_manager, "search") else None)
+            )
             if not method_name:
-                logger.warning("db_manager present but no compatible search method", available=dir(self.db_manager))
+                logger.warning(
+                    "db_manager present but no compatible search method",
+                    available=dir(self.db_manager),
+                )
                 return []
 
             search_fn = getattr(self.db_manager, method_name)
@@ -301,7 +318,9 @@ class KnowledgeAgent:
             logger.error("db_manager search failed", error=str(e))
             return []
 
-    def _convert_raw_results(self, raw_results: list[dict[str, Any]]) -> list[KnowledgeDocument]:
+    def _convert_raw_results(
+        self, raw_results: list[dict[str, Any]]
+    ) -> list[KnowledgeDocument]:
         """Convert raw search rows into KnowledgeDocument objects."""
         sources: list[KnowledgeDocument] = []
         for i, item in enumerate(raw_results or []):
@@ -313,7 +332,11 @@ class KnowledgeAgent:
                         title=item.get("title") or meta.get("title") or "Untitled",
                         content=item.get("content") or item.get("text") or "",
                         source=item.get("source") or meta.get("source") or "unknown",
-                        relevance_score=float(item.get("score", item.get("relevance", 0.0))) if isinstance(item, dict) else 0.0,
+                        relevance_score=(
+                            float(item.get("score", item.get("relevance", 0.0)))
+                            if isinstance(item, dict)
+                            else 0.0
+                        ),
                         metadata=meta if isinstance(meta, dict) else {},
                     )
                 )
@@ -327,10 +350,11 @@ class KnowledgeAgent:
         """Generate answer using RAG with GPT-5."""
         # Build time-aware strings
         from datetime import datetime
+
         import pytz
 
-        miami_tz = pytz.timezone('America/New_York')
-        current_time = datetime.now(miami_tz).strftime('%A, %B %d, %Y at %I:%M %p %Z')
+        miami_tz = pytz.timezone("America/New_York")
+        current_time = datetime.now(miami_tz).strftime("%A, %B %d, %Y at %I:%M %p %Z")
 
         # If no sources, avoid hallucinations and ask for permission to broaden search
         if not sources:
@@ -374,20 +398,27 @@ class KnowledgeAgent:
                     # Updated call: generate_response expects 'user_input' (removed unsupported params)
                     fallback_response = await self.fallback_provider.generate_response(
                         user_input=user_msg,
-                        context={"type": "knowledge_rag", "sources_count": len(sources)}
+                        context={
+                            "type": "knowledge_rag",
+                            "sources_count": len(sources),
+                        },
                     )
                     logger.info("Used fallback provider for RAG generation")
                     return fallback_response
                 except Exception as fallback_error:
-                    logger.error("Fallback provider also failed", error=str(fallback_error))
+                    logger.error(
+                        "Fallback provider also failed", error=str(fallback_error)
+                    )
 
             # Final fallback - return basic context summary with footnotes
-            summary = "\n\n".join([
-                f"Query: {query.query}",
-                "Key source excerpts:",
-                "\n".join([f"- {s.title}: {s.content[:240]}" for s in sources[:3]]),
-                footnotes,
-            ])
+            summary = "\n\n".join(
+                [
+                    f"Query: {query.query}",
+                    "Key source excerpts:",
+                    "\n".join([f"- {s.title}: {s.content[:240]}" for s in sources[:3]]),
+                    footnotes,
+                ]
+            )
             return summary[:1500]
 
     def _calculate_confidence_score(self, sources: list[KnowledgeDocument]) -> float:
@@ -419,12 +450,14 @@ class KnowledgeAgent:
             " is missing or uncertain, say so and propose next steps. Keep explanations clear and concise."
         )
 
-    def _build_knowledge_prompt(self, *, query: str, current_time: str, sources_block: str, footnotes: str) -> str:
+    def _build_knowledge_prompt(
+        self, *, query: str, current_time: str, sources_block: str, footnotes: str
+    ) -> str:
         """Build the user prompt with clear delimiters and a strict output structure."""
         return (
             f"# Knowledge Synthesis Request\n"
             f"Time: {current_time}\n"
-            f"Query: \"{query}\"\n\n"
+            f'Query: "{query}"\n\n'
             f"## Sources (do not assume anything not contained below)\n"
             f"<<<SOURCES>>>\n{sources_block}\n<<<END_SOURCES>>>\n\n"
             f"## Instructions\n"
@@ -465,7 +498,11 @@ class KnowledgeAgent:
         """Create a compact footnote list mapping [n] to source metadata."""
         rows: list[str] = []
         for idx, s in enumerate(sources, start=1):
-            score = f"{s.relevance_score:.2f}" if isinstance(s.relevance_score, float) else ""
+            score = (
+                f"{s.relevance_score:.2f}"
+                if isinstance(s.relevance_score, float)
+                else ""
+            )
             rows.append(f"[{idx}] {s.title} — {s.source} (relevance {score})")
         return "\n".join(rows)
 

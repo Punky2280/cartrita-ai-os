@@ -2,8 +2,10 @@ from typing import Any
 
 try:  # defer structlog import to avoid twisted/zope issues in Python 3.13 test env
     import structlog  # type: ignore
+
     logger = structlog.get_logger(__name__)
 except Exception:  # pragma: no cover - fallback lightweight logger
+
     class _FallbackLogger:  # minimal interface
         def error(self, *args, **kwargs):
             pass
@@ -16,7 +18,9 @@ SUPPORTED_MAX_PARAM = "max_tokens"  # canonical param used by most providers
 ChatOpenAI = None  # type: ignore
 
 
-def create_chat_openai(**kwargs: Any):  # return type omitted to avoid import at module load
+def create_chat_openai(
+    **kwargs: Any,
+):  # return type omitted to avoid import at module load
     """Create a ChatOpenAI instance normalizing token limit parameter.
 
     Accepts either max_completion_tokens or max_tokens. If both provided, prefers max_completion_tokens.
@@ -43,10 +47,13 @@ def create_chat_openai(**kwargs: Any):  # return type omitted to avoid import at
     if ChatOpenAI is None:
         try:  # pragma: no cover - import guarded
             from langchain_openai import ChatOpenAI as _RealChatOpenAI  # type: ignore
+
             ChatOpenAI = _RealChatOpenAI  # type: ignore
         except Exception as import_err:  # pragma: no cover
             logger.error("Failed to import ChatOpenAI", error=str(import_err))
-            raise RuntimeError("ChatOpenAI dependency unavailable; ensure langchain-openai installed") from import_err
+            raise RuntimeError(
+                "ChatOpenAI dependency unavailable; ensure langchain-openai installed"
+            ) from import_err
 
     try:
         return ChatOpenAI(**kwargs)

@@ -5,18 +5,19 @@ Leverages both OpenAI and Hugging Face APIs for optimal performance and cost
 
 import asyncio
 import os
-from typing import Any, Dict, List, Optional
-from enum import Enum
-from datetime import datetime
 from dataclasses import dataclass, field
+from datetime import datetime
+from enum import Enum
+from typing import Any, Dict, List, Optional
 
-from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
-from langchain.memory import ConversationSummaryBufferMemory
 import tiktoken
+from langchain.memory import ConversationSummaryBufferMemory
+from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
 
 
 class ModelProvider(str, Enum):
     """AI model providers"""
+
     OPENAI = "openai"
     HUGGINGFACE = "huggingface"
     LOCAL = "local"
@@ -24,6 +25,7 @@ class ModelProvider(str, Enum):
 
 class TaskComplexity(str, Enum):
     """Task complexity levels"""
+
     SIMPLE = "simple"
     MEDIUM = "medium"
     COMPLEX = "complex"
@@ -33,6 +35,7 @@ class TaskComplexity(str, Enum):
 @dataclass
 class ModelConfig:
     """Configuration for a specific model"""
+
     name: str
     provider: ModelProvider
     cost_per_1k_tokens: float
@@ -46,6 +49,7 @@ class ModelConfig:
 @dataclass
 class TaskRequirements:
     """Requirements for a specific task"""
+
     complexity: TaskComplexity
     max_cost: float
     max_latency: float  # seconds
@@ -67,11 +71,13 @@ class MultiProviderOrchestrator:
         huggingface_api_key: Optional[str] = None,
         cost_optimization: bool = True,
         fallback_strategy: bool = True,
-        **kwargs
+        **kwargs,
     ):
         # API Keys
         self.openai_api_key = openai_api_key or os.getenv("OPENAI_API_KEY")
-        self.huggingface_api_key = huggingface_api_key or os.getenv("HUGGINGFACE_API_KEY")
+        self.huggingface_api_key = huggingface_api_key or os.getenv(
+            "HUGGINGFACE_API_KEY"
+        )
 
         # Configuration
         self.cost_optimization = cost_optimization
@@ -92,7 +98,10 @@ class MultiProviderOrchestrator:
         if self.openai_api_key:
             try:
                 from cartrita.orchestrator.utils.llm_factory import create_chat_openai
-                basic_llm = create_chat_openai(api_key=self.openai_api_key, model="gpt-3.5-turbo")
+
+                basic_llm = create_chat_openai(
+                    api_key=self.openai_api_key, model="gpt-3.5-turbo"
+                )
             except ImportError:
                 basic_llm = None
 
@@ -102,13 +111,13 @@ class MultiProviderOrchestrator:
                 llm=basic_llm,
                 memory_key="chat_history",
                 return_messages=True,
-                max_token_limit=4000
+                max_token_limit=4000,
             )
         else:
             from langchain.memory import ConversationBufferMemory
+
             self.memory = ConversationBufferMemory(
-                memory_key="chat_history",
-                return_messages=True
+                memory_key="chat_history", return_messages=True
             )
 
         # Initialize model instances
@@ -120,73 +129,82 @@ class MultiProviderOrchestrator:
 
         # OpenAI Models
         if self.openai_api_key:
-            configs.update({
-                "gpt-4o": ModelConfig(
-                    name="gpt-4o",
-                    provider=ModelProvider.OPENAI,
-                    cost_per_1k_tokens=0.03,
-                    max_tokens=128000,
-                    supports_streaming=True,
-                    supports_function_calling=True,
-                    expertise_areas=["reasoning", "coding", "analysis", "creativity"],
-                    quality_score=0.95
-                ),
-                "gpt-4o-mini": ModelConfig(
-                    name="gpt-4o-mini",
-                    provider=ModelProvider.OPENAI,
-                    cost_per_1k_tokens=0.0015,
-                    max_tokens=128000,
-                    supports_streaming=True,
-                    supports_function_calling=True,
-                    expertise_areas=["general", "simple_tasks"],
-                    quality_score=0.85
-                ),
-                "gpt-3.5-turbo": ModelConfig(
-                    name="gpt-3.5-turbo",
-                    provider=ModelProvider.OPENAI,
-                    cost_per_1k_tokens=0.001,
-                    max_tokens=16385,
-                    supports_streaming=True,
-                    supports_function_calling=True,
-                    expertise_areas=["general", "fast_responses"],
-                    quality_score=0.80
-                )
-            })
+            configs.update(
+                {
+                    "gpt-4o": ModelConfig(
+                        name="gpt-4o",
+                        provider=ModelProvider.OPENAI,
+                        cost_per_1k_tokens=0.03,
+                        max_tokens=128000,
+                        supports_streaming=True,
+                        supports_function_calling=True,
+                        expertise_areas=[
+                            "reasoning",
+                            "coding",
+                            "analysis",
+                            "creativity",
+                        ],
+                        quality_score=0.95,
+                    ),
+                    "gpt-4o-mini": ModelConfig(
+                        name="gpt-4o-mini",
+                        provider=ModelProvider.OPENAI,
+                        cost_per_1k_tokens=0.0015,
+                        max_tokens=128000,
+                        supports_streaming=True,
+                        supports_function_calling=True,
+                        expertise_areas=["general", "simple_tasks"],
+                        quality_score=0.85,
+                    ),
+                    "gpt-3.5-turbo": ModelConfig(
+                        name="gpt-3.5-turbo",
+                        provider=ModelProvider.OPENAI,
+                        cost_per_1k_tokens=0.001,
+                        max_tokens=16385,
+                        supports_streaming=True,
+                        supports_function_calling=True,
+                        expertise_areas=["general", "fast_responses"],
+                        quality_score=0.80,
+                    ),
+                }
+            )
 
         # Hugging Face Models
         if self.huggingface_api_key:
-            configs.update({
-                "llama-3.1-8b": ModelConfig(
-                    name="meta-llama/Meta-Llama-3.1-8B-Instruct",
-                    provider=ModelProvider.HUGGINGFACE,
-                    cost_per_1k_tokens=0.0001,
-                    max_tokens=8192,
-                    supports_streaming=True,
-                    supports_function_calling=False,
-                    expertise_areas=["general", "fast_responses"],
-                    quality_score=0.75
-                ),
-                "mixtral-8x7b": ModelConfig(
-                    name="mistralai/Mixtral-8x7B-Instruct-v0.1",
-                    provider=ModelProvider.HUGGINGFACE,
-                    cost_per_1k_tokens=0.0003,
-                    max_tokens=32768,
-                    supports_streaming=True,
-                    supports_function_calling=False,
-                    expertise_areas=["multilingual", "reasoning"],
-                    quality_score=0.85
-                ),
-                "codellama-34b": ModelConfig(
-                    name="codellama/CodeLlama-34b-Instruct-hf",
-                    provider=ModelProvider.HUGGINGFACE,
-                    cost_per_1k_tokens=0.0002,
-                    max_tokens=4096,
-                    supports_streaming=True,
-                    supports_function_calling=False,
-                    expertise_areas=["coding", "debugging", "code_review"],
-                    quality_score=0.90
-                )
-            })
+            configs.update(
+                {
+                    "llama-3.1-8b": ModelConfig(
+                        name="meta-llama/Meta-Llama-3.1-8B-Instruct",
+                        provider=ModelProvider.HUGGINGFACE,
+                        cost_per_1k_tokens=0.0001,
+                        max_tokens=8192,
+                        supports_streaming=True,
+                        supports_function_calling=False,
+                        expertise_areas=["general", "fast_responses"],
+                        quality_score=0.75,
+                    ),
+                    "mixtral-8x7b": ModelConfig(
+                        name="mistralai/Mixtral-8x7B-Instruct-v0.1",
+                        provider=ModelProvider.HUGGINGFACE,
+                        cost_per_1k_tokens=0.0003,
+                        max_tokens=32768,
+                        supports_streaming=True,
+                        supports_function_calling=False,
+                        expertise_areas=["multilingual", "reasoning"],
+                        quality_score=0.85,
+                    ),
+                    "codellama-34b": ModelConfig(
+                        name="codellama/CodeLlama-34b-Instruct-hf",
+                        provider=ModelProvider.HUGGINGFACE,
+                        cost_per_1k_tokens=0.0002,
+                        max_tokens=4096,
+                        supports_streaming=True,
+                        supports_function_calling=False,
+                        expertise_areas=["coding", "debugging", "code_review"],
+                        quality_score=0.90,
+                    ),
+                }
+            )
 
         return configs
 
@@ -195,19 +213,22 @@ class MultiProviderOrchestrator:
         for model_id, config in self.available_models.items():
             try:
                 if config.provider == ModelProvider.OPENAI:
-                    from cartrita.orchestrator.utils.llm_factory import create_chat_openai
+                    from cartrita.orchestrator.utils.llm_factory import (
+                        create_chat_openai,
+                    )
+
                     self.model_instances[model_id] = create_chat_openai(
                         model=config.name,
                         api_key=self.openai_api_key,
                         temperature=0.7,
                         max_tokens=2048,
-                        streaming=config.supports_streaming
+                        streaming=config.supports_streaming,
                     )
 
                 elif config.provider == ModelProvider.HUGGINGFACE:
                     # Use Hugging Face Inference API
-                    from langchain_community.llms import HuggingFaceEndpoint
                     from langchain_community.chat_models import ChatHuggingFace
+                    from langchain_community.llms import HuggingFaceEndpoint
 
                     # Create endpoint with your token
                     endpoint = HuggingFaceEndpoint(
@@ -216,13 +237,12 @@ class MultiProviderOrchestrator:
                         max_new_tokens=1024,
                         temperature=0.7,
                         timeout=60,
-                        streaming=config.supports_streaming
+                        streaming=config.supports_streaming,
                     )
 
                     # Wrap in chat interface
                     self.model_instances[model_id] = ChatHuggingFace(
-                        llm=endpoint,
-                        verbose=False
+                        llm=endpoint, verbose=False
                     )
 
             except Exception as e:
@@ -230,9 +250,7 @@ class MultiProviderOrchestrator:
                 continue
 
     def select_optimal_model(
-        self,
-        task_requirements: TaskRequirements,
-        context_length: Optional[int] = None
+        self, task_requirements: TaskRequirements, context_length: Optional[int] = None
     ) -> Optional[str]:
         """
         Select the optimal model based on task requirements and constraints
@@ -245,7 +263,10 @@ class MultiProviderOrchestrator:
                 continue
 
             # Check hard requirements
-            if task_requirements.requires_function_calling and not config.supports_function_calling:
+            if (
+                task_requirements.requires_function_calling
+                and not config.supports_function_calling
+            ):
                 continue
 
             if task_requirements.requires_streaming and not config.supports_streaming:
@@ -270,7 +291,9 @@ class MultiProviderOrchestrator:
             # Check domain expertise
             expertise_match = 0.0
             if task_requirements.domain_expertise:
-                matches = set(config.expertise_areas) & set(task_requirements.domain_expertise)
+                matches = set(config.expertise_areas) & set(
+                    task_requirements.domain_expertise
+                )
                 expertise_match = len(matches) / len(task_requirements.domain_expertise)
 
             # Calculate suitability score
@@ -278,13 +301,15 @@ class MultiProviderOrchestrator:
                 config, task_requirements, estimated_cost, expertise_match
             )
 
-            candidates.append({
-                "model_id": model_id,
-                "config": config,
-                "suitability": suitability,
-                "estimated_cost": estimated_cost,
-                "expertise_match": expertise_match
-            })
+            candidates.append(
+                {
+                    "model_id": model_id,
+                    "config": config,
+                    "suitability": suitability,
+                    "estimated_cost": estimated_cost,
+                    "expertise_match": expertise_match,
+                }
+            )
 
         if not candidates:
             return None
@@ -296,7 +321,10 @@ class MultiProviderOrchestrator:
         if self.cost_optimization and len(candidates) > 1:
             best = candidates[0]
             for candidate in candidates[1:]:
-                if candidate["suitability"] >= best["suitability"] * 0.95 and candidate["estimated_cost"] < best["estimated_cost"] * 0.8:
+                if (
+                    candidate["suitability"] >= best["suitability"] * 0.95
+                    and candidate["estimated_cost"] < best["estimated_cost"] * 0.8
+                ):
                     best = candidate
                     break
             return best["model_id"]
@@ -308,7 +336,7 @@ class MultiProviderOrchestrator:
         config: ModelConfig,
         requirements: TaskRequirements,
         estimated_cost: float,
-        expertise_match: float
+        expertise_match: float,
     ) -> float:
         """Calculate model suitability score"""
 
@@ -327,7 +355,7 @@ class MultiProviderOrchestrator:
             TaskComplexity.SIMPLE: 0.7,
             TaskComplexity.MEDIUM: 0.8,
             TaskComplexity.COMPLEX: 0.9,
-            TaskComplexity.CRITICAL: 1.0
+            TaskComplexity.CRITICAL: 1.0,
         }
 
         required_quality = complexity_scores[requirements.complexity]
@@ -338,13 +366,17 @@ class MultiProviderOrchestrator:
 
         # Historical performance bonus
         if config.name in self.model_performance:
-            avg_performance = sum(self.model_performance[config.name].values()) / len(self.model_performance[config.name])
+            avg_performance = sum(self.model_performance[config.name].values()) / len(
+                self.model_performance[config.name]
+            )
             score += (avg_performance - 0.5) * 0.1
 
         return max(0.0, min(1.0, score))
 
-    async def _invoke_model(self, model: Any, messages: List[BaseMessage], callbacks: Optional[Any]) -> Any:
-        if hasattr(model, 'ainvoke'):
+    async def _invoke_model(
+        self, model: Any, messages: List[BaseMessage], callbacks: Optional[Any]
+    ) -> Any:
+        if hasattr(model, "ainvoke"):
             return await model.ainvoke(messages, callbacks=callbacks)
         return model.invoke(messages, callbacks=callbacks)
 
@@ -367,7 +399,7 @@ class MultiProviderOrchestrator:
         context: Optional[str],
         start_time: datetime,
         execution_time: float,
-        original_error: str
+        original_error: str,
     ) -> Optional[Dict[str, Any]]:
         fallback_model = self._get_fallback_model()
         if not (fallback_model and fallback_model in self.model_instances):
@@ -378,13 +410,17 @@ class MultiProviderOrchestrator:
             response = await self._invoke_model(model, messages, callbacks=None)
 
             cfg = self.available_models[fallback_model]
-            response_text = response.content if hasattr(response, 'content') else str(response)
+            response_text = (
+                response.content if hasattr(response, "content") else str(response)
+            )
             cost = self._compute_cost(cfg, response_text)
 
             # record success with full duration since start
             fallback_time = (datetime.now() - start_time).total_seconds()
             self.current_session_cost += cost
-            self._record_performance(fallback_model, fallback_time - execution_time, cost, True)
+            self._record_performance(
+                fallback_model, fallback_time - execution_time, cost, True
+            )
             self._update_memory(query, response_text)
 
             return {
@@ -396,7 +432,7 @@ class MultiProviderOrchestrator:
                 "cost": cost,
                 "session_total_cost": self.current_session_cost,
                 "used_fallback": True,
-                "original_error": original_error
+                "original_error": original_error,
             }
         except (RuntimeError, ValueError, TimeoutError) as _:
             return None
@@ -406,7 +442,7 @@ class MultiProviderOrchestrator:
         query: str,
         task_requirements: Optional[TaskRequirements] = None,
         context: Optional[str] = None,
-        callbacks: Optional[Any] = None
+        callbacks: Optional[Any] = None,
     ) -> Dict[str, Any]:
         """
         Execute query with optimally selected model
@@ -419,7 +455,7 @@ class MultiProviderOrchestrator:
                 complexity=TaskComplexity.MEDIUM,
                 max_cost=5.0,
                 max_latency=30.0,
-                quality_threshold=0.8
+                quality_threshold=0.8,
             )
 
         # Estimate context length
@@ -439,7 +475,7 @@ class MultiProviderOrchestrator:
                     "error": "No suitable model available for task requirements",
                     "selected_model": None,
                     "execution_time": 0.0,
-                    "cost": 0.0
+                    "cost": 0.0,
                 }
 
         try:
@@ -448,7 +484,9 @@ class MultiProviderOrchestrator:
             messages = self._prepare_messages(query, context)
             response = await self._invoke_model(model, messages, callbacks)
 
-            response_text = response.content if hasattr(response, 'content') else str(response)
+            response_text = (
+                response.content if hasattr(response, "content") else str(response)
+            )
             cost = self._compute_cost(config, response_text)
             execution_time = self._record_success(selected_model, start_time, cost)
             self._update_memory(query, response_text)
@@ -460,7 +498,7 @@ class MultiProviderOrchestrator:
                 "provider": config.provider.value,
                 "execution_time": execution_time,
                 "cost": cost,
-                "session_total_cost": self.current_session_cost
+                "session_total_cost": self.current_session_cost,
             }
 
         except Exception as e:
@@ -470,7 +508,9 @@ class MultiProviderOrchestrator:
 
             if self.fallback_strategy and selected_model != self._get_fallback_model():
                 last_error = str(e)
-                fb = await self._attempt_fallback(query, context, start_time, execution_time, last_error)
+                fb = await self._attempt_fallback(
+                    query, context, start_time, execution_time, last_error
+                )
                 if fb is not None:
                     return fb
 
@@ -479,7 +519,7 @@ class MultiProviderOrchestrator:
                 "error": str(e),
                 "selected_model": selected_model,
                 "execution_time": execution_time,
-                "cost": 0.0
+                "cost": 0.0,
             }
 
     def _get_fallback_model(self) -> Optional[str]:
@@ -490,14 +530,19 @@ class MultiProviderOrchestrator:
 
         # Or any available OpenAI model
         for model_id, config in self.available_models.items():
-            if config.provider == ModelProvider.OPENAI and model_id in self.model_instances:
+            if (
+                config.provider == ModelProvider.OPENAI
+                and model_id in self.model_instances
+            ):
                 return model_id
 
         # Or any available model
         available_models = list(self.model_instances.keys())
         return available_models[0] if available_models else None
 
-    def _prepare_messages(self, query: str, context: Optional[str] = None) -> List[BaseMessage]:
+    def _prepare_messages(
+        self, query: str, context: Optional[str] = None
+    ) -> List[BaseMessage]:
         """Prepare messages for model execution"""
         messages = []
 
@@ -552,7 +597,9 @@ class MultiProviderOrchestrator:
         except (LookupError, ValueError, ImportError, TypeError):
             return len(response) // 4
 
-    def _record_performance(self, model_id: str, execution_time: float, cost: float, success: bool):
+    def _record_performance(
+        self, model_id: str, execution_time: float, cost: float, success: bool
+    ):
         """Record model performance metrics"""
         if model_id not in self.model_performance:
             self.model_performance[model_id] = {}
@@ -562,7 +609,7 @@ class MultiProviderOrchestrator:
         self.model_performance[model_id][timestamp] = {
             "execution_time": execution_time,
             "cost": cost,
-            "success": success
+            "success": success,
         }
 
         # Keep only recent performance data (last 100 entries)
@@ -571,13 +618,15 @@ class MultiProviderOrchestrator:
             del self.model_performance[model_id][oldest_key]
 
         # Record in usage history
-        self.usage_history.append({
-            "timestamp": datetime.now(),
-            "model_id": model_id,
-            "execution_time": execution_time,
-            "cost": cost,
-            "success": success
-        })
+        self.usage_history.append(
+            {
+                "timestamp": datetime.now(),
+                "model_id": model_id,
+                "execution_time": execution_time,
+                "cost": cost,
+                "success": success,
+            }
+        )
 
     # Public interface methods
     def chat(self, message: str, **kwargs) -> str:
@@ -600,7 +649,7 @@ class MultiProviderOrchestrator:
                 "max_tokens": config.max_tokens,
                 "quality_score": config.quality_score,
                 "expertise_areas": config.expertise_areas,
-                "available": model_id in self.model_instances
+                "available": model_id in self.model_instances,
             }
             for model_id, config in self.available_models.items()
         }
@@ -614,21 +663,23 @@ class MultiProviderOrchestrator:
 
             success_count = sum(1 for p in performances.values() if p["success"])
             total_count = len(performances)
-            avg_time = sum(p["execution_time"] for p in performances.values()) / total_count
+            avg_time = (
+                sum(p["execution_time"] for p in performances.values()) / total_count
+            )
             avg_cost = sum(p["cost"] for p in performances.values()) / total_count
 
             metrics[model_id] = {
                 "success_rate": success_count / total_count if total_count > 0 else 0,
                 "average_execution_time": avg_time,
                 "average_cost": avg_cost,
-                "total_calls": total_count
+                "total_calls": total_count,
             }
 
         return {
             "individual_models": metrics,
             "session_cost": self.current_session_cost,
             "session_limit": self.session_cost_limit,
-            "total_calls": len(self.usage_history)
+            "total_calls": len(self.usage_history),
         }
 
     def reset_session(self):
@@ -646,14 +697,14 @@ class MultiProviderOrchestrator:
                     "provider": v.provider.value,
                     "cost_per_1k": v.cost_per_1k_tokens,
                     "quality_score": v.quality_score,
-                    "expertise_areas": v.expertise_areas
+                    "expertise_areas": v.expertise_areas,
                 }
                 for k, v in self.available_models.items()
             },
             "configuration": {
                 "cost_optimization": self.cost_optimization,
                 "fallback_strategy": self.fallback_strategy,
-                "session_cost_limit": self.session_cost_limit
+                "session_cost_limit": self.session_cost_limit,
             },
-            "performance_metrics": self.get_performance_metrics()
+            "performance_metrics": self.get_performance_metrics(),
         }

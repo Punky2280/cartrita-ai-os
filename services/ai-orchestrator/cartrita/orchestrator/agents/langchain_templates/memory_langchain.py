@@ -4,8 +4,10 @@ Implements memory patterns for conversation management
 """
 
 from typing import Any, Dict, Optional
+
 from langchain.memory import ConversationBufferMemory
 from pydantic import Field
+
 
 class CartritaMemory(ConversationBufferMemory):
     """Custom memory implementation for Cartrita"""
@@ -33,7 +35,9 @@ class CartritaMemory(ConversationBufferMemory):
 
         if old_messages:
             # Create summary (simplified for template)
-            summary = f"Previous conversation summary: {len(old_messages)} messages exchanged"
+            summary = (
+                f"Previous conversation summary: {len(old_messages)} messages exchanged"
+            )
 
             # Clear and rebuild memory
             self.chat_memory.clear()
@@ -41,19 +45,24 @@ class CartritaMemory(ConversationBufferMemory):
             for msg in recent_messages:
                 self.chat_memory.messages.append(msg)
 
+
 class CartritaEntityMemory:
     """Entity memory for tracking entities in conversation"""
 
     def __init__(self):
         self.entities: Dict[str, Dict[str, Any]] = {}
 
-    def add_entity(self, entity_type: str, entity_name: str, attributes: Dict[str, Any]) -> None:
+    def add_entity(
+        self, entity_type: str, entity_name: str, attributes: Dict[str, Any]
+    ) -> None:
         """Add or update an entity"""
         if entity_type not in self.entities:
             self.entities[entity_type] = {}
         self.entities[entity_type][entity_name] = attributes
 
-    def get_entity(self, entity_type: str, entity_name: str) -> Optional[Dict[str, Any]]:
+    def get_entity(
+        self, entity_type: str, entity_name: str
+    ) -> Optional[Dict[str, Any]]:
         """Get entity information"""
         if entity_type in self.entities:
             return self.entities[entity_type].get(entity_name)

@@ -60,6 +60,16 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Switch to non-root user
 USER nextjs
 
+# Health check for container monitoring
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1
+
+# Security labels
+LABEL security.non-root=true \
+    security.read-only=true \
+    maintainer="Cartrita AI Team" \
+    version="2.0.0"
+
 # Expose port
 EXPOSE 3000
 

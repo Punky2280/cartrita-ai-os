@@ -3,21 +3,21 @@ name: Static Analysis Nightly Drift
 on:
   workflow_dispatch:
   schedule:
-    - cron: '17 3 * * *'  # 03:17 UTC daily
+    - cron: "17 3 * * *" # 03:17 UTC daily
 
 jobs:
   nightly-sarif:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     permissions:
-      contents: write   # for committing history
-      issues: write     # for creating/updating regression issue
+      contents: write # for committing history
+      issues: write # for creating/updating regression issue
       pull-requests: read
     env:
       SARIF_HISTORY_DIR: sarif-history
-      SARIF_SOFT_MAX_NEW_ERRORS: '0'      # soft threshold for new errors
-      SARIF_SOFT_MAX_NEW_WARNINGS: '10'   # soft threshold for new warnings
-      SARIF_SOFT_MAX_NEW_TOTAL: '25'      # soft threshold for total new findings
+      SARIF_SOFT_MAX_NEW_ERRORS: "0" # soft threshold for new errors
+      SARIF_SOFT_MAX_NEW_WARNINGS: "10" # soft threshold for new warnings
+      SARIF_SOFT_MAX_NEW_TOTAL: "25" # soft threshold for total new findings
     steps:
       - name: Checkout
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
@@ -25,12 +25,12 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Setup Python
         uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
         with:
-          python-version: '3.13'
+          python-version: "3.13.3"
 
       - name: Install Python deps
         run: |

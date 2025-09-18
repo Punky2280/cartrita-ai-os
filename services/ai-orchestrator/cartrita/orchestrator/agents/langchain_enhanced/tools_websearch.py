@@ -1,6 +1,6 @@
-from typing import Any, Dict
-from datetime import datetime, timedelta
 import time
+from datetime import datetime, timedelta
+from typing import Any, Dict
 
 from .base_tool import AdvancedCartritaTool, ToolCategory, ToolMetrics
 
@@ -22,7 +22,9 @@ class WebSearchTool(AdvancedCartritaTool):
     def do_execute(self, *args, **kwargs) -> str:
         def parse_args():
             if args:
-                return str(args[0]), int(args[1]) if len(args) > 1 else int(kwargs.get("num_results", 5))
+                return str(args[0]), (
+                    int(args[1]) if len(args) > 1 else int(kwargs.get("num_results", 5))
+                )
             return str(kwargs.get("query")), int(kwargs.get("num_results", 5))
 
         query, num_results = parse_args()

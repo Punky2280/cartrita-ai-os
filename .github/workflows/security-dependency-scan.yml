@@ -1,0 +1,141 @@
+name: Dependency Security Scan
+
+on:
+  workflow_call:
+    outputs:
+      scan-result:
+        description: "Dependency scan completion status"
+        value: ${{ jobs.dependency-scan.outputs.status }}
+      findings-count:
+        description: "Number of dependency vulnerabilities"
+        value: ${{ jobs.dependency-scan.outputs.findings }}
+
+jobs:
+  dependency-scan:
+    name: Software Composition Analysis
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.scan-complete.outputs.status }}
+      findings: ${{ steps.count-findings.outputs.count }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install dependency scanning tools
+        run: |
+          pip install safety pip-audit
+          npm install -g audit-ci npm-audit-resolver
+
+      - name: Create reports directory
+        run: mkdir -p dependency-reports
+
+      - name: Python dependency scan with Safety
+        run: |
+          # Scan Python dependencies for known vulnerabilities
+          if [[ -f services/ai-orchestrator/requirements.in ]]; then
+            cd services/ai-orchestrator
+            pip install -r requirements.in
+            safety check --json --output ../../dependency-reports/python-safety.json || true
+            safety check --output ../../dependency-reports/python-safety.txt || true
+            cd ../..
+          fi
+
+      - name: Python dependency scan with pip-audit
+        run: |
+          if [[ -f services/ai-orchestrator/requirements.in ]]; then
+            cd services/ai-orchestrator
+            pip-audit --format=json --output=../../dependency-reports/python-audit.json . || true
+            pip-audit --output=../../dependency-reports/python-audit.txt . || true
+            cd ../..
+          fi
+
+      - name: Node.js dependency scan
+        run: |
+          if [[ -f frontend/package.json ]]; then
+            cd frontend
+            npm install
+            npm audit --audit-level=low --json > ../dependency-reports/npm-audit.json || true
+            npm audit --audit-level=low > ../dependency-reports/npm-audit.txt || true
+            cd ..
+          fi
+
+      - name: OWASP Dependency Check
+        run: |
+          # Download and run OWASP Dependency Check
+          wget -O dependency-check.zip https://github.com/jeremylong/DependencyCheck/releases/download/v9.0.7/dependency-check-9.0.7-release.zip
+          unzip dependency-check.zip
+          ./dependency-check/bin/dependency-check.sh --project "Cartrita AI OS" --scan . --format JSON --format HTML --out dependency-reports/owasp || true
+          ./dependency-check/bin/dependency-check.sh --project "Cartrita AI OS" --scan . --format ALL --out dependency-reports/owasp-detailed || true
+
+      - name: Count security findings
+        id: count-findings
+        run: |
+          SAFETY_COUNT=0
+          AUDIT_COUNT=0
+          NPM_COUNT=0
+          OWASP_COUNT=0
+
+          # Count Safety findings
+          if [[ -f dependency-reports/python-safety.json ]]; then
+            SAFETY_COUNT=$(jq '[.[] | select(.vulnerability_id)] | length' dependency-reports/python-safety.json 2>/dev/null || echo 0)
+          fi
+
+          # Count pip-audit findings
+          if [[ -f dependency-reports/python-audit.json ]]; then
+            AUDIT_COUNT=$(jq '[.vulnerabilities[]] | length' dependency-reports/python-audit.json 2>/dev/null || echo 0)
+          fi
+
+          # Count npm audit findings
+          if [[ -f dependency-reports/npm-audit.json ]]; then
+            NPM_COUNT=$(jq '.metadata.vulnerabilities | to_entries | map(select(.value > 0)) | length' dependency-reports/npm-audit.json 2>/dev/null || echo 0)
+          fi
+
+          # Count OWASP findings
+          if [[ -f dependency-reports/owasp/dependency-check-report.json ]]; then
+            OWASP_COUNT=$(jq '[.dependencies[] | select(.vulnerabilities)] | length' dependency-reports/owasp/dependency-check-report.json 2>/dev/null || echo 0)
+          fi
+
+          TOTAL=$((SAFETY_COUNT + AUDIT_COUNT + NPM_COUNT + OWASP_COUNT))
+          echo "count=$TOTAL" >> $GITHUB_OUTPUT
+          echo "Found $TOTAL dependency vulnerabilities (Safety: $SAFETY_COUNT, pip-audit: $AUDIT_COUNT, npm: $NPM_COUNT, OWASP: $OWASP_COUNT)"
+
+      - name: Generate dependency summary
+        run: |
+          echo "# Dependency Security Scan Results" > dependency-reports/summary.md
+          echo "" >> dependency-reports/summary.md
+          echo "## Scan Results Overview" >> dependency-reports/summary.md
+          echo "- Python Safety: $(jq '[.[] | select(.vulnerability_id)] | length' dependency-reports/python-safety.json 2>/dev/null || echo 0) vulnerabilities" >> dependency-reports/summary.md
+          echo "- Python pip-audit: $(jq '[.vulnerabilities[]] | length' dependency-reports/python-audit.json 2>/dev/null || echo 0) vulnerabilities" >> dependency-reports/summary.md
+          echo "- Node.js npm audit: $(jq '.metadata.vulnerabilities | to_entries | map(select(.value > 0)) | length' dependency-reports/npm-audit.json 2>/dev/null || echo 0) vulnerabilities" >> dependency-reports/summary.md
+          echo "- OWASP Dependency Check: $(jq '[.dependencies[] | select(.vulnerabilities)] | length' dependency-reports/owasp/dependency-check-report.json 2>/dev/null || echo 0) vulnerabilities" >> dependency-reports/summary.md
+
+      - name: Mark scan complete
+        id: scan-complete
+        run: |
+          echo "status=completed" >> $GITHUB_OUTPUT
+
+      - name: Upload dependency reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-security-reports
+          path: dependency-reports/
+          retention-days: 30
+
+      - name: Create step summary
+        run: |
+          echo "## 🔍 Dependency Security Scan Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          cat dependency-reports/summary.md >> $GITHUB_STEP_SUMMARY

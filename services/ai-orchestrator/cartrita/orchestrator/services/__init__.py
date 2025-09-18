@@ -8,7 +8,7 @@ Services package for Cartrita AI OS.
 Contains various service implementations for the AI orchestrator.
 """
 
-from .auth import verify_api_key, get_api_key
+from .auth import get_api_key, verify_api_key
 from .deepgram_service import DeepgramService
 from .github_service import GitHubService
 from .huggingface_service import HuggingFaceService
@@ -22,5 +22,5 @@ __all__ = [
     "GitHubService",
     "HuggingFaceService",
     "OpenAIService",
-    "TavilyService"
+    "TavilyService",
 ]

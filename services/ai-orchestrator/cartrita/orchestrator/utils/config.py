@@ -9,15 +9,9 @@ Uses Pydantic v2 with advanced validation and environment variable support.
 import secrets
 from pathlib import Path
 
-from pydantic import (
-    Field,
-    HttpUrl,
-    SecretStr,
-    field_validator,
-    model_validator,
-)
+from pydantic import Field, HttpUrl, SecretStr, field_validator, model_validator
 from pydantic.networks import IPvAnyAddress
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class DatabaseSettings(BaseSettings):
@@ -26,9 +20,7 @@ class DatabaseSettings(BaseSettings):
     host: str = Field(default="localhost", description="Database host")
     port: int = Field(default=5432, ge=1, le=65535, description="Database port")
     user: str = Field(default="robbie", description="Database user")
-    password: SecretStr = Field(
-        default="punky1", description="Database password"
-    )
+    password: SecretStr = Field(default="punky1", description="Database password")
     database: str = Field(default="cartrita_db", description="Database name")
     pool_size: int = Field(default=20, ge=1, le=100, description="Connection pool size")
     max_overflow: int = Field(
@@ -44,8 +36,7 @@ class DatabaseSettings(BaseSettings):
         """Generate database URL."""
         return f"postgresql://{self.user}:{self.password.get_secret_value()}@{self.host}:{self.port}/{self.database}"
 
-    class Config:
-        env_prefix = "POSTGRES_"
+    model_config = SettingsConfigDict(env_prefix="POSTGRES_")
 
 
 class RedisSettings(BaseSettings):
@@ -72,16 +63,15 @@ class RedisSettings(BaseSettings):
         auth = f":{self.password.get_secret_value()}@" if self.password else ""
         return f"redis://{auth}{self.host}:{self.port}/{self.db}"
 
-    class Config:
-        env_prefix = "REDIS_"
+    model_config = SettingsConfigDict(env_prefix="REDIS_")
 
 
 class AISettings(BaseSettings):
     """AI and ML configuration settings."""
 
     # OpenAI GPT-4.1 for Orchestrator
-    openai_api_key: SecretStr = Field(
-        ..., description="OpenAI API key for GPT-4.1 orchestrator"
+    openai_api_key: SecretStr | None = Field(
+        default=None, description="OpenAI API key for GPT-4.1 orchestrator"
     )
     openai_embeddings_api_key: SecretStr | None = Field(
         default=None, description="OpenAI embeddings API key"
@@ -93,7 +83,8 @@ class AISettings(BaseSettings):
 
     # Model configurations - Optimized for cost-effectiveness and rate limits
     orchestrator_model: str = Field(
-        default="gpt-4.1-mini", description="Cost-effective GPT-4.1-mini for orchestration"
+        default="gpt-4.1-mini",
+        description="Cost-effective GPT-4.1-mini for orchestration",
     )
     agent_model: str = Field(
         default="gpt-4o-mini",
@@ -136,7 +127,8 @@ class AISettings(BaseSettings):
         default="o3-mini", description="O3-mini for complex reasoning tasks"
     )
     deep_research_model: str = Field(
-        default="o4-mini-deep-research", description="O4-mini for deep research analysis"
+        default="o4-mini-deep-research",
+        description="O4-mini for deep research analysis",
     )
 
     # Model parameters
@@ -164,9 +156,7 @@ class AISettings(BaseSettings):
         default=300, ge=30, le=1800, description="Agent execution timeout"
     )
     max_agent_memory: str = Field(default="2GB", description="Max memory per agent")
-
-    class Config:
-        env_prefix = "AI_"
+    model_config = SettingsConfigDict(env_prefix="AI_")
 
 
 class SecuritySettings(BaseSettings):
@@ -218,9 +208,7 @@ class SecuritySettings(BaseSettings):
     rate_limit_window: int = Field(
         default=60, ge=1, description="Rate limit window in seconds"
     )
-
-    class Config:
-        env_prefix = "SECURITY_"
+    model_config = SettingsConfigDict(env_prefix="SECURITY_")
 
 
 class MonitoringSettings(BaseSettings):
@@ -269,9 +257,7 @@ class MonitoringSettings(BaseSettings):
     sentry_traces_sample_rate: float = Field(
         default=1.0, ge=0.0, le=1.0, description="Sentry traces sample rate"
     )
-
-    class Config:
-        env_prefix = "MONITORING_"
+    model_config = SettingsConfigDict(env_prefix="MONITORING_")
 
 
 class ExternalAPISettings(BaseSettings):
@@ -324,9 +310,7 @@ class ExternalAPISettings(BaseSettings):
     huggingface_hub_token: SecretStr | None = Field(
         default=None, description="HuggingFace Hub token"
     )
-
-    class Config:
-        env_prefix = "EXTERNAL_"
+    model_config = SettingsConfigDict(env_prefix="EXTERNAL_")
 
 
 class Settings(BaseSettings):
@@ -394,17 +378,14 @@ class Settings(BaseSettings):
         Path(path).mkdir(parents=True, exist_ok=True)
         return path
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = False
-        extra = "allow"
-
-        # Environment variable prefixes
-        env_prefix = ""
-
-        # Nested settings
-        env_nested_delimiter = "__"
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="allow",
+        env_prefix="",
+        env_nested_delimiter="__",
+    )
 
 
 # Global settings instance - Initialize only when needed

@@ -19,11 +19,11 @@ from langchain.agents import AgentExecutor, create_openai_tools_agent
 from langchain_core.messages import BaseMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.tools import BaseTool
-from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from pydantic import BaseModel
 
 from cartrita.orchestrator.agents.cartrita_core.api_key_manager import APIKeyManager
 from cartrita.orchestrator.providers.fallback_provider import get_fallback_provider
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 
 logger = structlog.get_logger(__name__)
 
@@ -34,7 +34,9 @@ class ChatOpenAI:  # type: ignore
     def __init__(self, *args, **kwargs):  # noqa: D401
         self._factory_enforced = True
         # Intentionally inert: tests patch this symbol; production code should not instantiate directly.
-        raise RuntimeError("Direct ChatOpenAI usage is disallowed; use create_chat_openai()")
+        raise RuntimeError(
+            "Direct ChatOpenAI usage is disallowed; use create_chat_openai()"
+        )
 
 
 class TaskComplexity(str, Enum):
@@ -89,15 +91,25 @@ class CartritaCoreAgent:
 
         # Get settings with proper initialization
         from cartrita.orchestrator.utils.config import get_settings
+
         _settings = get_settings()
 
         # Check if OpenAI API key is available and valid
         api_key = _settings.ai.openai_api_key.get_secret_value()
         # Replace insecure key logging with non-sensitive metadata
-        logger.info("Checking OpenAI API key", key_present=bool(api_key), key_length=(len(api_key) if api_key else 0))
-        if not api_key or api_key in ["your_openai_api_key_here", "sk-test-development-key-replace-with-real-key"]:
+        logger.info(
+            "Checking OpenAI API key",
+            key_present=bool(api_key),
+            key_length=(len(api_key) if api_key else 0),
+        )
+        if not api_key or api_key in [
+            "your_openai_api_key_here",
+            "sk-test-development-key-replace-with-real-key",
+        ]:
             self.mock_mode = True
-            logger.warning("OpenAI API key not configured - using production fallback system")
+            logger.warning(
+                "OpenAI API key not configured - using production fallback system"
+            )
             self.llm = None
         else:
             try:
@@ -152,7 +164,9 @@ class CartritaCoreAgent:
         self.system_prompt = self._create_system_prompt()
 
         # Create the LangChain agent
-        logger.info(f"Creating agent executor: mock_mode={self.mock_mode}, llm={self.llm is not None}")
+        logger.info(
+            f"Creating agent executor: mock_mode={self.mock_mode}, llm={self.llm is not None}"
+        )
         if not self.mock_mode:
             self.agent_executor = self._create_agent_executor()
             logger.info("Agent executor created successfully")
@@ -336,7 +350,9 @@ Remember: You're representing not just advanced AI, but also the intelligence, w
     def _create_agent_executor(self) -> AgentExecutor:
         """Create the LangChain agent executor with tools."""
         if self.llm is None:
-            raise RuntimeError("Cannot create agent executor without LLM - running in mock mode")
+            raise RuntimeError(
+                "Cannot create agent executor without LLM - running in mock mode"
+            )
 
         # Define Cartrita's core tools
         tools = [
@@ -398,7 +414,9 @@ Remember: You're representing not just advanced AI, but also the intelligence, w
 
         class KeyManagementTool(BaseTool):
             name: str = "request_api_access"
-            description: str = "Request API key access for specific tools and operations"
+            description: str = (
+                "Request API key access for specific tools and operations"
+            )
 
             def _run(self, tool_name: str, duration: int = 60) -> str:
                 """Request API key access."""
@@ -549,11 +567,14 @@ Remember: You're representing not just advanced AI, but also the intelligence, w
 
                 # Get current time for context
                 from datetime import datetime
+
                 import pytz
 
                 # Use Miami timezone
-                miami_tz = pytz.timezone('America/New_York')
-                current_time = datetime.now(miami_tz).strftime("%A, %B %d, %Y at %I:%M %p %Z")
+                miami_tz = pytz.timezone("America/New_York")
+                current_time = datetime.now(miami_tz).strftime(
+                    "%A, %B %d, %Y at %I:%M %p %Z"
+                )
 
                 # Create a personality-aware prompt for the fallback provider
                 cartrita_prompt = (
@@ -572,15 +593,17 @@ Remember: You're representing not just advanced AI, but also the intelligence, w
                         context={
                             "personality": "cartrita_hialeah",
                             "agent_type": "cartrita_core",
-                            "cultural_context": "miami_caribbean"
-                        }
+                            "cultural_context": "miami_caribbean",
+                        },
                     )
 
                     response_text = fallback_response["response"]
                     provider_used = fallback_response["metadata"]["provider_used"]
 
                     # Add some Cartrita personality if the response is too generic
-                    response_with_personality = self._add_personality_touch(response_text)
+                    response_with_personality = self._add_personality_touch(
+                        response_text
+                    )
 
                     logger.info(f"Fallback response generated using: {provider_used}")
 
@@ -595,7 +618,9 @@ Remember: You're representing not just advanced AI, but also the intelligence, w
                             "agent_id": self.agent_id,
                             "fallback_mode": True,
                             "provider_used": provider_used,
-                            "fallback_level": fallback_response["metadata"]["fallback_level"],
+                            "fallback_level": fallback_response["metadata"][
+                                "fallback_level"
+                            ],
                         },
                     }
 

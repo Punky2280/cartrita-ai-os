@@ -1,0 +1,596 @@
+{
+  "total_real_issues": 21,
+  "by_type": {
+    "hardcoded_secret": [
+      {
+        "file": "test_task12_standalone.py",
+        "line": 533,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "malformed_token = \"invalid.jwt.token\""
+      },
+      {
+        "file": "test_task12_api_security.py",
+        "line": 483,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "test_jwt_secret = \"test-secret-key-at-least-32-characters\""
+      },
+      {
+        "file": "test_task11_database_security.py",
+        "line": 79,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "query = f\"SELECT * FROM users WHERE id = 1 -- AND password = '{test_secret_pattern}'\""
+      },
+      {
+        "file": "services/api-gateway/src/middleware/__tests__/security.test.js",
+        "line": 23,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';"
+      },
+      {
+        "file": "services/api-gateway/src/middleware/__tests__/security.test.js",
+        "line": 24,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "process.env.PROD_API_KEY = 'prod-key-12345678901234567890123456';"
+      },
+      {
+        "file": "services/api-gateway/src/middleware/__tests__/security.test.js",
+        "line": 355,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';"
+      },
+      {
+        "file": "generated_patches.json",
+        "line": 91,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"original\": \"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'\","
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34298,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: String $PASSWORD = \"$VALUE\";"
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34318,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: var $PASSWORD = \"$VALUE\";"
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34339,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: let $PASSWORD = \"$VALUE\""
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34340,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: const $PASSWORD = \"$VALUE\""
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34341,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: var $PASSWORD = \"$VALUE\""
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34342,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: let $PASSWORD = '$VALUE'"
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34343,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: const $PASSWORD = '$VALUE'"
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34344,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: var $PASSWORD = '$VALUE'"
+      }
+    ],
+    "dangerous_function": [
+      {
+        "file": "test_task11_database_security.py",
+        "line": 101,
+        "type": "dangerous_function",
+        "severity": "high",
+        "description": "Use of exec() function",
+        "recommendation": "Use safer alternatives or input validation",
+        "code": "query = \"SELECT exec('rm -rf /') FROM users\""
+      },
+      {
+        "file": "scripts/test_final_integration.py",
+        "line": 176,
+        "type": "dangerous_function",
+        "severity": "high",
+        "description": "Use of eval() function",
+        "recommendation": "Use safer alternatives or input validation",
+        "code": "def safe_eval(node):"
+      },
+      {
+        "file": "scripts/test_final_integration.py",
+        "line": 180,
+        "type": "dangerous_function",
+        "severity": "high",
+        "description": "Use of eval() function",
+        "recommendation": "Use safer alternatives or input validation",
+        "code": "return ops[type(node.op)](safe_eval(node.left), safe_eval(node.right))"
+      },
+      {
+        "file": "scripts/test_final_integration.py",
+        "line": 182,
+        "type": "dangerous_function",
+        "severity": "high",
+        "description": "Use of eval() function",
+        "recommendation": "Use safer alternatives or input validation",
+        "code": "return ops[type(node.op)](safe_eval(node.operand))"
+      },
+      {
+        "file": "scripts/test_final_integration.py",
+        "line": 194,
+        "type": "dangerous_function",
+        "severity": "high",
+        "description": "Use of eval() function",
+        "recommendation": "Use safer alternatives or input validation",
+        "code": "return str(safe_eval(ast.parse(expression, mode='eval').body))"
+      },
+      {
+        "file": "services/ai-orchestrator/tests/test_cartrita_core.py",
+        "line": 63,
+        "type": "dangerous_function",
+        "severity": "high",
+        "description": "Use of eval() function",
+        "recommendation": "Use safer alternatives or input validation",
+        "code": "def test_key_storage_and_retrieval(self, api_key_manager):"
+      }
+    ]
+  },
+  "by_file": {
+    "test_task12_standalone.py": [
+      {
+        "file": "test_task12_standalone.py",
+        "line": 533,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "malformed_token = \"invalid.jwt.token\""
+      }
+    ],
+    "test_task12_api_security.py": [
+      {
+        "file": "test_task12_api_security.py",
+        "line": 483,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "test_jwt_secret = \"test-secret-key-at-least-32-characters\""
+      }
+    ],
+    "test_task11_database_security.py": [
+      {
+        "file": "test_task11_database_security.py",
+        "line": 79,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "query = f\"SELECT * FROM users WHERE id = 1 -- AND password = '{test_secret_pattern}'\""
+      },
+      {
+        "file": "test_task11_database_security.py",
+        "line": 101,
+        "type": "dangerous_function",
+        "severity": "high",
+        "description": "Use of exec() function",
+        "recommendation": "Use safer alternatives or input validation",
+        "code": "query = \"SELECT exec('rm -rf /') FROM users\""
+      }
+    ],
+    "scripts/test_final_integration.py": [
+      {
+        "file": "scripts/test_final_integration.py",
+        "line": 176,
+        "type": "dangerous_function",
+        "severity": "high",
+        "description": "Use of eval() function",
+        "recommendation": "Use safer alternatives or input validation",
+        "code": "def safe_eval(node):"
+      },
+      {
+        "file": "scripts/test_final_integration.py",
+        "line": 180,
+        "type": "dangerous_function",
+        "severity": "high",
+        "description": "Use of eval() function",
+        "recommendation": "Use safer alternatives or input validation",
+        "code": "return ops[type(node.op)](safe_eval(node.left), safe_eval(node.right))"
+      },
+      {
+        "file": "scripts/test_final_integration.py",
+        "line": 182,
+        "type": "dangerous_function",
+        "severity": "high",
+        "description": "Use of eval() function",
+        "recommendation": "Use safer alternatives or input validation",
+        "code": "return ops[type(node.op)](safe_eval(node.operand))"
+      },
+      {
+        "file": "scripts/test_final_integration.py",
+        "line": 194,
+        "type": "dangerous_function",
+        "severity": "high",
+        "description": "Use of eval() function",
+        "recommendation": "Use safer alternatives or input validation",
+        "code": "return str(safe_eval(ast.parse(expression, mode='eval').body))"
+      }
+    ],
+    "services/ai-orchestrator/tests/test_cartrita_core.py": [
+      {
+        "file": "services/ai-orchestrator/tests/test_cartrita_core.py",
+        "line": 63,
+        "type": "dangerous_function",
+        "severity": "high",
+        "description": "Use of eval() function",
+        "recommendation": "Use safer alternatives or input validation",
+        "code": "def test_key_storage_and_retrieval(self, api_key_manager):"
+      }
+    ],
+    "services/api-gateway/src/middleware/__tests__/security.test.js": [
+      {
+        "file": "services/api-gateway/src/middleware/__tests__/security.test.js",
+        "line": 23,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';"
+      },
+      {
+        "file": "services/api-gateway/src/middleware/__tests__/security.test.js",
+        "line": 24,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "process.env.PROD_API_KEY = 'prod-key-12345678901234567890123456';"
+      },
+      {
+        "file": "services/api-gateway/src/middleware/__tests__/security.test.js",
+        "line": 355,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';"
+      }
+    ],
+    "generated_patches.json": [
+      {
+        "file": "generated_patches.json",
+        "line": 91,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"original\": \"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'\","
+      }
+    ],
+    ".codacy/tools-configs/semgrep.yaml": [
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34298,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: String $PASSWORD = \"$VALUE\";"
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34318,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: var $PASSWORD = \"$VALUE\";"
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34339,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: let $PASSWORD = \"$VALUE\""
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34340,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: const $PASSWORD = \"$VALUE\""
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34341,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: var $PASSWORD = \"$VALUE\""
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34342,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: let $PASSWORD = '$VALUE'"
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34343,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: const $PASSWORD = '$VALUE'"
+      },
+      {
+        "file": ".codacy/tools-configs/semgrep.yaml",
+        "line": 34344,
+        "type": "hardcoded_secret",
+        "severity": "high",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "- pattern: var $PASSWORD = '$VALUE'"
+      }
+    ]
+  },
+  "all_issues": [
+    {
+      "file": "test_task12_standalone.py",
+      "line": 533,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "malformed_token = \"invalid.jwt.token\""
+    },
+    {
+      "file": "test_task12_api_security.py",
+      "line": 483,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "test_jwt_secret = \"test-secret-key-at-least-32-characters\""
+    },
+    {
+      "file": "test_task11_database_security.py",
+      "line": 79,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "query = f\"SELECT * FROM users WHERE id = 1 -- AND password = '{test_secret_pattern}'\""
+    },
+    {
+      "file": "test_task11_database_security.py",
+      "line": 101,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of exec() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "query = \"SELECT exec('rm -rf /') FROM users\""
+    },
+    {
+      "file": "scripts/test_final_integration.py",
+      "line": 176,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of eval() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "def safe_eval(node):"
+    },
+    {
+      "file": "scripts/test_final_integration.py",
+      "line": 180,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of eval() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "return ops[type(node.op)](safe_eval(node.left), safe_eval(node.right))"
+    },
+    {
+      "file": "scripts/test_final_integration.py",
+      "line": 182,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of eval() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "return ops[type(node.op)](safe_eval(node.operand))"
+    },
+    {
+      "file": "scripts/test_final_integration.py",
+      "line": 194,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of eval() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "return str(safe_eval(ast.parse(expression, mode='eval').body))"
+    },
+    {
+      "file": "services/ai-orchestrator/tests/test_cartrita_core.py",
+      "line": 63,
+      "type": "dangerous_function",
+      "severity": "high",
+      "description": "Use of eval() function",
+      "recommendation": "Use safer alternatives or input validation",
+      "code": "def test_key_storage_and_retrieval(self, api_key_manager):"
+    },
+    {
+      "file": "services/api-gateway/src/middleware/__tests__/security.test.js",
+      "line": 23,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';"
+    },
+    {
+      "file": "services/api-gateway/src/middleware/__tests__/security.test.js",
+      "line": 24,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "process.env.PROD_API_KEY = 'prod-key-12345678901234567890123456';"
+    },
+    {
+      "file": "services/api-gateway/src/middleware/__tests__/security.test.js",
+      "line": 355,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "process.env.DEV_API_KEY = 'dev-key-12345678901234567890123456';"
+    },
+    {
+      "file": "generated_patches.json",
+      "line": 91,
+      "type": "hardcoded_secret",
+      "severity": "critical",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "\"original\": \"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'\","
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34298,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: String $PASSWORD = \"$VALUE\";"
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34318,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: var $PASSWORD = \"$VALUE\";"
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34339,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: let $PASSWORD = \"$VALUE\""
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34340,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: const $PASSWORD = \"$VALUE\""
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34341,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: var $PASSWORD = \"$VALUE\""
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34342,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: let $PASSWORD = '$VALUE'"
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34343,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: const $PASSWORD = '$VALUE'"
+    },
+    {
+      "file": ".codacy/tools-configs/semgrep.yaml",
+      "line": 34344,
+      "type": "hardcoded_secret",
+      "severity": "high",
+      "description": "Potential hardcoded secret detected",
+      "recommendation": "Move secret to environment variables or secure vault",
+      "code": "- pattern: var $PASSWORD = '$VALUE'"
+    }
+  ]
+}

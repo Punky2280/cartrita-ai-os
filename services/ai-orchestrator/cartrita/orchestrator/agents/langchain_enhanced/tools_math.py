@@ -9,8 +9,8 @@ class MathCalculatorTool(AdvancedCartritaTool):
 
     def do_execute(self, *args, **kwargs) -> str:
         import ast
-        import operator
         import math
+        import operator
 
         if kwargs.get("expression") is not None:
             expression = str(kwargs["expression"])
@@ -20,15 +20,27 @@ class MathCalculatorTool(AdvancedCartritaTool):
             raise ValueError("expression is required")
 
         ops = {
-            ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul,
-            ast.Div: operator.truediv, ast.Pow: operator.pow, ast.BitXor: operator.xor,
+            ast.Add: operator.add,
+            ast.Sub: operator.sub,
+            ast.Mult: operator.mul,
+            ast.Div: operator.truediv,
+            ast.Pow: operator.pow,
+            ast.BitXor: operator.xor,
             ast.USub: operator.neg,
         }
         fun = {
-            'sin': math.sin, 'cos': math.cos, 'tan': math.tan,
-            'sqrt': math.sqrt, 'log': math.log, 'exp': math.exp,
-            'abs': abs, 'round': round, 'min': min, 'max': max,
-            'pi': math.pi, 'e': math.e
+            "sin": math.sin,
+            "cos": math.cos,
+            "tan": math.tan,
+            "sqrt": math.sqrt,
+            "log": math.log,
+            "exp": math.exp,
+            "abs": abs,
+            "round": round,
+            "min": min,
+            "max": max,
+            "pi": math.pi,
+            "e": math.e,
         }
 
         def ev(n):

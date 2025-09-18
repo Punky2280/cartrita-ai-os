@@ -4,13 +4,14 @@ Handles image generation, analysis, and vision tasks using DALL-E and GPT-Image 
 """
 
 import asyncio
+import base64
 import time
 from typing import Any, Dict, List, Tuple
-import base64
 
 import structlog
-from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from pydantic import BaseModel, Field
+
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 
 logger = structlog.get_logger(__name__)
 
@@ -18,6 +19,7 @@ logger = structlog.get_logger(__name__)
 # ============================================
 # Image Models
 # ============================================
+
 
 class ImageRequest(BaseModel):
     """Image processing request model."""
@@ -38,13 +40,16 @@ class ImageResponse(BaseModel):
     result: str | bytes | List[str] = Field(..., description="Processing result")
     task_type: str = Field(..., description="Type of task performed")
     processing_time: float = Field(..., description="Processing duration")
-    metadata: Dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
+    metadata: Dict[str, Any] = Field(
+        default_factory=dict, description="Additional metadata"
+    )
     urls: List[str] = Field(default_factory=list, description="Generated image URLs")
 
 
 # ============================================
 # Image Agent
 # ============================================
+
 
 class ImageAgent:
     """
@@ -67,6 +72,7 @@ class ImageAgent:
         """Initialize the image agent with optimal models."""
         # Get settings with proper initialization
         from cartrita.orchestrator.utils.config import get_settings
+
         _settings = get_settings()
 
         # Use gpt-image-1 for vision tasks (100K TPM, 5 images/min)
@@ -88,12 +94,14 @@ class ImageAgent:
         self.processing_stats = {
             "images_generated": 0,
             "images_analyzed": 0,
-            "total_processing_time": 0.0
+            "total_processing_time": 0.0,
         }
 
-        logger.info("Image Agent initialized",
-                    vision_model=self.vision_model,
-                    generation_model=self.generation_model)
+        logger.info(
+            "Image Agent initialized",
+            vision_model=self.vision_model,
+            generation_model=self.generation_model,
+        )
 
     async def start(self) -> None:
         """Start the image agent."""
@@ -140,21 +148,28 @@ class ImageAgent:
                 task_type=request.task_type,
                 processing_time=processing_time,
                 metadata={
-                    "model_used": self.vision_model if "analyze" in request.task_type else self.generation_model,
+                    "model_used": (
+                        self.vision_model
+                        if "analyze" in request.task_type
+                        else self.generation_model
+                    ),
                     "quality": request.quality,
                     "size": request.size,
-                    "style": request.style
-                }
+                    "style": request.style,
+                },
             )
 
         except Exception as e:
-            logger.error("Image processing failed", error=str(e), task_type=request.task_type)
+            logger.error(
+                "Image processing failed", error=str(e), task_type=request.task_type
+            )
             raise
 
     async def _generate_image(self, request: ImageRequest) -> List[str]:
         """Generate images using DALL-E models."""
         try:
             from openai import AsyncOpenAI
+
             client = AsyncOpenAI(api_key=self.api_key)
 
             # Use DALL-E 3 for high quality or DALL-E 2 for faster generation
@@ -165,11 +180,13 @@ class ImageAgent:
                 quality=request.quality,
                 style=request.style,
                 n=min(request.n, 5),  # Respect rate limits
-                response_format="url"
+                response_format="url",
             )
 
             urls = [image.url for image in response.data]
-            logger.info("Generated images", count=len(urls), model=self.generation_model)
+            logger.info(
+                "Generated images", count=len(urls), model=self.generation_model
+            )
             return urls
 
         except Exception as e:
@@ -185,19 +202,24 @@ class ImageAgent:
             # Prepare image for vision model
             if request.image_data:
                 # Convert bytes to base64 for API
-                image_b64 = base64.b64encode(request.image_data).decode('utf-8')
+                image_b64 = base64.b64encode(request.image_data).decode("utf-8")
                 image_url = f"data:image/jpeg;base64,{image_b64}"
             else:
                 image_url = request.image_url
 
             # Add temporal awareness for context
             from datetime import datetime
+
             import pytz
 
-            miami_tz = pytz.timezone('America/New_York')
-            current_time = datetime.now(miami_tz).strftime('%A, %B %d, %Y at %I:%M %p %Z')
+            miami_tz = pytz.timezone("America/New_York")
+            current_time = datetime.now(miami_tz).strftime(
+                "%A, %B %d, %Y at %I:%M %p %Z"
+            )
 
-            analysis_prompt = request.prompt or f"""# IMAGE ANALYSIS - CARTRITA AI OS 🖼️
+            analysis_prompt = (
+                request.prompt
+                or f"""# IMAGE ANALYSIS - CARTRITA AI OS 🖼️
 
 You are Cartrita's specialized Image Agent with advanced visual intelligence capabilities.
 
@@ -240,6 +262,7 @@ Analyze this image comprehensively using this structure:
 - Clear about what you can and cannot determine
 
 Remember: You're providing professional-grade visual analysis that Cartrita can trust and use for decision-making."""
+            )
 
             # Use vision model for image analysis
             messages = [
@@ -247,8 +270,8 @@ Remember: You're providing professional-grade visual analysis that Cartrita can 
                     "role": "user",
                     "content": [
                         {"type": "text", "text": analysis_prompt},
-                        {"type": "image_url", "image_url": {"url": image_url}}
-                    ]
+                        {"type": "image_url", "image_url": {"url": image_url}},
+                    ],
                 }
             ]
 
@@ -279,6 +302,7 @@ Remember: You're providing professional-grade visual analysis that Cartrita can 
         """Edit image using DALL-E edit capabilities."""
         try:
             from openai import AsyncOpenAI
+
             AsyncOpenAI(api_key=self.api_key)
 
             # Note: DALL-E edit requires image + mask + prompt
@@ -295,7 +319,9 @@ Remember: You're providing professional-grade visual analysis that Cartrita can 
 
     async def _compare_images(self, request: ImageRequest) -> str:
         """Compare multiple images."""
-        compare_prompt = request.prompt or """
+        compare_prompt = (
+            request.prompt
+            or """
         Compare these images and provide:
         - Similarities and differences
         - Which image might be better for specific purposes
@@ -303,27 +329,20 @@ Remember: You're providing professional-grade visual analysis that Cartrita can 
         - Compositional analysis
         - Any notable observations
         """
+        )
 
         # This would require multiple image inputs
         # For now, use single image analysis
         request.prompt = compare_prompt
         return await self._analyze_image(request)
 
-    async def batch_generate(
-        self,
-        prompts: List[str],
-        **kwargs
-    ) -> List[ImageResponse]:
+    async def batch_generate(self, prompts: List[str], **kwargs) -> List[ImageResponse]:
         """Generate multiple images with rate limit handling."""
         results = []
 
         for i, prompt in enumerate(prompts):
             try:
-                request = ImageRequest(
-                    prompt=prompt,
-                    task_type="generate",
-                    **kwargs
-                )
+                request = ImageRequest(prompt=prompt, task_type="generate", **kwargs)
 
                 response = await self.process_image(request)
                 results.append(response)
@@ -339,9 +358,7 @@ Remember: You're providing professional-grade visual analysis that Cartrita can 
         return results
 
     async def analyze_batch(
-        self,
-        images: List[Tuple[bytes, str]],
-        prompt: str | None = None
+        self, images: List[Tuple[bytes, str]], prompt: str | None = None
     ) -> List[ImageResponse]:
         """Analyze multiple images."""
         results = []
@@ -349,9 +366,7 @@ Remember: You're providing professional-grade visual analysis that Cartrita can 
         for i, (image_data, image_name) in enumerate(images):
             try:
                 request = ImageRequest(
-                    image_data=image_data,
-                    prompt=prompt,
-                    task_type="analyze"
+                    image_data=image_data, prompt=prompt, task_type="analyze"
                 )
 
                 response = await self.process_image(request)
@@ -359,7 +374,9 @@ Remember: You're providing professional-grade visual analysis that Cartrita can 
                 results.append(response)
 
             except Exception as e:
-                logger.error(f"Batch analysis failed for image {image_name}", error=str(e))
+                logger.error(
+                    f"Batch analysis failed for image {image_name}", error=str(e)
+                )
                 results.append(None)
 
         return results
@@ -369,12 +386,12 @@ Remember: You're providing professional-grade visual analysis that Cartrita can 
         return {
             "models": {
                 "vision": self.vision_model,
-                "generation": self.generation_model
+                "generation": self.generation_model,
             },
             "rate_limits": {
                 "dall_e_3": "500 RPM, 5 images per minute",
                 "dall_e_2": "500 RPM, 5 images per minute",
-                "gpt_image_1": "100K TPM, 5 images per minute"
+                "gpt_image_1": "100K TPM, 5 images per minute",
             },
             "capabilities": [
                 "high_quality_image_generation",
@@ -382,19 +399,11 @@ Remember: You're providing professional-grade visual analysis that Cartrita can 
                 "visual_reasoning",
                 "image_description",
                 "content_moderation",
-                "batch_processing"
+                "batch_processing",
             ],
-            "generation_sizes": [
-                "1024x1024", "1792x1024", "1024x1792"
-            ],
-            "generation_qualities": [
-                "standard", "hd"
-            ],
-            "generation_styles": [
-                "natural", "vivid"
-            ],
-            "supported_formats": [
-                "jpg", "png", "webp", "gif"
-            ],
-            "statistics": self.processing_stats
+            "generation_sizes": ["1024x1024", "1792x1024", "1024x1792"],
+            "generation_qualities": ["standard", "hd"],
+            "generation_styles": ["natural", "vivid"],
+            "supported_formats": ["jpg", "png", "webp", "gif"],
+            "statistics": self.processing_stats,
         }

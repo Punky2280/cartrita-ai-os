@@ -14,7 +14,8 @@ const {
   rateLimitConfig,
   jwtConfig,
   validateApiKey,
-  corsConfig
+  corsConfig,
+  enforceHTTPS
 } = require('./middleware/security');
 
 const PORT = process.env.API_GATEWAY_PORT || 3000;
@@ -28,6 +29,9 @@ fastify.register(require('@fastify/rate-limit'), rateLimitConfig);
 
 // Register JWT
 fastify.register(require('@fastify/jwt'), jwtConfig);
+
+// HTTPS enforcement middleware (before other processing)
+fastify.addHook('preHandler', enforceHTTPS);
 
 // Add security headers to all responses
 fastify.addHook('onSend', (request, reply, payload, done) => {

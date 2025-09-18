@@ -3,16 +3,18 @@ import importlib.util
 import os
 import pytest  # type: ignore
 
-MODULE_PATH = os.path.abspath(os.path.join(
-    os.path.dirname(__file__),
-    "..",
-    "services",
-    "ai-orchestrator",
-    "cartrita",
-    "orchestrator",
-    "services",
-    "service_manager.py",
-))
+MODULE_PATH = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        "services",
+        "ai-orchestrator",
+        "cartrita",
+        "orchestrator",
+        "services",
+        "service_manager.py",
+    )
+)
 
 spec = importlib.util.spec_from_file_location("_service_manager_isolated", MODULE_PATH)
 service_manager_module = importlib.util.module_from_spec(spec)
@@ -40,12 +42,14 @@ class DummyAI:
 class DummySettings:
     ai = DummyAI()
 
+
 # Now that DummySettings exists, ensure module-level settings populated
 service_manager_module.settings = DummySettings()
 
 
 def _patch_settings(monkeypatch):
     from cartrita.orchestrator.utils import config as config_mod
+
     dummy = DummySettings()
     monkeypatch.setattr(config_mod, "settings", dummy, raising=False)
     monkeypatch.setattr(config_mod, "get_settings", lambda: dummy, raising=False)

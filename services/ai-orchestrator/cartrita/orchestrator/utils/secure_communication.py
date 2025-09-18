@@ -9,11 +9,12 @@ import hmac
 import json
 import os
 import time
-from typing import Any, Dict, List, Optional, AsyncIterator
-from pydantic import BaseModel, Field, validator
+from typing import Any, AsyncIterator, Dict, List, Optional
+
 import aiohttp
-from cryptography.fernet import Fernet
 import structlog
+from cryptography.fernet import Fernet
+from pydantic import BaseModel, Field, field_validator
 
 logger = structlog.get_logger(__name__)
 
@@ -26,7 +27,8 @@ class SecureMessage(BaseModel):
     signature: Optional[str] = Field(None, description="HMAC signature for integrity")
     encrypted: bool = Field(False, description="Whether payload is encrypted")
 
-    @validator('timestamp')
+    @field_validator("timestamp")
+    @classmethod
     def validate_timestamp(cls, v):
         """Ensure timestamp is recent (within 5 minutes)."""
         if abs(time.time() - v) > 300:  # 5 minutes
@@ -49,9 +51,9 @@ class SecureCommunicator:
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=self.request_timeout),
             headers={
-                'User-Agent': 'Cartrita-AI-OS/2.0',
-                'Content-Type': 'application/json'
-            }
+                "User-Agent": "Cartrita-AI-OS/2.0",
+                "Content-Type": "application/json",
+            },
         )
         return self
 
@@ -62,11 +64,7 @@ class SecureCommunicator:
 
     def _generate_signature(self, payload: str) -> str:
         """Generate HMAC signature for message integrity."""
-        return hmac.new(
-            self.secret_key,
-            payload.encode(),
-            hashlib.sha256
-        ).hexdigest()
+        return hmac.new(self.secret_key, payload.encode(), hashlib.sha256).hexdigest()
 
     def _verify_signature(self, payload: str, signature: str) -> bool:
         """Verify HMAC signature."""
@@ -91,9 +89,7 @@ class SecureCommunicator:
         return json.loads(decrypted.decode())
 
     def create_secure_message(
-        self,
-        payload: Dict[str, Any],
-        encrypt: bool = False
+        self, payload: Dict[str, Any], encrypt: bool = False
     ) -> SecureMessage:
         """Create a secure message with optional encryption and signature."""
 
@@ -106,10 +102,7 @@ class SecureCommunicator:
             encrypted_flag = False
 
         # Create message without signature first
-        message = SecureMessage(
-            payload=message_payload,
-            encrypted=encrypted_flag
-        )
+        message = SecureMessage(payload=message_payload, encrypted=encrypted_flag)
 
         # Generate signature for the entire message
         message_str = json.dumps(message_payload, sort_keys=True)
@@ -146,7 +139,7 @@ class SecureCommunicator:
         payload: Dict[str, Any],
         method: str = "POST",
         encrypt: bool = False,
-        headers: Optional[Dict[str, str]] = None
+        headers: Optional[Dict[str, str]] = None,
     ) -> Dict[str, Any]:
         """Send a secure request with retries and error handling."""
 
@@ -158,10 +151,12 @@ class SecureCommunicator:
 
         # Prepare headers
         request_headers = headers or {}
-        request_headers.update({
-            'X-Secure-Message': 'true',
-            'X-Message-Timestamp': str(secure_msg.timestamp)
-        })
+        request_headers.update(
+            {
+                "X-Secure-Message": "true",
+                "X-Message-Timestamp": str(secure_msg.timestamp),
+            }
+        )
 
         # Retry logic
         last_exception = None
@@ -170,17 +165,13 @@ class SecureCommunicator:
                 logger.info(f"Sending secure request to {url} (attempt {attempt + 1})")
 
                 async with self.session.request(
-                    method,
-                    url,
-                    json=secure_msg.dict(),
-                    headers=request_headers
+                    method, url, json=secure_msg.dict(), headers=request_headers
                 ) as response:
-
                     if response.status == 200:
                         response_data = await response.json()
 
                         # If response is also a secure message, verify it
-                        if response_data.get('signature'):
+                        if response_data.get("signature"):
                             response_msg = SecureMessage(**response_data)
                             if self.verify_secure_message(response_msg):
                                 return response_msg.payload
@@ -191,27 +182,31 @@ class SecureCommunicator:
                         return response_data
 
                     elif response.status == 429:  # Rate limited
-                        retry_after = int(response.headers.get('Retry-After', 60))
+                        retry_after = int(response.headers.get("Retry-After", 60))
                         logger.warning(f"Rate limited, waiting {retry_after} seconds")
                         await asyncio.sleep(retry_after)
                         continue
 
                     else:
                         error_msg = await response.text()
-                        logger.error(f"Request failed with status {response.status}: {error_msg}")
-                        raise aiohttp.ClientError(f"HTTP {response.status}: {error_msg}")
+                        logger.error(
+                            f"Request failed with status {response.status}: {error_msg}"
+                        )
+                        raise aiohttp.ClientError(
+                            f"HTTP {response.status}: {error_msg}"
+                        )
 
             except asyncio.TimeoutError as e:
                 logger.warning(f"Request timeout (attempt {attempt + 1})")
                 last_exception = e
                 if attempt < self.max_retries - 1:
-                    await asyncio.sleep(2 ** attempt)  # Exponential backoff
+                    await asyncio.sleep(2**attempt)  # Exponential backoff
 
             except Exception as e:
                 logger.error(f"Request failed (attempt {attempt + 1}): {e}")
                 last_exception = e
                 if attempt < self.max_retries - 1:
-                    await asyncio.sleep(2 ** attempt)
+                    await asyncio.sleep(2**attempt)
 
         raise last_exception or Exception("All retry attempts failed")
 
@@ -235,7 +230,7 @@ class MessageQueue:
 
         # Limit queue size
         if len(self.queues[topic]) > self.max_size:
-            self.queues[topic] = self.queues[topic][-self.max_size:]
+            self.queues[topic] = self.queues[topic][-self.max_size :]
 
         # Notify subscribers
         for event in self.subscribers[topic]:
@@ -280,7 +275,7 @@ class CircuitBreaker:
         self,
         failure_threshold: int = 5,
         recovery_timeout: int = 60,
-        expected_exception: type = Exception
+        expected_exception: type = Exception,
     ):
         self.failure_threshold = failure_threshold
         self.recovery_timeout = recovery_timeout
@@ -288,23 +283,23 @@ class CircuitBreaker:
 
         self.failure_count = 0
         self.last_failure_time = None
-        self.state = 'CLOSED'  # CLOSED, OPEN, HALF_OPEN
+        self.state = "CLOSED"  # CLOSED, OPEN, HALF_OPEN
 
     def _is_failure_threshold_reached(self) -> bool:
         return self.failure_count >= self.failure_threshold
 
     def _is_timeout_expired(self) -> bool:
         return (
-            self.last_failure_time and
-            time.time() - self.last_failure_time >= self.recovery_timeout
+            self.last_failure_time
+            and time.time() - self.last_failure_time >= self.recovery_timeout
         )
 
     async def call(self, func, *args, **kwargs):
         """Execute function with circuit breaker protection."""
 
-        if self.state == 'OPEN':
+        if self.state == "OPEN":
             if self._is_timeout_expired():
-                self.state = 'HALF_OPEN'
+                self.state = "HALF_OPEN"
                 logger.info("Circuit breaker moving to HALF_OPEN state")
             else:
                 raise Exception("Circuit breaker is OPEN")
@@ -313,8 +308,8 @@ class CircuitBreaker:
             result = await func(*args, **kwargs)
 
             # Success - reset failure count and close circuit
-            if self.state == 'HALF_OPEN':
-                self.state = 'CLOSED'
+            if self.state == "HALF_OPEN":
+                self.state = "CLOSED"
                 self.failure_count = 0
                 logger.info("Circuit breaker CLOSED after successful call")
 
@@ -325,17 +320,17 @@ class CircuitBreaker:
             self.last_failure_time = time.time()
 
             if self._is_failure_threshold_reached():
-                self.state = 'OPEN'
-                logger.error(f"Circuit breaker OPENED after {self.failure_count} failures")
+                self.state = "OPEN"
+                logger.error(
+                    f"Circuit breaker OPENED after {self.failure_count} failures"
+                )
 
             raise e
 
 
 # Example usage patterns
 async def optimized_agent_communication(
-    agent_type: str,
-    request_data: Dict[str, Any],
-    timeout: int = 30
+    agent_type: str, request_data: Dict[str, Any], timeout: int = 30
 ) -> Dict[str, Any]:
     """Optimized communication pattern for agent requests."""
 
@@ -343,16 +338,14 @@ async def optimized_agent_communication(
     circuit_breaker = CircuitBreaker(failure_threshold=3, recovery_timeout=30)
 
     async with SecureCommunicator(
-        secret_key=os.getenv('API_KEY_SECRET', 'default_secret'),
-        encryption_key=os.getenv('ENCRYPTION_KEY')
+        secret_key=os.getenv("API_KEY_SECRET", "default_secret"),
+        encryption_key=os.getenv("ENCRYPTION_KEY"),
     ) as communicator:
 
         async def make_request():
             agent_url = f"http://localhost:8000/agents/{agent_type}/process"
             return await communicator.send_secure_request(
-                agent_url,
-                request_data,
-                encrypt=True
+                agent_url, request_data, encrypt=True
             )
 
         try:
@@ -363,5 +356,5 @@ async def optimized_agent_communication(
             return {
                 "error": "Service temporarily unavailable",
                 "agent_type": agent_type,
-                "fallback": True
+                "fallback": True,
             }

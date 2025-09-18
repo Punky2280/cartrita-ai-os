@@ -11,14 +11,15 @@ from datetime import datetime, timedelta, timezone
 from typing import Dict, Optional
 
 from fastapi import Depends, HTTPException, Request, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from jose import jwt, JWTError
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
 
 
 class TokenData(BaseModel):
     """JWT token data model."""
+
     user_id: str
     permissions: list[str] = []
     issued_at: datetime
@@ -31,8 +32,12 @@ class JWTManager:
     def __init__(self):
         self.secret_key = os.getenv("JWT_SECRET", "dev-jwt-secret-change-in-production")
         self.algorithm = "HS256"
-        self.access_token_expire_minutes = int(os.getenv("JWT_ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
-        self.refresh_token_expire_days = int(os.getenv("JWT_REFRESH_TOKEN_EXPIRE_DAYS", "7"))
+        self.access_token_expire_minutes = int(
+            os.getenv("JWT_ACCESS_TOKEN_EXPIRE_MINUTES", "30")
+        )
+        self.refresh_token_expire_days = int(
+            os.getenv("JWT_REFRESH_TOKEN_EXPIRE_DAYS", "7")
+        )
 
         # Password hashing
         self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -40,7 +45,9 @@ class JWTManager:
         # Rate limiting storage (in production, use Redis)
         self._rate_limit_storage: Dict[str, list] = {}
 
-    def create_access_token(self, user_id: str, permissions: list[str] = None) -> str:
+    def create_access_token(
+        self, user_id: str, permissions: Optional[list[str]] = None
+    ) -> str:
         """Create a JWT access token."""
         if permissions is None:
             permissions = []
@@ -53,7 +60,7 @@ class JWTManager:
             "permissions": permissions,
             "iat": now.timestamp(),
             "exp": expire.timestamp(),
-            "type": "access"
+            "type": "access",
         }
 
         return jwt.encode(payload, self.secret_key, algorithm=self.algorithm)
@@ -67,7 +74,7 @@ class JWTManager:
             "sub": user_id,
             "iat": now.timestamp(),
             "exp": expire.timestamp(),
-            "type": "refresh"
+            "type": "refresh",
         }
 
         return jwt.encode(payload, self.secret_key, algorithm=self.algorithm)
@@ -99,10 +106,7 @@ class JWTManager:
             exp = datetime.fromtimestamp(payload.get("exp", 0), tz=timezone.utc)
 
             return TokenData(
-                user_id=user_id,
-                permissions=permissions,
-                issued_at=iat,
-                expires_at=exp
+                user_id=user_id, permissions=permissions, issued_at=iat, expires_at=exp
             )
 
         except JWTError as e:
@@ -120,7 +124,9 @@ class JWTManager:
         """Verify a password against its hash."""
         return self.pwd_context.verify(plain_password, hashed_password)
 
-    def check_rate_limit(self, identifier: str, max_attempts: int = 5, window_minutes: int = 15) -> bool:
+    def check_rate_limit(
+        self, identifier: str, max_attempts: int = 5, window_minutes: int = 15
+    ) -> bool:
         """Check if request is within rate limits."""
         now = datetime.now(timezone.utc)
         window_start = now - timedelta(minutes=window_minutes)
@@ -128,7 +134,8 @@ class JWTManager:
         # Clean old attempts
         if identifier in self._rate_limit_storage:
             self._rate_limit_storage[identifier] = [
-                attempt_time for attempt_time in self._rate_limit_storage[identifier]
+                attempt_time
+                for attempt_time in self._rate_limit_storage[identifier]
                 if attempt_time > window_start
             ]
         else:
@@ -151,8 +158,7 @@ security = HTTPBearer()
 
 
 async def get_current_user(
-    request: Request,
-    credentials: HTTPAuthorizationCredentials = Depends(security)
+    request: Request, credentials: HTTPAuthorizationCredentials = Depends(security)
 ) -> TokenData:
     """
     Get current authenticated user from JWT token.
@@ -161,11 +167,13 @@ async def get_current_user(
     # Rate limiting by IP
     client_ip = request.client.host if request.client else "unknown"
 
-    if not jwt_manager.check_rate_limit(f"auth:{client_ip}", max_attempts=10, window_minutes=5):
+    if not jwt_manager.check_rate_limit(
+        f"auth:{client_ip}", max_attempts=10, window_minutes=5
+    ):
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
             detail="Too many authentication attempts. Please try again later.",
-            headers={"Retry-After": "300"}
+            headers={"Retry-After": "300"},
         )
 
     # Verify token
@@ -184,20 +192,24 @@ async def get_current_user(
 
 async def require_permission(permission: str):
     """Dependency factory for permission-based access control."""
-    async def permission_checker(current_user: TokenData = Depends(get_current_user)) -> TokenData:
+
+    async def permission_checker(
+        current_user: TokenData = Depends(get_current_user),
+    ) -> TokenData:
         if permission not in current_user.permissions:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail=f"Insufficient permissions. Required: {permission}"
+                detail=f"Insufficient permissions. Required: {permission}",
             )
         return current_user
+
     return permission_checker
 
 
 # Backwards compatibility with existing API key auth
 async def verify_api_key_or_jwt(
     request: Request,
-    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
 ) -> str:
     """
     Verify either API key (legacy) or JWT token.
@@ -213,6 +225,7 @@ async def verify_api_key_or_jwt(
 
     # Fall back to API key authentication
     from .auth import verify_api_key
+
     api_key_header = request.headers.get("X-API-Key")
     if api_key_header:
         # Create a mock dependencies object for the old function

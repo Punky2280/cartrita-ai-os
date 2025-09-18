@@ -26,14 +26,14 @@ WORKDIR /app
 COPY --from=dependencies --chown=nodejs:nodejs /app/node_modules ./node_modules
 COPY --chown=nodejs:nodejs . .
 
-# Create health check script
-RUN echo '#!/bin/sh\ncurl -f http://localhost:3000/health || exit 1' > /app/healthcheck.sh && \
-    chmod +x /app/healthcheck.sh && \
-    chown nodejs:nodejs /app/healthcheck.sh
+# Copy and setup health check script
+COPY --chown=nodejs:nodejs healthcheck.sh ./
+RUN chmod +x ./healthcheck.sh
 
-# Create necessary directories
+# Create necessary directories for read-only container
 RUN mkdir -p /app/logs /app/temp && \
-    chown -R nodejs:nodejs /app
+    chown -R nodejs:nodejs /app && \
+    chmod 755 /app/logs /app/temp
 
 # Switch to non-root user
 USER nodejs
@@ -44,8 +44,9 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
 
 # Security labels
 LABEL security.non-root=true \
-      maintainer="Cartrita AI Team" \
-      version="2.0.0"
+    security.read-only=true \
+    maintainer="Cartrita AI Team" \
+    version="2.0.0"
 
 # Expose port
 EXPOSE 3000

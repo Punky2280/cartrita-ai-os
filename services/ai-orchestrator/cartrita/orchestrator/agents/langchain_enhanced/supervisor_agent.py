@@ -5,19 +5,33 @@ Advanced agent orchestrator using LangChain patterns with tool calling and strea
 
 from typing import Any, Dict, List, Optional, Union
 
-from langchain.agents import BaseSingleActionAgent, AgentExecutor
-from langchain.callbacks.manager import CallbackManagerForChainRun, AsyncCallbackManagerForChainRun
-from langchain.schema import AgentAction, AgentFinish, BaseMessage, HumanMessage, AIMessage
-from langchain.tools import BaseTool, StructuredTool
-from langchain.memory import ConversationSummaryBufferMemory
-from cartrita.orchestrator.utils.llm_factory import create_chat_openai
+from langchain.agents import AgentExecutor, BaseSingleActionAgent
+from langchain.callbacks.manager import (
+    AsyncCallbackManagerForChainRun,
+    CallbackManagerForChainRun,
+)
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from langchain.memory import ConversationSummaryBufferMemory
 from langchain.pydantic_v1 import BaseModel, Field
+from langchain.schema import (
+    AgentAction,
+    AgentFinish,
+    AIMessage,
+    BaseMessage,
+    HumanMessage,
+)
+from langchain.tools import BaseTool, StructuredTool
+from pydantic import ConfigDict
+
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 
 
 class SupervisorDecision(BaseModel):
     """Structured output for supervisor decisions"""
-    action: str = Field(description="Action to take: 'delegate', 'synthesize', 'clarify'")
+
+    action: str = Field(
+        description="Action to take: 'delegate', 'synthesize', 'clarify'"
+    )
     target_agent: Optional[str] = Field(description="Agent to delegate to")
     reasoning: str = Field(description="Reasoning for the decision")
     priority: int = Field(description="Priority level 1-5")
@@ -26,11 +40,14 @@ class SupervisorDecision(BaseModel):
 
 class AgentCapability(BaseModel):
     """Agent capability definition"""
+
     name: str = Field(description="Agent name")
     description: str = Field(description="Capability description")
     expertise_areas: List[str] = Field(description="Areas of expertise")
     cost_factor: float = Field(default=1.0, description="Resource cost factor")
-    average_response_time: float = Field(default=5.0, description="Average response time")
+    average_response_time: float = Field(
+        default=5.0, description="Average response time"
+    )
 
 
 class LangChainSupervisorAgent(BaseSingleActionAgent):
@@ -46,42 +63,39 @@ class LangChainSupervisorAgent(BaseSingleActionAgent):
     name: str = Field(default="supervisor", description="Agent name")
     description: str = Field(
         default="Advanced supervisor agent for orchestrating specialized AI agents",
-        description="Agent description"
+        description="Agent description",
     )
     llm: Any = Field(description="Language model")
     memory: ConversationSummaryBufferMemory = Field(description="Conversation memory")
     available_agents: List[AgentCapability] = Field(
-        default_factory=list,
-        description="Available specialized agents"
+        default_factory=list, description="Available specialized agents"
     )
     tools: List[BaseTool] = Field(default_factory=list, description="Available tools")
     max_iterations: int = Field(default=10, description="Maximum iterations")
     cost_threshold: float = Field(default=100.0, description="Cost threshold")
     streaming: bool = Field(default=True, description="Enable streaming")
-
-    class Config:
-        arbitrary_types_allowed = True
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         # Initialize LLM if not provided
-        if not hasattr(self, 'llm') or self.llm is None:
+        if not hasattr(self, "llm") or self.llm is None:
             callbacks = [StreamingStdOutCallbackHandler()] if self.streaming else None
             self.llm = create_chat_openai(
                 model="gpt-4o",
                 temperature=0.7,
                 streaming=self.streaming,
-                callbacks=callbacks
+                callbacks=callbacks,
             )
 
         # Initialize memory
-        if not hasattr(self, 'memory') or self.memory is None:
+        if not hasattr(self, "memory") or self.memory is None:
             self.memory = ConversationSummaryBufferMemory(
                 llm=self.llm,
                 memory_key="chat_history",
                 return_messages=True,
-                max_token_limit=2000
+                max_token_limit=2000,
             )
 
         # Initialize default agent capabilities
@@ -99,36 +113,36 @@ class LangChainSupervisorAgent(BaseSingleActionAgent):
                     description="Research and information gathering",
                     expertise_areas=["web search", "data analysis", "fact checking"],
                     cost_factor=0.8,
-                    average_response_time=3.0
+                    average_response_time=3.0,
                 ),
                 AgentCapability(
                     name="code",
                     description="Code generation and analysis",
                     expertise_areas=["programming", "debugging", "architecture"],
                     cost_factor=1.2,
-                    average_response_time=4.0
+                    average_response_time=4.0,
                 ),
                 AgentCapability(
                     name="creative",
                     description="Creative content generation",
                     expertise_areas=["writing", "storytelling", "brainstorming"],
                     cost_factor=1.0,
-                    average_response_time=2.5
+                    average_response_time=2.5,
                 ),
                 AgentCapability(
                     name="analytical",
                     description="Data analysis and reasoning",
                     expertise_areas=["statistics", "logic", "problem solving"],
                     cost_factor=1.1,
-                    average_response_time=3.5
+                    average_response_time=3.5,
                 ),
                 AgentCapability(
                     name="multimodal",
                     description="Image and audio processing",
                     expertise_areas=["computer vision", "audio analysis", "multimedia"],
                     cost_factor=1.5,
-                    average_response_time=6.0
-                )
+                    average_response_time=6.0,
+                ),
             ]
 
     def _initialize_tools(self):
@@ -138,23 +152,23 @@ class LangChainSupervisorAgent(BaseSingleActionAgent):
                 name="delegate_task",
                 description="Delegate a task to a specialized agent",
                 func=self._delegate_task,
-                args_schema=SupervisorDecision
+                args_schema=SupervisorDecision,
             ),
             StructuredTool.from_function(
                 func=self._get_agent_status,
                 name="get_agent_status",
-                description="Get status and availability of agents"
+                description="Get status and availability of agents",
             ),
             StructuredTool.from_function(
                 func=self._synthesize_responses,
                 name="synthesize_responses",
-                description="Synthesize multiple agent responses"
+                description="Synthesize multiple agent responses",
             ),
             StructuredTool.from_function(
                 func=self._optimize_workflow,
                 name="optimize_workflow",
-                description="Optimize workflow based on constraints"
-            )
+                description="Optimize workflow based on constraints",
+            ),
         ]
 
     @property
@@ -169,7 +183,7 @@ class LangChainSupervisorAgent(BaseSingleActionAgent):
         self,
         intermediate_steps: List[tuple],
         callbacks: Optional[CallbackManagerForChainRun] = None,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> Union[AgentAction, AgentFinish]:
         """Plan next action using LangChain tools"""
 
@@ -194,7 +208,7 @@ class LangChainSupervisorAgent(BaseSingleActionAgent):
         self,
         intermediate_steps: List[tuple],
         callbacks: Optional[AsyncCallbackManagerForChainRun] = None,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> Union[AgentAction, AgentFinish]:
         """Async plan next action"""
 
@@ -207,7 +221,9 @@ class LangChainSupervisorAgent(BaseSingleActionAgent):
 
         return action
 
-    def _create_planning_prompt(self, context: str, user_input: str) -> List[BaseMessage]:
+    def _create_planning_prompt(
+        self, context: str, user_input: str
+    ) -> List[BaseMessage]:
         """Create planning prompt with context"""
 
         system_msg = f"""You are the Supervisor Agent for Cartrita AI OS, an advanced AI orchestrator.
@@ -231,7 +247,7 @@ Remember: You can delegate to multiple agents, synthesize their responses, and i
 
         return [
             AIMessage(content=system_msg),
-            HumanMessage(content=f"User Request: {user_input}")
+            HumanMessage(content=f"User Request: {user_input}"),
         ]
 
     def _format_agent_capabilities(self) -> str:
@@ -266,14 +282,16 @@ Remember: You can delegate to multiple agents, synthesize their responses, and i
 
         return "\n".join(context_parts) if context_parts else "No previous context"
 
-    def _parse_response_to_action(self, response: str, intermediate_steps: List[tuple]) -> Union[AgentAction, AgentFinish]:
+    def _parse_response_to_action(
+        self, response: str, intermediate_steps: List[tuple]
+    ) -> Union[AgentAction, AgentFinish]:
         """Parse LLM response to determine next action"""
 
         # Check if should finish
         if len(intermediate_steps) >= self.max_iterations:
             return AgentFinish(
                 return_values={"output": "Maximum iterations reached"},
-                log="Reached maximum iterations"
+                log="Reached maximum iterations",
             )
 
         # Simple parsing logic - can be enhanced with structured output
@@ -289,30 +307,25 @@ Remember: You can delegate to multiple agents, synthesize their responses, and i
                     "target_agent": agent_name,
                     "reasoning": response,
                     "priority": 3,
-                    "metadata": {"user_input": task}
+                    "metadata": {"user_input": task},
                 },
-                log=response
+                log=response,
             )
 
         elif "synthesize" in response.lower():
             return AgentAction(
                 tool="synthesize_responses",
                 tool_input={"responses": intermediate_steps},
-                log=response
+                log=response,
             )
 
         elif "status" in response.lower():
-            return AgentAction(
-                tool="get_agent_status",
-                tool_input={},
-                log=response
-            )
+            return AgentAction(tool="get_agent_status", tool_input={}, log=response)
 
         else:
             # Direct response
             return AgentFinish(
-                return_values={"output": response},
-                log="Providing direct response"
+                return_values={"output": response}, log="Providing direct response"
             )
 
     def _extract_agent_name(self, response: str) -> str:
@@ -325,10 +338,10 @@ Remember: You can delegate to multiple agents, synthesize their responses, and i
     def _extract_task(self, response: str) -> str:
         """Extract task description from response"""
         # Simple extraction - can be improved with NLP
-        lines = response.split('\n')
+        lines = response.split("\n")
         for line in lines:
-            if 'task:' in line.lower():
-                return line.split(':', 1)[1].strip()
+            if "task:" in line.lower():
+                return line.split(":", 1)[1].strip()
         return response
 
     # Tool implementations
@@ -340,7 +353,7 @@ Remember: You can delegate to multiple agents, synthesize their responses, and i
         # Find agent capability
         agent_info = next(
             (a for a in self.available_agents if a.name == agent_name),
-            self.available_agents[0]
+            self.available_agents[0],
         )
 
         # Simulate delegation (in real implementation, this would call actual agents)
@@ -397,7 +410,7 @@ Provide a unified, well-structured response that combines the best insights from
             tools=self.tools,
             memory=self.memory,
             verbose=True,
-            max_iterations=self.max_iterations
+            max_iterations=self.max_iterations,
         )
 
         result = executor.invoke({"input": input_text})
@@ -410,7 +423,7 @@ Provide a unified, well-structured response that combines the best insights from
             tools=self.tools,
             memory=self.memory,
             verbose=True,
-            max_iterations=self.max_iterations
+            max_iterations=self.max_iterations,
         )
 
         result = await executor.ainvoke({"input": input_text})
@@ -431,5 +444,5 @@ Provide a unified, well-structured response that combines the best insights from
             "average_response_time": 0.0,
             "cost_consumed": 0.0,
             "success_rate": 100.0,
-            "available_agents": len(self.available_agents)
+            "available_agents": len(self.available_agents),
         }

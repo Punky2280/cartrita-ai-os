@@ -20,9 +20,9 @@ except ImportError as e:
     _import_error = e  # store for later
     HumanMessage = None  # type: ignore
     SystemMessage = None  # type: ignore
-from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 from pydantic import BaseModel, Field
 
+from cartrita.orchestrator.utils.llm_factory import create_chat_openai
 
 # Configure logger
 logger = structlog.get_logger(__name__)
@@ -136,6 +136,7 @@ class CodeAgent:
     ):
         # Get settings with proper initialization
         from cartrita.orchestrator.utils.config import get_settings
+
         _settings = get_settings()
 
         self.model = model or _settings.ai.code_model

@@ -10,7 +10,12 @@ import asyncio
 from typing import Any, AsyncGenerator, Dict, List, Optional
 
 import structlog
-from deepgram import DeepgramClient, LiveTranscriptionEvents, LiveOptions, PrerecordedOptions
+from deepgram import (
+    DeepgramClient,
+    LiveOptions,
+    LiveTranscriptionEvents,
+    PrerecordedOptions,
+)
 
 from cartrita.orchestrator.utils.config import settings
 
@@ -27,12 +32,12 @@ class DeepgramService:
         self.model = "nova-2"  # Latest general purpose model
         self.language = "en-US"
 
-        logger.info("Deepgram service initialized", model=self.model, language=self.language)
+        logger.info(
+            "Deepgram service initialized", model=self.model, language=self.language
+        )
 
     async def transcribe_audio(
-        self,
-        audio_data: bytes,
-        options: Optional[Dict[str, Any]] = None
+        self, audio_data: bytes, options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
         Transcribe pre-recorded audio data.
@@ -52,7 +57,7 @@ class DeepgramService:
                 smart_format=True,
                 punctuate=True,
                 diarize=True,
-                **(options or {})
+                **(options or {}),
             )
 
             logger.info("Starting audio transcription", audio_size=len(audio_data))
@@ -74,39 +79,46 @@ class DeepgramService:
                     result = {
                         "transcript": alternative.transcript,
                         "confidence": alternative.confidence,
-                        "words": [
-                            {
-                                "word": word.word,
-                                "start": word.start,
-                                "end": word.end,
-                                "confidence": word.confidence,
-                                "speaker": getattr(word, "speaker", None)
-                            }
-                            for word in alternative.words
-                        ] if alternative.words else [],
+                        "words": (
+                            [
+                                {
+                                    "word": word.word,
+                                    "start": word.start,
+                                    "end": word.end,
+                                    "confidence": word.confidence,
+                                    "speaker": getattr(word, "speaker", None),
+                                }
+                                for word in alternative.words
+                            ]
+                            if alternative.words
+                            else []
+                        ),
                         "duration": getattr(response.metadata, "duration", None),
-                        "channels": len(response.results.channels)
+                        "channels": len(response.results.channels),
                     }
 
                     logger.info(
                         "Transcription completed",
                         transcript_length=len(result["transcript"]),
                         confidence=result["confidence"],
-                        word_count=len(result["words"])
+                        word_count=len(result["words"]),
                     )
 
                     return result
 
-            return {"transcript": "", "confidence": 0.0, "words": [], "error": "No transcription results"}
+            return {
+                "transcript": "",
+                "confidence": 0.0,
+                "words": [],
+                "error": "No transcription results",
+            }
 
         except Exception as e:
             logger.error("Audio transcription failed", error=str(e))
             return {"transcript": "", "confidence": 0.0, "words": [], "error": str(e)}
 
     async def start_live_transcription(
-        self,
-        websocket_url: str,
-        options: Optional[Dict[str, Any]] = None
+        self, websocket_url: str, options: Optional[Dict[str, Any]] = None
     ) -> AsyncGenerator[Dict[str, Any], None]:
         """
         Start live transcription session.
@@ -127,7 +139,7 @@ class DeepgramService:
                 punctuate=True,
                 interim_results=True,
                 diarize=True,
-                **(options or {})
+                **(options or {}),
             )
 
             logger.info("Starting live transcription session")
@@ -145,16 +157,20 @@ class DeepgramService:
                         "confidence": alternative.confidence,
                         "is_final": result.is_final,
                         "speech_final": getattr(result, "speech_final", False),
-                        "words": [
-                            {
-                                "word": word.word,
-                                "start": word.start,
-                                "end": word.end,
-                                "confidence": word.confidence,
-                                "speaker": getattr(word, "speaker", None)
-                            }
-                            for word in alternative.words
-                        ] if alternative.words else []
+                        "words": (
+                            [
+                                {
+                                    "word": word.word,
+                                    "start": word.start,
+                                    "end": word.end,
+                                    "confidence": word.confidence,
+                                    "speaker": getattr(word, "speaker", None),
+                                }
+                                for word in alternative.words
+                            ]
+                            if alternative.words
+                            else []
+                        ),
                     }
 
             async def on_metadata(metadata):
@@ -163,14 +179,11 @@ class DeepgramService:
                     "request_id": metadata.request_id,
                     "channels": metadata.channels,
                     "duration": metadata.duration,
-                    "models": metadata.models
+                    "models": metadata.models,
                 }
 
             async def on_error(error):
-                yield {
-                    "type": "error",
-                    "error": str(error)
-                }
+                yield {"type": "error", "error": str(error)}
 
             # Register handlers
             dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
@@ -196,10 +209,7 @@ class DeepgramService:
             logger.error("Live transcription failed", error=str(e))
             yield {"type": "error", "error": str(e)}
 
-    async def analyze_audio_quality(
-        self,
-        audio_data: bytes
-    ) -> Dict[str, Any]:
+    async def analyze_audio_quality(self, audio_data: bytes) -> Dict[str, Any]:
         """
         Analyze audio quality and provide recommendations.
 
@@ -218,11 +228,14 @@ class DeepgramService:
                 "clarity": "good",
                 "recommendations": [
                     "Audio quality is good for transcription",
-                    "Consider using noise reduction if background noise is present"
-                ]
+                    "Consider using noise reduction if background noise is present",
+                ],
             }
 
-            logger.info("Audio quality analysis completed", quality_score=analysis["quality_score"])
+            logger.info(
+                "Audio quality analysis completed",
+                quality_score=analysis["quality_score"],
+            )
             return analysis
 
         except Exception as e:
@@ -248,7 +261,7 @@ class DeepgramService:
                 {"code": "pt", "name": "Portuguese", "model": "nova-2"},
                 {"code": "ja", "name": "Japanese", "model": "nova-2"},
                 {"code": "ko", "name": "Korean", "model": "nova-2"},
-                {"code": "zh", "name": "Chinese", "model": "nova-2"}
+                {"code": "zh", "name": "Chinese", "model": "nova-2"},
             ]
 
             return languages
@@ -266,10 +279,7 @@ class DeepgramService:
                 "status": "healthy",
                 "balance": getattr(response, "balance", "unknown"),
                 "model": self.model,
-                "language": self.language
+                "language": self.language,
             }
         except Exception as e:
-            return {
-                "status": "unhealthy",
-                "error": str(e)
-            }
+            return {"status": "unhealthy", "error": str(e)}

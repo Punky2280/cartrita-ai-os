@@ -1,0 +1,709 @@
+{
+  "total_critical": 77,
+  "files_affected": [
+    "config_security_audit.json",
+    "generated_patches.json"
+  ],
+  "issue_types": {
+    "hardcoded_secret": 77
+  },
+  "grouped_issues": {
+    "config_security_audit.json": [
+      {
+        "file": "config_security_audit.json",
+        "line": 141,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid format\""
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 186,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid format\\\"\""
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 231,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 276,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 312,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 411,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 474,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 519,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 555,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 654,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 717,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"original\\\\\\\": \\\\\\\"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 762,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 807,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 843,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 942,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1005,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1050,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1086,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1185,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1518,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"original\\\": \\\"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'\\\",\""
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1626,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid format\\\"\""
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1671,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1716,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1752,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1851,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1914,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1959,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1995,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2094,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2157,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"original\\\\\\\": \\\\\\\"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2202,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2247,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2283,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2382,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2445,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2490,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2526,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2625,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 141,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid format\""
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 186,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid format\\\"\""
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 231,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 276,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 312,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 411,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 474,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 519,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 555,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 654,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 717,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"original\\\\\\\": \\\\\\\"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 762,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 807,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 843,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 942,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1005,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1050,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1086,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1185,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1518,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"original\\\": \\\"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'\\\",\""
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1626,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid format\\\"\""
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1671,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1716,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1752,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1851,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1914,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1959,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 1995,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2094,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2157,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"original\\\\\\\": \\\\\\\"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2202,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"('sk-1234567890abcdefghijklmnopqrstuvwxyz', False),  # Valid "
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2247,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2283,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2382,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2445,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"original\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"valid_key = 'sk-abcd1234567"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2490,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"('sk-1234567890abcdefghijklmnop"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2526,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      },
+      {
+        "file": "config_security_audit.json",
+        "line": 2625,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"code\": \"\\\"code\\\": \\\"\\\\\\\"code\\\\\\\": \\\\\\\"\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"code\\\\\\\\\\\\\\\\\\\\\\"
+      }
+    ],
+    "generated_patches.json": [
+      {
+        "file": "generated_patches.json",
+        "line": 91,
+        "type": "hardcoded_secret",
+        "severity": "critical",
+        "description": "Potential hardcoded secret detected",
+        "recommendation": "Move secret to environment variables or secure vault",
+        "code": "\"original\": \"valid_key = 'sk-abcd1234567890abcdefghijklmnopqrstuvwxyz'\","
+      }
+    ]
+  }
+}
