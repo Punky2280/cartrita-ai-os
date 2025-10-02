@@ -1,0 +1,30 @@
+{
+  "counts": {
+    "new": {
+      "total": 0,
+      "error": 0,
+      "warning": 0,
+      "note": 0,
+      "none": 0
+    },
+    "fixed": {
+      "total": 0,
+      "error": 0,
+      "warning": 0,
+      "note": 0,
+      "none": 0
+    },
+    "persisted": {
+      "total": 0,
+      "error": 0,
+      "warning": 0,
+      "note": 0,
+      "none": 0
+    }
+  },
+  "details": {
+    "new": [],
+    "fixed": [],
+    "persisted": []
+  }
+}
